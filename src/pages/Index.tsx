@@ -89,7 +89,6 @@ export default function Index() {
       <SEO
         title="GRATIS — Pure Power, Pure Purpose"
         description="Pure hydration in 100% recyclable tetrapacks."
-        canonical={typeof window !== 'undefined' ? window.location.href : '/'}
       />
 
       <section className="relative overflow-hidden min-h-screen max-w-full contain-layout">

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db, auth } from '@/firebase';
+import { collection, query, where, getDocs, addDoc, updateDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { toast } from 'sonner';
 
 export interface Review {
@@ -10,21 +11,20 @@ export interface Review {
   comment: string | null;
   helpful_votes: number;
   verified_purchase: boolean;
-  created_at: string;
+  created_at: any;
 }
 
 export const useProductReviews = (productId: string) => {
   return useQuery({
     queryKey: ['reviews', productId],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('reviews')
-        .select('*')
-        .eq('product_id', productId)
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      return data as Review[];
+      const q = query(collection(db, 'reviews'), where('product_id', '==', productId), orderBy('created_at', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const reviews: Review[] = [];
+      querySnapshot.forEach((doc) => {
+        reviews.push({ id: doc.id, ...doc.data() } as Review);
+      });
+      return reviews;
     }
   });
 };
@@ -38,24 +38,22 @@ export const useCreateReview = () => {
       rating: number; 
       comment: string;
     }) => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = auth.currentUser;
       if (!user) throw new Error('Must be logged in to review');
 
-      const { data, error } = await supabase
-        .from('reviews')
-        .insert({
-          product_id: productId,
-          user_id: user.id,
-          rating,
-          comment,
-        })
-        .select()
-        .single();
+      const docRef = await addDoc(collection(db, 'reviews'), {
+        product_id: productId,
+        user_id: user.uid,
+        rating,
+        comment,
+        helpful_votes: 0,
+        verified_purchase: false, // This might need more logic based on actual purchases
+        created_at: serverTimestamp()
+      });
       
-      if (error) throw error;
-      return data;
+      return { id: docRef.id };
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['reviews', variables.productId] });
       toast.success('Review submitted successfully!');
     },
@@ -80,12 +78,8 @@ export const useUpdateReview = () => {
       rating: number; 
       comment: string;
     }) => {
-      const { error } = await supabase
-        .from('reviews')
-        .update({ rating, comment })
-        .eq('id', reviewId);
-      
-      if (error) throw error;
+      const reviewRef = doc(db, "reviews", reviewId);
+      await updateDoc(reviewRef, { rating, comment });
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['reviews', variables.productId] });

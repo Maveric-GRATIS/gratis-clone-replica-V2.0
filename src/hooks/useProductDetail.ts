@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Database } from '@/integrations/supabase/types';
+import { db } from '@/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
-type Product = Database['public']['Tables']['products']['Row'];
+interface Product {
+  id: string;
+  [key: string]: any;
+}
 
 export const useProductDetail = (slug: string) => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -13,15 +16,14 @@ export const useProductDetail = (slug: string) => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        // For now, fetch by ID since we don't have slugs yet
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('id', slug)
-          .single();
+        const docRef = doc(db, "products", slug);
+        const docSnap = await getDoc(docRef);
 
-        if (error) throw error;
-        setProduct(data);
+        if (docSnap.exists()) {
+          setProduct({ id: docSnap.id, ...docSnap.data() } as Product);
+        } else {
+          setError("No such product!");
+        }
       } catch (err: any) {
         setError(err.message);
       } finally {

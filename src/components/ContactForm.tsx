@@ -7,7 +7,8 @@ import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { analytics } from '@/lib/analytics';
-import { supabase } from '@/integrations/supabase/client';
+import { functions } from '@/firebase';
+import { httpsCallable } from 'firebase/functions';
 import { Mail, User, MessageSquare } from 'lucide-react';
 
 interface ContactFormData {
@@ -32,31 +33,20 @@ export const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Track form submission
       analytics.track({
         action: 'contact_form_submit',
         category: 'engagement',
         label: formData.subject,
       });
 
-      // Send email via edge function
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: {
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        },
-      });
-
-      if (error) throw error;
+      const sendContactEmail = httpsCallable(functions, 'sendContactEmail');
+      await sendContactEmail(formData);
 
       toast({
         title: "Message sent!",
         description: "We'll get back to you within 24 hours.",
       });
 
-      // Reset form
       setFormData({
         name: '',
         email: '',

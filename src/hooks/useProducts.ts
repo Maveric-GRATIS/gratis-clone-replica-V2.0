@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Database } from '@/integrations/supabase/types';
+import { db } from '@/firebase';
+import { collection, query, where, getDocs, orderBy, QueryConstraint } from 'firebase/firestore';
 
-type Product = Database['public']['Tables']['products']['Row'];
+interface Product {
+  id: string;
+  [key: string]: any;
+}
 
 interface UseProductsOptions {
   category?: string;
@@ -15,7 +18,6 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Handle both old and new API
   const options: UseProductsOptions = typeof categoryOrOptions === 'string' 
     ? { category: categoryOrOptions, featured: legacyFeatured }
     : categoryOrOptions || {};
@@ -27,28 +29,32 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
     setError(null);
     
     try {
-      let query = supabase
-        .from('products')
-        .select('*')
-        .eq('in_stock', true)
-        .order('created_at', { ascending: false });
+      const productCollection = collection(db, 'products');
+      const queryConstraints: QueryConstraint[] = [
+          where('in_stock', '==', true),
+          orderBy('created_at', 'desc')
+      ];
 
       if (category) {
-        query = query.eq('category', category);
+        queryConstraints.push(where('category', '==', category));
       }
 
       if (featured !== undefined) {
-        query = query.eq('featured', featured);
+        queryConstraints.push(where('featured', '==', featured));
       }
 
       if (tier) {
-        query = query.eq('tier', tier);
+        queryConstraints.push(where('tier', '==', tier));
       }
 
-      const { data, error } = await query;
+      const q = query(productCollection, ...queryConstraints);
+      const querySnapshot = await getDocs(q);
+      const productsData: Product[] = [];
+      querySnapshot.forEach((doc) => {
+        productsData.push({ id: doc.id, ...doc.data() } as Product);
+      });
+      setProducts(productsData);
 
-      if (error) throw error;
-      setProducts(data || []);
     } catch (err: any) {
       setError(err.message);
     } finally {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { db, auth } from '@/firebase';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -37,7 +38,7 @@ interface Order {
   subtotal: number;
   shipping_cost: number;
   total: number;
-  created_at: string;
+  created_at: any;
 }
 
 export default function OrderDetail() {
@@ -52,45 +53,31 @@ export default function OrderDetail() {
     const fetchOrderDetails = async () => {
       if (!orderId) return;
 
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const user = auth.currentUser;
       if (!user) {
         navigate('/auth');
         return;
       }
 
-      const { data: orderData, error: orderError } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('id', orderId)
-        .eq('user_id', user.id)
-        .single();
+      const orderRef = doc(db, 'orders', orderId);
+      const orderSnap = await getDoc(orderRef);
 
-      if (orderError) {
-        console.error('Error fetching order:', orderError);
+      if (!orderSnap.exists() || orderSnap.data().user_id !== user.uid) {
+        console.error('Order not found or access denied.');
         setLoading(false);
         return;
       }
+      
+      setOrder({ id: orderSnap.id, ...orderSnap.data() } as Order);
 
-      setOrder(orderData);
+      const itemsQuery = query(collection(db, 'order_items'), where('order_id', '==', orderId));
+      const itemsSnap = await getDocs(itemsQuery);
+      setItems(itemsSnap.docs.map(d => ({ id: d.id, ...d.data() } as OrderItem)));
 
-      const { data: itemsData, error: itemsError } = await supabase
-        .from('order_items')
-        .select('*')
-        .eq('order_id', orderId);
-
-      if (!itemsError) {
-        setItems(itemsData || []);
-      }
-
-      const { data: addressData, error: addressError } = await supabase
-        .from('shipping_addresses')
-        .select('*')
-        .eq('order_id', orderId)
-        .single();
-
-      if (!addressError) {
-        setAddress(addressData);
+      const addressQuery = query(collection(db, 'shipping_addresses'), where('order_id', '==', orderId));
+      const addressSnap = await getDocs(addressQuery);
+      if (!addressSnap.empty) {
+        setAddress(addressSnap.docs[0].data() as ShippingAddress);
       }
 
       setLoading(false);
@@ -139,7 +126,7 @@ export default function OrderDetail() {
             <div>
               <h1 className="text-3xl font-bold mb-2">Order {order.order_number}</h1>
               <p className="text-muted-foreground">
-                Placed on {new Date(order.created_at).toLocaleDateString('en-US', {
+                Placed on {new Date(order.created_at.toDate()).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',

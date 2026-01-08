@@ -1,20 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
-import { db } from '@/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
 export const useUserImpact = () => {
   const { user } = useAuth();
 
   return useQuery({
-    queryKey: ['user-impact', user?.uid],
+    queryKey: ['user-impact', user?.id],
     queryFn: async () => {
       if (!user) return null;
       
-      const q = query(collection(db, 'user_impact'), where('user_id', '==', user.uid));
-      const querySnapshot = await getDocs(q);
+      const { data, error } = await supabase
+        .from('user_impact')
+        .select('*')
+        .eq('user_id', user.id)
+        .maybeSingle();
       
-      if (querySnapshot.empty) {
+      if (error) throw error;
+      
+      // If no impact record exists, return defaults
+      if (!data) {
         return {
           total_spent: 0,
           liters_funded: 0,
@@ -23,8 +28,7 @@ export const useUserImpact = () => {
         };
       }
       
-      const doc = querySnapshot.docs[0];
-      return { id: doc.id, ...doc.data() };
+      return data;
     },
     enabled: !!user
   });

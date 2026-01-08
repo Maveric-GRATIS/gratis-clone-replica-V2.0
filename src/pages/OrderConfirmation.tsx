@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { CheckCircle, Package, ArrowRight } from 'lucide-react';
@@ -27,17 +26,16 @@ export default function OrderConfirmation() {
     const fetchOrder = async () => {
       if (!orderId) return;
 
-      try {
-        const docRef = doc(db, 'orders', orderId);
-        const docSnap = await getDoc(docRef);
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('id', orderId)
+        .single();
 
-        if (docSnap.exists()) {
-          setOrder({ id: docSnap.id, ...docSnap.data() } as Order);
-        } else {
-          console.log('No such document!');
-        }
-      } catch (error) {
+      if (error) {
         console.error('Error fetching order:', error);
+      } else {
+        setOrder(data);
       }
       setLoading(false);
     };

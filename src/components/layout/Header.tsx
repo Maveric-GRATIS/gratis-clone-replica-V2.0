@@ -19,6 +19,7 @@ const MENU: MenuEntry[] = [
   {
     label: "GRATIS",
     items: [
+      { to: "/hydration", label: "Shop All" },
       { to: "/water", label: "Water" },
       { to: "/theurgy", label: "Theurgy" },
       { to: "/fu", label: "F.U." },

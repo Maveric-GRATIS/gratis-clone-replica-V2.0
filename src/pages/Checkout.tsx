@@ -10,12 +10,11 @@ import { StripePaymentForm } from '@/components/checkout/StripePaymentForm';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { auth, app } from '../firebase';
-import { getFunctions, httpsCallable } from "firebase/functions";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || '');
 
@@ -48,7 +47,6 @@ export default function Checkout() {
   const [processing, setProcessing] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const functions = getFunctions(app);
 
   if (items.length === 0 && currentStep === 1) {
     navigate('/rig-store');
@@ -74,7 +72,7 @@ export default function Checkout() {
   const handleReviewContinue = async () => {
     setProcessing(true);
     try {
-      const user = auth.currentUser;
+      const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
         toast({
@@ -95,26 +93,32 @@ export default function Checkout() {
         return;
       }
 
-      const createOrder = httpsCallable(functions, 'create-order');
-      const orderResult: any = await createOrder({ 
+      // Create order via edge function
+      const { data: orderData, error: orderError } = await supabase.functions.invoke('create-order', {
+        body: {
           items: items,
           shippingData: shippingData,
           shippingOption: shippingOption,
-       });
-
-      if (!orderResult.data.success) throw new Error(orderResult.data.error || 'Failed to create order');
-
-      setOrderId(orderResult.data.order.id);
-
-      const createPaymentIntent = httpsCallable(functions, 'create-payment-intent');
-      const paymentResult: any = await createPaymentIntent({ 
-        amount: total,
-        orderId: orderResult.data.order.id,
+        },
       });
 
-      if (!paymentResult.data.clientSecret) throw new Error('Failed to create payment intent');
+      if (orderError) throw orderError;
+      if (!orderData.success) throw new Error(orderData.error || 'Failed to create order');
 
-      setClientSecret(paymentResult.data.clientSecret);
+      setOrderId(orderData.order.id);
+
+      // Create payment intent
+      const { data: paymentData, error: paymentError } = await supabase.functions.invoke('create-payment-intent', {
+        body: {
+          amount: total,
+          orderId: orderData.order.id,
+        },
+      });
+
+      if (paymentError) throw paymentError;
+      if (!paymentData.clientSecret) throw new Error('Failed to create payment intent');
+
+      setClientSecret(paymentData.clientSecret);
       setCurrentStep(4);
 
       toast({
@@ -134,6 +138,8 @@ export default function Checkout() {
   };
 
   const handlePaymentSuccess = async () => {
+    // Order confirmation email is handled by the Stripe webhook (stripe-webhook/index.ts)
+    // when payment_intent.succeeded event is received
     clearCart();
     navigate(`/order-confirmation/${orderId}`);
   };

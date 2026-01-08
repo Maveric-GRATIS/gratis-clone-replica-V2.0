@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
-import { db } from '@/firebase';
-import { collection, query, where, getDocs, orderBy, limit } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
 import { useUserImpact } from '@/hooks/useUserImpact';
 import { Package, Heart, Droplet, Leaf, ShoppingBag, User } from 'lucide-react';
 import { format } from 'date-fns';
@@ -14,42 +13,40 @@ import SEO from '@/components/SEO';
 import { PageHero } from '@/components/PageHero';
 import { EmptyState } from '@/components/EmptyState';
 
-interface Order {
-  id: string;
-  order_number: string;
-  status: string;
-  total: number;
-  created_at: string;
-}
-
 export default function Dashboard() {
   const { user } = useAuth();
   const { data: impact } = useUserImpact();
 
   const { data: orders } = useQuery({
-    queryKey: ['user-orders', user?.uid],
+    queryKey: ['user-orders', user?.id],
     queryFn: async () => {
       if (!user) return [];
       
-      const q = query(collection(db, 'orders'), where('user_id', '==', user.uid), orderBy('created_at', 'desc'), limit(5));
-      const querySnapshot = await getDocs(q);
-      const orders: Order[] = [];
-      querySnapshot.forEach((doc) => {
-        orders.push({ id: doc.id, ...doc.data() } as Order);
-      });
-      return orders;
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+      
+      if (error) throw error;
+      return data;
     },
     enabled: !!user
   });
 
   const { data: wishlistCount } = useQuery({
-    queryKey: ['wishlist-count', user?.uid],
+    queryKey: ['wishlist-count', user?.id],
     queryFn: async () => {
       if (!user) return 0;
       
-      const q = query(collection(db, 'wishlists'), where('user_id', '==', user.uid));
-      const querySnapshot = await getDocs(q);
-      return querySnapshot.size;
+      const { count, error } = await supabase
+        .from('wishlists')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id);
+      
+      if (error) throw error;
+      return count || 0;
     },
     enabled: !!user
   });

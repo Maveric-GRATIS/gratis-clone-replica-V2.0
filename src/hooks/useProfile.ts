@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db } from '@/firebase';
-import { collection, query, where, getDocs, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface Profile {
@@ -10,8 +9,8 @@ interface Profile {
   display_name?: string | null;
   avatar_url?: string | null;
   phone?: string | null;
-  created_at: any; 
-  updated_at: any;
+  created_at: string;
+  updated_at: string;
 }
 
 export const useProfile = () => {
@@ -27,15 +26,14 @@ export const useProfile = () => {
     setError(null);
     
     try {
-      const q = query(collection(db, "profiles"), where("user_id", "==", user.uid));
-      const querySnapshot = await getDocs(q);
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
 
-      if (!querySnapshot.empty) {
-        const profileDoc = querySnapshot.docs[0];
-        setProfile({ id: profileDoc.id, ...profileDoc.data() } as Profile);
-      } else {
-        setProfile(null);
-      }
+      if (error) throw error;
+      setProfile(data);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -44,20 +42,25 @@ export const useProfile = () => {
   };
 
   const updateProfile = async (updates: Partial<Profile>) => {
-    if (!profile) return;
+    if (!user) return;
     
     setLoading(true);
     setError(null);
     
     try {
-      const profileRef = doc(db, "profiles", profile.id);
-      await updateDoc(profileRef, {
-        ...updates,
-        updated_at: serverTimestamp()
-      });
-      // Re-fetch profile to get updated data
-      await fetchProfile();
-      return { data: profile, error: null };
+      const { data, error } = await supabase
+        .from('profiles')
+        .update({
+          ...updates,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      setProfile(data);
+      return { data, error: null };
     } catch (err: any) {
       setError(err.message);
       return { data: null, error: err.message };

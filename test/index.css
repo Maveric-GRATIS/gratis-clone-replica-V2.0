@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* GRATIS Design System - All colors MUST be HSL */
+
+@layer base {
+  /* Performance & Smooth Scrolling */
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  :root {
+    /* Core palette */
+    --background: 0 0% 0%; /* Black */
+    --foreground: 0 0% 100%; /* White */
+
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Brand tokens */
+    --brand-yellow: 75 100% 50%; /* Neon Yellow-Green #C6FF00 */
+    --brand-pink: 330 100% 50%; /* Hot Pink #FF007F */
+    --brand-blue: 195 100% 50%; /* Electric Blue #00BFFF */
+    --brand-orange: 24 100% 50%; /* Accent Orange #FF6600 */
+
+    --primary: var(--brand-yellow);
+    --primary-foreground: 0 0% 10%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: var(--brand-pink);
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: var(--brand-blue);
+
+    --radius: 0.6rem;
+
+    /* Sidebar tokens (kept for components compatibility) */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-primary: var(--brand-yellow);
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: var(--brand-blue);
+
+    /* Effects */
+    --primary-glow: 75 100% 60%;
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-pink)), hsl(var(--brand-blue)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--brand-orange)), hsl(var(--brand-pink)));
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--brand-blue) / 0.35);
+    --shadow-glow: 0 0 40px hsl(var(--brand-pink) / 0.35);
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: var(--brand-yellow);
+    --primary-foreground: 0 0% 10%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: var(--brand-pink);
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: var(--brand-blue);
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 92%;
+    --sidebar-primary: var(--brand-yellow);
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: var(--brand-blue);
+  }
+}
+
+@layer base {
+  * { 
+    @apply border-border;
+    /* Faster transitions for text/foreground elements */
+    transition-property: color, fill, stroke, border-color, background-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms, 150ms, 150ms, 200ms, 300ms;
+  }
+  
+  /* Slower, smoother transitions for major background elements */
+  body, 
+  header, 
+  footer, 
+  main,
+  section,
+  [class*="bg-"],
+  [class*="backdrop"] {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 350ms;
+  }
+  
+  /* Medium speed for interactive elements */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    transition-property: background-color, border-color, color, transform, box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+  
+  html, body {
+    @apply overflow-x-hidden max-w-full;
+    position: relative;
+  }
+  body { 
+    @apply bg-background text-foreground antialiased;
+    overflow-y: auto;
+  }
+  #root {
+    @apply overflow-x-hidden max-w-full;
+  }
+}
+
+/* Utilities and animation helpers */
+@layer utilities {
+  .story-link {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
+  }
+  .hover-scale { @apply transition-transform duration-200 hover:scale-105; }
+  .pulse { @apply animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]; }
+  .overflow-x-clip { @apply overflow-x-clip; }
+  .section-container { @apply overflow-x-hidden w-full max-w-full; }
+  .dropdown-menu {
+    @apply bg-[hsl(0_0%_6%)];
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px hsl(var(--brand-blue) / 0.3);
+  }
+  
+  /* Performance Optimizations */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  .contain-paint {
+    contain: paint;
+  }
+  
+  .contain-layout {
+    contain: layout;
+  }
+}
+
+/* Optimize all images */
+img {
+  content-visibility: auto;
+}
+
+/* Reduce animation overhead */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

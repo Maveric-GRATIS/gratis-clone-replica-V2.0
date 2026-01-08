@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import { supabase } from '@/integrations/supabase/client';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -26,20 +25,23 @@ export default function Orders() {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const user = auth.currentUser;
+      const { data: { user } } = await supabase.auth.getUser();
       
       if (!user) {
         navigate('/auth');
         return;
       }
 
-      try {
-        const q = query(collection(db, 'orders'), where('user_id', '==', user.uid), orderBy('created_at', 'desc'));
-        const querySnapshot = await getDocs(q);
-        const fetchedOrders = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
-        setOrders(fetchedOrders);
-      } catch (error) {
+      const { data, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
         console.error('Error fetching orders:', error);
+      } else {
+        setOrders(data || []);
       }
       setLoading(false);
     };

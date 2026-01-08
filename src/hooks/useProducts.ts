@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
-import { db } from '@/firebase';
-import { collection, query, where, getDocs, orderBy, QueryConstraint } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
+import { Database } from '@/integrations/supabase/types';
 
-interface Product {
-  id: string;
-  [key: string]: any;
-}
+type Product = Database['public']['Tables']['products']['Row'];
 
 interface UseProductsOptions {
   category?: string;
@@ -18,6 +15,7 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Handle both old and new API
   const options: UseProductsOptions = typeof categoryOrOptions === 'string' 
     ? { category: categoryOrOptions, featured: legacyFeatured }
     : categoryOrOptions || {};
@@ -29,32 +27,28 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
     setError(null);
     
     try {
-      const productCollection = collection(db, 'products');
-      const queryConstraints: QueryConstraint[] = [
-          where('in_stock', '==', true),
-          orderBy('created_at', 'desc')
-      ];
+      let query = supabase
+        .from('products')
+        .select('*')
+        .eq('in_stock', true)
+        .order('created_at', { ascending: false });
 
       if (category) {
-        queryConstraints.push(where('category', '==', category));
+        query = query.eq('category', category);
       }
 
       if (featured !== undefined) {
-        queryConstraints.push(where('featured', '==', featured));
+        query = query.eq('featured', featured);
       }
 
       if (tier) {
-        queryConstraints.push(where('tier', '==', tier));
+        query = query.eq('tier', tier);
       }
 
-      const q = query(productCollection, ...queryConstraints);
-      const querySnapshot = await getDocs(q);
-      const productsData: Product[] = [];
-      querySnapshot.forEach((doc) => {
-        productsData.push({ id: doc.id, ...doc.data() } as Product);
-      });
-      setProducts(productsData);
+      const { data, error } = await query;
 
+      if (error) throw error;
+      setProducts(data || []);
     } catch (err: any) {
       setError(err.message);
     } finally {

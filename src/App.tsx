@@ -43,6 +43,7 @@ import Blaze from "@/pages/spark/Blaze";
 import Enlist from "@/pages/spark/Enlist";
 import Auth from "./pages/Auth";
 import RigStore from "./pages/RigStore";
+import HydrationStore from "./pages/HydrationStore";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import Checkout from "./pages/Checkout";
@@ -95,6 +96,8 @@ const App = () => {
             <Route path="/auth" element={<Auth />} />
             <Route path="/rig-store" element={<RigStore />} />
             <Route path="/rig-store/:slug" element={<ProductDetail />} />
+            <Route path="/hydration" element={<HydrationStore />} />
+            <Route path="/hydration/:slug" element={<ProductDetail />} />
             <Route path="/water" element={<Water />} />
             <Route path="/theurgy" element={<Theurgy />} />
             <Route path="/fu" element={<FU />} />

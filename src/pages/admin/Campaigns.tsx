@@ -7,19 +7,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { db } from '@/firebase';
-import { collection, getDocs, doc, updateDoc, deleteDoc, query, orderBy } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
-
-interface Campaign {
-  id: string;
-  title: string;
-  start_date: string | null;
-  end_date: string | null;
-  active: boolean;
-  created_at: string;
-}
 
 export default function AdminCampaigns() {
   const queryClient = useQueryClient();
@@ -28,20 +18,24 @@ export default function AdminCampaigns() {
   const { data: campaigns, isLoading } = useQuery({
     queryKey: ['admin-campaigns'],
     queryFn: async () => {
-      const q = query(collection(db, 'campaigns'), orderBy('created_at', 'desc'));
-      const querySnapshot = await getDocs(q);
-      const campaigns: Campaign[] = [];
-      querySnapshot.forEach((doc) => {
-        campaigns.push({ id: doc.id, ...doc.data() } as Campaign);
-      });
-      return campaigns;
+      const { data, error } = await supabase
+        .from('campaigns')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
     }
   });
 
   const toggleActive = useMutation({
     mutationFn: async ({ id, active }: { id: string; active: boolean }) => {
-      const campaignRef = doc(db, 'campaigns', id);
-      await updateDoc(campaignRef, { active: !active });
+      const { error } = await supabase
+        .from('campaigns')
+        .update({ active: !active })
+        .eq('id', id);
+      
+      if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-campaigns'] });
@@ -54,8 +48,12 @@ export default function AdminCampaigns() {
 
   const deleteCampaign = useMutation({
     mutationFn: async (id: string) => {
-      const campaignRef = doc(db, 'campaigns', id);
-      await deleteDoc(campaignRef);
+      const { error } = await supabase
+        .from('campaigns')
+        .delete()
+        .eq('id', id);
+      
+      if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-campaigns'] });

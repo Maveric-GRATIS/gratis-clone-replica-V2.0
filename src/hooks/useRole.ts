@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db } from '@/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 
 type UserRole = 'customer' | 'admin' | 'marketing';
@@ -21,12 +20,14 @@ export const useRole = () => {
 
       try {
         setLoading(true);
-        const q = query(collection(db, 'user_roles'), where('user_id', '==', user.uid));
-        const querySnapshot = await getDocs(q);
-        
-        const fetchedRoles = querySnapshot.docs.map(doc => doc.data().role as UserRole);
-        setRoles(fetchedRoles);
+        const { data, error } = await supabase
+          .from('user_roles')
+          .select('role')
+          .eq('user_id', user.id);
 
+        if (error) throw error;
+        
+        setRoles(data?.map(r => r.role as UserRole) || []);
       } catch (err: any) {
         setError(err.message);
         setRoles([]);
@@ -41,7 +42,7 @@ export const useRole = () => {
   const hasRole = (role: UserRole) => roles.includes(role);
   const isAdmin = hasRole('admin');
   const isMarketing = hasRole('marketing');
-  const isCustomer = !isAdmin && !isMarketing;
+  const isCustomer = hasRole('customer');
 
   return {
     roles,

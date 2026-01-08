@@ -8,6 +8,7 @@ export interface CartItem {
     color?: string;
     flavor?: string;
     material?: string;
+    pack?: string;
   };
   image: string;
   category: 'beverage' | 'merch';

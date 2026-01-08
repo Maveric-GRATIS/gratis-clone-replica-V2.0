@@ -1,23 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '@/firebase';
-import { collection, query, where, getDocs, limit, orderBy } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingBag, Plus } from 'lucide-react';
 import { useCartActions } from '@/hooks/useCartActions';
 import { formatEuro } from '@/lib/currency';
+import { Database } from '@/integrations/supabase/types';
 
-interface Product {
-  id: string;
-  name: string;
-  price: string | number;
-  original_price?: string | number | null;
-  image_url: string | null;
-  subcategory: string | null;
-  colors_available?: string[] | null;
-  [key: string]: any; // Allow other properties
-}
+type Product = Database['public']['Tables']['products']['Row'];
 
 interface CompleteTheLookProps {
   currentProduct: Product;
@@ -45,6 +36,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
     const fetchMatchingProducts = async () => {
       setLoading(true);
       
+      // Get matching categories for the current product
       const matchingCategories = getCategoryMatches(currentProduct.subcategory);
       
       if (matchingCategories.length === 0) {
@@ -53,24 +45,21 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
       }
 
       try {
-        const q = query(
-          collection(db, 'products'),
-          where('category', '==', 'merch'),
-          where('in_stock', '==', true),
-          where('subcategory', 'in', matchingCategories),
-          orderBy('featured', 'desc'),
-          limit(5) // Fetch a bit more to filter out current product
-        );
+        // Fetch products from matching categories
+        const { data, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('category', 'merch')
+          .eq('in_stock', true)
+          .in('subcategory', matchingCategories)
+          .neq('id', currentProduct.id) // Exclude current product
+          .limit(4)
+          .order('featured', { ascending: false });
 
-        const querySnapshot = await getDocs(q);
-        const products: Product[] = [];
-        querySnapshot.forEach((doc) => {
-          products.push({ id: doc.id, ...doc.data() } as Product);
-        });
-
-        const filteredData = products.filter(p => p.id !== currentProduct.id).slice(0, 4);
+        if (error) throw error;
         
-        const sortedData = filteredData.sort((a, b) => {
+        // Prioritize products with similar colors if available
+        const sortedData = data?.sort((a, b) => {
           const aHasMatchingColor = currentProduct.colors_available?.some(
             color => a.colors_available?.includes(color)
           );

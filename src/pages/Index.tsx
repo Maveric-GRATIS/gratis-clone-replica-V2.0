@@ -3,7 +3,7 @@ import SEO from "@/components/SEO";
 import ProductFeatures, { waterFeatures } from "@/components/ProductFeatures";
 import MerchCarousel from "@/components/MerchCarousel";
 import AdvertisingPartnerCTA from "@/components/AdvertisingPartnerCTA";
-import { WaterCarousel } from "@/components/WaterCarousel";
+import { ProductCarousel } from "@/components/ProductCarousel";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import gratisAmsterdamCanal from "@/assets/gratis-amsterdam-canal.jpg";
@@ -89,6 +89,7 @@ export default function Index() {
       <SEO
         title="GRATIS — Pure Power, Pure Purpose"
         description="Pure hydration in 100% recyclable tetrapacks."
+        canonical={typeof window !== 'undefined' ? window.location.href : '/'}
       />
 
       <section className="relative overflow-hidden min-h-screen max-w-full contain-layout">
@@ -123,7 +124,7 @@ export default function Index() {
               </p>
               <div className="flex gap-4">
                 <Button variant="hero" size="xl" asChild>
-                  <Link to="/rig-store?category=beverage">Drink with Purpose</Link>
+                  <Link to="/hydration">Drink with Purpose</Link>
                 </Button>
                 <Button variant="outline" size="xl" asChild>
                   <Link to="/water">Learn More</Link>
@@ -135,26 +136,8 @@ export default function Index() {
       </section>
 
       <main className="space-y-0 overflow-x-hidden max-w-full">
-        {/* Water Collection - Primary Focus */}
-        <section className="container mx-auto px-4 py-20 overflow-x-hidden">
-          <div className="text-center mb-12 space-y-4 animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-black">
-              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                Water Collection
-              </span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Experience the purest hydration with our premium alkaline water collection.
-              Each pack is crafted for the street-savvy individual who demands excellence.
-            </p>
-          </div>
-          <WaterCarousel />
-          <div className="text-center mt-12">
-            <Button variant="hero" size="lg" asChild>
-              <Link to="/rig-store?category=beverage">Shop All Water</Link>
-            </Button>
-          </div>
-        </section>
+        {/* Product Carousel - Primary Focus */}
+        <ProductCarousel />
         
         {/* Product Features */}
         <section className="bg-muted/30 py-20">

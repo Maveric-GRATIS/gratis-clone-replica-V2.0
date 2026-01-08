@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useCartActions } from '@/hooks/useCartActions';
 import { useProducts } from '@/hooks/useProducts';
-import { ShoppingBag, Filter, Star } from 'lucide-react';
+import { ShoppingBag, Filter, Star, Eye } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatEuro } from '@/lib/currency';
+import { LazyImage } from '@/components/LazyImage';
+import { QuickViewModal } from '@/components/product/QuickViewModal';
 
 // GRATIS streetwear merchandise categories
 const merchCategories = [
@@ -18,8 +20,31 @@ const merchCategories = [
 export default function RigStore() {
   const [selectedCategory, setSelectedCategory] = useState('SHOP ALL');
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<any>(null);
   const { addToCart } = useCartActions();
   const { products, loading, error } = useProducts('merch');
+
+  const handleQuickViewAddToCart = useCallback((product: any, variant: { size?: string; color?: string }) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: Number(product.price),
+      image: product.image_url || '',
+      category: product.category as 'merch' | 'beverage',
+      variant
+    });
+  }, [addToCart]);
+
+  // Smooth category transition
+  const handleCategoryChange = useCallback((category: string) => {
+    if (category === selectedCategory) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setSelectedCategory(category);
+      setTimeout(() => setIsTransitioning(false), 50);
+    }, 150);
+  }, [selectedCategory]);
 
   // Filter products based on selected category
   const filteredProducts = React.useMemo(() => {
@@ -64,7 +89,7 @@ export default function RigStore() {
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-900 to-black py-20">
+      <section className="relative bg-gradient-to-br from-gray-900 to-black py-20 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-primary/20 to-transparent rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-l from-accent/20 to-transparent rounded-full blur-3xl animate-pulse delay-1000" />
@@ -72,20 +97,20 @@ export default function RigStore() {
         
         <div className="container relative z-10">
           <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-6">
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-6 animate-fade-in">
               GRATIS <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent">STORE</span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-8 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
               Bold streetwear. Vibrant energy. Premium quality that makes a statement.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold">
+            <div className="flex flex-wrap justify-center gap-4 animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'backwards' }}>
+              <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold transition-transform duration-300 hover:scale-105">
                 FREE SHIPPING ON €100+
               </Badge>
-              <Badge className="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold">
+              <Badge className="bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold transition-transform duration-300 hover:scale-105">
                 30-DAY RETURNS
               </Badge>
-              <Badge className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold">
+              <Badge className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white font-bold transition-transform duration-300 hover:scale-105">
                 PREMIUM STREETWEAR
               </Badge>
             </div>
@@ -123,11 +148,11 @@ export default function RigStore() {
                   key={category}
                   variant={selectedCategory === category ? "default" : "ghost"}
                   size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className={`whitespace-nowrap font-bold text-xs tracking-wide transition-all ${
+                  onClick={() => handleCategoryChange(category)}
+                  className={`whitespace-nowrap font-bold text-xs tracking-wide transition-all duration-300 transform-gpu ${
                     selectedCategory === category 
-                      ? 'bg-primary text-black' 
-                      : 'text-gray-400 hover:text-white'
+                      ? 'bg-primary text-black scale-105' 
+                      : 'text-gray-400 hover:text-white hover:scale-105'
                   }`}
                 >
                   {category} {!loading && `(${count})`}
@@ -150,12 +175,16 @@ export default function RigStore() {
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-gray-900 rounded-3xl overflow-hidden">
-                  <Skeleton className="aspect-square w-full" />
+                <div 
+                  key={i} 
+                  className="bg-gray-900 rounded-3xl overflow-hidden animate-pulse"
+                  style={{ animationDelay: `${i * 100}ms` }}
+                >
+                  <Skeleton className="aspect-square w-full bg-gray-800" />
                   <div className="p-6 space-y-4">
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-4 w-1/2" />
+                    <Skeleton className="h-6 w-3/4 bg-gray-800" />
+                    <Skeleton className="h-4 w-full bg-gray-800" />
+                    <Skeleton className="h-4 w-1/2 bg-gray-800" />
                   </div>
                 </div>
               ))}
@@ -175,34 +204,36 @@ export default function RigStore() {
               </Button>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
               {filteredProducts.map((product, index) => (
               <Link
                 key={product.id}
                 to={`/rig-store/${product.id}`}
-                className="group relative bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-3xl overflow-hidden hover-scale transition-all duration-500 block"
+                className="group relative bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-3xl overflow-hidden transform-gpu transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 block animate-fade-in"
                 onMouseEnter={() => setHoveredProduct(product.id)}
                 onMouseLeave={() => setHoveredProduct(null)}
-                style={{ animationDelay: `${index * 150}ms` }}
+                style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'backwards' }}
               >
                 {/* Product Image */}
                 <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 p-8">
-                  <img
+                  <LazyImage
                     src={product.image_url || ''}
                     alt={product.name}
-                    className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-6"
+                    aspectRatio="1/1"
+                    className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-rotate-6"
                   />
 
-                  {/* Floating Action Button */}
-                  <Button
-                    size="sm"
-                    className={`absolute top-4 right-4 rounded-full transition-all duration-300 ${
-                      hoveredProduct === product.id 
-                        ? 'opacity-100 translate-y-0' 
-                        : 'opacity-0 translate-y-2'
-                    }`}
-                    onClick={(e) => {
-                      e.preventDefault();
+                  {/* Floating Action Buttons */}
+                  <div className={`absolute top-4 right-4 flex flex-col gap-2 transform-gpu transition-all duration-300 ease-out ${
+                    hoveredProduct === product.id 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-4'
+                  }`}>
+                    <Button
+                      size="sm"
+                      className="rounded-full active:scale-95"
+                      onClick={(e) => {
+                        e.preventDefault();
                         addToCart({
                           id: product.id,
                           name: product.name,
@@ -211,11 +242,24 @@ export default function RigStore() {
                           category: product.category as 'merch' | 'beverage',
                           variant: {}
                         });
-                    }}
-                  >
-                    <ShoppingBag className="w-4 h-4 mr-1" />
-                    Add
-                  </Button>
+                      }}
+                    >
+                      <ShoppingBag className="w-4 h-4 mr-1" />
+                      Add
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      className="rounded-full active:scale-95"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setQuickViewProduct(product);
+                      }}
+                    >
+                      <Eye className="w-4 h-4 mr-1" />
+                      Quick View
+                    </Button>
+                  </div>
 
                   {/* Discount Badge */}
                   {product.original_price && (
@@ -225,7 +269,7 @@ export default function RigStore() {
                   )}
 
                   {/* Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 </div>
 
                 {/* Product Info */}
@@ -274,7 +318,7 @@ export default function RigStore() {
 
                     <Button 
                       variant="outline"
-                      className="border-primary text-primary hover:bg-primary hover:text-black transition-all duration-300"
+                      className="border-primary text-primary hover:bg-primary hover:text-black transform-gpu transition-all duration-300 hover:scale-105 active:scale-95"
                       onClick={(e) => {
                         e.preventDefault();
                         addToCart({
@@ -292,25 +336,19 @@ export default function RigStore() {
                   </div>
                 </div>
 
-                {/* Animated Border */}
-                <div className="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-primary via-accent to-primary bg-clip-border opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
-                     style={{ 
-                       background: 'linear-gradient(45deg, transparent, transparent), linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)))',
-                       backgroundClip: 'padding-box, border-box',
-                       backgroundOrigin: 'border-box'
-                     }} 
-                 />
+                {/* Animated Border Glow */}
+                <div className="absolute inset-0 rounded-3xl border-2 border-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none shadow-[0_0_20px_hsl(var(--primary)/0.3)]" />
               </Link>
             ))}
             </div>
           )}
 
           {/* Load More */}
-          <div className="text-center mt-16">
+          <div className="text-center mt-16 animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
             <Button 
               variant="outline" 
               size="lg"
-              className="border-white text-white hover:bg-white hover:text-black font-bold"
+              className="border-white text-white hover:bg-white hover:text-black font-bold transform-gpu transition-all duration-300 hover:scale-105 active:scale-95"
             >
               Load More Brutal Gear
             </Button>
@@ -340,6 +378,14 @@ export default function RigStore() {
           </div>
         </div>
       </section>
+
+      {/* Quick View Modal */}
+      <QuickViewModal
+        product={quickViewProduct}
+        isOpen={!!quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+        onAddToCart={handleQuickViewAddToCart}
+      />
     </div>
   );
 }

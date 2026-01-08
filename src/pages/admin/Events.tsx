@@ -7,18 +7,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { db } from '@/firebase';
-import { collection, getDocs, doc, updateDoc, deleteDoc, query, orderBy } from 'firebase/firestore';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
-
-interface Event {
-  id: string;
-  title: string;
-  event_date: string;
-  location: string | null;
-  published: boolean;
-}
 
 export default function AdminEvents() {
   const queryClient = useQueryClient();
@@ -27,20 +18,24 @@ export default function AdminEvents() {
   const { data: events, isLoading } = useQuery({
     queryKey: ['admin-events'],
     queryFn: async () => {
-      const q = query(collection(db, 'events'), orderBy('event_date', 'desc'));
-      const querySnapshot = await getDocs(q);
-      const events: Event[] = [];
-      querySnapshot.forEach((doc) => {
-        events.push({ id: doc.id, ...doc.data() } as Event);
-      });
-      return events;
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .order('event_date', { ascending: false });
+      
+      if (error) throw error;
+      return data;
     }
   });
 
   const togglePublished = useMutation({
     mutationFn: async ({ id, published }: { id: string; published: boolean }) => {
-      const eventRef = doc(db, 'events', id);
-      await updateDoc(eventRef, { published: !published });
+      const { error } = await supabase
+        .from('events')
+        .update({ published: !published })
+        .eq('id', id);
+      
+      if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
@@ -53,8 +48,12 @@ export default function AdminEvents() {
 
   const deleteEvent = useMutation({
     mutationFn: async (id: string) => {
-      const eventRef = doc(db, 'events', id);
-      await deleteDoc(eventRef);
+      const { error } = await supabase
+        .from('events')
+        .delete()
+        .eq('id', id);
+      
+      if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });

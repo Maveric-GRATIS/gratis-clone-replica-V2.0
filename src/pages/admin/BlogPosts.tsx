@@ -7,9 +7,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { collection, getDocs, doc, updateDoc, deleteDoc, query, orderBy } from 'firebase/firestore';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+
+interface BlogPost {
+  id: string;
+  title: string;
+  category: string;
+  views_count: number;
+  published: boolean;
+  published_at: string | null;
+  created_at: string;
+}
 
 export default function AdminBlogPosts() {
   const queryClient = useQueryClient();
@@ -18,27 +29,23 @@ export default function AdminBlogPosts() {
   const { data: posts, isLoading } = useQuery({
     queryKey: ['admin-blog-posts'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      return data;
+      const q = query(collection(db, 'blog_posts'), orderBy('created_at', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const posts: BlogPost[] = [];
+      querySnapshot.forEach((doc) => {
+        posts.push({ id: doc.id, ...doc.data() } as BlogPost);
+      });
+      return posts;
     }
   });
 
   const togglePublished = useMutation({
     mutationFn: async ({ id, published }: { id: string; published: boolean }) => {
-      const { error } = await supabase
-        .from('blog_posts')
-        .update({ 
-          published: !published,
-          published_at: !published ? new Date().toISOString() : null
-        })
-        .eq('id', id);
-      
-      if (error) throw error;
+      const postRef = doc(db, 'blog_posts', id);
+      await updateDoc(postRef, {
+        published: !published,
+        published_at: !published ? new Date().toISOString() : null
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });
@@ -51,12 +58,8 @@ export default function AdminBlogPosts() {
 
   const deletePost = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('blog_posts')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
+      const postRef = doc(db, 'blog_posts', id);
+      await deleteDoc(postRef);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-blog-posts'] });

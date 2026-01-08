@@ -7,8 +7,19 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { collection, getDocs, doc, updateDoc, deleteDoc, query, orderBy } from 'firebase/firestore';
 import { toast } from 'sonner';
+
+interface Video {
+  id: string;
+  title: string;
+  category: string;
+  views_count: number;
+  published: boolean;
+  featured: boolean;
+  created_at: string;
+}
 
 export default function AdminVideos() {
   const queryClient = useQueryClient();
@@ -17,24 +28,20 @@ export default function AdminVideos() {
   const { data: videos, isLoading } = useQuery({
     queryKey: ['admin-videos'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('videos')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      return data;
+      const q = query(collection(db, 'videos'), orderBy('created_at', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const videos: Video[] = [];
+      querySnapshot.forEach((doc) => {
+        videos.push({ id: doc.id, ...doc.data() } as Video);
+      });
+      return videos;
     }
   });
 
   const togglePublished = useMutation({
     mutationFn: async ({ id, published }: { id: string; published: boolean }) => {
-      const { error } = await supabase
-        .from('videos')
-        .update({ published: !published })
-        .eq('id', id);
-      
-      if (error) throw error;
+      const videoRef = doc(db, 'videos', id);
+      await updateDoc(videoRef, { published: !published });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-videos'] });
@@ -47,12 +54,8 @@ export default function AdminVideos() {
 
   const deleteVideo = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('videos')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
+      const videoRef = doc(db, 'videos', id);
+      await deleteDoc(videoRef);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-videos'] });

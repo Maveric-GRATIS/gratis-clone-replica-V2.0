@@ -1,6 +1,13 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import {
+  User,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut as firebaseSignOut,
+  onAuthStateChanged,
+  updateProfile
+} from 'firebase/auth';
+import { auth } from '../firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -39,20 +46,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signUp = async (email: string, password: string, displayName?: string) => {
-    const redirectUrl = `${window.location.origin}/`;
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          display_name: displayName || email.split('@')[0]
-        }
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      if (userCredential.user) {
+        await updateProfile(userCredential.user, {
+          displayName: displayName || email.split('@')[0],
+        });
+        // Manually update the user state to include the displayName immediately
+        setUser({ ...userCredential.user, displayName: displayName || email.split('@')[0] });
       }
-    });
-    
-    return { error };
+      return { error: null };
+    } catch (error) {
+      return { error };
+    }
   };
 
   const signIn = async (email: string, password: string) => {
@@ -60,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email,
       password,
     });
-    
+
     return { error };
   };
 
@@ -74,7 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     session,
     signUp,
     signIn,
-    signOut,
+signOut,
     loading,
   };
 

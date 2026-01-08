@@ -7,7 +7,8 @@ import {
   onAuthStateChanged,
   updateProfile
 } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 interface AuthContextType {
   user: User | null;
@@ -34,12 +35,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signUp = async (email: string, password: string, displayName?: string) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      if (userCredential.user) {
-        await updateProfile(userCredential.user, {
+      const user = userCredential.user;
+      
+      if (user) {
+        // Update Firebase Auth profile
+        await updateProfile(user, {
           displayName: displayName || email.split('@')[0],
         });
+
+        // Create a new user document in Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          email: user.email,
+          displayName: displayName || email.split('@')[0],
+          role: 'customer', // Default role
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+        });
+
         // Manually update the user state to include the displayName immediately
-        setUser({ ...userCredential.user, displayName: displayName || email.split('@')[0] });
+        setUser({ ...user, displayName: displayName || email.split('@')[0] });
       }
       return { error: null };
     } catch (error) {
@@ -69,7 +84,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     user,
     signUp,
     signIn,
-    signOut,
+signOut,
     loading,
   };
 

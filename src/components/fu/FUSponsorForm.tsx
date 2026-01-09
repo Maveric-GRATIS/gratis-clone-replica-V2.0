@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,7 +22,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Loader2, Sparkles } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { db, functions } from '@/firebase';
+import { addDoc, collection } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
 import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
@@ -65,39 +68,17 @@ export default function FUSponsorForm({ onSuccess }: FUSponsorFormProps) {
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      // Save to database
-      const { error: dbError } = await supabase
-        .from('fu_sponsor_inquiries')
-        .insert({
-          company_name: values.company_name,
-          contact_person: values.contact_person,
-          email: values.email,
-          phone: values.phone || null,
-          website: values.website || null,
-          edition_size: values.edition_size,
-          flavor_vision: values.flavor_vision,
-          impact_cause: values.impact_cause,
-          brand_story: values.brand_story || null,
-          budget_range: values.budget_range || null,
-        });
+      // Save to Firestore
+      await addDoc(collection(db, 'fu_sponsor_inquiries'), {
+        ...values,
+        createdAt: new Date(),
+      });
 
-      if (dbError) throw dbError;
-
-      // Also send email notification
-      await supabase.functions.invoke('send-partner-inquiry-notification', {
-        body: {
-          company_name: values.company_name,
-          contact_person: values.contact_person,
-          email: values.email,
-          phone: values.phone || null,
-          website: values.website || null,
+      // Also send email notification via Firebase Functions
+      const sendPartnerInquiry = httpsCallable(functions, 'sendPartnerInquiryNotification');
+      await sendPartnerInquiry({
+          ...values,
           inquiry_type: 'fu_sponsor',
-          edition_size: values.edition_size,
-          flavor_vision: values.flavor_vision,
-          impact_cause: values.impact_cause,
-          brand_story: values.brand_story || null,
-          budget_range: values.budget_range || null,
-        },
       });
 
       toast({
@@ -251,57 +232,57 @@ export default function FUSponsorForm({ onSuccess }: FUSponsorFormProps) {
           control={form.control}
           name="flavor_vision"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Your Flavor Vision *</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Describe the unique taste combination you envision. What makes it 'you'? Think bold, crazy, unforgettable..."
-                  className="resize-none"
-                  rows={3}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+              <FormItem>
+                <FormLabel>Your Flavor Vision *</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Describe the unique taste combination you envision. What makes it 'you'? Think bold, crazy, unforgettable..."
+                    className="resize-none"
+                    rows={3}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
         />
 
         <FormField
           control={form.control}
           name="impact_cause"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Your Impact Cause *</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Where should 100% of profits go? Clean water, education, arts, environment, or your own cause..."
-                  className="resize-none"
-                  rows={3}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+              <FormItem>
+                <FormLabel>Your Impact Cause *</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Where should 100% of profits go? Clean water, education, arts, environment, or your own cause..."
+                    className="resize-none"
+                    rows={3}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
         />
 
         <FormField
           control={form.control}
           name="brand_story"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Your Brand Story (Optional)</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us about your brand, event, or the story behind this collaboration..."
-                  className="resize-none"
-                  rows={3}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+              <FormItem>
+                <FormLabel>Your Brand Story (Optional)</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Tell us about your brand, event, or the story behind this collaboration..."
+                    className="resize-none"
+                    rows={3}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
         />
 
         <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>

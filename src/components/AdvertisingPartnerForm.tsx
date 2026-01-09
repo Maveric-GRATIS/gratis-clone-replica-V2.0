@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,7 +30,8 @@ import {
 import { CalendarIcon, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { addDoc, collection } from 'firebase/firestore';
 import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
@@ -72,29 +74,10 @@ export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartner
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      // TODO: Re-implement with new schema
-      toast({
-        title: "Feature Temporarily Unavailable",
-        description: "Advertising inquiries will be available soon. Please contact us directly.",
+      await addDoc(collection(db, 'advertising_inquiries'), {
+        ...values,
+        createdAt: new Date(),
       });
-      return;
-      
-      /* const { error } = await supabase.from('advertising_inquiries').insert([
-        {
-          company_name: values.company_name,
-          contact_person: values.contact_person,
-          email: values.email,
-          phone: values.phone || null,
-          website: values.website || null,
-          industry: values.industry || null,
-          estimated_volume: values.estimated_volume || null,
-          campaign_goals: values.campaign_goals || null,
-          preferred_start_date: values.preferred_start_date?.toISOString().split('T')[0] || null,
-          additional_notes: values.additional_notes || null,
-        },
-      ]);
-
-      if (error) throw error;
 
       toast({
         title: 'Application Submitted!',
@@ -103,7 +86,6 @@ export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartner
 
       form.reset();
       onSuccess?.();
-      */
     } catch (error: any) {
       toast({
         title: 'Submission Failed',

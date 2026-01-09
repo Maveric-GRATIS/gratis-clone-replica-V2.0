@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +10,9 @@ import { Separator } from '@/components/ui/separator';
 import { formatEuro } from '@/lib/currency';
 import { Loader2, ArrowLeft, Package, MapPin } from 'lucide-react';
 import { SEO } from '@/components/SEO';
+import { useAuth } from '@/contexts/AuthContext';
 
+// Interfaces remain the same
 interface OrderItem {
   id: string;
   product_name: string;
@@ -37,12 +41,13 @@ interface Order {
   subtotal: number;
   shipping_cost: number;
   total: number;
-  created_at: string;
+  created_at: any; // Firestore timestamp
 }
 
 export default function OrderDetail() {
   const { orderId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [order, setOrder] = useState<Order | null>(null);
   const [items, setItems] = useState<OrderItem[]>([]);
   const [address, setAddress] = useState<ShippingAddress | null>(null);
@@ -51,55 +56,55 @@ export default function OrderDetail() {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       if (!orderId) return;
-
-      const { data: { user } } = await supabase.auth.getUser();
-      
       if (!user) {
         navigate('/auth');
         return;
       }
 
-      const { data: orderData, error: orderError } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('id', orderId)
-        .eq('user_id', user.id)
-        .single();
+      setLoading(true);
 
-      if (orderError) {
-        console.error('Error fetching order:', orderError);
+      try {
+        // Fetch the order
+        const orderRef = doc(db, 'orders', orderId);
+        const orderSnap = await getDoc(orderRef);
+
+        if (!orderSnap.exists() || orderSnap.data().user_id !== user.uid) {
+          console.error('Order not found or access denied.');
+          setLoading(false);
+          return;
+        }
+
+        const orderData = { id: orderSnap.id, ...orderSnap.data() } as Order;
+        setOrder(orderData);
+
+        // Fetch order items
+        const itemsRef = collection(db, 'order_items');
+        const itemsQuery = query(itemsRef, where('order_id', '==', orderId));
+        const itemsSnap = await getDocs(itemsQuery);
+        const itemsData = itemsSnap.docs.map(d => ({ id: d.id, ...d.data() } as OrderItem));
+        setItems(itemsData);
+
+        // Fetch shipping address
+        // Assuming one address per order, or you might need a different lookup
+        const addressRef = collection(db, 'shipping_addresses');
+        const addressQuery = query(addressRef, where('order_id', '==', orderId));
+        const addressSnap = await getDocs(addressQuery);
+        if (!addressSnap.empty) {
+          const addressData = addressSnap.docs[0].data() as ShippingAddress;
+          setAddress(addressData);
+        }
+
+      } catch (error) {
+        console.error('Error fetching order details:', error);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      setOrder(orderData);
-
-      const { data: itemsData, error: itemsError } = await supabase
-        .from('order_items')
-        .select('*')
-        .eq('order_id', orderId);
-
-      if (!itemsError) {
-        setItems(itemsData || []);
-      }
-
-      const { data: addressData, error: addressError } = await supabase
-        .from('shipping_addresses')
-        .select('*')
-        .eq('order_id', orderId)
-        .single();
-
-      if (!addressError) {
-        setAddress(addressData);
-      }
-
-      setLoading(false);
     };
 
     fetchOrderDetails();
-  }, [orderId, navigate]);
+  }, [orderId, user, navigate]);
 
-  if (loading) {
+    if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -117,6 +122,17 @@ export default function OrderDetail() {
       </div>
     );
   }
+  
+  // Convert Firestore Timestamp to Date for formatting
+  const getOrderDate = () => {
+    if (order?.created_at && 'toDate' in order.created_at) {
+      return order.created_at.toDate();
+    } else if (order?.created_at) {
+      return new Date(order.created_at);
+    }
+    return new Date();
+  };
+
 
   return (
     <>
@@ -139,7 +155,7 @@ export default function OrderDetail() {
             <div>
               <h1 className="text-3xl font-bold mb-2">Order {order.order_number}</h1>
               <p className="text-muted-foreground">
-                Placed on {new Date(order.created_at).toLocaleDateString('en-US', {
+                Placed on {getOrderDate().toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',

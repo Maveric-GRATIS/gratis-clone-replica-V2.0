@@ -1,8 +1,17 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Database } from '@/integrations/supabase/types';
 
-type DistributionLocation = Database['public']['Tables']['distribution_locations']['Row'];
+import { useState, useEffect } from 'react';
+import { db } from '@/firebase';
+import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+
+interface DistributionLocation {
+  id: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  totalDistributed: number;
+  active: boolean;
+}
 
 export const useDistributionLocations = () => {
   const [locations, setLocations] = useState<DistributionLocation[]>([]);
@@ -11,17 +20,23 @@ export const useDistributionLocations = () => {
 
   useEffect(() => {
     const fetchLocations = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('distribution_locations')
-          .select('*')
-          .eq('active', true)
-          .order('total_distributed', { ascending: false });
+        const locationsRef = collection(db, 'distribution_locations');
+        const q = query(
+          locationsRef,
+          where('active', '==', true),
+          orderBy('totalDistributed', 'desc')
+        );
 
-        if (error) throw error;
-        setLocations(data || []);
+        const querySnapshot = await getDocs(q);
+        const fetchedLocations = querySnapshot.docs.map(doc => 
+          ({ id: doc.id, ...doc.data() } as DistributionLocation)
+        );
+        setLocations(fetchedLocations);
       } catch (err: any) {
+        console.error("Error fetching distribution locations: ", err);
         setError(err.message);
       } finally {
         setLoading(false);

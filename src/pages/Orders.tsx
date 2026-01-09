@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { auth, db } from '@/firebase';
+import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +17,7 @@ interface Order {
   order_number: string;
   status: string;
   total: number;
-  created_at: string;
+  created_at: Timestamp;
 }
 
 export default function Orders() {
@@ -24,29 +26,41 @@ export default function Orders() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        navigate('/auth');
-        return;
-      }
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        try {
+          const ordersRef = collection(db, 'orders');
+          const q = query(
+            ordersRef,
+            where('user_id', '==', user.uid),
+            orderBy('created_at', 'desc')
+          );
 
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching orders:', error);
+          const querySnapshot = await getDocs(q);
+          const fetchedOrders = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              order_number: data.order_number,
+              status: data.status,
+              total: data.total,
+              created_at: data.created_at,
+            } as Order;
+          });
+          
+          setOrders(fetchedOrders);
+        } catch (error) {
+          console.error('Error fetching orders:', error);
+        } finally {
+          setLoading(false);
+        }
       } else {
-        setOrders(data || []);
+        setLoading(false);
+        navigate('/auth');
       }
-      setLoading(false);
-    };
+    });
 
-    fetchOrders();
+    return () => unsubscribe();
   }, [navigate]);
 
   const getStatusColor = (status: string) => {
@@ -119,7 +133,7 @@ export default function Orders() {
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Placed on {new Date(order.created_at).toLocaleDateString('en-US', {
+                        Placed on {order.created_at.toDate().toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric'

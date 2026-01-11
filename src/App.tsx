@@ -53,6 +53,7 @@ import OrderDetail from "./pages/OrderDetail";
 import Dashboard from "./pages/Dashboard";
 import Wishlist from "./pages/Wishlist";
 import Admin from "./pages/Admin";
+import AdminDashboard from "./pages/AdminDashboard";
 import Partners from "./pages/Partners";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -71,8 +72,8 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
+          defaultTheme="light"
+          enableSystem={true}
           storageKey="gratis-theme"
         >
           <AuthProvider>
@@ -81,6 +82,17 @@ const App = () => {
                 <Toaster />
                 <Sonner />
                 <BrowserRouter>
+                  <Routes>
+                    {/* Admin Dashboard - Separate Layout (No Header/Footer) */}
+                    <Route
+                      path="/admin/dashboard"
+                      element={
+                        <ProtectedRoute requireAdmin>
+                          <AdminDashboard />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
                   <div className="max-w-full">
                     <ScrollProgressBar />
                     <OfflineIndicator />

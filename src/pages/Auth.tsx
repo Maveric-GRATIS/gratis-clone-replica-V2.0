@@ -1,35 +1,49 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRole } from "@/hooks/useRole";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
 
 export default function Auth() {
   const { signIn, signUp, user } = useAuth();
+  const { isAdmin } = useRole();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  
+
   // Form state
-  const [signInData, setSignInData] = useState({ email: '', password: '' });
-  const [signUpData, setSignUpData] = useState({ 
-    email: '', 
-    password: '', 
-    confirmPassword: '', 
-    displayName: '' 
+  const [signInData, setSignInData] = useState({ email: "", password: "" });
+  const [signUpData, setSignUpData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    displayName: "",
   });
 
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate('/');
+      // Check if user is admin and redirect accordingly
+      const isAdminUser = isAdmin || user?.role === "admin";
+      if (isAdminUser) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     }
-  }, [user, navigate]);
+  }, [user, isAdmin, navigate]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,11 +59,13 @@ export default function Auth() {
     setLoading(true);
     try {
       const { error } = await signIn(signInData.email, signInData.password);
-      
+
       if (error) {
         toast({
           title: "Sign In Failed",
-          description: error.message || "Failed to sign in. Please check your credentials.",
+          description:
+            error.message ||
+            "Failed to sign in. Please check your credentials.",
           variant: "destructive",
         });
       } else {
@@ -57,7 +73,13 @@ export default function Auth() {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate('/');
+        // Check if admin and redirect to admin dashboard
+        const userRole = user?.role;
+        if (userRole === "admin" || isAdmin) {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error: any) {
       toast({
@@ -72,8 +94,12 @@ export default function Auth() {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!signUpData.email || !signUpData.password || !signUpData.confirmPassword) {
+
+    if (
+      !signUpData.email ||
+      !signUpData.password ||
+      !signUpData.confirmPassword
+    ) {
       toast({
         title: "Error",
         description: "Please fill in all required fields.",
@@ -103,34 +129,42 @@ export default function Auth() {
     setLoading(true);
     try {
       const { error } = await signUp(
-        signUpData.email, 
-        signUpData.password, 
+        signUpData.email,
+        signUpData.password,
         signUpData.displayName
       );
-      
+
       if (error) {
-        if (error.message.includes('already registered')) {
+        if (error.message.includes("already registered")) {
           toast({
             title: "Account exists",
-            description: "An account with this email already exists. Please sign in instead.",
+            description:
+              "An account with this email already exists. Please sign in instead.",
             variant: "destructive",
           });
         } else {
           toast({
             title: "Sign Up Failed",
-            description: error.message || "Failed to create account. Please try again.",
+            description:
+              error.message || "Failed to create account. Please try again.",
             variant: "destructive",
           });
         }
       } else {
         toast({
           title: "Account Created!",
-          description: "Your account has been created successfully. You can now sign in.",
+          description:
+            "Your account has been created successfully. You can now sign in.",
         });
         // Clear form and switch to sign in tab
-        setSignUpData({ email: '', password: '', confirmPassword: '', displayName: '' });
+        setSignUpData({
+          email: "",
+          password: "",
+          confirmPassword: "",
+          displayName: "",
+        });
         // Set the email in sign in form for convenience
-        setSignInData({ email: signUpData.email, password: '' });
+        setSignInData({ email: signUpData.email, password: "" });
       }
     } catch (error: any) {
       toast({
@@ -150,7 +184,9 @@ export default function Auth() {
           <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
             GRATIS
           </h1>
-          <p className="text-muted-foreground mt-2">Welcome to the future of hydration</p>
+          <p className="text-muted-foreground mt-2">
+            Welcome to the future of hydration
+          </p>
         </div>
 
         <Card className="shadow-2xl border-0 bg-card/80 backdrop-blur-sm">
@@ -166,7 +202,7 @@ export default function Auth() {
                 <TabsTrigger value="signin">Sign In</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="signin" className="space-y-4">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
@@ -176,7 +212,12 @@ export default function Auth() {
                       type="email"
                       placeholder="Enter your email"
                       value={signInData.email}
-                      onChange={(e) => setSignInData(prev => ({ ...prev, email: e.target.value }))}
+                      onChange={(e) =>
+                        setSignInData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
@@ -187,17 +228,24 @@ export default function Auth() {
                       type="password"
                       placeholder="Enter your password"
                       value={signInData.password}
-                      onChange={(e) => setSignInData(prev => ({ ...prev, password: e.target.value }))}
+                      onChange={(e) =>
+                        setSignInData((prev) => ({
+                          ...prev,
+                          password: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {loading && (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     Sign In
                   </Button>
                 </form>
               </TabsContent>
-              
+
               <TabsContent value="signup" className="space-y-4">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
@@ -207,18 +255,30 @@ export default function Auth() {
                       type="email"
                       placeholder="Enter your email"
                       value={signUpData.email}
-                      onChange={(e) => setSignUpData(prev => ({ ...prev, email: e.target.value }))}
+                      onChange={(e) =>
+                        setSignUpData((prev) => ({
+                          ...prev,
+                          email: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-displayname">Display Name (Optional)</Label>
+                    <Label htmlFor="signup-displayname">
+                      Display Name (Optional)
+                    </Label>
                     <Input
                       id="signup-displayname"
                       type="text"
                       placeholder="How should we call you?"
                       value={signUpData.displayName}
-                      onChange={(e) => setSignUpData(prev => ({ ...prev, displayName: e.target.value }))}
+                      onChange={(e) =>
+                        setSignUpData((prev) => ({
+                          ...prev,
+                          displayName: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                   <div className="space-y-2">
@@ -228,7 +288,12 @@ export default function Auth() {
                       type="password"
                       placeholder="Create a password (min 6 characters)"
                       value={signUpData.password}
-                      onChange={(e) => setSignUpData(prev => ({ ...prev, password: e.target.value }))}
+                      onChange={(e) =>
+                        setSignUpData((prev) => ({
+                          ...prev,
+                          password: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
@@ -239,12 +304,19 @@ export default function Auth() {
                       type="password"
                       placeholder="Confirm your password"
                       value={signUpData.confirmPassword}
-                      onChange={(e) => setSignUpData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                      onChange={(e) =>
+                        setSignUpData((prev) => ({
+                          ...prev,
+                          confirmPassword: e.target.value,
+                        }))
+                      }
                       required
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {loading && (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     Create Account
                   </Button>
                 </form>
@@ -252,7 +324,7 @@ export default function Auth() {
             </Tabs>
           </CardContent>
         </Card>
-        
+
         <div className="text-center mt-6">
           <p className="text-sm text-muted-foreground">
             By signing up, you agree to our terms of service and privacy policy.

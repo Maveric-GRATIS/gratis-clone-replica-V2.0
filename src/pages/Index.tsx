@@ -110,18 +110,18 @@ export default function Index() {
         </div>
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/5 to-background" />
 
         <div className="relative container min-h-screen flex items-center">
           <div className="grid md:grid-cols-2 items-center gap-10">
             <div className="space-y-6 animate-fade-in">
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight">
-                <span className="block text-foreground">Pure Power,</span>
+                <span className="block text-white">Pure Power,</span>
                 <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                   Pure Purpose
                 </span>
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-prose">
+              <p className="text-lg md:text-xl text-white/90 max-w-prose">
                 From mountain springs to your hands — in 100% recyclable
                 tetrapacks.
               </p>

@@ -18,6 +18,7 @@ import {
 import { Menu, ChevronDown, ShoppingCart } from "lucide-react";
 import React from "react";
 import UserProfile from "@/components/UserProfile";
+import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logoGratis from "@/assets/logo-gratis.png";
@@ -32,7 +33,6 @@ const MENU: MenuEntry[] = [
   {
     label: "GRATIS",
     items: [
-      { to: "/hydration", label: "Shop All" },
       { to: "/water", label: "Water" },
       { to: "/theurgy", label: "Theurgy" },
       { to: "/fu", label: "F.U." },
@@ -94,8 +94,33 @@ export default function Header() {
   const { totalItems, openCart } = useCart();
 
   const [openMenu, setOpenMenu] = React.useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const openTimer = React.useRef<number | null>(null);
   const closeTimer = React.useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Altijd zichtbaar bij de top
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+      } else {
+        // Toon navbar bij omhoog scrollen, verberg bij omlaag scrollen
+        if (currentScrollY < lastScrollY) {
+          setIsVisible(true);
+        } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setIsVisible(false);
+        }
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const handleOpen = (key: string) => {
     if (closeTimer.current) {
@@ -121,7 +146,11 @@ export default function Header() {
     paths?.some((p) => location.pathname.startsWith(p)) ?? false;
 
   return (
-    <header className="sticky top-0 z-[100] bg-background backdrop-blur supports-[backdrop-filter]:bg-background border-b border-border">
+    <header
+      className={`fixed top-0 left-0 right-0 z-[100] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 border-b border-border transition-transform duration-300 ease-out ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div
         className="container flex items-center justify-between"
         style={{ height: "72px" }}

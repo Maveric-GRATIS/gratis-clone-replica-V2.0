@@ -113,18 +113,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         await updateProfile(firebaseUser, { displayName });
       }
 
-      const userDocRef = doc(db, "users", firebaseUser.uid);
-      const userPayload = {
-        uid: firebaseUser.uid,
-        email: firebaseUser.email,
-        displayName: displayName || firebaseUser.displayName || "",
-        createdAt: serverTimestamp(),
-        lastLogin: serverTimestamp(),
-        role: "customer",
-      };
-      await setDoc(userDocRef, userPayload);
-
-      setUser({ ...firebaseUser, ...userPayload } as User);
+      // Try to create Firestore document, but don't fail if it doesn't work
+      try {
+        const userDocRef = doc(db, "users", firebaseUser.uid);
+        const userPayload = {
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: displayName || firebaseUser.displayName || "",
+          createdAt: serverTimestamp(),
+          lastLogin: serverTimestamp(),
+          role: "customer",
+        };
+        await setDoc(userDocRef, userPayload);
+        setUser({ ...firebaseUser, ...userPayload } as User);
+      } catch (firestoreError) {
+        console.warn(
+          "Firestore creation failed, using auth user only:",
+          firestoreError
+        );
+        setUser(firebaseUser as User);
+      }
 
       return { error: null };
     } catch (error) {
@@ -142,16 +150,25 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       );
       const firebaseUser = userCredential.user;
 
-      const userDocRef = doc(db, "users", firebaseUser.uid);
-      await updateDoc(userDocRef, {
-        lastLogin: serverTimestamp(),
-      });
+      // Try to update Firestore, but don't fail if it doesn't work
+      try {
+        const userDocRef = doc(db, "users", firebaseUser.uid);
+        await updateDoc(userDocRef, {
+          lastLogin: serverTimestamp(),
+        });
 
-      const userDoc = await getDoc(userDocRef);
-      if (userDoc.exists()) {
-        setUser({ ...firebaseUser, ...userDoc.data() } as User);
-      } else {
-        // This case should ideally not happen if signUp is correct and robust
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists()) {
+          setUser({ ...firebaseUser, ...userDoc.data() } as User);
+        } else {
+          setUser(firebaseUser as User);
+        }
+      } catch (firestoreError) {
+        // If Firestore fails, just use Firebase Auth user
+        console.warn(
+          "Firestore update failed, using auth user only:",
+          firestoreError
+        );
         setUser(firebaseUser as User);
       }
 

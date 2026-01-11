@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo } from "react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,74 +14,95 @@ import { WaterTestimonials } from "@/components/water/WaterTestimonials";
 import { EnvironmentalImpact } from "@/components/water/EnvironmentalImpact";
 import { WaterImageGallery } from "@/components/water/WaterImageGallery";
 import DistributionMap from "@/components/DistributionMap";
-import { ShoppingCart, Truck, Shield, RotateCcw, Star } from 'lucide-react';
-import { toast } from 'sonner';
+import { ShoppingCart, Truck, Shield, RotateCcw, Star } from "lucide-react";
+import { toast } from "sonner";
 
 // Flavor options with images
 const flavors = [
   {
-    id: 'still',
-    name: 'W.A.T.E.R',
-    subtitle: 'Pure Still',
-    image: '/lovable-uploads/gratis-canal-collection.jpg',
-    color: '#3B82F6',
+    id: "still",
+    name: "W.A.T.E.R",
+    subtitle: "Pure Still",
+    image: "/lovable-uploads/gratis-canal-collection.jpg",
+    color: "#3B82F6",
   },
   {
-    id: 'sparkling',
-    name: 'THEURGY',
-    subtitle: 'Sparkling',
-    image: '/lovable-uploads/gratis-lifestyle-drink.jpg',
-    color: '#8B5CF6',
+    id: "sparkling",
+    name: "THEURGY",
+    subtitle: "Sparkling",
+    image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
+    color: "#8B5CF6",
   },
   {
-    id: 'flavored',
-    name: 'F.U.',
-    subtitle: 'Flavored',
-    image: '/lovable-uploads/gratis-neon-tank.jpg',
-    color: '#EC4899',
+    id: "flavored",
+    name: "F.U.",
+    subtitle: "Flavored",
+    image: "/lovable-uploads/gratis-neon-tank.jpg",
+    color: "#EC4899",
   },
 ];
 
 // Size options
 const sizes = [
-  { value: '500ml', label: '500mL' },
-  { value: '750ml', label: '750mL' },
-  { value: '1L', label: '1 Liter' },
+  { value: "500ml", label: "500mL" },
+  { value: "750ml", label: "750mL" },
+  { value: "1L", label: "1 Liter" },
 ];
 
 // Pack options with price multipliers
 const packs = [
-  { value: '1', label: 'Single', price: 0 },
-  { value: '6', label: '6-Pack', price: 4.99 },
-  { value: '12', label: '12-Pack', price: 8.99 },
-  { value: '24', label: '24-Pack', price: 14.99 },
+  { value: "1", label: "Single", price: 0 },
+  { value: "6", label: "6-Pack", price: 4.99 },
+  { value: "12", label: "12-Pack", price: 8.99 },
+  { value: "24", label: "24-Pack", price: 14.99 },
 ];
 
 export default function Water() {
-  const { products } = useProducts('beverage');
+  const { products } = useProducts("beverage");
   const { locations, loading: locationsLoading } = useDistributionLocations();
   const { addItem } = useCart();
 
   // Selection state
-  const [selectedFlavor, setSelectedFlavor] = useState<string>('still');
-  const [selectedSize, setSelectedSize] = useState<string>('500ml');
-  const [selectedPack, setSelectedPack] = useState<string>('6');
+  const [selectedFlavor, setSelectedFlavor] = useState<string>("still");
+  const [selectedSize, setSelectedSize] = useState<string>("500ml");
+  const [selectedPack, setSelectedPack] = useState<string>("6");
 
-  // Get featured water product for display
+  // Get featured water product for display - with fallback
   const featuredProduct = useMemo(() => {
-    const product = products.find(p => p.featured) || products[0];
+    const product = products.find((p) => p.featured) || products[0];
+
+    // Fallback product if Firestore has no products
+    if (!product) {
+      return {
+        id: "water-default",
+        name: "GRATIS Water",
+        price: 2.99,
+        image_url: "/lovable-uploads/c51ea472-b223-4a6a-934c-74b38370615e.png",
+        category: "beverage",
+        in_stock: true,
+        featured: true,
+      };
+    }
+
     return product;
   }, [products]);
 
   // Calculate price based on selections
   const basePrice = featuredProduct ? Number(featuredProduct.price) : 2.99;
   const packMultiplier = parseInt(selectedPack) || 1;
-  const packDiscount = selectedPack === '24' ? 0.85 : selectedPack === '12' ? 0.9 : selectedPack === '6' ? 0.95 : 1;
+  const packDiscount =
+    selectedPack === "24"
+      ? 0.85
+      : selectedPack === "12"
+        ? 0.9
+        : selectedPack === "6"
+          ? 0.95
+          : 1;
   const totalPrice = (basePrice * packMultiplier * packDiscount).toFixed(2);
 
   // Get images for gallery
   const productImages = useMemo(() => {
-    if (!featuredProduct) return ['/placeholder.svg'];
+    if (!featuredProduct) return ["/placeholder.svg"];
     const images = [featuredProduct.image_url];
     if (featuredProduct.additional_images) {
       images.push(...featuredProduct.additional_images);
@@ -90,32 +111,47 @@ export default function Water() {
   }, [featuredProduct]);
 
   const handleAddToCart = () => {
-    if (!featuredProduct) return;
+    if (!featuredProduct) {
+      toast.error("Product not available");
+      console.error("No featured product available");
+      return;
+    }
 
-    const flavorLabel = flavors.find(f => f.id === selectedFlavor)?.name || 'Still';
-    
-    addItem({
+    const flavorLabel =
+      flavors.find((f) => f.id === selectedFlavor)?.name || "Still";
+
+    const cartItem = {
       id: `${featuredProduct.id}-${selectedFlavor}-${selectedSize}-${selectedPack}`,
       name: `${featuredProduct.name} - ${flavorLabel}`,
       price: parseFloat(totalPrice),
-      image: featuredProduct.image_url || '',
-      category: 'beverage',
+      image: featuredProduct.image_url || "",
+      category: "beverage" as const,
       variant: {
         size: selectedSize,
         pack: `${selectedPack}-Pack`,
         flavor: flavorLabel,
       },
-    });
+    };
 
-    toast.success(`Added ${selectedPack}x ${flavorLabel} to cart!`);
+    console.log("Adding to cart:", cartItem);
+
+    try {
+      addItem(cartItem);
+      toast.success(`Added ${selectedPack}x ${flavorLabel} to cart!`);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add to cart");
+    }
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="GRATIS Water — Pure Power, Pure Purpose" 
-        description="Mountain-sourced water in sustainable tetrapacks. 100% natural, 0% artificial, infinitely recyclable." 
-        canonical={typeof window !== 'undefined' ? window.location.href : '/water'} 
+      <SEO
+        title="GRATIS Water — Pure Power, Pure Purpose"
+        description="Mountain-sourced water in sustainable tetrapacks. 100% natural, 0% artificial, infinitely recyclable."
+        canonical={
+          typeof window !== "undefined" ? window.location.href : "/water"
+        }
       />
 
       {/* Hero Product Section - Liquid Death Style */}
@@ -124,9 +160,9 @@ export default function Water() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Left: Image Gallery */}
             <div className="order-2 lg:order-1">
-              <WaterImageGallery 
+              <WaterImageGallery
                 images={productImages}
-                productName={featuredProduct?.name || 'GRATIS Water'}
+                productName={featuredProduct?.name || "GRATIS Water"}
               />
             </div>
 
@@ -134,7 +170,10 @@ export default function Water() {
             <div className="order-1 lg:order-2 space-y-6">
               {/* Badge & Title */}
               <div>
-                <Badge variant="secondary" className="mb-3 bg-primary/20 text-primary border-primary/30">
+                <Badge
+                  variant="secondary"
+                  className="mb-3 bg-primary/20 text-primary border-primary/30"
+                >
                   100K SERIES
                 </Badge>
                 <h1 className="text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
@@ -149,7 +188,10 @@ export default function Water() {
               <div className="flex items-center gap-2">
                 <div className="flex">
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="h-5 w-5 fill-yellow-500 text-yellow-500" />
+                    <Star
+                      key={star}
+                      className="h-5 w-5 fill-yellow-500 text-yellow-500"
+                    />
                   ))}
                 </div>
                 <span className="text-sm text-muted-foreground">
@@ -159,8 +201,9 @@ export default function Water() {
 
               {/* Description */}
               <p className="text-muted-foreground leading-relaxed">
-                From pristine mountain springs to your hands — in 100% recyclable tetrapacks. 
-                No plastic. No guilt. Just pure hydration that funds clean water access worldwide.
+                From pristine mountain springs to your hands — in 100%
+                recyclable tetrapacks. No plastic. No guilt. Just pure hydration
+                that funds clean water access worldwide.
               </p>
 
               {/* Series Badge (Limited Edition) */}
@@ -210,8 +253,8 @@ export default function Water() {
                   )}
                 </div>
 
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="w-full text-lg h-14"
                   onClick={handleAddToCart}
                 >
@@ -223,15 +266,21 @@ export default function Water() {
                 <div className="grid grid-cols-3 gap-4 pt-4">
                   <div className="flex flex-col items-center gap-1 text-center">
                     <Truck className="h-5 w-5 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground">Free Shipping 50€+</span>
+                    <span className="text-xs text-muted-foreground">
+                      Free Shipping 50€+
+                    </span>
                   </div>
                   <div className="flex flex-col items-center gap-1 text-center">
                     <RotateCcw className="h-5 w-5 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground">30-Day Returns</span>
+                    <span className="text-xs text-muted-foreground">
+                      30-Day Returns
+                    </span>
                   </div>
                   <div className="flex flex-col items-center gap-1 text-center">
                     <Shield className="h-5 w-5 text-muted-foreground" />
-                    <span className="text-xs text-muted-foreground">Secure Checkout</span>
+                    <span className="text-xs text-muted-foreground">
+                      Secure Checkout
+                    </span>
                   </div>
                 </div>
               </div>
@@ -267,15 +316,16 @@ export default function Water() {
               DISTRIBUTION LOCATIONS
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              We distribute free GRATIS water at major train stations during rush hours.
-              Every bottle is advertiser-funded and 100% free to you.
+              We distribute free GRATIS water at major train stations during
+              rush hours. Every bottle is advertiser-funded and 100% free to
+              you.
             </p>
           </div>
-          
+
           {!locationsLoading && locations.length > 0 && (
             <DistributionMap locations={locations} height="500px" />
           )}
-          
+
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             <div className="bg-card border rounded-xl p-6 text-center">
               <div className="text-4xl font-black text-primary mb-2">15+</div>
@@ -284,15 +334,21 @@ export default function Water() {
             </div>
             <div className="bg-card border rounded-xl p-6 text-center">
               <div className="text-4xl font-black text-primary mb-2">
-                {locations.reduce((sum, loc) => sum + (loc.total_distributed || 0), 0).toLocaleString()}
+                {locations
+                  .reduce((sum, loc) => sum + (loc.total_distributed || 0), 0)
+                  .toLocaleString()}
               </div>
               <div className="font-bold mb-1">Bottles Distributed</div>
               <div className="text-sm text-muted-foreground">Since launch</div>
             </div>
             <div className="bg-card border rounded-xl p-6 text-center">
-              <div className="text-4xl font-black text-primary mb-2">Rush Hours</div>
+              <div className="text-4xl font-black text-primary mb-2">
+                Rush Hours
+              </div>
               <div className="font-bold mb-1">07:00-09:00 | 17:00-19:00</div>
-              <div className="text-sm text-muted-foreground">Mon-Fri distribution times</div>
+              <div className="text-sm text-muted-foreground">
+                Mon-Fri distribution times
+              </div>
             </div>
           </div>
         </div>

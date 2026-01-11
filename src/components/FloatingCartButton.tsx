@@ -1,9 +1,9 @@
-import { ShoppingCart, X } from 'lucide-react';
-import { useCart } from '@/contexts/CartContext';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { cn } from '@/lib/utils';
+import { ShoppingCart, X } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 export const FloatingCartButton = () => {
   const { items, totalItems, totalPrice, openCart } = useCart();
@@ -14,33 +14,42 @@ export const FloatingCartButton = () => {
 
   return (
     <div
-      className="fixed bottom-6 right-4 md:right-6 z-50 flex flex-col items-end gap-2 max-w-[calc(100vw-2rem)]"
+      className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 flex flex-col items-end gap-2 max-w-[calc(100vw-2rem)]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
     >
       {/* Mini Cart Preview */}
       <div
         className={cn(
-          "bg-card border border-border rounded-lg shadow-elegant p-4 w-80 transition-all duration-300 origin-bottom-right",
-          isHovered ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
+          "bg-card border border-border rounded-lg shadow-elegant p-3 sm:p-4 w-72 sm:w-80 transition-all duration-300 origin-bottom-right",
+          isHovered
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95 pointer-events-none"
         )}
       >
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-foreground">Your Cart</h3>
-          <span className="text-sm text-muted-foreground">{totalItems} items</span>
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
+          <h3 className="font-semibold text-sm sm:text-base text-foreground">
+            Your Cart
+          </h3>
+          <span className="text-xs sm:text-sm text-muted-foreground">
+            {totalItems} items
+          </span>
         </div>
 
-        <div className="space-y-2 max-h-64 overflow-y-auto mb-3">
+        <div className="space-y-2 max-h-48 sm:max-h-64 overflow-y-auto mb-2 sm:mb-3">
           {items.slice(0, 3).map((item) => (
-            <div key={item.id} className="flex gap-3 items-start">
+            <div key={item.id} className="flex gap-2 sm:gap-3 items-start">
               <img
                 src={item.image}
                 alt={item.name}
-                className="w-12 h-12 object-cover rounded"
+                className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded flex-shrink-0"
               />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">{item.name}</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs sm:text-sm font-medium text-foreground truncate">
+                  {item.name}
+                </p>
+                <p className="text-[10px] sm:text-xs text-muted-foreground">
                   {item.quantity} × €{item.price.toFixed(2)}
                 </p>
               </div>
@@ -68,7 +77,7 @@ export const FloatingCartButton = () => {
               View Cart
             </Button>
             <Button
-              onClick={() => navigate('/checkout')}
+              onClick={() => navigate("/checkout")}
               size="sm"
               className="flex-1"
             >

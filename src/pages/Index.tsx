@@ -31,16 +31,16 @@ export default function Index() {
     // Preload first image immediately
     const firstImg = new Image();
     firstImg.src = backgroundImages[0];
-    
+
     // Lazy load remaining images after first paint
     const loadRemainingImages = () => {
       backgroundImages.forEach((src, index) => {
         if (index === 0) return; // Skip first image, already loaded
-        
+
         const img = new Image();
         img.src = src;
         img.onload = () => {
-          setLoadedImages(prev => new Set([...prev, index]));
+          setLoadedImages((prev) => new Set([...prev, index]));
         };
       });
     };
@@ -64,10 +64,10 @@ export default function Index() {
 
     const updateParallax = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Only update every 10px for smoother performance
       if (Math.abs(currentScrollY - lastScrollY) < 10) return;
-      
+
       lastScrollY = currentScrollY;
       setScrollY(currentScrollY);
     };
@@ -77,9 +77,9 @@ export default function Index() {
       rafId = requestAnimationFrame(updateParallax);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
@@ -89,16 +89,18 @@ export default function Index() {
       <SEO
         title="GRATIS — Pure Power, Pure Purpose"
         description="Pure hydration in 100% recyclable tetrapacks."
-        canonical={typeof window !== 'undefined' ? window.location.href : '/'}
+        canonical={typeof window !== "undefined" ? window.location.href : "/"}
       />
 
       <section className="relative overflow-hidden min-h-screen max-w-full contain-layout">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
-          style={{ 
+          style={{
             backgroundImage: `url(${backgroundImages[currentBgIndex]})`,
-            transform: `translate3d(0, ${scrollY * 0.3}px, 0)`,
-            filter: loadedImages.has(currentBgIndex) ? 'blur(0px)' : 'blur(20px)',
+            transform: `translate3d(0, ${scrollY * 0.15}px, 0)`,
+            filter: loadedImages.has(currentBgIndex)
+              ? "blur(0px)"
+              : "blur(20px)",
             opacity: loadedImages.has(currentBgIndex) ? 1 : 0.7,
             left: 0,
             right: 0,
@@ -106,10 +108,10 @@ export default function Index() {
         >
           <div className="absolute inset-0 bg-black/70" />
         </div>
-        
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
-        
+
         <div className="relative container min-h-screen flex items-center">
           <div className="grid md:grid-cols-2 items-center gap-10">
             <div className="space-y-6 animate-fade-in">
@@ -120,7 +122,8 @@ export default function Index() {
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-prose">
-                From mountain springs to your hands — in 100% recyclable tetrapacks.
+                From mountain springs to your hands — in 100% recyclable
+                tetrapacks.
               </p>
               <div className="flex gap-4">
                 <Button variant="hero" size="xl" asChild>
@@ -138,21 +141,21 @@ export default function Index() {
       <main className="space-y-0 overflow-x-hidden max-w-full">
         {/* Product Carousel - Primary Focus */}
         <ProductCarousel />
-        
+
         {/* Product Features */}
         <section className="bg-muted/30 py-20">
           <div className="container mx-auto px-4">
-            <ProductFeatures 
+            <ProductFeatures
               features={waterFeatures}
               title="Why Choose GRATIS?"
               subtitle="Pure hydration meets street culture"
             />
           </div>
         </section>
-        
+
         {/* Advertising Partner CTA */}
         <AdvertisingPartnerCTA />
-        
+
         {/* Merch Collection - Compact Carousel */}
         <MerchCarousel />
       </main>

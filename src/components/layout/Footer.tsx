@@ -1,22 +1,33 @@
 import { Link } from "react-router-dom";
 
-const Column = ({ title, links }: { title: string; links: { label: string; to: string; external?: boolean }[] }) => (
+const Column = ({
+  title,
+  links,
+}: {
+  title: string;
+  links: { label: string; to: string; external?: boolean }[];
+}) => (
   <div>
-    <h3 className="text-sm font-semibold mb-3 text-[hsl(var(--brand-pink))]">{title}</h3>
-    <ul className="space-y-2 text-sm text-foreground/70">
+    <h3 className="text-xs sm:text-sm font-semibold mb-2 sm:mb-3 text-[hsl(var(--brand-pink))]">
+      {title}
+    </h3>
+    <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-foreground/70">
       {links.map((l) => (
         <li key={l.label}>
           {l.external ? (
-            <a 
-              href={l.to} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href={l.to}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-[hsl(var(--brand-yellow))] story-link"
             >
               {l.label}
             </a>
           ) : (
-            <Link to={l.to} className="hover:text-[hsl(var(--brand-yellow))] story-link">
+            <Link
+              to={l.to}
+              className="hover:text-[hsl(var(--brand-yellow))] story-link"
+            >
               {l.label}
             </Link>
           )}
@@ -28,21 +39,49 @@ const Column = ({ title, links }: { title: string; links: { label: string; to: s
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   return (
     <footer className="border-t border-border bg-background">
-      <div className="container py-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+      <div className="container py-8 sm:py-10 md:py-12 px-4 sm:px-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 sm:gap-8">
         <Column
           title="Follow GRATIS"
           links={[
-            { label: "TikTok", to: "https://tiktok.com/@gratis", external: true },
-            { label: "Instagram", to: "https://instagram.com/gratis", external: true },
-            { label: "Pinterest", to: "https://pinterest.com/gratis", external: true },
-            { label: "Snapchat", to: "https://snapchat.com/add/gratis", external: true },
+            {
+              label: "TikTok",
+              to: "https://tiktok.com/@gratis",
+              external: true,
+            },
+            {
+              label: "Instagram",
+              to: "https://instagram.com/gratis",
+              external: true,
+            },
+            {
+              label: "Pinterest",
+              to: "https://pinterest.com/gratis",
+              external: true,
+            },
+            {
+              label: "Snapchat",
+              to: "https://snapchat.com/add/gratis",
+              external: true,
+            },
             { label: "X", to: "https://x.com/gratis", external: true },
-            { label: "Facebook", to: "https://facebook.com/gratis", external: true },
-            { label: "LinkedIn", to: "https://linkedin.com/company/gratis", external: true },
-            { label: "YouTube", to: "https://youtube.com/@gratis", external: true },
+            {
+              label: "Facebook",
+              to: "https://facebook.com/gratis",
+              external: true,
+            },
+            {
+              label: "LinkedIn",
+              to: "https://linkedin.com/company/gratis",
+              external: true,
+            },
+            {
+              label: "YouTube",
+              to: "https://youtube.com/@gratis",
+              external: true,
+            },
           ]}
         />
         <Column
@@ -82,7 +121,10 @@ export default function Footer() {
             { label: "User Privacy (Privacy Policy)", to: "/tribe/privacy" },
             { label: "Tracking (Cookie Policy)", to: "/tribe/cookies" },
             { label: "Help (Accessibility Policy)", to: "/tribe/standards" },
-            { label: "Safety (Disclaimer & Donor Privacy)", to: "/tribe/privacy" },
+            {
+              label: "Safety (Disclaimer & Donor Privacy)",
+              to: "/tribe/privacy",
+            },
           ]}
         />
         <Column

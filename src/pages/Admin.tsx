@@ -58,10 +58,12 @@ export default function Admin() {
 
   return (
     <AdminLayout>
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Admin Panel</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-1 sm:space-y-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
+            Admin Panel
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             Manage all aspects of your GRATIS platform
           </p>
         </div>
@@ -71,55 +73,81 @@ export default function Admin() {
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-8 lg:w-auto">
-            <TabsTrigger value="dashboard" className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4" />
-              <span className="hidden sm:inline">Dashboard</span>
-            </TabsTrigger>
-            <TabsTrigger value="products" className="flex items-center gap-2">
-              <Package className="h-4 w-4" />
-              <span className="hidden sm:inline">Products</span>
-            </TabsTrigger>
-            <TabsTrigger value="orders" className="flex items-center gap-2">
-              <ShoppingCart className="h-4 w-4" />
-              <span className="hidden sm:inline">Orders</span>
-            </TabsTrigger>
-            <TabsTrigger value="users" className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              <span className="hidden sm:inline">Users</span>
-            </TabsTrigger>
-            <TabsTrigger value="videos" className="flex items-center gap-2">
-              <Video className="h-4 w-4" />
-              <span className="hidden sm:inline">Videos</span>
-            </TabsTrigger>
-            <TabsTrigger value="events" className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              <span className="hidden sm:inline">Events</span>
-            </TabsTrigger>
-            <TabsTrigger value="campaigns" className="flex items-center gap-2">
-              <Megaphone className="h-4 w-4" />
-              <span className="hidden sm:inline">Campaigns</span>
-            </TabsTrigger>
-            <TabsTrigger value="blog" className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              <span className="hidden sm:inline">Blog</span>
-            </TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto -mx-4 px-4 pb-2">
+            <TabsList className="inline-flex h-auto w-auto min-w-full lg:grid lg:grid-cols-8 lg:w-auto gap-1 p-1">
+              <TabsTrigger
+                value="dashboard"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <BarChart3 className="h-4 w-4" />
+                <span className="whitespace-nowrap">Dashboard</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="products"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Package className="h-4 w-4" />
+                <span className="whitespace-nowrap">Products</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="orders"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                <span className="whitespace-nowrap">Orders</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="users"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Users className="h-4 w-4" />
+                <span className="whitespace-nowrap">Users</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="videos"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Video className="h-4 w-4" />
+                <span className="whitespace-nowrap">Videos</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="events"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Calendar className="h-4 w-4" />
+                <span className="whitespace-nowrap">Events</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="campaigns"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Megaphone className="h-4 w-4" />
+                <span className="whitespace-nowrap">Campaigns</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value="blog"
+                className="flex-shrink-0 flex items-center gap-2 px-3 py-2.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <FileText className="h-4 w-4" />
+                <span className="whitespace-nowrap">Blog</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Dashboard Tab */}
-          <TabsContent value="dashboard" className="space-y-6">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <TabsContent value="dashboard" className="space-y-4 md:space-y-6">
+            <div className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4">
               {stats.map(({ title, value, description, icon: Icon, color }) => (
                 <Card key={title} className="hover:shadow-lg transition-shadow">
-                  <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                  <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
+                    <CardTitle className="text-xs sm:text-sm font-medium">
                       {title}
                     </CardTitle>
-                    <Icon className={`h-5 w-5 ${color}`} />
+                    <Icon className={`h-4 w-4 sm:h-5 sm:w-5 ${color}`} />
                   </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{value}</div>
-                    <p className="text-xs text-muted-foreground">
+                  <CardContent className="pt-0">
+                    <div className="text-xl sm:text-2xl font-bold">{value}</div>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">
                       {description}
                     </p>
                   </CardContent>
@@ -127,43 +155,47 @@ export default function Admin() {
               ))}
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 lg:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>Recent Activity</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-base sm:text-lg">
+                    Recent Activity
+                  </CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
                     Latest updates from your platform
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <Package className="h-4 w-4 text-blue-500" />
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">Products loaded</p>
-                        <p className="text-xs text-muted-foreground">
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-muted/50">
+                      <Package className="h-5 w-5 sm:h-4 sm:w-4 text-blue-500 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs sm:text-sm font-medium truncate">
+                          Products loaded
+                        </p>
+                        <p className="text-[10px] sm:text-xs text-muted-foreground">
                           {products.length} products in catalog
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <ShoppingCart className="h-4 w-4 text-green-500" />
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">
+                    <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-muted/50">
+                      <ShoppingCart className="h-5 w-5 sm:h-4 sm:w-4 text-green-500 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs sm:text-sm font-medium truncate">
                           Orders system ready
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-[10px] sm:text-xs text-muted-foreground">
                           No orders yet
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                      <Users className="h-4 w-4 text-purple-500" />
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">
+                    <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-muted/50">
+                      <Users className="h-5 w-5 sm:h-4 sm:w-4 text-purple-500 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs sm:text-sm font-medium truncate">
                           User management active
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-[10px] sm:text-xs text-muted-foreground">
                           Firebase connected
                         </p>
                       </div>
@@ -174,44 +206,58 @@ export default function Admin() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
-                  <CardDescription>Common administrative tasks</CardDescription>
+                  <CardTitle className="text-base sm:text-lg">
+                    Quick Actions
+                  </CardTitle>
+                  <CardDescription className="text-xs sm:text-sm">
+                    Common administrative tasks
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid gap-2">
+                  <div className="grid gap-2 sm:gap-3">
                     <Button
                       onClick={() => setActiveTab("products")}
                       variant="outline"
-                      className="justify-start gap-3"
+                      className="justify-start gap-3 h-auto py-3 sm:py-2.5"
+                      size="lg"
                     >
-                      <Package className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm font-medium">
+                      <Package className="h-5 w-5 sm:h-4 sm:w-4 text-blue-500 flex-shrink-0" />
+                      <span className="text-sm sm:text-base font-medium">
                         Manage Products
                       </span>
                     </Button>
                     <Button
                       onClick={() => setActiveTab("orders")}
                       variant="outline"
-                      className="justify-start gap-3"
+                      className="justify-start gap-3 h-auto py-3 sm:py-2.5"
+                      size="lg"
                     >
-                      <ShoppingCart className="h-4 w-4 text-green-500" />
-                      <span className="text-sm font-medium">View Orders</span>
+                      <ShoppingCart className="h-5 w-5 sm:h-4 sm:w-4 text-green-500 flex-shrink-0" />
+                      <span className="text-sm sm:text-base font-medium">
+                        View Orders
+                      </span>
                     </Button>
                     <Button
                       onClick={() => setActiveTab("videos")}
                       variant="outline"
-                      className="justify-start gap-3"
+                      className="justify-start gap-3 h-auto py-3 sm:py-2.5"
+                      size="lg"
                     >
-                      <Video className="h-4 w-4 text-red-500" />
-                      <span className="text-sm font-medium">Manage Videos</span>
+                      <Video className="h-5 w-5 sm:h-4 sm:w-4 text-red-500 flex-shrink-0" />
+                      <span className="text-sm sm:text-base font-medium">
+                        Manage Videos
+                      </span>
                     </Button>
                     <Button
                       onClick={() => setActiveTab("events")}
                       variant="outline"
-                      className="justify-start gap-3"
+                      className="justify-start gap-3 h-auto py-3 sm:py-2.5"
+                      size="lg"
                     >
-                      <Calendar className="h-4 w-4 text-orange-500" />
-                      <span className="text-sm font-medium">Create Event</span>
+                      <Calendar className="h-5 w-5 sm:h-4 sm:w-4 text-orange-500 flex-shrink-0" />
+                      <span className="text-sm sm:text-base font-medium">
+                        Create Event
+                      </span>
                     </Button>
                   </div>
                 </CardContent>

@@ -14,6 +14,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth, db } from "@/firebase";
+import { clearCartStorage } from "@/lib/cart-storage";
 import {
   doc,
   setDoc,
@@ -181,8 +182,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const signOut = async () => {
     try {
+      // Note: Cart will be automatically saved to Firestore by CartContext
+      // before we sign out, so we just need to clear localStorage
       await firebaseSignOut(auth);
       setUser(null);
+      // Clear cart from localStorage on logout (Firestore already has it)
+      clearCartStorage();
       return { error: null };
     } catch (error) {
       console.error("Sign out error:", error);

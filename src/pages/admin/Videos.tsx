@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -7,34 +8,45 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { 
+  collection, 
+  getDocs, 
+  orderBy, 
+  doc, 
+  updateDoc, 
+  deleteDoc 
+} from 'firebase/firestore';
 import { toast } from 'sonner';
+
+interface Video {
+  id: string;
+  title: string;
+  category: string;
+  views_count: number;
+  published: boolean;
+  featured: boolean;
+  created_at: { seconds: number; nanoseconds: number };
+}
 
 export default function AdminVideos() {
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data: videos, isLoading } = useQuery({
+  const { data: videos, isLoading } = useQuery<Video[], Error>({
     queryKey: ['admin-videos'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('videos')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      return data;
+      const videosCollection = collection(db, 'videos');
+      const q = query(videosCollection, orderBy('created_at', 'desc'));
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Video));
     }
   });
 
   const togglePublished = useMutation({
     mutationFn: async ({ id, published }: { id: string; published: boolean }) => {
-      const { error } = await supabase
-        .from('videos')
-        .update({ published: !published })
-        .eq('id', id);
-      
-      if (error) throw error;
+      const videoRef = doc(db, 'videos', id);
+      await updateDoc(videoRef, { published: !published });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-videos'] });
@@ -47,12 +59,8 @@ export default function AdminVideos() {
 
   const deleteVideo = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('videos')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
+      const videoRef = doc(db, 'videos', id);
+      await deleteDoc(videoRef);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-videos'] });
@@ -65,7 +73,7 @@ export default function AdminVideos() {
 
   const filteredVideos = videos?.filter(video =>
     video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    video.category.toLowerCase().includes(searchTerm.toLowerCase())
+    (video.category && video.category.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -119,9 +127,9 @@ export default function AdminVideos() {
                     <TableRow key={video.id}>
                       <TableCell className="font-medium">{video.title}</TableCell>
                       <TableCell>
-                        <Badge variant="outline">{video.category}</Badge>
+                        {video.category && <Badge variant="outline">{video.category}</Badge>}
                       </TableCell>
-                      <TableCell>{video.views_count.toLocaleString()}</TableCell>
+                      <TableCell>{video.views_count?.toLocaleString() || 0}</TableCell>
                       <TableCell>
                         <Badge variant={video.published ? 'default' : 'secondary'}>
                           {video.published ? 'Published' : 'Draft'}

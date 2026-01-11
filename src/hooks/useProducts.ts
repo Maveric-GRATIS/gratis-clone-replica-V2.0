@@ -1,8 +1,21 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Database } from '@/integrations/supabase/types';
 
-type Product = Database['public']['Tables']['products']['Row'];
+import { useState, useEffect } from 'react';
+import { db } from '@/firebase';
+import { collection, query, where, getDocs, orderBy, QueryConstraint } from 'firebase/firestore';
+
+// Define a TypeScript interface for the Product
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  original_price?: number;
+  image_url?: string;
+  category: string;
+  in_stock: boolean;
+  featured: boolean;
+  tier?: string;
+  // Add other product fields as necessary
+}
 
 interface UseProductsOptions {
   category?: string;
@@ -15,7 +28,6 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Handle both old and new API
   const options: UseProductsOptions = typeof categoryOrOptions === 'string' 
     ? { category: categoryOrOptions, featured: legacyFeatured }
     : categoryOrOptions || {};
@@ -27,29 +39,32 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
     setError(null);
     
     try {
-      let query = supabase
-        .from('products')
-        .select('*')
-        .eq('in_stock', true)
-        .order('created_at', { ascending: false });
+      const productsRef = collection(db, 'products');
+      const constraints: QueryConstraint[] = [];
+
+      constraints.push(where('in_stock', '==', true));
 
       if (category) {
-        query = query.eq('category', category);
+        constraints.push(where('category', '==', category));
       }
 
       if (featured !== undefined) {
-        query = query.eq('featured', featured);
+        constraints.push(where('featured', '==', featured));
       }
 
       if (tier) {
-        query = query.eq('tier', tier);
+        constraints.push(where('tier', '==', tier));
       }
 
-      const { data, error } = await query;
+      constraints.push(orderBy('createdAt', 'desc'));
 
-      if (error) throw error;
-      setProducts(data || []);
+      const q = query(productsRef, ...constraints);
+      const querySnapshot = await getDocs(q);
+      
+      const fetchedProducts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+      setProducts(fetchedProducts);
     } catch (err: any) {
+      console.error("Error fetching products: ", err);
       setError(err.message);
     } finally {
       setLoading(false);

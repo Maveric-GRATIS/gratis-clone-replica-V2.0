@@ -1,12 +1,14 @@
+
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Ticket, Loader2, CheckCircle, XCircle, PartyPopper } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { functions } from '@/firebase';
+import { httpsCallable } from 'firebase/functions';
 
 interface GoldenTicketClaimProps {
   open: boolean;
@@ -40,32 +42,26 @@ export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps
     setResult(null);
 
     try {
-      const { data, error } = await supabase.rpc('claim_prize', { code_input: code.trim().toUpperCase() });
+      const claimPrizeCallable = httpsCallable(functions, 'claimPrize');
+      const response = await claimPrizeCallable({ code: code.trim().toUpperCase() });
+      const data = response.data as { 
+        success: boolean; 
+        prize?: { title: string; description: string; value: string; type: string; }; 
+        error?: string; 
+      };
 
-      if (error) throw error;
-
-      if (data && data.length > 0) {
-        const prizeResult = data[0];
-        if (prizeResult.success) {
-          setResult({
-            success: true,
-            prize: {
-              title: prizeResult.prize_title,
-              description: prizeResult.prize_description,
-              value: prizeResult.prize_value,
-              type: prizeResult.prize_type,
-            },
-          });
-          toast.success('Congratulations! You won a prize!');
-        } else {
-          setResult({ success: false, error: prizeResult.error_message || 'Invalid or already claimed code' });
-        }
+      if (data.success && data.prize) {
+        setResult({
+          success: true,
+          prize: data.prize,
+        });
+        toast.success('Congratulations! You won a prize!');
       } else {
-        setResult({ success: false, error: 'Invalid code' });
+        setResult({ success: false, error: data.error || 'Invalid or already claimed code' });
       }
     } catch (error: any) {
       console.error('Error claiming prize:', error);
-      setResult({ success: false, error: error.message || 'An error occurred' });
+      setResult({ success: false, error: error.message || 'An error occurred while claiming the prize.' });
     } finally {
       setLoading(false);
     }

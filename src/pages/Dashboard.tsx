@@ -1,52 +1,61 @@
+
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { collection, query, where, orderBy, limit, getDocs, Timestamp } from 'firebase/firestore';
 import { useUserImpact } from '@/hooks/useUserImpact';
 import { Package, Heart, Droplet, Leaf, ShoppingBag, User } from 'lucide-react';
 import { format } from 'date-fns';
 import { formatEuro } from '@/lib/currency';
-import SEO from '@/components/SEO';
+import { SEO } from '@/components/SEO';
 import { PageHero } from '@/components/PageHero';
 import { EmptyState } from '@/components/EmptyState';
+
+interface Order {
+  id: string;
+  order_number: string;
+  total: number;
+  status: string;
+  created_at: Timestamp;
+}
 
 export default function Dashboard() {
   const { user } = useAuth();
   const { data: impact } = useUserImpact();
 
-  const { data: orders } = useQuery({
-    queryKey: ['user-orders', user?.id],
+  const { data: orders } = useQuery<Order[], Error>({
+    queryKey: ['user-orders', user?.uid],
     queryFn: async () => {
       if (!user) return [];
       
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(5);
+      const ordersRef = collection(db, 'orders');
+      const q = query(
+        ordersRef,
+        where('user_id', '==', user.uid),
+        orderBy('created_at', 'desc'),
+        limit(5)
+      );
       
-      if (error) throw error;
-      return data;
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Order));
     },
     enabled: !!user
   });
 
-  const { data: wishlistCount } = useQuery({
-    queryKey: ['wishlist-count', user?.id],
+  const { data: wishlistCount } = useQuery<number, Error>({
+    queryKey: ['wishlist-count', user?.uid],
     queryFn: async () => {
       if (!user) return 0;
       
-      const { count, error } = await supabase
-        .from('wishlists')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', user.id);
+      const wishlistRef = collection(db, 'wishlists');
+      const q = query(wishlistRef, where('user_id', '==', user.uid));
+      const snapshot = await getDocs(q);
       
-      if (error) throw error;
-      return count || 0;
+      return snapshot.size;
     },
     enabled: !!user
   });
@@ -54,6 +63,7 @@ export default function Dashboard() {
   if (!user) {
     return (
       <>
+        <SEO title="Dashboard" description="Sign in to view your dashboard" />
         <PageHero 
           title="Dashboard" 
           subtitle="Track your impact and activity"
@@ -126,7 +136,7 @@ export default function Dashboard() {
                 <Heart className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{wishlistCount}</div>
+                <div className="text-2xl font-bold">{wishlistCount || 0}</div>
                 <p className="text-xs text-muted-foreground">Saved items</p>
               </CardContent>
             </Card>
@@ -158,7 +168,7 @@ export default function Dashboard() {
                           <div>
                             <p className="font-medium">Order #{order.order_number}</p>
                             <p className="text-sm text-muted-foreground">
-                              {format(new Date(order.created_at), 'MMM dd, yyyy')}
+                              {format(order.created_at.toDate(), 'MMM dd, yyyy')}
                             </p>
                           </div>
                         </div>

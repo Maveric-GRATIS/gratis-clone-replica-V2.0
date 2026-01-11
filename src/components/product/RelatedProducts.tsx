@@ -1,7 +1,20 @@
-import ProductCard from '@/components/ProductCard';
-import { Database } from '@/integrations/supabase/types';
 
-type Product = Database['public']['Tables']['products']['Row'];
+import ProductCard from '@/components/ProductCard';
+
+// Define the Product type locally
+interface Product {
+  id: string;
+  name: string;
+  handle: string;
+  price: number | any;
+  original_price?: number | null | any;
+  rating?: number | null | any;
+  reviews_count?: number | null | any;
+  short_description?: string | null;
+  image_url: string;
+  // Add any other fields that are necessary from your product data
+}
+
 
 interface RelatedProductsProps {
   products: Product[];

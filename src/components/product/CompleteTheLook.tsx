@@ -1,14 +1,27 @@
+
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { collection, query, where, getDocs, limit, orderBy, documentId } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingBag, Plus } from 'lucide-react';
 import { useCartActions } from '@/hooks/useCartActions';
 import { formatEuro } from '@/lib/currency';
-import { Database } from '@/integrations/supabase/types';
 
-type Product = Database['public']['Tables']['products']['Row'];
+// Define a TypeScript interface for the Product
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  original_price?: number;
+  image_url?: string;
+  category: string;
+  subcategory: string | null;
+  in_stock: boolean;
+  featured: boolean;
+  colors_available?: string[];
+}
 
 interface CompleteTheLookProps {
   currentProduct: Product;
@@ -36,7 +49,6 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
     const fetchMatchingProducts = async () => {
       setLoading(true);
       
-      // Get matching categories for the current product
       const matchingCategories = getCategoryMatches(currentProduct.subcategory);
       
       if (matchingCategories.length === 0) {
@@ -45,21 +57,22 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
       }
 
       try {
-        // Fetch products from matching categories
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('category', 'merch')
-          .eq('in_stock', true)
-          .in('subcategory', matchingCategories)
-          .neq('id', currentProduct.id) // Exclude current product
-          .limit(4)
-          .order('featured', { ascending: false });
+        const productsRef = collection(db, 'products');
+        const q = query(
+          productsRef,
+          where('category', '==', 'merch'),
+          where('in_stock', '==', true),
+          where('subcategory', 'in', matchingCategories),
+          orderBy('featured', 'desc'),
+          limit(5) // Fetch extra to filter out current product client-side
+        );
 
-        if (error) throw error;
-        
-        // Prioritize products with similar colors if available
-        const sortedData = data?.sort((a, b) => {
+        const querySnapshot = await getDocs(q);
+        const fetchedProducts = querySnapshot.docs
+          .map(doc => ({ id: doc.id, ...doc.data() } as Product))
+          .filter(p => p.id !== currentProduct.id); // Exclude current product
+
+        const sortedData = fetchedProducts.sort((a, b) => {
           const aHasMatchingColor = currentProduct.colors_available?.some(
             color => a.colors_available?.includes(color)
           );
@@ -72,7 +85,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
           return 0;
         });
 
-        setMatchingProducts(sortedData || []);
+        setMatchingProducts(sortedData.slice(0, 4));
       } catch (error) {
         console.error('Error fetching matching products:', error);
       } finally {
@@ -121,7 +134,6 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
   return (
     <section className="py-12 border-t">
       <div className="space-y-6">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-bold mb-2">Complete the Look</h2>
@@ -130,7 +142,6 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
             </p>
           </div>
           
-          {/* Bundle Price Display */}
           {matchingProducts.length >= 2 && (
             <div className="text-right">
               <p className="text-sm text-muted-foreground mb-1">Bundle price (3 items)</p>
@@ -151,7 +162,6 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
           )}
         </div>
 
-        {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Current Product Card */}
           <div className="relative bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border-2 border-primary/50 rounded-2xl overflow-hidden">
@@ -173,14 +183,12 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
             </Link>
           </div>
 
-          {/* Plus Icon */}
           <div className="hidden md:flex items-center justify-center">
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
               <Plus className="w-6 h-6 text-muted-foreground" />
             </div>
           </div>
 
-          {/* Matching Products */}
           {matchingProducts.slice(0, 2).map((product, index) => (
             <>
               <div
@@ -222,7 +230,6 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
                 </Link>
               </div>
               
-              {/* Plus Icon between matching products */}
               {index === 0 && matchingProducts.length > 1 && (
                 <div className="hidden md:flex items-center justify-center">
                   <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
@@ -234,14 +241,12 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
           ))}
         </div>
 
-        {/* CTA Button */}
         {matchingProducts.length >= 2 && (
           <div className="flex justify-center pt-4">
             <Button
               size="lg"
               className="gap-2"
               onClick={() => {
-                // Add current product and first two matching products to cart
                 addToCart({
                   id: currentProduct.id,
                   name: currentProduct.name,
@@ -269,7 +274,6 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
           </div>
         )}
 
-        {/* More Suggestions */}
         {matchingProducts.length > 2 && (
           <div className="text-center pt-4">
             <Link to="/rig-store">

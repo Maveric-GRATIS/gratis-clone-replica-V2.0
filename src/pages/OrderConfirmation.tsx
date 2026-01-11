@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { doc, getDoc, Timestamp } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { CheckCircle, Package, ArrowRight } from 'lucide-react';
@@ -13,31 +15,43 @@ interface Order {
   order_number: string;
   status: string;
   total: number;
-  created_at: string;
+  created_at: Timestamp;
 }
 
 export default function OrderConfirmation() {
-  const { orderId } = useParams();
+  const { orderId } = useParams<{ orderId: string }>();
   const navigate = useNavigate();
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrder = async () => {
-      if (!orderId) return;
-
-      const { data, error } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('id', orderId)
-        .single();
-
-      if (error) {
-        console.error('Error fetching order:', error);
-      } else {
-        setOrder(data);
+      if (!orderId) {
+        setLoading(false);
+        return;
       }
-      setLoading(false);
+
+      try {
+        const orderRef = doc(db, 'orders', orderId);
+        const orderSnap = await getDoc(orderRef);
+
+        if (orderSnap.exists()) {
+          const data = orderSnap.data();
+          setOrder({
+            id: orderSnap.id,
+            order_number: data.order_number,
+            status: data.status,
+            total: data.total,
+            created_at: data.created_at
+          } as Order);
+        } else {
+          console.error('No such order!');
+        }
+      } catch (error) {
+        console.error('Error fetching order:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchOrder();
@@ -88,7 +102,7 @@ export default function OrderConfirmation() {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Order Date</span>
                   <span className="font-semibold">
-                    {new Date(order.created_at).toLocaleDateString()}
+                    {order.created_at.toDate().toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex justify-between">

@@ -1,8 +1,20 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { Database } from '@/integrations/supabase/types';
 
-type Product = Database['public']['Tables']['products']['Row'];
+import { useState, useEffect } from 'react';
+import { db } from '@/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+
+// Define a TypeScript interface for the Product
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  original_price?: number;
+  image_url?: string;
+  category: string;
+  in_stock: boolean;
+  featured: boolean;
+  // Add other product fields as necessary
+}
 
 export const useProductDetail = (slug: string) => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -11,18 +23,22 @@ export const useProductDetail = (slug: string) => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      try {
-        setLoading(true);
-        // For now, fetch by ID since we don't have slugs yet
-        const { data, error } = await supabase
-          .from('products')
-          .select('*')
-          .eq('id', slug)
-          .single();
+      if (!slug) return;
+      
+      setLoading(true);
+      setError(null);
 
-        if (error) throw error;
-        setProduct(data);
+      try {
+        const docRef = doc(db, 'products', slug);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setProduct({ id: docSnap.id, ...docSnap.data() } as Product);
+        } else {
+          setError('Product not found');
+        }
       } catch (err: any) {
+        console.error("Error fetching product detail: ", err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -34,7 +50,7 @@ export const useProductDetail = (slug: string) => {
 
   return {
     product,
-    variants: [],
+    variants: [], // These will need to be fetched separately if needed
     reviews: [],
     relatedProducts: [],
     loading,

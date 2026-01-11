@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/contexts/CartContext';
@@ -10,7 +11,8 @@ import { StripePaymentForm } from '@/components/checkout/StripePaymentForm';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { auth, functions } from '@/firebase'; 
+import { httpsCallable } from 'firebase/functions';
 import { useToast } from '@/hooks/use-toast';
 import { SEO } from '@/components/SEO';
 import { loadStripe } from '@stripe/stripe-js';
@@ -72,8 +74,7 @@ export default function Checkout() {
   const handleReviewContinue = async () => {
     setProcessing(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
+      const user = auth.currentUser;
       if (!user) {
         toast({
           title: 'Authentication required',
@@ -93,30 +94,33 @@ export default function Checkout() {
         return;
       }
 
-      // Create order via edge function
-      const { data: orderData, error: orderError } = await supabase.functions.invoke('create-order', {
-        body: {
-          items: items,
-          shippingData: shippingData,
-          shippingOption: shippingOption,
-        },
+      // Firebase functions calls
+      const createOrder = httpsCallable(functions, 'create-order');
+      const createPaymentIntent = httpsCallable(functions, 'create-payment-intent');
+
+      // Create order
+      const orderResult = await createOrder({
+        items: items,
+        shippingData: shippingData,
+        shippingOption: shippingOption,
       });
 
-      if (orderError) throw orderError;
-      if (!orderData.success) throw new Error(orderData.error || 'Failed to create order');
-
+      const orderData = orderResult.data as { success: boolean; order: { id: string }; error?: string };
+      if (!orderData.success || !orderData.order) {
+        throw new Error(orderData.error || 'Failed to create order.');
+      }
       setOrderId(orderData.order.id);
 
       // Create payment intent
-      const { data: paymentData, error: paymentError } = await supabase.functions.invoke('create-payment-intent', {
-        body: {
-          amount: total,
-          orderId: orderData.order.id,
-        },
+      const paymentResult = await createPaymentIntent({
+        amount: total,
+        orderId: orderData.order.id,
       });
-
-      if (paymentError) throw paymentError;
-      if (!paymentData.clientSecret) throw new Error('Failed to create payment intent');
+      
+      const paymentData = paymentResult.data as { clientSecret?: string; error?: string };
+      if (!paymentData.clientSecret) {
+        throw new Error(paymentData.error || 'Could not initialize payment.');
+      }
 
       setClientSecret(paymentData.clientSecret);
       setCurrentStep(4);
@@ -125,11 +129,12 @@ export default function Checkout() {
         title: 'Order created',
         description: 'Please complete payment to confirm your order.',
       });
+
     } catch (error) {
-      console.error('Error creating order:', error);
+      console.error('Error during checkout process:', error);
       toast({
-        title: 'Order creation failed',
-        description: error instanceof Error ? error.message : 'Please try again.',
+        title: 'Checkout Error',
+        description: error instanceof Error ? error.message : 'An unexpected error occurred.',
         variant: 'destructive',
       });
     } finally {
@@ -137,11 +142,13 @@ export default function Checkout() {
     }
   };
 
-  const handlePaymentSuccess = async () => {
-    // Order confirmation email is handled by the Stripe webhook (stripe-webhook/index.ts)
-    // when payment_intent.succeeded event is received
+  const handlePaymentSuccess = () => {
     clearCart();
-    navigate(`/order-confirmation/${orderId}`);
+    if (orderId) {
+      navigate(`/order-confirmation/${orderId}`);
+    } else {
+      navigate('/'); // Fallback if orderId is missing
+    }
   };
 
   const handlePaymentError = (error: string) => {
@@ -160,7 +167,7 @@ export default function Checkout() {
       />
       <div className="min-h-screen bg-background py-12">
         <div className="container max-w-6xl mx-auto px-4">
-          <Button
+           <Button
             variant="ghost"
             onClick={() => {
               if (currentStep > 1) {
@@ -180,7 +187,7 @@ export default function Checkout() {
 
           <CheckoutSteps currentStep={currentStep} />
 
-          <div className="grid lg:grid-cols-3 gap-8 mt-8">
+           <div className="grid lg:grid-cols-3 gap-8 mt-8">
             <div className="lg:col-span-2">
               <Card className="p-6">
                 {currentStep === 1 && (
@@ -216,6 +223,7 @@ export default function Checkout() {
                       total={total}
                       onEdit={setCurrentStep}
                       onContinue={handleReviewContinue}
+                      processing={processing}
                     />
                   </div>
                 )}

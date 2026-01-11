@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -7,35 +8,45 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { 
+  collection, 
+  getDocs, 
+  orderBy, 
+  doc, 
+  updateDoc, 
+  deleteDoc 
+} from 'firebase/firestore';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+
+interface Campaign {
+  id: string;
+  title: string;
+  start_date: { seconds: number; nanoseconds: number } | null;
+  end_date: { seconds: number; nanoseconds: number } | null;
+  active: boolean;
+  created_at: { seconds: number; nanoseconds: number };
+}
 
 export default function AdminCampaigns() {
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data: campaigns, isLoading } = useQuery({
+  const { data: campaigns, isLoading } = useQuery<Campaign[], Error>({
     queryKey: ['admin-campaigns'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('campaigns')
-        .select('*')
-        .order('created_at', { ascending: false });
-      
-      if (error) throw error;
-      return data;
+      const campaignsCollection = collection(db, 'campaigns');
+      const q = query(campaignsCollection, orderBy('created_at', 'desc'));
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Campaign));
     }
   });
 
   const toggleActive = useMutation({
     mutationFn: async ({ id, active }: { id: string; active: boolean }) => {
-      const { error } = await supabase
-        .from('campaigns')
-        .update({ active: !active })
-        .eq('id', id);
-      
-      if (error) throw error;
+      const campaignRef = doc(db, 'campaigns', id);
+      await updateDoc(campaignRef, { active: !active });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-campaigns'] });
@@ -48,12 +59,8 @@ export default function AdminCampaigns() {
 
   const deleteCampaign = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('campaigns')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
+      const campaignRef = doc(db, 'campaigns', id);
+      await deleteDoc(campaignRef);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-campaigns'] });
@@ -116,8 +123,8 @@ export default function AdminCampaigns() {
                 <TableBody>
                   {filteredCampaigns?.map((campaign) => {
                     const now = new Date();
-                    const startDate = campaign.start_date ? new Date(campaign.start_date) : null;
-                    const endDate = campaign.end_date ? new Date(campaign.end_date) : null;
+                    const startDate = campaign.start_date ? new Date(campaign.start_date.seconds * 1000) : null;
+                    const endDate = campaign.end_date ? new Date(campaign.end_date.seconds * 1000) : null;
                     
                     let statusBadge = 'Scheduled';
                     if (campaign.active && startDate && startDate <= now && (!endDate || endDate >= now)) {

@@ -1,35 +1,39 @@
+
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
+
+interface UserImpactData {
+  total_spent: number;
+  liters_funded: number;
+  carbon_saved: number;
+  orders_count: number;
+}
 
 export const useUserImpact = () => {
   const { user } = useAuth();
 
-  return useQuery({
-    queryKey: ['user-impact', user?.id],
+  return useQuery<UserImpactData | null, Error>({
+    queryKey: ['user-impact', user?.uid],
     queryFn: async () => {
       if (!user) return null;
       
-      const { data, error } = await supabase
-        .from('user_impact')
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      const impactRef = doc(db, 'user_impact', user.uid);
+      const impactSnap = await getDoc(impactRef);
       
-      if (error) throw error;
-      
-      // If no impact record exists, return defaults
-      if (!data) {
-        return {
-          total_spent: 0,
-          liters_funded: 0,
-          carbon_saved: 0,
-          orders_count: 0
-        };
+      if (impactSnap.exists()) {
+        return impactSnap.data() as UserImpactData;
       }
       
-      return data;
+      // If no impact record exists, return defaults
+      return {
+        total_spent: 0,
+        liters_funded: 0,
+        carbon_saved: 0,
+        orders_count: 0
+      };
     },
-    enabled: !!user
+    enabled: !!user,
   });
 };

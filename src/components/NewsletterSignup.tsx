@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -5,7 +6,8 @@ import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { analytics } from '@/lib/analytics';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { Mail, Sparkles } from 'lucide-react';
 
 interface NewsletterSignupProps {
@@ -32,30 +34,30 @@ export const NewsletterSignup = ({
     setIsSubmitting(true);
 
     try {
-      // Track newsletter signup
+      const subscribersRef = collection(db, 'newsletter_subscribers');
+      const q = query(subscribersRef, where('email', '==', email.toLowerCase().trim()));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        toast({
+          title: "You're already subscribed!",
+          description: "Thanks for being part of the GRATIS tribe.",
+        });
+        setEmail('');
+        setIsSubmitting(false);
+        return;
+      }
+
       analytics.track({
         action: 'newsletter_signup',
         category: 'engagement',
         label: email,
       });
 
-      // Insert into newsletter_subscribers table
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .insert({ email: email.toLowerCase().trim() });
-
-      if (error) {
-        // Handle duplicate email gracefully
-        if (error.code === '23505') {
-          toast({
-            title: "You're already subscribed!",
-            description: "Thanks for being part of the GRATIS tribe.",
-          });
-          setEmail('');
-          return;
-        }
-        throw error;
-      }
+      await addDoc(subscribersRef, { 
+        email: email.toLowerCase().trim(),
+        subscribedAt: new Date(),
+      });
 
       toast({
         title: "Welcome to the GRATIS tribe!",

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
@@ -7,35 +8,44 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { db } from '@/firebase';
+import { 
+  collection, 
+  getDocs, 
+  orderBy, 
+  doc, 
+  updateDoc, 
+  deleteDoc 
+} from 'firebase/firestore';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+
+interface Event {
+  id: string;
+  title: string;
+  event_date: { seconds: number; nanoseconds: number };
+  location: string | null;
+  published: boolean;
+}
 
 export default function AdminEvents() {
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data: events, isLoading } = useQuery({
+  const { data: events, isLoading } = useQuery<Event[], Error>({
     queryKey: ['admin-events'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('events')
-        .select('*')
-        .order('event_date', { ascending: false });
-      
-      if (error) throw error;
-      return data;
+      const eventsCollection = collection(db, 'events');
+      const q = query(eventsCollection, orderBy('event_date', 'desc'));
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event));
     }
   });
 
   const togglePublished = useMutation({
     mutationFn: async ({ id, published }: { id: string; published: boolean }) => {
-      const { error } = await supabase
-        .from('events')
-        .update({ published: !published })
-        .eq('id', id);
-      
-      if (error) throw error;
+      const eventRef = doc(db, 'events', id);
+      await updateDoc(eventRef, { published: !published });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
@@ -48,12 +58,8 @@ export default function AdminEvents() {
 
   const deleteEvent = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('events')
-        .delete()
-        .eq('id', id);
-      
-      if (error) throw error;
+      const eventRef = doc(db, 'events', id);
+      await deleteDoc(eventRef);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
@@ -116,7 +122,7 @@ export default function AdminEvents() {
                 </TableHeader>
                 <TableBody>
                   {filteredEvents?.map((event) => {
-                    const eventDate = new Date(event.event_date);
+                    const eventDate = new Date(event.event_date.seconds * 1000);
                     const isPast = eventDate < new Date();
                     
                     return (

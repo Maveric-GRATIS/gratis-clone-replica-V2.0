@@ -2,8 +2,19 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Menu, ChevronDown, ShoppingCart } from "lucide-react";
 import React from "react";
 import UserProfile from "@/components/UserProfile";
@@ -13,7 +24,9 @@ import logoGratis from "@/assets/logo-gratis.png";
 
 // Navigation structure per spec (hover dropdowns)
 type SubLink = { to: string; label: string };
-type MenuEntry = { label: string; to: string } | { label: string; items: SubLink[] };
+type MenuEntry =
+  | { label: string; to: string }
+  | { label: string; items: SubLink[] };
 
 const MENU: MenuEntry[] = [
   {
@@ -108,12 +121,15 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-[100] bg-background backdrop-blur supports-[backdrop-filter]:bg-background border-b border-border">
-      <div className="container flex items-center justify-between" style={{ height: "72px" }}>
+      <div
+        className="container flex items-center justify-between"
+        style={{ height: "72px" }}
+      >
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img 
-            src={logoGratis} 
-            alt="GRATIS - Home" 
+          <img
+            src={logoGratis}
+            alt="GRATIS - Home"
             className="h-14 w-auto object-contain hover:opacity-80 transition-opacity"
           />
         </Link>
@@ -135,30 +151,44 @@ export default function Header() {
                   key={key}
                   role="none"
                   className="relative flex items-center px-5 static md:relative"
-                  onMouseEnter={() => { if ("items" in item) handleOpen(key); }}
-                  onMouseLeave={() => { if ("items" in item) handleClose(key); }}
-                  onFocus={() => { if ("items" in item) setOpenMenu(key); }}
-                  onBlur={() => { if ("items" in item) setOpenMenu(null); }}
+                  onMouseEnter={() => {
+                    if ("items" in item) handleOpen(key);
+                  }}
+                  onMouseLeave={() => {
+                    if ("items" in item) handleClose(key);
+                  }}
+                  onFocus={() => {
+                    if ("items" in item) setOpenMenu(key);
+                  }}
+                  onBlur={() => {
+                    if ("items" in item) setOpenMenu(null);
+                  }}
                 >
                   {"items" in item ? (
-                  <button
-                    className={`uppercase font-bold tracking-[0.04em] text-sm transition-colors hover:text-[hsl(var(--brand-yellow))] ${
-                      active || openMenu === key ? 'text-[hsl(var(--brand-yellow))]' : 'text-foreground/90'
-                    } flex items-center gap-1 ${openMenu === key ? 'opacity-100' : 'opacity-90'}`}
-                    aria-haspopup="true"
-                    aria-expanded={openMenu === key}
-                  >
-                    {item.label}
-                    <ChevronDown className={`h-3.5 w-3.5 opacity-80 transition-transform duration-200 ${
-                      openMenu === key ? 'rotate-180' : 'rotate-0'
-                    }`} />
-                  </button>
+                    <button
+                      className={`uppercase font-bold tracking-[0.04em] text-sm transition-colors hover:text-[hsl(var(--brand-yellow))] ${
+                        active || openMenu === key
+                          ? "text-[hsl(var(--brand-yellow))]"
+                          : "text-foreground/90"
+                      } flex items-center gap-1 ${openMenu === key ? "opacity-100" : "opacity-90"}`}
+                      aria-haspopup="true"
+                      aria-expanded={openMenu === key}
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 opacity-80 transition-transform duration-200 ${
+                          openMenu === key ? "rotate-180" : "rotate-0"
+                        }`}
+                      />
+                    </button>
                   ) : (
                     <NavLink
                       to={item.to}
                       className={({ isActive }) =>
                         `uppercase font-bold tracking-[0.04em] text-sm transition-colors hover:text-[hsl(var(--brand-yellow))] ${
-                          isActive ? 'text-[hsl(var(--brand-yellow))]' : 'text-foreground/90'
+                          isActive
+                            ? "text-[hsl(var(--brand-yellow))]"
+                            : "text-foreground/90"
                         }`
                       }
                       role="menuitem"
@@ -172,49 +202,59 @@ export default function Header() {
                   )}
 
                   {"items" in item && (
-                <div
-                  role="menu"
-                  className={`absolute ${
-                    key === 'SPARK' || key === 'IMPACT TV' ? 'right-0' : 'left-0'
-                  } top-full mt-2 z-[200] dropdown-menu border border-border rounded-lg shadow-2xl transition-all duration-[180ms] ease-[cubic-bezier(.22,.61,.36,1)] contain-paint ${
-                    openMenu === key ? 'opacity-100 translate-y-0 pointer-events-auto visible will-change-transform' : 'opacity-0 -translate-y-1.5 pointer-events-none invisible'
-                  }`}
-                  style={{
-                    minWidth: 'min(calc(100vw - 2rem), max-content)',
-                    maxWidth: item.items.length <= 3 ? '420px' : item.items.length <= 6 ? '580px' : '720px'
-                  }}
-                >
-                  <div 
-                    className="p-5 grid gap-x-6 gap-y-3"
-                    style={{
-                      gridTemplateColumns: item.items.length <= 3 
-                        ? `repeat(${item.items.length}, 1fr)` 
-                        : item.items.length <= 6 
-                          ? 'repeat(2, 1fr)'
-                          : item.items.length <= 9
-                            ? 'repeat(3, 1fr)'
-                            : 'repeat(3, 1fr)'
-                    }}
-                  >
-                    {item.items.map((sub) => (
-                      <NavLink
-                        key={sub.label}
-                        to={sub.to}
-                        role="menuitem"
-                        className={({ isActive }) =>
-                          `block px-4 py-2.5 text-sm font-medium transition-all duration-200 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--brand-yellow))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(0_0%_6%)] ${
-                            isActive 
-                              ? 'text-[hsl(var(--brand-yellow))] bg-[hsl(0_0%_16%)] font-semibold border border-[hsl(var(--brand-yellow)/0.3)]' 
-                              : 'text-foreground hover:text-[hsl(var(--brand-yellow))] hover:bg-[hsl(0_0%_14%)]'
-                          }`
-                        }
-                        onClick={() => setOpenMenu(null)}
+                    <div
+                      role="menu"
+                      className={`absolute ${
+                        key === "SPARK" || key === "IMPACT TV"
+                          ? "right-0"
+                          : "left-0"
+                      } top-full mt-2 z-[200] dropdown-menu border border-border rounded-lg shadow-2xl transition-all duration-200 ease-out contain-paint ${
+                        openMenu === key
+                          ? "opacity-100 translate-y-0 pointer-events-auto visible will-change-transform"
+                          : "opacity-0 -translate-y-1.5 pointer-events-none invisible"
+                      }`}
+                      style={{
+                        minWidth: "min(calc(100vw - 2rem), max-content)",
+                        maxWidth:
+                          item.items.length <= 3
+                            ? "420px"
+                            : item.items.length <= 6
+                              ? "580px"
+                              : "720px",
+                      }}
+                    >
+                      <div
+                        className="p-5 grid gap-x-6 gap-y-3"
+                        style={{
+                          gridTemplateColumns:
+                            item.items.length <= 3
+                              ? `repeat(${item.items.length}, 1fr)`
+                              : item.items.length <= 6
+                                ? "repeat(2, 1fr)"
+                                : item.items.length <= 9
+                                  ? "repeat(3, 1fr)"
+                                  : "repeat(3, 1fr)",
+                        }}
                       >
-                        {sub.label}
-                      </NavLink>
-                    ))}
-                  </div>
-                </div>
+                        {item.items.map((sub) => (
+                          <NavLink
+                            key={sub.label}
+                            to={sub.to}
+                            role="menuitem"
+                            className={({ isActive }) =>
+                              `block px-4 py-2.5 text-sm font-medium transition-all duration-200 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--brand-yellow))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(0_0%_6%)] ${
+                                isActive
+                                  ? "text-[hsl(var(--brand-yellow))] bg-[hsl(0_0%_16%)] font-semibold border border-[hsl(var(--brand-yellow)/0.3)]"
+                                  : "text-foreground hover:text-[hsl(var(--brand-yellow))] hover:bg-[hsl(0_0%_14%)]"
+                              }`
+                            }
+                            onClick={() => setOpenMenu(null)}
+                          >
+                            {sub.label}
+                          </NavLink>
+                        ))}
+                      </div>
+                    </div>
                   )}
                 </li>
               );
@@ -259,16 +299,18 @@ export default function Header() {
               <SheetContent side="left" className="w-[85%] sm:w-[360px]">
                 <SheetHeader>
                   <SheetTitle className="flex items-center">
-                    <img 
-                      src={logoGratis} 
-                      alt="GRATIS - Home" 
+                    <img
+                      src={logoGratis}
+                      alt="GRATIS - Home"
                       className="h-12 w-auto object-contain"
                     />
                   </SheetTitle>
                 </SheetHeader>
                 <div className="mt-6">
                   <div className="flex items-center justify-between mb-4 pb-4 border-b border-border">
-                    <span className="text-sm font-medium text-foreground/70">Theme</span>
+                    <span className="text-sm font-medium text-foreground/70">
+                      Theme
+                    </span>
                     <ThemeToggle />
                   </div>
                   <Accordion type="multiple" className="w-full">
@@ -287,7 +329,9 @@ export default function Header() {
                                       to={sub.to}
                                       className={({ isActive }) =>
                                         `block px-1.5 py-2 text-sm ${
-                                          isActive ? 'text-[hsl(var(--brand-yellow))]' : 'text-foreground/90 hover:text-[hsl(var(--brand-yellow))]'
+                                          isActive
+                                            ? "text-[hsl(var(--brand-yellow))]"
+                                            : "text-foreground/90 hover:text-[hsl(var(--brand-yellow))]"
                                         }`
                                       }
                                     >
@@ -306,7 +350,9 @@ export default function Header() {
                             to={item.to}
                             className={({ isActive }) =>
                               `block py-2 uppercase text-sm font-bold tracking-[0.04em] ${
-                                isActive ? 'text-[hsl(var(--brand-yellow))]' : 'text-foreground/90 hover:text-[hsl(var(--brand-yellow))]'
+                                isActive
+                                  ? "text-[hsl(var(--brand-yellow))]"
+                                  : "text-foreground/90 hover:text-[hsl(var(--brand-yellow))]"
                               }`
                             }
                           >

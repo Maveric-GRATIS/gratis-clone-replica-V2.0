@@ -52,14 +52,7 @@ import Orders from "./pages/Orders";
 import OrderDetail from "./pages/OrderDetail";
 import Dashboard from "./pages/Dashboard";
 import Wishlist from "./pages/Wishlist";
-import AdminDashboard from "./pages/admin/Dashboard";
-import AdminProducts from "./pages/admin/Products";
-import AdminOrders from "./pages/admin/Orders";
-import AdminUsers from "./pages/admin/Users";
-import AdminVideos from "./pages/admin/Videos";
-import AdminEvents from "./pages/admin/Events";
-import AdminCampaigns from "./pages/admin/Campaigns";
-import AdminBlogPosts from "./pages/admin/BlogPosts";
+import Admin from "./pages/Admin";
 import Partners from "./pages/Partners";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -74,121 +67,124 @@ const App = () => {
   }, []);
 
   return (
-  <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="gratis-theme">
-        <AuthProvider>
-          <CartProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-            <BrowserRouter>
-      <div className="max-w-full">
-        <ScrollProgressBar />
-        <OfflineIndicator />
-        <Header />
-        <Cart />
-        <FloatingCartButton />
-        <div className="overflow-x-hidden">
-          <PageTransition>
-              <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/rig-store" element={<RigStore />} />
-            <Route path="/rig-store/:slug" element={<ProductDetail />} />
-            <Route path="/hydration" element={<HydrationStore />} />
-            <Route path="/hydration/:slug" element={<ProductDetail />} />
-            <Route path="/water" element={<Water />} />
-            <Route path="/theurgy" element={<Theurgy />} />
-            <Route path="/fu" element={<FU />} />
-            <Route path="/arcane" element={<Arcane />} />
-            <Route path="/partners" element={<Partners />} />
-            <Route path="/tribe" element={<Tribe />} />
-            <Route path="/tribe/heritage" element={<Heritage />} />
-            <Route path="/tribe/ethics" element={<Ethics />} />
-            <Route path="/tribe/team" element={<Team />} />
-            <Route path="/tribe/standards" element={<Standards />} />
-            <Route path="/tribe/responsibility" element={<Responsibility />} />
-            <Route path="/tribe/compliance" element={<Compliance />} />
-            <Route path="/tribe/terms" element={<Terms />} />
-            <Route path="/tribe/privacy" element={<Privacy />} />
-            <Route path="/tribe/cookies" element={<Cookies />} />
-            <Route path="/impact-tv" element={<ImpactTV />} />
-            <Route path="/impact-tv/nexus" element={<Nexus />} />
-            <Route path="/impact-tv/yarns" element={<Yarns />} />
-            <Route path="/impact-tv/unveil" element={<Unveil />} />
-            <Route path="/impact-tv/icon" element={<Icon />} />
-            <Route path="/impact-tv/tales" element={<Tales />} />
-          <Route path="/spark" element={<Spark />} />
-          <Route path="/spark/donate" element={<Donate />} />
-            <Route path="/spark/verve" element={<Verve />} />
-            <Route path="/spark/infuse" element={<Infuse />} />
-            <Route path="/spark/blaze" element={<Blaze />} />
-            <Route path="/spark/enlist" element={<Enlist />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/orders/:orderId" element={<OrderDetail />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            
-            {/* Admin Routes */}
-            <Route path="/admin" element={
-              <ProtectedRoute requireAdmin>
-                <AdminDashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/products" element={
-              <ProtectedRoute requireAdmin>
-                <AdminProducts />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/orders" element={
-              <ProtectedRoute requireAdmin>
-                <AdminOrders />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/users" element={
-              <ProtectedRoute requireAdmin>
-                <AdminUsers />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/videos" element={
-              <ProtectedRoute requireMarketing>
-                <AdminVideos />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/events" element={
-              <ProtectedRoute requireMarketing>
-                <AdminEvents />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/campaigns" element={
-              <ProtectedRoute requireMarketing>
-                <AdminCampaigns />
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/blog" element={
-              <ProtectedRoute requireMarketing>
-                <AdminBlogPosts />
-              </ProtectedRoute>
-            } />
-            
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-            </Routes>
-          </PageTransition>
-        </div>
-        <Footer />
-          </div>
-          </BrowserRouter>
-            </TooltipProvider>
-          </CartProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          storageKey="gratis-theme"
+        >
+          <AuthProvider>
+            <CartProvider>
+              <TooltipProvider>
+                <Toaster />
+                <Sonner />
+                <BrowserRouter>
+                  <div className="max-w-full">
+                    <ScrollProgressBar />
+                    <OfflineIndicator />
+                    <Header />
+                    <Cart />
+                    <FloatingCartButton />
+                    <div className="overflow-x-hidden">
+                      <PageTransition>
+                        <Routes>
+                          <Route path="/" element={<Index />} />
+                          <Route path="/auth" element={<Auth />} />
+                          <Route path="/rig-store" element={<RigStore />} />
+                          <Route
+                            path="/rig-store/:slug"
+                            element={<ProductDetail />}
+                          />
+                          <Route
+                            path="/hydration"
+                            element={<HydrationStore />}
+                          />
+                          <Route
+                            path="/hydration/:slug"
+                            element={<ProductDetail />}
+                          />
+                          <Route path="/water" element={<Water />} />
+                          <Route path="/theurgy" element={<Theurgy />} />
+                          <Route path="/fu" element={<FU />} />
+                          <Route path="/arcane" element={<Arcane />} />
+                          <Route path="/partners" element={<Partners />} />
+                          <Route path="/tribe" element={<Tribe />} />
+                          <Route
+                            path="/tribe/heritage"
+                            element={<Heritage />}
+                          />
+                          <Route path="/tribe/ethics" element={<Ethics />} />
+                          <Route path="/tribe/team" element={<Team />} />
+                          <Route
+                            path="/tribe/standards"
+                            element={<Standards />}
+                          />
+                          <Route
+                            path="/tribe/responsibility"
+                            element={<Responsibility />}
+                          />
+                          <Route
+                            path="/tribe/compliance"
+                            element={<Compliance />}
+                          />
+                          <Route path="/tribe/terms" element={<Terms />} />
+                          <Route path="/tribe/privacy" element={<Privacy />} />
+                          <Route path="/tribe/cookies" element={<Cookies />} />
+                          <Route path="/impact-tv" element={<ImpactTV />} />
+                          <Route path="/impact-tv/nexus" element={<Nexus />} />
+                          <Route path="/impact-tv/yarns" element={<Yarns />} />
+                          <Route
+                            path="/impact-tv/unveil"
+                            element={<Unveil />}
+                          />
+                          <Route path="/impact-tv/icon" element={<Icon />} />
+                          <Route path="/impact-tv/tales" element={<Tales />} />
+                          <Route path="/spark" element={<Spark />} />
+                          <Route path="/spark/donate" element={<Donate />} />
+                          <Route path="/spark/verve" element={<Verve />} />
+                          <Route path="/spark/infuse" element={<Infuse />} />
+                          <Route path="/spark/blaze" element={<Blaze />} />
+                          <Route path="/spark/enlist" element={<Enlist />} />
+                          <Route path="/contact" element={<Contact />} />
+                          <Route path="/checkout" element={<Checkout />} />
+                          <Route
+                            path="/order-confirmation/:orderId"
+                            element={<OrderConfirmation />}
+                          />
+                          <Route path="/orders" element={<Orders />} />
+                          <Route
+                            path="/orders/:orderId"
+                            element={<OrderDetail />}
+                          />
+                          <Route path="/dashboard" element={<Dashboard />} />
+                          <Route path="/wishlist" element={<Wishlist />} />
+
+                          {/* Admin Routes - Single Unified Panel */}
+                          <Route
+                            path="/admin/*"
+                            element={
+                              <ProtectedRoute requireAdmin>
+                                <Admin />
+                              </ProtectedRoute>
+                            }
+                          />
+
+                          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                          <Route path="*" element={<NotFound />} />
+                        </Routes>
+                      </PageTransition>
+                    </div>
+                    <Footer />
+                  </div>
+                </BrowserRouter>
+              </TooltipProvider>
+            </CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 

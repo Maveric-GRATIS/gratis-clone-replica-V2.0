@@ -65,10 +65,10 @@ export const useProfile = () => {
       await updateDoc(profileRef, updatePayload);
 
       // Refetch the profile to get the updated data
-      await fetchProfile(); 
+      await fetchProfile();
       // Optimistically update the local state to avoid a re-render flash
       setProfile(prevProfile => prevProfile ? { ...prevProfile, ...updates } : null);
-      
+
       // Since updateDoc doesn't return the doc, we return the updates
       return { data: { ...profile, ...updates }, error: null };
     } catch (err: any) {

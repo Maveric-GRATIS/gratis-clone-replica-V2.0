@@ -25,7 +25,7 @@ export const useRole = () => {
         const rolesRef = collection(db, 'user_roles');
         const q = query(rolesRef, where('user_id', '==', user.uid));
         const querySnapshot = await getDocs(q);
-        
+
         const userRoles = querySnapshot.docs.map(doc => doc.data().role as UserRole);
         setRoles(userRoles);
       } catch (err: any) {

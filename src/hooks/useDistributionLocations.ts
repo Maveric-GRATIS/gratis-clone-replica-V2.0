@@ -31,7 +31,7 @@ export const useDistributionLocations = () => {
         );
 
         const querySnapshot = await getDocs(q);
-        const fetchedLocations = querySnapshot.docs.map(doc => 
+        const fetchedLocations = querySnapshot.docs.map(doc =>
           ({ id: doc.id, ...doc.data() } as DistributionLocation)
         );
         setLocations(fetchedLocations);

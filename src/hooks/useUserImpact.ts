@@ -18,14 +18,14 @@ export const useUserImpact = () => {
     queryKey: ['user-impact', user?.uid],
     queryFn: async () => {
       if (!user) return null;
-      
+
       const impactRef = doc(db, 'user_impact', user.uid);
       const impactSnap = await getDoc(impactRef);
-      
+
       if (impactSnap.exists()) {
         return impactSnap.data() as UserImpactData;
       }
-      
+
       // If no impact record exists, return defaults
       return {
         total_spent: 0,

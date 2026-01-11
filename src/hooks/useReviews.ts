@@ -1,17 +1,17 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db, auth } from '@/firebase';
-import { 
-  collection, 
-  query, 
-  where, 
-  getDocs, 
-  addDoc, 
-  updateDoc, 
-  doc, 
-  serverTimestamp, 
-  Timestamp, 
-  orderBy 
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  serverTimestamp,
+  Timestamp,
+  orderBy
 } from 'firebase/firestore';
 import { toast } from 'sonner';
 
@@ -47,7 +47,7 @@ export const useProductReviews = (productId: string) => {
 
       const querySnapshot = await getDocs(q);
       const reviews = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Review));
-      
+
       // Here you might want to fetch user details for each review
       return reviews;
     },
@@ -58,8 +58,8 @@ export const useProductReviews = (productId: string) => {
 // Create a new review
 export const useCreateReview = () => {
   const queryClient = useQueryClient();
-  
-  return useMutation<void, Error, { productId: string; rating: number; comment: string; }>({ 
+
+  return useMutation<void, Error, { productId: string; rating: number; comment: string; }>({
     mutationFn: async ({ productId, rating, comment }) => {
       const user = auth.currentUser;
       if (!user) throw new Error('You must be logged in to post a review.');
@@ -93,8 +93,8 @@ export const useCreateReview = () => {
 // Update an existing review
 export const useUpdateReview = () => {
   const queryClient = useQueryClient();
-  
-  return useMutation<void, Error, { reviewId: string; productId: string; rating: number; comment: string; }>({ 
+
+  return useMutation<void, Error, { reviewId: string; productId: string; rating: number; comment: string; }>({
     mutationFn: async ({ reviewId, rating, comment }) => {
       const user = auth.currentUser;
       if (!user) throw new Error('Authentication error.');
@@ -122,7 +122,7 @@ export const useUpdateReview = () => {
 export const useVoteReview = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, { reviewId: string; productId: string; currentVotes: number; }>({ 
+  return useMutation<void, Error, { reviewId: string; productId: string; currentVotes: number; }>({
     mutationFn: async ({ reviewId, currentVotes }) => {
       const reviewRef = doc(db, 'reviews', reviewId);
       await updateDoc(reviewRef, {

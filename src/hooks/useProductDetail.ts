@@ -24,7 +24,7 @@ export const useProductDetail = (slug: string) => {
   useEffect(() => {
     const fetchProduct = async () => {
       if (!slug) return;
-      
+
       setLoading(true);
       setError(null);
 

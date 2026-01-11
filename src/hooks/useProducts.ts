@@ -28,7 +28,7 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const options: UseProductsOptions = typeof categoryOrOptions === 'string' 
+  const options: UseProductsOptions = typeof categoryOrOptions === 'string'
     ? { category: categoryOrOptions, featured: legacyFeatured }
     : categoryOrOptions || {};
 
@@ -37,7 +37,7 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
   const fetchProducts = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const productsRef = collection(db, 'products');
       const constraints: QueryConstraint[] = [];
@@ -60,7 +60,7 @@ export const useProducts = (categoryOrOptions?: string | UseProductsOptions, leg
 
       const q = query(productsRef, ...constraints);
       const querySnapshot = await getDocs(q);
-      
+
       const fetchedProducts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
       setProducts(fetchedProducts);
     } catch (err: any) {

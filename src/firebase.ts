@@ -6,15 +6,21 @@ import { getFunctions } from "firebase/functions";
 import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 
+// Firebase config from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyCiCkqrHcBJZVcy6RXsBKeb-NZXnKsAD6s",
-  authDomain: "gratis-ngo-7bb44.firebaseapp.com",
-  projectId: "gratis-ngo-7bb44",
-  storageBucket: "gratis-ngo-7bb44.firebasestorage.app",
-  messagingSenderId: "659832345710",
-  appId: "1:659832345710:web:8048362b3636c465f4c27f",
-  measurementId: "G-LF6HJ0RP8D"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
+
+// Validate required config
+if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+  throw new Error("Missing required Firebase configuration. Check your .env file.");
+}
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

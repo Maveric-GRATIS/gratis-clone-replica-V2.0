@@ -96,6 +96,7 @@ export default function Header() {
   const [openMenu, setOpenMenu] = React.useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const openTimer = React.useRef<number | null>(null);
   const closeTimer = React.useRef<number | null>(null);
 
@@ -131,25 +132,43 @@ export default function Header() {
     openTimer.current = window.setTimeout(() => setOpenMenu(key), 80); // openDelay 80ms
   };
 
-  const handleClose = (key: string) => {
+  const handleClose = () => {
     if (openTimer.current) {
       window.clearTimeout(openTimer.current);
       openTimer.current = null;
     }
     if (closeTimer.current) window.clearTimeout(closeTimer.current);
     closeTimer.current = window.setTimeout(() => {
-      setOpenMenu((prev) => (prev === key ? null : prev));
-    }, 120); // closeDelay 120ms
+      setOpenMenu(null);
+    }, 300); // closeDelay 300ms - longer delay
   };
 
   const isActivePath = (paths?: string[]) =>
     paths?.some((p) => location.pathname.startsWith(p)) ?? false;
 
+  // Check if we're at top of page
+  const isAtTop = lastScrollY < 50;
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[100] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 border-b border-border transition-transform duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-out ${
         isVisible ? "translate-y-0" : "-translate-y-full"
+      } ${
+        isHeaderHovered || openMenu || !isAtTop
+          ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 border-b border-border"
+          : "bg-transparent"
       }`}
+      onMouseEnter={() => {
+        setIsHeaderHovered(true);
+        if (closeTimer.current) {
+          window.clearTimeout(closeTimer.current);
+          closeTimer.current = null;
+        }
+      }}
+      onMouseLeave={() => {
+        setIsHeaderHovered(false);
+        handleClose();
+      }}
     >
       <div
         className="container flex items-center justify-between"
@@ -183,15 +202,6 @@ export default function Header() {
                   className="relative flex items-center px-5 static md:relative"
                   onMouseEnter={() => {
                     if ("items" in item) handleOpen(key);
-                  }}
-                  onMouseLeave={() => {
-                    if ("items" in item) handleClose(key);
-                  }}
-                  onFocus={() => {
-                    if ("items" in item) setOpenMenu(key);
-                  }}
-                  onBlur={() => {
-                    if ("items" in item) setOpenMenu(null);
                   }}
                 >
                   {"items" in item ? (
@@ -229,62 +239,6 @@ export default function Header() {
 
                   {active && (
                     <span className="pointer-events-none absolute left-0 right-0 -bottom-px h-[2px] bg-[hsl(var(--brand-blue))]" />
-                  )}
-
-                  {"items" in item && (
-                    <div
-                      role="menu"
-                      className={`absolute ${
-                        key === "SPARK" || key === "IMPACT TV"
-                          ? "right-0"
-                          : "left-0"
-                      } top-full mt-2 z-[200] dropdown-menu border border-border rounded-lg shadow-2xl transition-all duration-200 ease-out contain-paint ${
-                        openMenu === key
-                          ? "opacity-100 translate-y-0 pointer-events-auto visible will-change-transform"
-                          : "opacity-0 -translate-y-1.5 pointer-events-none invisible"
-                      }`}
-                      style={{
-                        minWidth: "min(calc(100vw - 2rem), max-content)",
-                        maxWidth:
-                          item.items.length <= 3
-                            ? "420px"
-                            : item.items.length <= 6
-                              ? "580px"
-                              : "720px",
-                      }}
-                    >
-                      <div
-                        className="p-5 grid gap-x-6 gap-y-3"
-                        style={{
-                          gridTemplateColumns:
-                            item.items.length <= 3
-                              ? `repeat(${item.items.length}, 1fr)`
-                              : item.items.length <= 6
-                                ? "repeat(2, 1fr)"
-                                : item.items.length <= 9
-                                  ? "repeat(3, 1fr)"
-                                  : "repeat(3, 1fr)",
-                        }}
-                      >
-                        {item.items.map((sub) => (
-                          <NavLink
-                            key={sub.label}
-                            to={sub.to}
-                            role="menuitem"
-                            className={({ isActive }) =>
-                              `block px-4 py-2.5 text-sm font-medium transition-all duration-200 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--brand-yellow))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(0_0%_6%)] ${
-                                isActive
-                                  ? "text-[hsl(var(--brand-yellow))] bg-[hsl(0_0%_16%)] font-semibold border border-[hsl(var(--brand-yellow)/0.3)]"
-                                  : "text-foreground hover:text-[hsl(var(--brand-yellow))] hover:bg-[hsl(0_0%_14%)]"
-                              }`
-                            }
-                            onClick={() => setOpenMenu(null)}
-                          >
-                            {sub.label}
-                          </NavLink>
-                        ))}
-                      </div>
-                    </div>
                   )}
                 </li>
               );
@@ -398,6 +352,39 @@ export default function Header() {
           </div>
         </div>
       </div>
+
+      {/* Second navbar row - appears when menu is open */}
+      {openMenu && (
+        <div className="border-t border-border bg-background/95 backdrop-blur">
+          <div className="w-full px-4">
+            <nav className="flex items-center justify-center gap-0.5 py-3 flex-wrap max-w-full">
+              {MENU.find((m) => m.label === openMenu) &&
+                "items" in MENU.find((m) => m.label === openMenu)! &&
+                (
+                  MENU.find((m) => m.label === openMenu) as {
+                    label: string;
+                    items: SubLink[];
+                  }
+                ).items.map((sub) => (
+                  <NavLink
+                    key={sub.label}
+                    to={sub.to}
+                    className={({ isActive }) =>
+                      `px-3 py-2 text-sm font-semibold uppercase tracking-wide whitespace-nowrap transition-colors rounded-md ${
+                        isActive
+                          ? "text-[hsl(var(--brand-yellow))] bg-[hsl(0_0%_16%)]"
+                          : "text-foreground/80 hover:text-[hsl(var(--brand-yellow))] hover:bg-[hsl(0_0%_10%)]"
+                      }`
+                    }
+                    onClick={() => setOpenMenu(null)}
+                  >
+                    {sub.label}
+                  </NavLink>
+                ))}
+            </nav>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

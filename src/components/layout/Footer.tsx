@@ -116,15 +116,12 @@ export default function Footer() {
         <Column
           title="Transparency"
           links={[
-            { label: "Terms of Use", to: "/tribe/terms" },
-            { label: "Rights (Brand Protection)", to: "/tribe/standards" },
-            { label: "User Privacy (Privacy Policy)", to: "/tribe/privacy" },
-            { label: "Tracking (Cookie Policy)", to: "/tribe/cookies" },
-            { label: "Help (Accessibility Policy)", to: "/tribe/standards" },
-            {
-              label: "Safety (Disclaimer & Donor Privacy)",
-              to: "/tribe/privacy",
-            },
+            { label: "Terms of Use", to: "/legal/terms" },
+            { label: "Privacy Policy", to: "/legal/privacy" },
+            { label: "Cookie Policy", to: "/legal/cookies" },
+            { label: "Donor Privacy", to: "/legal/donor-privacy" },
+            { label: "Brand Protection", to: "/tribe/standards" },
+            { label: "Accessibility", to: "/tribe/standards" },
           ]}
         />
         <Column

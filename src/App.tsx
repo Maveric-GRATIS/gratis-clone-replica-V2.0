@@ -10,6 +10,7 @@ import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { Cart } from "@/components/Cart";
 import { FloatingCartButton } from "@/components/FloatingCartButton";
 import { ScrollProgressBar } from "@/components/ScrollProgressBar";
+import { CookieConsent } from "@/components/CookieConsent";
 import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -29,6 +30,7 @@ import Compliance from "@/pages/tribe/Compliance";
 import Terms from "@/pages/tribe/Terms";
 import Privacy from "@/pages/tribe/Privacy";
 import Cookies from "@/pages/tribe/Cookies";
+import * as LegalPages from "@/pages/legal";
 import ImpactTV from "@/pages/ImpactTV";
 import Nexus from "@/pages/impactTV/Nexus";
 import Yarns from "@/pages/impactTV/Yarns";
@@ -96,6 +98,7 @@ const App = () => {
                   <div className="max-w-full">
                     <ScrollProgressBar />
                     <OfflineIndicator />
+                    <CookieConsent />
                     <Header />
                     <Cart />
                     <FloatingCartButton />
@@ -144,6 +147,25 @@ const App = () => {
                           <Route path="/tribe/terms" element={<Terms />} />
                           <Route path="/tribe/privacy" element={<Privacy />} />
                           <Route path="/tribe/cookies" element={<Cookies />} />
+
+                          {/* Legal Pages */}
+                          <Route
+                            path="/legal/privacy"
+                            element={<LegalPages.Privacy />}
+                          />
+                          <Route
+                            path="/legal/terms"
+                            element={<LegalPages.Terms />}
+                          />
+                          <Route
+                            path="/legal/cookies"
+                            element={<LegalPages.Cookies />}
+                          />
+                          <Route
+                            path="/legal/donor-privacy"
+                            element={<LegalPages.DonorPrivacy />}
+                          />
+
                           <Route path="/impact-tv" element={<ImpactTV />} />
                           <Route path="/impact-tv/nexus" element={<Nexus />} />
                           <Route path="/impact-tv/yarns" element={<Yarns />} />

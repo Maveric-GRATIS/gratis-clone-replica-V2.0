@@ -57,6 +57,7 @@ import Wishlist from "./pages/Wishlist";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Partners from "./pages/Partners";
+import CollectionDetail from "./pages/CollectionDetail";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -108,6 +109,10 @@ const App = () => {
                           <Route path="/" element={<Index />} />
                           <Route path="/auth" element={<Auth />} />
                           <Route path="/rig-store" element={<RigStore />} />
+                          <Route
+                            path="/rig-store/collection/:slug"
+                            element={<CollectionDetail />}
+                          />
                           <Route
                             path="/rig-store/:slug"
                             element={<ProductDetail />}

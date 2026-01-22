@@ -1,0 +1,146 @@
+COOKIE POLICY
+G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change)
+Last Updated: January 14, 2026 | Effective: February 14, 2026
+1. Introduction
+This Cookie Policy explains how G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change) ("GRATIS," "we," "our," or "us") uses cookies and similar technologies on our website (gratis.ngo). This policy should be read alongside our Privacy Policy, which explains how we handle your personal data.
+We are committed to transparency about the technologies we use and giving you control over your online experience.
+2. Legal Framework
+Our use of cookies complies with:
+• The Dutch Telecommunications Act (Telecommunicatiewet), Article 11.7a
+• The ePrivacy Directive 2002/58/EC (as amended by 2009/136/EC)
+• The General Data Protection Regulation (GDPR) (EU) 2016/679
+• The California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA)
+• Other applicable US state privacy laws
+Under these laws, we must inform you about cookies and similar technologies and obtain your consent before placing non-essential cookies on your device.
+3. What Are Cookies and Similar Technologies?
+3.1 Cookies
+Cookies are small text files stored on your device (computer, tablet, or mobile phone) when you visit a website. They enable the website to remember your actions and preferences over a period of time.
+3.2 Types of Cookies
+TypeDescriptionExpirationSession CookiesTemporary cookies deleted when you close your browserEnd of browser sessionPersistent CookiesRemain on your device until expiration or manual deletionDefined duration (days/months/years)First-Party CookiesSet by the website you are visiting (gratis.ngo)VariesThird-Party CookiesSet by external services embedded in our websiteVaries by provider3.3 Similar Technologies
+We may also use similar technologies:
+• Web Beacons (Pixel Tags): Small invisible images that track page views and email opens
+• Local Storage: Browser storage similar to cookies but with larger capacity
+• Session Storage: Temporary browser storage cleared when the tab is closed
+• Fingerprinting: We do NOT use device fingerprinting for tracking
+4. Categories of Cookies We Use
+4.1 Essential Cookies (Strictly Necessary)
+These cookies are necessary for our website to function and cannot be disabled. They are usually set in response to your actions, such as setting privacy preferences, logging in, or filling out forms.
+Legal basis: Performance of contract; these cookies do not require consent.
+Cookie NameProviderPurposeDuration__sessionFirebase (gratis.ngo)Authentication session managementSessioncart_idgratis.ngoShopping cart identification30 dayscookie_consentgratis.ngoStores your cookie preferences1 yearcsrf_tokengratis.ngoSecurity: prevents cross-site request forgerySessionstripe_midStripePayment processing and fraud prevention1 yearstripe_sidStripeStripe session identifier30 minutes__stripe_midStripeFraud prevention identifier1 yearlocalegratis.ngoStores language preference1 yearthemegratis.ngoStores light/dark mode preference1 year4.2 Analytics Cookies
+These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously. We use this data to improve our website and services.
+Legal basis: Consent (GDPR Article 6(1)(a)); Legitimate interests where data is fully anonymized.
+Cookie NameProviderPurposeDuration_gaGoogle AnalyticsDistinguishes unique users2 years_ga_*Google AnalyticsMaintains session state2 years_gidGoogle AnalyticsDistinguishes users24 hours_gatGoogle AnalyticsThrottles request rate1 minute_hjSessionUser_*HotjarUnique user identifier for analytics365 days_hjSession_*HotjarCurrent session data30 minutes_hjFirstSeenHotjarIdentifies first sessionSession_hjAbsoluteSessionInProgressHotjarSession tracking30 minutes_hjIncludedInPageviewSampleHotjarPageview sampling2 minutesAnalytics settings:
+• IP anonymization enabled (last octet removed)
+• Data retention: 14 months, then deleted or anonymized
+• No advertising features enabled
+• User ID features disabled
+4.3 Marketing/Advertising Cookies
+These cookies are used to deliver relevant advertisements and track campaign effectiveness. They remember that you have visited our website and may share this information with advertisers.
+Legal basis: Consent (GDPR Article 6(1)(a)) - requires explicit opt-in.
+Cookie NameProviderPurposeDuration_fbpMeta/FacebookTracks visits for Facebook advertising3 months_fbcMeta/FacebookClick identifier for ad tracking3 months_gcl_auGoogle AdsConversion linker for Google Ads90 days_gcl_awGoogle AdsStores click info for conversions90 days_uetsidMicrosoft/BingSession ID for Bing Ads1 day_uetvidMicrosoft/BingPersistent ID for Bing Ads13 months_tt_enable_cookieTikTokTikTok tracking status13 months_ttpTikTokTikTok pixel tracking13 monthsli_fat_idLinkedInMember targeting for LinkedIn Ads30 dayslidcLinkedInLoad balancing and session1 daybcookieLinkedInBrowser identifier2 yearsUserMatchHistoryLinkedInLinkedIn Ads tracking30 days4.4 Functional Cookies
+These cookies enable enhanced functionality and personalization beyond essential features. They may be set by us or third-party providers.
+Legal basis: Consent (GDPR Article 6(1)(a)) for third-party cookies; Legitimate interests for first-party personalization.
+Cookie NameProviderPurposeDurationrecently_viewedgratis.ngoStores recently viewed products30 dayswishlistgratis.ngoStores wishlist items30 daysmapbox-gl-jsMapboxMap display preferencesSessionintercom-*IntercomChat support widget stateVaries5. Managing Your Cookie Preferences
+5.1 Our Consent Banner
+When you first visit our website, you will see a cookie consent banner allowing you to:
+• Accept All Cookies: Enables all cookie categories
+• Reject Non-Essential: Only essential cookies are placed
+• Manage Preferences: Choose individual cookie categories
+You can change your preferences at any time by clicking the 'Cookie Settings' link in our website footer.
+5.2 Browser Settings
+You can also control cookies through your browser settings. Instructions for common browsers:
+• Google Chrome: Settings > Privacy and Security > Cookies and other site data
+• Mozilla Firefox: Settings > Privacy & Security > Cookies and Site Data
+• Safari: Preferences > Privacy > Manage Website Data
+• Microsoft Edge: Settings > Privacy, search, and services > Cookies
+• Opera: Settings > Privacy & security > Cookies
+Note: Blocking all cookies may impact website functionality.
+5.3 Opt-Out Links
+You can opt out of specific third-party tracking:
+• Google Analytics: https://tools.google.com/dlpage/gaoptout
+• Google Ads: https://adssettings.google.com
+• Facebook: https://www.facebook.com/settings/?tab=ads
+• LinkedIn: https://www.linkedin.com/psettings/advertising
+• TikTok: https://www.tiktok.com/privacy/settings
+• Microsoft/Bing: https://account.microsoft.com/privacy/ad-settings
+• Network Advertising Initiative: https://optout.networkadvertising.org
+• Digital Advertising Alliance: https://optout.aboutads.info
+• European Interactive Digital Advertising Alliance: https://www.youronlinechoices.eu
+5.4 Do Not Track
+Some browsers send 'Do Not Track' (DNT) signals. We currently respond to DNT signals by disabling non-essential cookies when detected.
+5.5 Global Privacy Control
+We honor the Global Privacy Control (GPC) signal as required by CCPA/CPRA. When we detect a GPC signal, we treat it as a request to opt out of the sale/sharing of personal information.
+6. Third-Party Cookie Details
+The following third parties may set cookies when you use our website:
+6.1 Google (Analytics, Ads, Firebase)
+Privacy Policy: https://policies.google.com/privacy
+Purpose: Website analytics, advertising, authentication
+Data transfers: US (protected by SCCs)
+6.2 Meta (Facebook, Instagram)
+Privacy Policy: https://www.facebook.com/policy.php
+Purpose: Social sharing, advertising
+Data transfers: US (protected by SCCs)
+6.3 Stripe
+Privacy Policy: https://stripe.com/privacy
+Purpose: Payment processing, fraud prevention
+Data transfers: US (PCI-DSS compliant, SCCs)
+6.4 Hotjar
+Privacy Policy: https://www.hotjar.com/legal/policies/privacy/
+Purpose: User experience analytics, heatmaps
+Data processing: EU
+6.5 LinkedIn
+Privacy Policy: https://www.linkedin.com/legal/privacy-policy
+Purpose: B2B advertising, professional audience targeting
+Data transfers: US (protected by SCCs)
+6.6 TikTok
+Privacy Policy: https://www.tiktok.com/legal/privacy-policy
+Purpose: Social advertising
+Data transfers: Various (protected by SCCs)
+7. Data Protection and Your Rights
+7.1 Data Collected via Cookies
+Cookies may collect:
+• Device information (browser type, operating system)
+• IP address (anonymized after 30 days)
+• Browsing behavior (pages visited, time spent)
+• Referral source
+• Preferences and settings
+7.2 Your Rights
+Under GDPR and applicable US state laws, you have rights regarding data collected via cookies:
+• Right to access: Request a copy of data collected
+• Right to deletion: Request deletion of cookie data
+• Right to withdraw consent: Disable non-essential cookies at any time
+• Right to object: Object to processing for direct marketing
+To exercise these rights, contact us at privacy@gratis.ngo or adjust your cookie settings.
+7.3 Data Retention
+Cookie data is retained for:
+• Session cookies: Until browser session ends
+• Analytics data: 14 months maximum
+• Marketing cookies: As specified by each provider (see tables above)
+7.4 International Transfers
+Some cookie data may be transferred to countries outside the EEA/UK. We ensure appropriate safeguards:
+• Standard Contractual Clauses with all third-party providers
+• EU-US Data Privacy Framework certification where applicable
+• Supplementary measures including encryption and access controls
+8. Changes to This Cookie Policy
+We may update this Cookie Policy from time to time. Changes will be:
+• Posted on this page with updated 'Last Updated' date
+• Notified via cookie consent banner re-display for material changes
+• Communicated via email for account holders (for significant changes)
+We encourage you to review this policy periodically.
+9. Contact Information
+For questions about our use of cookies or to exercise your data protection rights:
+Data Protection Officer
+Email: privacy@gratis.ngo
+Postal Address
+Stichting G.R.A.T.I.S.
+[Registered Address]
+Amsterdam, Netherlands
+General Inquiries: info@gratis.ngo
+
+
+END OF COOKIE POLICY
+Document Version: 2.0 | Stichting G.R.A.T.I.S.
+Stichting G.R.A.T.I.S. - Cookie Policy
+
+Page 1 | CONFIDENTIAL - For Legal Review | gratis.ngo
+

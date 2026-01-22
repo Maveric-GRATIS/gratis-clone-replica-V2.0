@@ -1,0 +1,147 @@
+ACCESSIBILITY STATEMENT
+G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change)
+Committed to Digital Accessibility for All
+Last Updated: January 14, 2026 | Effective: February 14, 2026
+1. Our Commitment to Accessibility
+G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change) ("GRATIS") is committed to ensuring digital accessibility for people of all abilities. We believe that the internet should be available and accessible to anyone, and we are committed to providing a website that is accessible to the widest possible audience, regardless of ability or technology.
+We actively work to increase the accessibility and usability of our website (gratis.ngo) and related digital properties.
+2. Accessibility Standards
+We strive to conform to the following accessibility standards:
+2.1 Web Content Accessibility Guidelines (WCAG)
+Our target is conformance with WCAG 2.1 Level AA, which covers a wide range of recommendations for making web content more accessible. These guidelines address:
+• Perceivable: Information and interface components must be presentable in ways users can perceive
+• Operable: Interface components and navigation must be operable
+• Understandable: Information and operation of the interface must be understandable
+• Robust: Content must be robust enough to be interpreted by assistive technologies
+2.2 European Accessibility Standards
+• EN 301 549 (EU standard for digital accessibility)
+• European Accessibility Act (Directive (EU) 2019/882) requirements
+2.3 US Accessibility Laws
+• Section 508 of the Rehabilitation Act standards
+• Americans with Disabilities Act (ADA) Title III principles
+• State-specific accessibility laws
+3. Accessibility Features of Our Website
+Our website includes the following accessibility features:
+3.1 Navigation
+• Consistent navigation structure across all pages
+• Skip navigation links to bypass repetitive content
+• Descriptive page titles and headings
+• Breadcrumb navigation for orientation
+• Keyboard-accessible menus and controls
+• Focus indicators for keyboard navigation
+3.2 Content
+• Alternative text for all meaningful images
+• Captions and transcripts for video content
+• Clear, simple language
+• Adequate color contrast (minimum 4.5:1 for normal text)
+• Text resizable up to 200% without loss of functionality
+• Content readable in single-column format
+3.3 Forms and Interactions
+• Labels associated with form controls
+• Error messages that identify the problem and suggest correction
+• Sufficient time to complete forms
+• Accessible CAPTCHA alternatives
+• Confirmation before destructive actions
+3.4 Visual Design
+• High contrast mode available
+• Dark mode option for reduced eye strain
+• No content that flashes more than 3 times per second
+• Responsive design for various screen sizes
+• Content not dependent on color alone
+3.5 Assistive Technology Support
+• Compatible with screen readers (NVDA, JAWS, VoiceOver)
+• Compatible with screen magnification software
+• Compatible with speech recognition software
+• ARIA landmarks and labels where appropriate
+4. Accessibility Testing
+We evaluate our accessibility through:
+• Automated testing tools (e.g., axe, WAVE, Lighthouse)
+• Manual testing with keyboard navigation
+• Screen reader testing (NVDA, VoiceOver)
+• User testing with people who use assistive technologies
+• Regular audits by accessibility specialists
+We conduct accessibility reviews:
+• Before major website updates
+• Quarterly for existing content
+• When accessibility issues are reported
+5. Known Limitations
+While we strive for full accessibility, some content may have limitations:
+5.1 Third-Party Content
+Some third-party content embedded on our website may not be fully accessible:
+• Payment forms (Stripe checkout)
+• Maps (Mapbox integration)
+• Social media embeds
+We work with these providers to improve accessibility and provide alternatives where possible.
+5.2 Legacy Content
+Some older content may not yet meet all accessibility standards. We are actively remediating this content.
+5.3 PDFs and Documents
+Some downloadable documents may not be fully accessible. We can provide accessible alternatives upon request.
+6. Feedback and Reporting Issues
+We welcome your feedback on the accessibility of our website. If you encounter accessibility barriers or have suggestions for improvement:
+6.1 How to Report
+Contact our Accessibility Team:
+• Email: accessibility@gratis.ngo
+• General Inquiries: info@gratis.ngo
+• Phone: [To be added]
+When reporting an issue, please include:
+• URL of the page with the issue
+• Description of the problem
+• Assistive technology used (if applicable)
+• Browser and operating system
+• Suggested improvement (if any)
+6.2 Response Time
+We aim to respond to accessibility feedback within:
+• Initial acknowledgment: 2 business days
+• Full response: 10 business days
+• Issue resolution: Depending on complexity (we'll keep you informed)
+6.3 Alternative Access
+If you encounter an accessibility barrier, we will:
+• Provide the information or service in an alternative format
+• Assist you by phone or email
+• Work to fix the underlying issue
+7. Remediation Plan
+When we identify accessibility issues, we:
+• Prioritize based on impact and frequency
+• Set target dates for remediation
+• Track progress and report outcomes
+• Test fixes to ensure effectiveness
+Major accessibility improvements are documented in our changelog.
+8. Staff Training
+We ensure our team is equipped to maintain accessibility:
+• All content creators receive accessibility training
+• Developers are trained on WCAG implementation
+• Customer service staff know how to assist users with disabilities
+• Regular refresher training as standards evolve
+9. Continuous Improvement
+Accessibility is an ongoing effort. We commit to:
+• Regular accessibility audits (at least annually)
+• Staying current with accessibility standards
+• Incorporating accessibility into our development process
+• Engaging with the disability community
+• Publishing regular updates on accessibility progress
+10. Legal and Regulatory Compliance
+This accessibility statement demonstrates our commitment to complying with:
+• EU Web Accessibility Directive (EU) 2016/2102
+• European Accessibility Act (EU) 2019/882
+• Dutch accessibility requirements
+• Americans with Disabilities Act (ADA)
+• Section 508 of the Rehabilitation Act (US)
+• Applicable state and local accessibility laws
+11. Contact Information
+For accessibility questions or assistance:
+Accessibility Team
+Email: accessibility@gratis.ngo
+General Support
+Email: info@gratis.ngo
+Postal Address
+Stichting G.R.A.T.I.S.
+[Registered Address]
+Amsterdam, Netherlands
+
+
+END OF ACCESSIBILITY STATEMENT
+Document Version: 2.0 | Stichting G.R.A.T.I.S.
+Stichting G.R.A.T.I.S. - Accessibility Statement
+
+Page 1 | CONFIDENTIAL - For Legal Review | gratis.ngo
+

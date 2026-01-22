@@ -1,0 +1,125 @@
+                                                                                          MVP
+                                                                Acrostic
+ Level    Section    Page Name                 URL                             Spells     (Feb            Description
+                                                                 Letter
+                                                                                           14)
+                    GRATIS                                                                       Product landing page for all
+NAV       GRATIS                     /gratis                G              G-R-A-T-I-S   YES
+                    (Products)                                                                   beverage lines
+NAV-                                                                                             Pure water line - 3 variants
+          GRATIS    Water            /gratis/water                                       YES
+SUB                                                                                              (sizes/colors/packages)
+                                                                                                 Wellness functional water -
+NAV-
+          GRATIS    Theurgy          /gratis/theurgy                                     YES     mystic positioning (PRE-
+SUB
+                                                                                                 ORDER)
+NAV-                                                                                             Rebellious functional water -
+          GRATIS    F.U.             /gratis/fu                                          YES
+SUB                                                                                              caffeine/energy (PRE-ORDER)
+                    RIG (Merch                                                                   Luxury streetwear
+NAV       RIG                        /rig                   R              PAIDCONNECTYES
+                    Store)                                                                       merchandise hub
+NAV-
+          RIG       Prime Picks      /rig/prime-picks       P              PAIDCONNECT YES       Best sellers and fan favorites
+SUB
+NAV-                                                                                             Newest drops and latest
+          RIG       Apex Arrivals    /rig/apex-arrivals     A              PAIDCONNECT YES
+SUB                                                                                              releases
+NAV-
+          RIG       Imbued Icons     /rig/imbued-icons      I              PAIDCONNECT YES       Iconic graphic tees collection
+SUB
+NAV-
+          RIG       Dazzle Drip      /rig/dazzle-drip       D              PAIDCONNECT YES       Drinkware and accessories
+SUB
+NAV-                Charmed
+          RIG                        /rig/charmed-cozies    C              PAIDCONNECT YES       Sweatshirts and hoodies
+SUB                 Cozies
+NAV-
+          RIG       Occult Originals/rig/occult-originals   O              PAIDCONNECT YES       Bottoms collection
+SUB
+NAV-
+          RIG       Nexus Noggin /rig/nexus-noggin          N              PAIDCONNECT YES       Hats and headwear
+SUB
+NAV-                Nebula
+          RIG                        /rig/nebula-novelties N               PAIDCONNECT YES       Lifestyle and accessories
+SUB                 Novelties
+NAV-                Enchanted        /rig/enchanted-                                   PHASE     Limited editions and special
+          RIG                                               E              PAIDCONNECT
+SUB                 Exclusives       exclusives                                        2         releases
+NAV-                Cursed                                                             PHASE     Last chance items before
+          RIG                        /rig/cursed-countdownC                PAIDCONNECT
+SUB                 Countdown                                                          2         they're gone
+NAV-                Thaumaturge                                                        PHASE     Collaborations with
+          RIG                        /rig/thaumaturge-troveT               PAIDCONNECT
+SUB                 Trove                                                              2         artists/brands
+                                                                                                 Events hub - festivals,
+                    ARCANE
+NAV       ARCANE                     /arcane                A                            YES     activations, community
+                    (Events)
+                                                                                                 gatherings
+                    TRIBE                                                                        Community and membership
+NAV       TRIBE                 /tribe                      T              HEART         YES
+                    (Community)                                                                  hub
+NAV-                                                                                             Brand story, origins, and
+          TRIBE     Heritage         /tribe/heritage        H              HEART         YES
+SUB                                                                                              founding mission
+NAV-                                                                                             Values, principles, and ethical
+          TRIBE     Ethics           /tribe/ethics          E              HEART         YES
+SUB                                                                                              commitments
+NAV-                                                                                             Transparency reports and
+          TRIBE     Accountability /tribe/accountability    A              HEART         YES
+SUB                                                                                              impact tracking
+NAV-                                                                                             Environmental and social
+          TRIBE     Responsibility /tribe/responsibility    R              HEART         YES
+SUB                                                                                              responsibility initiatives
+NAV-                                                                                             Open books, financials, and
+          TRIBE     Transparency     /tribe/transparency    T              HEART         YES
+SUB                                                                                              governance
+          IMPACT    IMPACT TV                                                                    Video content hub - stories,
+NAV                                  /impact-tv             I              UNITY         YES
+          TV        (Media)                                                                      docs, streams
+NAV-      IMPACT                                                                                 Feature-length documentaries
+                    Unveil           /impact-tv/unveil      U              UNITY         YES
+SUB       TV                                                                                     and films
+NAV-      IMPACT                                                                                 Discover stories from around
+                    Nexus            /impact-tv/nexus       N              UNITY         YES
+SUB       TV                                                                                     the globe
+NAV-      IMPACT                                                                                 Series and shows - binge-
+                    Icon             /impact-tv/icon        I              UNITY         YES
+SUB       TV                                                                                     worthy content
+NAV-      IMPACT                                                                                 Short-form clips and quick
+                    Tales            /impact-tv/tales       T              UNITY         YES
+SUB       TV                                                                                     moments
+NAV-      IMPACT
+                    Yarns            /impact-tv/yarns       Y              UNITY         YES     Live streams and event replays
+SUB       TV
+                    SPARK                                                                        Engagement hub - donate,
+NAV       SPARK                      /spark                 S              VIBE          YES
+                    (Action)                                                                     invest, volunteer, work
+NAV-                                                                                             Donations - one-time, monthly,
+          SPARK     Verve            /spark/verve           V              VIBE          YES
+SUB                                                                                              crypto
+NAV-                                                                                             Investments - scholarships and
+SUB       SPARK     Infuse           /spark/infuse          I              VIBE          YES
+                                                                                                 microcredit
+NAV-                                                                                             Volunteer opportunities and
+          SPARK     Blaze            /spark/blaze           B              VIBE          YES
+SUB                                                                                              community action
+NAV-
+          SPARK     Enlist           /spark/enlist          E              VIBE          YES     Careers and job openings
+SUB
+                                                                                                 User authentication - login
+UTILITY             Sign In          /signin                                             YES
+                                                                                                 page
+                                      User registration - create
+UTILITY   Sign Up    /signup    YES
+                                      account
+                                      User dashboard - orders,
+UTILITY   Account    /account   YES
+                                      membership, settings
+UTILITY   Cart       /cart      YES   Shopping cart and checkout
+                                      Browse all products (Water +
+UTILITY   Shop All   /shop      YES
+                                      RIG)
+

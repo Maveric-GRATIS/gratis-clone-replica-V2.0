@@ -26,6 +26,8 @@ import Ethics from "@/pages/tribe/Ethics";
 import Team from "@/pages/tribe/Team";
 import Standards from "@/pages/tribe/Standards";
 import Responsibility from "@/pages/tribe/Responsibility";
+import Accountability from "@/pages/tribe/Accountability";
+import Transparency from "@/pages/tribe/Transparency";
 import Compliance from "@/pages/tribe/Compliance";
 import Terms from "@/pages/tribe/Terms";
 import Privacy from "@/pages/tribe/Privacy";
@@ -144,6 +146,14 @@ const App = () => {
                           <Route
                             path="/tribe/responsibility"
                             element={<Responsibility />}
+                          />
+                          <Route
+                            path="/tribe/accountability"
+                            element={<Accountability />}
+                          />
+                          <Route
+                            path="/tribe/transparency"
+                            element={<Transparency />}
                           />
                           <Route
                             path="/tribe/compliance"

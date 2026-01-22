@@ -4,8 +4,14 @@ import SEO from "@/components/SEO";
 export default function Tribe() {
   return (
     <div className="min-h-screen bg-background">
-      <SEO title="GRATIS TRIBE — Our Values" description="Heritage, Ethics, Responsibility, Team, Standards." canonical={typeof window !== 'undefined' ? window.location.href : '/tribe'} />
-      
+      <SEO
+        title="GRATIS TRIBE — Our Values"
+        description="Heritage, Ethics, Responsibility, Team, Standards."
+        canonical={
+          typeof window !== "undefined" ? window.location.href : "/tribe"
+        }
+      />
+
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
@@ -22,43 +28,56 @@ export default function Tribe() {
       <section className="border-t border-border">
         <div className="container py-16 space-y-12">
           <div className="text-center space-y-4">
-            <h2 className="text-2xl md:text-3xl font-bold">What We Stand For</h2>
+            <h2 className="text-2xl md:text-3xl font-bold">
+              What We Stand For
+            </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              GRATIS isn't just water. It's a movement built on authenticity, respect, and responsibility. 
-              Explore the values that drive everything we do.
+              GRATIS isn't just water. It's a movement built on authenticity,
+              respect, and responsibility. Explore the values that drive
+              everything we do.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { 
-                title: 'Heritage', 
-                body: 'Born from street culture. Built on authenticity. Discover the origin story that shaped our mission.',
-                to: '/tribe/heritage'
+              {
+                title: "Heritage",
+                body: "Born from street culture. Built on authenticity. Discover the origin story that shaped our mission.",
+                to: "/tribe/heritage",
               },
-              { 
-                title: 'Ethics', 
-                body: 'Fair trade, cultural respect, and community investment. Our commitment to doing right by everyone.',
-                to: '/tribe/ethics'
+              {
+                title: "Ethics",
+                body: "Fair trade, cultural respect, and community investment. Our commitment to doing right by everyone.",
+                to: "/tribe/ethics",
               },
-              { 
-                title: 'Team', 
-                body: 'Meet the diverse crew building GRATIS. Real people from the culture, creating something authentic.',
-                to: '/tribe/team'
+              {
+                title: "Accountability",
+                body: "Real-time tracking, verified impact, and independent audits. Every euro accounted for.",
+                to: "/tribe/accountability",
               },
-              { 
-                title: 'Standards', 
-                body: 'Quality without compromise. Safety you can trust. Excellence in every bottle we produce.',
-                to: '/tribe/standards'
+              {
+                title: "Team",
+                body: "Meet the diverse crew building GRATIS. Real people from the culture, creating something authentic.",
+                to: "/tribe/team",
               },
-              { 
-                title: 'Responsibility', 
-                body: 'Environmental commitments that protect the planet that sustains us all. Action over words.',
-                to: '/tribe/responsibility'
+              {
+                title: "Standards",
+                body: "Quality without compromise. Safety you can trust. Excellence in every bottle we produce.",
+                to: "/tribe/standards",
+              },
+              {
+                title: "Responsibility",
+                body: "Environmental commitments that protect the planet that sustains us all. Action over words.",
+                to: "/tribe/responsibility",
+              },
+              {
+                title: "Transparency",
+                body: "Open books, public financials, and radical transparency. No secrets, no spin—just facts.",
+                to: "/tribe/transparency",
               },
             ].map((section) => (
-              <Link 
-                key={section.title} 
+              <Link
+                key={section.title}
                 to={section.to}
                 className="group bg-muted/10 hover:bg-muted/20 rounded-lg p-6 transition-colors space-y-4"
               >

@@ -215,9 +215,11 @@ const MENU: MenuEntry[] = [
     items: [
       { to: "/tribe/heritage", label: "Heritage" },
       { to: "/tribe/ethics", label: "Ethics" },
+      { to: "/tribe/accountability", label: "Accountability" },
       { to: "/tribe/team", label: "Team" },
       { to: "/tribe/standards", label: "Standards" },
       { to: "/tribe/responsibility", label: "Responsibility" },
+      { to: "/tribe/transparency", label: "Transparency" },
     ],
     megaMenu: {
       sections: [
@@ -235,16 +237,26 @@ const MENU: MenuEntry[] = [
               label: "Ethics",
               description: "How we operate",
             },
+            {
+              to: "/tribe/accountability",
+              label: "Accountability",
+              description: "Verified impact tracking",
+            },
             { to: "/tribe/team", label: "Team", description: "Meet the crew" },
             {
               to: "/tribe/standards",
               label: "Standards",
-              description: "Quality & accountability",
+              description: "Quality & compliance",
             },
             {
               to: "/tribe/responsibility",
               label: "Responsibility",
-              description: "Social impact commitment",
+              description: "Environmental impact",
+            },
+            {
+              to: "/tribe/transparency",
+              label: "Transparency",
+              description: "Open books & data",
             },
           ],
         },

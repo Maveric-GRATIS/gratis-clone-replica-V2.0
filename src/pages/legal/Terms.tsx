@@ -6,11 +6,15 @@ export default function Terms() {
   return (
     <>
       <SEO
-        title="Terms of Use - GRATIS.NGO"
-        description="Terms of Use for GRATIS - Read our terms and conditions for using our website and services."
+        title="Terms of Use - G.R.A.T.I.S."
+        description="G.R.A.T.I.S. Terms of Use - Read our terms and conditions including TRIBE membership, purchases, and donations."
       />
 
-      <PageHero title="Terms of Use" lastUpdated="January 14, 2026" />
+      <PageHero
+        title="Terms of Use"
+        subtitle="G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change)"
+        lastUpdated="January 14, 2026"
+      />
 
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">
@@ -30,14 +34,25 @@ export default function Terms() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">2. About GRATIS</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                GRATIS (Giving Resources to Achieve Transformative and Impactful
-                Support) is a registered non-profit organization (Stichting)
-                based in the Netherlands. We operate a social enterprise model
-                where 100% of profits from product sales go directly to
-                charitable causes supporting water access, education, and
-                community development.
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                G.R.A.T.I.S. (Giving Resources to Achieve Transformative and
+                Impactful Change) is a registered Dutch foundation (Stichting)
+                based in Amsterdam, Netherlands. We operate a social enterprise
+                model where advertising revenue from our free water distribution
+                program funds verified NGO partners globally.
               </p>
+              <div className="bg-muted/50 rounded-lg p-4 text-sm">
+                <p>
+                  <strong>Chamber of Commerce (KVK):</strong> [To be assigned]
+                </p>
+                <p>
+                  <strong>ANBI Status:</strong> [Pending/Approved]
+                </p>
+                <p>
+                  <strong>USA 501(c)(3) Status:</strong> Pending Application
+                  (Expected Q2 2026)
+                </p>
+              </div>
             </section>
 
             <section>
@@ -87,6 +102,153 @@ export default function Terms() {
                   older)
                 </li>
               </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">
+                4. TRIBE Membership Program
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                GRATIS offers a tiered membership program called 'TRIBE' with
+                the following options:
+              </p>
+
+              <div className="overflow-x-auto mb-4">
+                <table className="w-full border-collapse text-sm">
+                  <thead>
+                    <tr className="border-b-2 border-border">
+                      <th className="text-left p-3 font-semibold">Tier</th>
+                      <th className="text-left p-3 font-semibold">Price</th>
+                      <th className="text-left p-3 font-semibold">Billing</th>
+                      <th className="text-left p-3 font-semibold">
+                        Key Benefits
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-muted-foreground">
+                    <tr className="border-b border-border">
+                      <td className="p-3">
+                        <strong>Explorer</strong>
+                      </td>
+                      <td className="p-3">Free</td>
+                      <td className="p-3">N/A</td>
+                      <td className="p-3">
+                        Basic access, newsletter, community updates
+                      </td>
+                    </tr>
+                    <tr className="border-b border-border">
+                      <td className="p-3">
+                        <strong>Insider</strong>
+                      </td>
+                      <td className="p-3">€9.99/month</td>
+                      <td className="p-3">Monthly recurring</td>
+                      <td className="p-3">
+                        Early access, member discounts, exclusive content
+                      </td>
+                    </tr>
+                    <tr className="border-b border-border">
+                      <td className="p-3">
+                        <strong>Core</strong>
+                      </td>
+                      <td className="p-3">€97/year</td>
+                      <td className="p-3">Annual recurring</td>
+                      <td className="p-3">
+                        All Insider benefits + priority support, exclusive
+                        events
+                      </td>
+                    </tr>
+                    <tr className="border-b border-border">
+                      <td className="p-3">
+                        <strong>Founder</strong>
+                      </td>
+                      <td className="p-3">€247 one-time</td>
+                      <td className="p-3">Lifetime (one-time)</td>
+                      <td className="p-3">
+                        All benefits forever, founder recognition, governance
+                        input
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="space-y-4 text-muted-foreground">
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">
+                    4.1 Subscription Terms
+                  </h4>
+                  <ul className="list-disc list-inside space-y-1 ml-4">
+                    <li>
+                      Paid memberships automatically renew unless cancelled
+                      before the renewal date
+                    </li>
+                    <li>
+                      Monthly subscriptions renew on the same day each month
+                    </li>
+                    <li>
+                      Annual subscriptions renew on the anniversary of your
+                      subscription start date
+                    </li>
+                    <li>
+                      Price changes will be notified at least 30 days in advance
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">
+                    4.2 Cancellation Policy
+                  </h4>
+                  <ul className="list-disc list-inside space-y-1 ml-4">
+                    <li>
+                      You may cancel your subscription at any time through your
+                      account settings
+                    </li>
+                    <li>
+                      Cancellation takes effect at the end of the current
+                      billing period
+                    </li>
+                    <li>
+                      No prorated refunds are provided for partial periods
+                    </li>
+                    <li>
+                      Founder memberships are non-refundable lifetime
+                      memberships
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">
+                    4.3 Founder Membership Special Terms
+                  </h4>
+                  <p className="mb-2">
+                    Founder memberships are one-time purchases granting lifetime
+                    benefits:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1 ml-4">
+                    <li>No refunds will be provided for Founder memberships</li>
+                    <li>
+                      Benefits will be honored for as long as GRATIS operates
+                    </li>
+                    <li>
+                      Any successor organization will be encouraged to honor
+                      Founder benefits
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">
+                    4.4 Benefit Modifications
+                  </h4>
+                  <p>
+                    We reserve the right to modify membership benefits with 60
+                    days notice. Core benefits (as defined at time of purchase)
+                    will be maintained or replaced with equivalent value.
+                  </p>
+                </div>
+              </div>
             </section>
 
             <section>

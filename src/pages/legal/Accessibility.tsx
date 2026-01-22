@@ -9,15 +9,15 @@ export default function Accessibility() {
   return (
     <>
       <SEO
-        title="Accessibility Statement"
-        description="GRATIS is committed to ensuring digital accessibility for people with disabilities. Learn about our accessibility standards and ongoing improvements."
+        title="Accessibility Statement - G.R.A.T.I.S."
+        description="G.R.A.T.I.S. Accessibility Statement - Committed to digital accessibility for all. WCAG 2.1 Level AA conformance target."
         canonical="https://gratis.ngo/legal/accessibility"
       />
 
       <div className="min-h-screen bg-background">
         <PageHero
           title="Accessibility Statement"
-          subtitle="Our commitment to digital accessibility for everyone"
+          subtitle="G.R.A.T.I.S. - Committed to Digital Accessibility for All"
         />
 
         <div className="container max-w-4xl py-16 px-4">

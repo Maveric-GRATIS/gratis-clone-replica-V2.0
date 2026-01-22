@@ -6,11 +6,15 @@ export default function DonorPrivacy() {
   return (
     <>
       <SEO
-        title="Donor Privacy Policy - GRATIS.NGO"
-        description="Donor Privacy Policy for GRATIS - How we protect and use donor information in accordance with charitable giving regulations."
+        title="Donor Privacy Policy - G.R.A.T.I.S."
+        description="G.R.A.T.I.S. Donor Privacy Policy - Protecting your privacy as a valued supporter. Learn about our commitment to donor privacy and ANBI compliance."
       />
 
-      <PageHero title="Donor Privacy Policy" lastUpdated="January 14, 2026" />
+      <PageHero
+        title="Donor Privacy Policy"
+        subtitle="G.R.A.T.I.S. - Protecting Your Privacy as a Valued Supporter"
+        lastUpdated="January 14, 2026"
+      />
 
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">

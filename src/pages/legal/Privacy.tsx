@@ -6,11 +6,15 @@ export default function Privacy() {
   return (
     <>
       <SEO
-        title="Privacy Policy - GRATIS.NGO"
-        description="Privacy Policy for GRATIS - Learn how we collect, use, and protect your personal data in compliance with GDPR."
+        title="Privacy Policy - G.R.A.T.I.S."
+        description="G.R.A.T.I.S. Privacy Policy - Learn how we collect, use, and protect your personal data in compliance with GDPR, CCPA, and other privacy regulations."
       />
 
-      <PageHero title="Privacy Policy" lastUpdated="January 14, 2026" />
+      <PageHero
+        title="Privacy Policy"
+        subtitle="G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change)"
+        lastUpdated="January 14, 2026"
+      />
 
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">
@@ -28,27 +32,54 @@ export default function Privacy() {
 
             <section>
               <h2 className="text-2xl font-semibold mb-4">
-                2. Data Controller
+                2. Data Controller Information
               </h2>
               <div className="text-muted-foreground leading-relaxed space-y-2">
                 <p>
-                  Stichting GRATIS is the data controller for personal data
-                  collected through our website.
+                  Stichting G.R.A.T.I.S. is the data controller for personal
+                  data collected through our website.
                 </p>
-                <p className="font-semibold">Contact Information:</p>
-                <ul className="list-none space-y-1 ml-4">
-                  <li>
-                    Email:{" "}
+                <div className="bg-muted/50 rounded-lg p-4 space-y-2 mt-4">
+                  <p className="font-semibold text-foreground">
+                    Stichting G.R.A.T.I.S.
+                  </p>
+                  <p>
+                    Registered Address: [Registered Address], Amsterdam,
+                    Netherlands
+                  </p>
+                  <p>Chamber of Commerce (KVK): [To be assigned]</p>
+                  <p>ANBI Status: [Pending/Approved]</p>
+                  <p>
+                    USA Registration: [State Registration Numbers - Pending]
+                  </p>
+                  <p className="pt-2 border-t border-border">
+                    <strong>Data Protection Officer (DPO):</strong>{" "}
                     <a
                       href="mailto:privacy@gratis.ngo"
                       className="text-primary hover:underline"
                     >
                       privacy@gratis.ngo
                     </a>
-                  </li>
-                  <li>Address: Amsterdam, Netherlands</li>
-                  <li>KVK Number: [To be provided]</li>
-                </ul>
+                  </p>
+                  <p>
+                    <strong>General Inquiries:</strong>{" "}
+                    <a
+                      href="mailto:info@gratis.ngo"
+                      className="text-primary hover:underline"
+                    >
+                      info@gratis.ngo
+                    </a>
+                  </p>
+                  <p>
+                    <strong>Legal Department:</strong>{" "}
+                    <a
+                      href="mailto:legal@gratis.ngo"
+                      className="text-primary hover:underline"
+                    >
+                      legal@gratis.ngo
+                    </a>
+                  </p>
+                </div>
               </div>
             </section>
 

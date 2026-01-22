@@ -19,7 +19,7 @@ export default function Cookies() {
         analytics: analyticsCookies,
         marketing: marketingCookies,
         timestamp: new Date().toISOString(),
-      })
+      }),
     );
 
     // Show success message or redirect
@@ -29,11 +29,15 @@ export default function Cookies() {
   return (
     <>
       <SEO
-        title="Cookie Policy - GRATIS.NGO"
-        description="Cookie Policy for GRATIS - Learn about the cookies we use and how to manage your preferences."
+        title="Cookie Policy - G.R.A.T.I.S."
+        description="G.R.A.T.I.S. Cookie Policy - Learn about the cookies we use, our compliance with ePrivacy Directive and GDPR, and how to manage your preferences."
       />
 
-      <PageHero title="Cookie Policy" lastUpdated="January 14, 2026" />
+      <PageHero
+        title="Cookie Policy"
+        subtitle="G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change)"
+        lastUpdated="January 14, 2026"
+      />
 
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">

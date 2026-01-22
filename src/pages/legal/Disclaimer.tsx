@@ -7,15 +7,15 @@ export default function Disclaimer() {
   return (
     <>
       <SEO
-        title="Disclaimer"
-        description="Legal disclaimer for GRATIS.NGO. Important information about website content, liability limitations, and user responsibilities."
+        title="Disclaimer & Transparency Report - G.R.A.T.I.S."
+        description="G.R.A.T.I.S. Disclaimer & Transparency Report - Trust, Verified. Every euro accounted for. Full NGO registration and compliance details."
         canonical="https://gratis.ngo/legal/disclaimer"
       />
 
       <div className="min-h-screen bg-background">
         <PageHero
-          title="Disclaimer"
-          subtitle="Important legal information about using our website and services"
+          title="Disclaimer & Transparency Report"
+          subtitle="G.R.A.T.I.S. - TRUST, VERIFIED"
         />
 
         <div className="container max-w-4xl py-16 px-4">

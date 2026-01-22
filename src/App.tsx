@@ -170,6 +170,14 @@ const App = () => {
                             path="/legal/donor-privacy"
                             element={<LegalPages.DonorPrivacy />}
                           />
+                          <Route
+                            path="/legal/accessibility"
+                            element={<LegalPages.Accessibility />}
+                          />
+                          <Route
+                            path="/legal/disclaimer"
+                            element={<LegalPages.Disclaimer />}
+                          />
 
                           <Route path="/impact-tv" element={<ImpactTV />} />
                           <Route path="/impact-tv/nexus" element={<Nexus />} />

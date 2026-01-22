@@ -15,35 +15,105 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Menu, ChevronDown, ShoppingCart } from "lucide-react";
+import { Menu, ChevronDown, ShoppingCart, Search } from "lucide-react";
 import React from "react";
 import UserProfile from "@/components/UserProfile";
 import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import logoGratis from "@/assets/logo-gratis.png";
+import { MegaMenu, MegaMenuSection } from "./MegaMenu";
+import { SearchModal } from "@/components/SearchModal";
 
-// Navigation structure per spec (hover dropdowns)
-type SubLink = { to: string; label: string };
+// Navigation structure with mega menu configurations
+type SubLink = {
+  to: string;
+  label: string;
+  description?: string;
+  badge?: string;
+  image?: string;
+};
 type MenuEntry =
   | { label: string; to: string }
-  | { label: string; items: SubLink[] };
+  | {
+      label: string;
+      items: SubLink[];
+      megaMenu?: { sections: MegaMenuSection[]; featured?: any };
+    };
 
 const MENU: MenuEntry[] = [
   {
     label: "GRATIS",
     items: [
-      { to: "/water", label: "Water" },
-      { to: "/theurgy", label: "Theurgy" },
-      { to: "/fu", label: "F.U." },
+      {
+        to: "/water",
+        label: "Water",
+        description: "Free hydration for everyone",
+      },
+      {
+        to: "/theurgy",
+        label: "Theurgy",
+        description: "The art behind the mission",
+      },
+      {
+        to: "/fu",
+        label: "F.U.",
+        description: "Fearlessly Uniting communities",
+      },
     ],
+    megaMenu: {
+      sections: [
+        {
+          title: "Products",
+          links: [
+            {
+              to: "/water",
+              label: "Water",
+              description:
+                "Free hydration for everyone, funded by your purchases",
+            },
+            {
+              to: "/theurgy",
+              label: "Theurgy",
+              description: "Explore the spiritual art behind our mission",
+            },
+            {
+              to: "/fu",
+              label: "F.U.",
+              description: "Fearlessly Uniting communities worldwide",
+            },
+          ],
+        },
+      ],
+      featured: {
+        title: "Join the Movement",
+        description:
+          "Every purchase funds free water distribution. Be part of the change.",
+        image:
+          "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop",
+        link: "/water",
+        badge: "Featured",
+      },
+    },
   },
   {
     label: "RIG",
     items: [
-      { to: "/rig-store", label: "Shop All" },
-      { to: "/rig-store/collection/prime-picks", label: "Prime Picks" },
-      { to: "/rig-store/collection/apex-arrivals", label: "Apex Arrivals" },
+      {
+        to: "/rig-store",
+        label: "Shop All",
+        description: "Explore all collections",
+      },
+      {
+        to: "/rig-store/collection/prime-picks",
+        label: "Prime Picks",
+        badge: "NEW",
+      },
+      {
+        to: "/rig-store/collection/apex-arrivals",
+        label: "Apex Arrivals",
+        badge: "NEW",
+      },
       { to: "/rig-store/collection/imbued-icons", label: "Imbued Icons" },
       { to: "/rig-store/collection/dazzle-drip", label: "Dazzle Drip" },
       { to: "/rig-store/collection/charmed-cozies", label: "Charmed Cozies" },
@@ -57,6 +127,87 @@ const MENU: MenuEntry[] = [
         label: "Nebula Novelties",
       },
     ],
+    megaMenu: {
+      sections: [
+        {
+          title: "Collections",
+          links: [
+            {
+              to: "/rig-store/collection/prime-picks",
+              label: "Prime Picks",
+              description: "Premium essentials",
+              badge: "NEW",
+              image:
+                "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100&h=100&fit=crop",
+            },
+            {
+              to: "/rig-store/collection/apex-arrivals",
+              label: "Apex Arrivals",
+              description: "Just landed",
+              badge: "NEW",
+              image:
+                "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=100&h=100&fit=crop",
+            },
+            {
+              to: "/rig-store/collection/imbued-icons",
+              label: "Imbued Icons",
+              description: "Iconic designs",
+              image:
+                "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=100&h=100&fit=crop",
+            },
+            {
+              to: "/rig-store/collection/dazzle-drip",
+              label: "Dazzle Drip",
+              description: "Statement pieces",
+              image:
+                "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=100&h=100&fit=crop",
+            },
+          ],
+        },
+        {
+          title: "More Styles",
+          links: [
+            {
+              to: "/rig-store/collection/charmed-cozies",
+              label: "Charmed Cozies",
+              description: "Comfort wear",
+              image:
+                "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=100&h=100&fit=crop",
+            },
+            {
+              to: "/rig-store/collection/occult-originals",
+              label: "Occult Originals",
+              description: "Unique finds",
+              image:
+                "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?w=100&h=100&fit=crop",
+            },
+            {
+              to: "/rig-store/collection/nexus-noggin",
+              label: "Nexus Noggin",
+              description: "Headwear",
+              image:
+                "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=100&h=100&fit=crop",
+            },
+            {
+              to: "/rig-store/collection/nebula-novelties",
+              label: "Nebula Novelties",
+              description: "Fun extras",
+              image:
+                "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=100&h=100&fit=crop",
+            },
+          ],
+        },
+      ],
+      featured: {
+        title: "Spring Collection 2026",
+        description:
+          "Fresh designs that make a difference. Shop the latest drops.",
+        image:
+          "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=400&fit=crop",
+        link: "/rig-store",
+        badge: "New Arrivals",
+      },
+    },
   },
   { label: "ARCANE", to: "/arcane" },
   {
@@ -68,6 +219,37 @@ const MENU: MenuEntry[] = [
       { to: "/tribe/standards", label: "Standards" },
       { to: "/tribe/responsibility", label: "Responsibility" },
     ],
+    megaMenu: {
+      sections: [
+        {
+          title: "About Us - HEART",
+          description: "Heritage, Ethics, Actions, Responsibility, Trust",
+          links: [
+            {
+              to: "/tribe/heritage",
+              label: "Heritage",
+              description: "Our story and mission",
+            },
+            {
+              to: "/tribe/ethics",
+              label: "Ethics",
+              description: "How we operate",
+            },
+            { to: "/tribe/team", label: "Team", description: "Meet the crew" },
+            {
+              to: "/tribe/standards",
+              label: "Standards",
+              description: "Quality & accountability",
+            },
+            {
+              to: "/tribe/responsibility",
+              label: "Responsibility",
+              description: "Social impact commitment",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     label: "IMPACT TV",
@@ -78,6 +260,41 @@ const MENU: MenuEntry[] = [
       { to: "/impact-tv/tales", label: "Tales" },
       { to: "/impact-tv/nexus", label: "Nexus" },
     ],
+    megaMenu: {
+      sections: [
+        {
+          title: "Stories & Impact - UNITY",
+          description: "Unveil, Narrate, Inspire, Tell, Yours",
+          links: [
+            {
+              to: "/impact-tv/yarns",
+              label: "Yarns",
+              description: "Community stories",
+            },
+            {
+              to: "/impact-tv/unveil",
+              label: "Unveil",
+              description: "Behind the scenes",
+            },
+            {
+              to: "/impact-tv/icon",
+              label: "Icon",
+              description: "Featured changemakers",
+            },
+            {
+              to: "/impact-tv/tales",
+              label: "Tales",
+              description: "Impact narratives",
+            },
+            {
+              to: "/impact-tv/nexus",
+              label: "Nexus",
+              description: "Connect with us",
+            },
+          ],
+        },
+      ],
+    },
   },
   {
     label: "SPARK",
@@ -87,6 +304,45 @@ const MENU: MenuEntry[] = [
       { to: "/spark/blaze", label: "Blaze" },
       { to: "/spark/enlist", label: "Enlist" },
     ],
+    megaMenu: {
+      sections: [
+        {
+          title: "Get Involved - VIBE",
+          description: "Verve, Infuse, Blaze, Enlist",
+          links: [
+            {
+              to: "/spark/verve",
+              label: "Verve (Donate)",
+              description: "Fuel the movement with donations",
+            },
+            {
+              to: "/spark/infuse",
+              label: "Infuse (Invest)",
+              description: "Invest in sustainable futures",
+            },
+            {
+              to: "/spark/blaze",
+              label: "Blaze (Volunteer)",
+              description: "Ignite change with your time",
+            },
+            {
+              to: "/spark/enlist",
+              label: "Enlist (Careers)",
+              description: "Join the team",
+            },
+          ],
+        },
+      ],
+      featured: {
+        title: "Make Your Impact",
+        description:
+          "Every action counts. Donate, invest, volunteer, or join us full-time.",
+        image:
+          "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=600&h=400&fit=crop",
+        link: "/spark/verve",
+        badge: "Start Today",
+      },
+    },
   },
 ];
 
@@ -94,6 +350,7 @@ export default function Header() {
   const isMobile = useIsMobile();
   const location = useLocation();
   const { totalItems, openCart } = useCart();
+  const [showSearch, setShowSearch] = React.useState(false);
 
   const [openMenu, setOpenMenu] = React.useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -250,6 +507,14 @@ export default function Header() {
 
         {/* Right actions */}
         <div className="flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setShowSearch(true)}
+            className="hidden md:flex"
+          >
+            <Search className="h-5 w-5" />
+          </Button>
           <ThemeToggle />
           <Button
             variant="ghost"
@@ -355,38 +620,57 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Second navbar row - appears when menu is open */}
-      {openMenu && (
-        <div className="border-t border-border bg-background/95 backdrop-blur">
-          <div className="w-full px-4">
-            <nav className="flex items-center justify-center gap-0.5 py-3 flex-wrap max-w-full">
-              {MENU.find((m) => m.label === openMenu) &&
-                "items" in MENU.find((m) => m.label === openMenu)! &&
-                (
-                  MENU.find((m) => m.label === openMenu) as {
-                    label: string;
-                    items: SubLink[];
-                  }
-                ).items.map((sub) => (
-                  <NavLink
-                    key={sub.label}
-                    to={sub.to}
-                    className={({ isActive }) =>
-                      `px-3 py-2 text-sm font-semibold uppercase tracking-wide whitespace-nowrap transition-colors rounded-md ${
-                        isActive
-                          ? "text-[hsl(var(--brand-yellow))] bg-[hsl(0_0%_16%)]"
-                          : "text-foreground/80 hover:text-[hsl(var(--brand-yellow))] hover:bg-[hsl(0_0%_10%)]"
-                      }`
+      {/* Mega Menu - appears when menu is open */}
+      {openMenu &&
+        MENU.find((m) => m.label === openMenu) &&
+        "megaMenu" in MENU.find((m) => m.label === openMenu)! && (
+          <MegaMenu
+            sections={
+              (MENU.find((m) => m.label === openMenu) as any).megaMenu.sections
+            }
+            featured={
+              (MENU.find((m) => m.label === openMenu) as any).megaMenu.featured
+            }
+          />
+        )}
+
+      {/* Fallback second navbar row for menus without mega menu */}
+      {openMenu &&
+        MENU.find((m) => m.label === openMenu) &&
+        !("megaMenu" in MENU.find((m) => m.label === openMenu)!) && (
+          <div className="border-t border-border bg-background/95 backdrop-blur">
+            <div className="w-full px-4">
+              <nav className="flex items-center justify-center gap-0.5 py-3 flex-wrap max-w-full">
+                {MENU.find((m) => m.label === openMenu) &&
+                  "items" in MENU.find((m) => m.label === openMenu)! &&
+                  (
+                    MENU.find((m) => m.label === openMenu) as {
+                      label: string;
+                      items: SubLink[];
                     }
-                    onClick={() => setOpenMenu(null)}
-                  >
-                    {sub.label}
-                  </NavLink>
-                ))}
-            </nav>
+                  ).items.map((sub) => (
+                    <NavLink
+                      key={sub.label}
+                      to={sub.to}
+                      className={({ isActive }) =>
+                        `px-3 py-2 text-sm font-semibold uppercase tracking-wide whitespace-nowrap transition-colors rounded-md ${
+                          isActive
+                            ? "text-[hsl(var(--brand-yellow))] bg-[hsl(0_0%_16%)]"
+                            : "text-foreground/80 hover:text-[hsl(var(--brand-yellow))] hover:bg-[hsl(0_0%_10%)]"
+                        }`
+                      }
+                      onClick={() => setOpenMenu(null)}
+                    >
+                      {sub.label}
+                    </NavLink>
+                  ))}
+              </nav>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+      {/* Search Modal */}
+      <SearchModal open={showSearch} onOpenChange={setShowSearch} />
     </header>
   );
 }

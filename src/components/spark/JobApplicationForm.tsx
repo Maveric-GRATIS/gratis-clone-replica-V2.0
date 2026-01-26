@@ -4,10 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Loader2, Briefcase, Upload } from "lucide-react";
+import { db, storage } from "@/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const jobApplicationSchema = z.object({
   position: z.string().min(1, "Please select a position"),
@@ -15,7 +24,9 @@ const jobApplicationSchema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number is required"),
   city: z.string().min(2, "City is required"),
-  coverLetter: z.string().min(50, "Cover letter must be at least 50 characters"),
+  coverLetter: z
+    .string()
+    .min(50, "Cover letter must be at least 50 characters"),
   portfolio: z.string().url("Must be a valid URL").optional().or(z.literal("")),
   startDate: z.string().min(1, "Start date preference is required"),
 });
@@ -42,7 +53,10 @@ export const JobApplicationForm = () => {
     { value: "marketing-intern", label: "Marketing & Social Media Intern" },
     { value: "impact-intern", label: "Impact Analysis Intern" },
     { value: "operations-manager", label: "Operations Manager (Full-Time)" },
-    { value: "partnerships-manager", label: "Partnerships Manager (Full-Time)" },
+    {
+      value: "partnerships-manager",
+      label: "Partnerships Manager (Full-Time)",
+    },
     { value: "brand-ambassador", label: "GRATIS Brand Ambassador" },
   ];
 
@@ -70,16 +84,46 @@ export const JobApplicationForm = () => {
         return;
       }
 
-      console.log("Job application submitted:", {
+      let resumeUrl = "";
+      let resumeFileName = resumeFile.name;
+
+      // Try to upload resume to Firebase Storage
+      try {
+        toast.info("Uploading resume...");
+        const timestamp = Date.now();
+        const fileExtension = resumeFile.name.split(".").pop();
+        const storageRef = ref(
+          storage,
+          `applications/${timestamp}_${validatedData.name.replace(/\s+/g, "_")}.${fileExtension}`,
+        );
+
+        const uploadResult = await uploadBytes(storageRef, resumeFile);
+        resumeUrl = await getDownloadURL(uploadResult.ref);
+      } catch (storageError) {
+        console.warn(
+          "Storage upload failed, saving without file:",
+          storageError,
+        );
+        // Continue without file upload - admin can request it later
+        toast.warning(
+          "Resume upload failed. We'll save your application and you can email your resume separately.",
+        );
+      }
+
+      // Save application to Firestore
+      toast.info("Saving application...");
+      await addDoc(collection(db, "jobApplications"), {
         ...validatedData,
-        resume: resumeFile.name,
+        resumeUrl: resumeUrl || "pending",
+        resumeFileName,
+        status: "pending",
+        submittedAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
       });
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
       toast.success("Application submitted! 🎉", {
-        description: "We've received your application and will review it within 5 business days. Good luck!",
+        description:
+          "We've received your application and will review it within 5 business days. Good luck!",
       });
 
       // Reset form
@@ -94,15 +138,23 @@ export const JobApplicationForm = () => {
         startDate: "",
       });
       setResumeFile(null);
-      
+
       // Reset file input
       const fileInput = document.getElementById("resume") as HTMLInputElement;
       if (fileInput) fileInput.value = "";
     } catch (error) {
+      console.error("Error submitting application:", error);
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
+      } else if (error instanceof Error) {
+        toast.error(`Error: ${error.message}`, {
+          description: "Check the console for more details.",
+        });
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error("Something went wrong. Please try again.", {
+          description:
+            "Make sure you're connected to the internet and try again.",
+        });
       }
     } finally {
       setIsSubmitting(false);
@@ -118,7 +170,9 @@ export const JobApplicationForm = () => {
             <Label htmlFor="position">Position</Label>
             <Select
               value={formData.position}
-              onValueChange={(value) => setFormData({ ...formData, position: value })}
+              onValueChange={(value) =>
+                setFormData({ ...formData, position: value })
+              }
             >
               <SelectTrigger id="position">
                 <SelectValue placeholder="Select a position" />
@@ -140,7 +194,9 @@ export const JobApplicationForm = () => {
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 placeholder="Your full name"
                 required
               />
@@ -153,7 +209,9 @@ export const JobApplicationForm = () => {
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="your@email.com"
                   required
                 />
@@ -165,7 +223,9 @@ export const JobApplicationForm = () => {
                   id="phone"
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
                   placeholder="+31 6 12345678"
                   required
                 />
@@ -177,7 +237,9 @@ export const JobApplicationForm = () => {
               <Input
                 id="city"
                 value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, city: e.target.value })
+                }
                 placeholder="Amsterdam, Rotterdam, etc."
                 required
               />
@@ -202,16 +264,22 @@ export const JobApplicationForm = () => {
                 </div>
               )}
             </div>
-            <p className="text-xs text-muted-foreground">PDF, DOC, or DOCX (max 5MB)</p>
+            <p className="text-xs text-muted-foreground">
+              PDF, DOC, or DOCX (max 5MB)
+            </p>
           </div>
 
           {/* Cover Letter */}
           <div>
-            <Label htmlFor="coverLetter">Cover Letter: Why GRATIS? Why this role?</Label>
+            <Label htmlFor="coverLetter">
+              Cover Letter: Why GRATIS? Why this role?
+            </Label>
             <Textarea
               id="coverLetter"
               value={formData.coverLetter}
-              onChange={(e) => setFormData({ ...formData, coverLetter: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, coverLetter: e.target.value })
+              }
               placeholder="Tell us about yourself, why you're passionate about GRATIS, and why you're the right fit for this role..."
               rows={6}
               required
@@ -225,7 +293,9 @@ export const JobApplicationForm = () => {
               id="portfolio"
               type="url"
               value={formData.portfolio}
-              onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, portfolio: e.target.value })
+              }
               placeholder="https://linkedin.com/in/yourprofile or portfolio link"
             />
           </div>
@@ -236,7 +306,9 @@ export const JobApplicationForm = () => {
             <Input
               id="startDate"
               value={formData.startDate}
-              onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, startDate: e.target.value })
+              }
               placeholder="Immediately, 2 weeks notice, after graduation, etc."
               required
             />
@@ -249,7 +321,8 @@ export const JobApplicationForm = () => {
               <span className="font-semibold text-sm">APPLICATION PROCESS</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              We review applications on a rolling basis. Shortlisted candidates will be invited for an interview within 5 business days.
+              We review applications on a rolling basis. Shortlisted candidates
+              will be invited for an interview within 5 business days.
             </p>
           </div>
 
@@ -271,7 +344,8 @@ export const JobApplicationForm = () => {
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
-            By submitting this application, you consent to GRATIS storing and processing your personal data for recruitment purposes.
+            By submitting this application, you consent to GRATIS storing and
+            processing your personal data for recruitment purposes.
           </p>
         </form>
       </CardContent>

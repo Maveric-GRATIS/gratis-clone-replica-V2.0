@@ -110,5 +110,16 @@ service cloud.firestore {
     match /carts/{userId}/{items=**} {
       allow read, write: if isOwner(userId);
     }
+
+    // Job Applications
+    match /jobApplications/{applicationId} {
+      // Anyone can submit an application
+      allow create: if true
+                    && request.resource.data.keys().hasAll(['position', 'name', 'email', 'phone', 'city', 'coverLetter', 'startDate', 'resumeUrl', 'status'])
+                    && request.resource.data.status == 'pending';
+
+      // Only admins can read, update, or delete applications
+      allow read, update, delete: if isAdmin();
+    }
   }
 }

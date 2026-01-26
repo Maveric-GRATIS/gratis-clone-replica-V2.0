@@ -37,6 +37,16 @@ service firebase.storage {
       allow write: if isAdmin() && isValidImageUpload();
     }
 
+    // Job application resumes - anyone can upload, only admins can read
+    match /applications/{fileName} {
+      allow create: if request.resource.size < 5 * 1024 * 1024 // 5MB limit
+                    && (request.resource.contentType.matches('application/pdf')
+                        || request.resource.contentType.matches('application/msword')
+                        || request.resource.contentType.matches('application/vnd.openxmlformats-officedocument.wordprocessingml.document'));
+      allow read: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
     // Deny all other access
     match /{allPaths=**} {
       allow read, write: if false;

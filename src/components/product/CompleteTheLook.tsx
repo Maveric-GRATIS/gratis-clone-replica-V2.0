@@ -168,7 +168,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
             <Badge className="absolute top-4 left-4 z-10 bg-primary text-primary-foreground">
               Current Item
             </Badge>
-            <Link to={`/rig-store/${currentProduct.id}`} className="block">
+            <Link to={`/rig/${currentProduct.id}`} className="block">
               <div className="aspect-square p-6 bg-gradient-to-br from-gray-900 to-gray-800">
                 <img
                   src={currentProduct.image_url || ''}
@@ -195,7 +195,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
                 key={product.id}
                 className="group relative bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300"
               >
-                <Link to={`/rig-store/${product.id}`} className="block">
+                <Link to={`/rig/${product.id}`} className="block">
                   <div className="aspect-square p-6 bg-gradient-to-br from-gray-900 to-gray-800">
                     <img
                       src={product.image_url || ''}
@@ -276,7 +276,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
 
         {matchingProducts.length > 2 && (
           <div className="text-center pt-4">
-            <Link to="/rig-store">
+            <Link to="/rig">
               <Button variant="outline">
                 View More Matching Items
               </Button>

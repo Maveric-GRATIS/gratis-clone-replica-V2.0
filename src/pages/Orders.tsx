@@ -103,7 +103,7 @@ export default function Orders() {
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">
           <div className="flex justify-end mb-6">
-            <Button onClick={() => navigate('/rig-store')}>
+            <Button onClick={() => navigate('/rig')}>
               Continue Shopping
             </Button>
           </div>
@@ -114,7 +114,7 @@ export default function Orders() {
               title="No orders yet"
               description="Start shopping to see your orders here"
               actionLabel="Browse Products"
-              actionHref="/rig-store"
+              actionHref="/rig"
             />
           ) : (
             <div className="space-y-4">

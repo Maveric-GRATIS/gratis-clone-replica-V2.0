@@ -51,7 +51,7 @@ export default function Checkout() {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   if (items.length === 0 && currentStep === 1) {
-    navigate('/rig-store');
+    navigate('/rig');
     return null;
   }
 
@@ -173,7 +173,7 @@ export default function Checkout() {
               if (currentStep > 1) {
                 setCurrentStep(currentStep - 1);
               } else {
-                navigate('/rig-store');
+                navigate('/rig');
               }
             }}
             className="mb-6"

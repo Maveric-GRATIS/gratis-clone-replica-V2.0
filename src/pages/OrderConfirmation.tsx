@@ -70,7 +70,7 @@ export default function OrderConfirmation() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center">
           <p className="text-muted-foreground mb-4">Order not found</p>
-          <Button onClick={() => navigate('/rig-store')}>Return to Store</Button>
+          <Button onClick={() => navigate('/rig')}>Return to Store</Button>
         </Card>
       </div>
     );
@@ -127,7 +127,7 @@ export default function OrderConfirmation() {
               </Button>
               <Button
                 variant="outline"
-                onClick={() => navigate('/rig-store')}
+                onClick={() => navigate('/rig')}
                 className="w-full"
               >
                 Continue Shopping

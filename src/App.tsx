@@ -16,6 +16,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Gratis from "@/pages/Gratis";
 import Water from "@/pages/Water";
 import Theurgy from "@/pages/Theurgy";
 import FU from "@/pages/FU";
@@ -47,6 +48,14 @@ import Blaze from "@/pages/spark/Blaze";
 import Enlist from "@/pages/spark/Enlist";
 import Auth from "./pages/Auth";
 import RigStore from "./pages/RigStore";
+import PrimePicks from "./pages/rig/PrimePicks";
+import ApexArrivals from "./pages/rig/ApexArrivals";
+import ImbuedIcons from "./pages/rig/ImbuedIcons";
+import DazzleDrip from "./pages/rig/DazzleDrip";
+import CharmedCozies from "./pages/rig/CharmedCozies";
+import OccultOriginals from "./pages/rig/OccultOriginals";
+import NexusNoggin from "./pages/rig/NexusNoggin";
+import NebulaNovelties from "./pages/rig/NebulaNovelties";
 import HydrationStore from "./pages/HydrationStore";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
@@ -110,6 +119,48 @@ const App = () => {
                         <Routes>
                           <Route path="/" element={<Index />} />
                           <Route path="/auth" element={<Auth />} />
+                          <Route path="/rig" element={<RigStore />} />
+                          <Route
+                            path="/rig/prime-picks"
+                            element={<PrimePicks />}
+                          />
+                          <Route
+                            path="/rig/apex-arrivals"
+                            element={<ApexArrivals />}
+                          />
+                          <Route
+                            path="/rig/imbued-icons"
+                            element={<ImbuedIcons />}
+                          />
+                          <Route
+                            path="/rig/dazzle-drip"
+                            element={<DazzleDrip />}
+                          />
+                          <Route
+                            path="/rig/charmed-cozies"
+                            element={<CharmedCozies />}
+                          />
+                          <Route
+                            path="/rig/occult-originals"
+                            element={<OccultOriginals />}
+                          />
+                          <Route
+                            path="/rig/nexus-noggin"
+                            element={<NexusNoggin />}
+                          />
+                          <Route
+                            path="/rig/nebula-novelties"
+                            element={<NebulaNovelties />}
+                          />
+                          <Route
+                            path="/rig/collection/:slug"
+                            element={<CollectionDetail />}
+                          />
+                          <Route
+                            path="/rig/:slug"
+                            element={<ProductDetail />}
+                          />
+                          {/* Legacy route redirect */}
                           <Route path="/rig-store" element={<RigStore />} />
                           <Route
                             path="/rig-store/collection/:slug"
@@ -127,6 +178,11 @@ const App = () => {
                             path="/hydration/:slug"
                             element={<ProductDetail />}
                           />
+                          <Route path="/gratis" element={<Gratis />} />
+                          <Route path="/gratis/water" element={<Water />} />
+                          <Route path="/gratis/theurgy" element={<Theurgy />} />
+                          <Route path="/gratis/fu" element={<FU />} />
+                          {/* Legacy route redirects */}
                           <Route path="/water" element={<Water />} />
                           <Route path="/theurgy" element={<Theurgy />} />
                           <Route path="/fu" element={<FU />} />

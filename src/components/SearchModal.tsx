@@ -130,7 +130,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
                   <Link
-                    to="/rig-store"
+                    to="/rig"
                     onClick={() => onOpenChange(false)}
                     className="p-3 rounded-lg bg-muted hover:bg-accent transition-colors"
                   >

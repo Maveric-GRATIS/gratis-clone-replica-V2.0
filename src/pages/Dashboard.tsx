@@ -185,7 +185,7 @@ export default function Dashboard() {
               ) : (
                 <div className="text-center py-8">
                   <p className="text-muted-foreground mb-4">No orders yet</p>
-                  <Link to="/rig-store">
+                  <Link to="/rig">
                     <Button>Start Shopping</Button>
                   </Link>
                 </div>
@@ -196,7 +196,7 @@ export default function Dashboard() {
           {/* Quick Actions */}
           <div className="grid gap-4 md:grid-cols-3">
             <Card className="hover:shadow-lg transition-shadow">
-              <Link to="/rig-store">
+              <Link to="/rig">
                 <CardHeader>
                   <CardTitle className="text-lg">Shop Products</CardTitle>
                   <CardDescription>Browse our latest collection</CardDescription>

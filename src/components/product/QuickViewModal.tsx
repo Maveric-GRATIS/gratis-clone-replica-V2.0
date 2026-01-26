@@ -186,7 +186,7 @@ export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickV
                 className="w-full border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
                 size="lg"
               >
-                <Link to={`/rig-store/${product.id}`} onClick={onClose}>
+                <Link to={`/rig/${product.id}`} onClick={onClose}>
                   View Full Details
                 </Link>
               </Button>

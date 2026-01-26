@@ -29,7 +29,7 @@ export default function CollectionDetail() {
             The collection you're looking for doesn't exist.
           </p>
           <Button asChild>
-            <Link to="/rig-store">
+            <Link to="/rig">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Store
             </Link>
@@ -72,7 +72,7 @@ export default function CollectionDetail() {
               className="mb-6 text-white hover:text-primary"
               asChild
             >
-              <Link to="/rig-store">
+              <Link to="/rig">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Store
               </Link>
@@ -146,7 +146,7 @@ export default function CollectionDetail() {
                 title="No Products Yet"
                 description={`The ${collection.name} collection is being stocked. Check back soon for new drops!`}
                 actionLabel="Browse All Products"
-                onAction={() => (window.location.href = "/rig-store")}
+                onAction={() => (window.location.href = "/rig")}
               />
             ) : (
               <>
@@ -166,7 +166,7 @@ export default function CollectionDetail() {
                       key={product.id}
                       className="group overflow-hidden hover:shadow-lg transition-shadow"
                     >
-                      <Link to={`/rig-store/${product.slug || product.id}`}>
+                      <Link to={`/rig/${product.slug || product.id}`}>
                         <CardContent className="p-0">
                           <div className="aspect-square relative overflow-hidden bg-muted">
                             {product.image_url && (
@@ -186,7 +186,7 @@ export default function CollectionDetail() {
                       </Link>
                       <CardFooter className="flex flex-col items-start p-4 gap-3">
                         <div className="flex-1 w-full">
-                          <Link to={`/rig-store/${product.slug || product.id}`}>
+                          <Link to={`/rig/${product.slug || product.id}`}>
                             <h3 className="font-semibold text-lg hover:text-primary transition-colors line-clamp-1">
                               {product.name}
                             </h3>

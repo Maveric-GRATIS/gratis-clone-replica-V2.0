@@ -46,53 +46,61 @@ const MENU: MenuEntry[] = [
     label: "GRATIS",
     items: [
       {
-        to: "/water",
-        label: "Water",
-        description: "Free hydration for everyone",
+        to: "/gratis",
+        label: "Shop All",
+        description: "All beverage lines",
       },
       {
-        to: "/theurgy",
-        label: "Theurgy",
-        description: "The art behind the mission",
+        to: "/gratis/water",
+        label: "W.A.T.E.R",
+        description: "Pure Still Water",
       },
       {
-        to: "/fu",
+        to: "/gratis/theurgy",
+        label: "THEURGY",
+        description: "Wellness Functional Water",
+        badge: "PRE-ORDER",
+      },
+      {
+        to: "/gratis/fu",
         label: "F.U.",
-        description: "Fearlessly Uniting communities",
+        description: "Rebellious Functional Water",
+        badge: "PRE-ORDER",
       },
     ],
     megaMenu: {
       sections: [
         {
-          title: "Products",
+          title: "Beverage Lines — G.R.A.T.I.S",
           links: [
             {
-              to: "/water",
-              label: "Water",
-              description:
-                "Free hydration for everyone, funded by your purchases",
+              to: "/gratis/water",
+              label: "W.A.T.E.R",
+              description: "Pure natural spring water",
             },
             {
-              to: "/theurgy",
-              label: "Theurgy",
-              description: "Explore the spiritual art behind our mission",
+              to: "/gratis/theurgy",
+              label: "THEURGY",
+              description: "Wellness functional water",
+              badge: "PRE-ORDER",
             },
             {
-              to: "/fu",
+              to: "/gratis/fu",
               label: "F.U.",
-              description: "Fearlessly Uniting communities worldwide",
+              description: "Rebellious energy water",
+              badge: "PRE-ORDER",
             },
           ],
         },
       ],
       featured: {
-        title: "Join the Movement",
+        title: "Premium Hydration for a Purpose",
         description:
-          "Every purchase funds free water distribution. Be part of the change.",
+          "100% ad revenue donated to verified NGOs worldwide. Infinitely recyclable aluminum bottles.",
         image:
           "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop",
-        link: "/water",
-        badge: "Featured",
+        link: "/gratis",
+        badge: "Mission-Driven",
       },
     },
   },
@@ -100,30 +108,30 @@ const MENU: MenuEntry[] = [
     label: "RIG",
     items: [
       {
-        to: "/rig-store",
+        to: "/rig",
         label: "Shop All",
         description: "Explore all collections",
       },
       {
-        to: "/rig-store/collection/prime-picks",
+        to: "/rig/prime-picks",
         label: "Prime Picks",
         badge: "NEW",
       },
       {
-        to: "/rig-store/collection/apex-arrivals",
+        to: "/rig/apex-arrivals",
         label: "Apex Arrivals",
         badge: "NEW",
       },
-      { to: "/rig-store/collection/imbued-icons", label: "Imbued Icons" },
-      { to: "/rig-store/collection/dazzle-drip", label: "Dazzle Drip" },
-      { to: "/rig-store/collection/charmed-cozies", label: "Charmed Cozies" },
+      { to: "/rig/imbued-icons", label: "Imbued Icons" },
+      { to: "/rig/dazzle-drip", label: "Dazzle Drip" },
+      { to: "/rig/charmed-cozies", label: "Charmed Cozies" },
       {
-        to: "/rig-store/collection/occult-originals",
+        to: "/rig/occult-originals",
         label: "Occult Originals",
       },
-      { to: "/rig-store/collection/nexus-noggin", label: "Nexus Noggin" },
+      { to: "/rig/nexus-noggin", label: "Nexus Noggin" },
       {
-        to: "/rig-store/collection/nebula-novelties",
+        to: "/rig/nebula-novelties",
         label: "Nebula Novelties",
       },
     ],
@@ -133,7 +141,7 @@ const MENU: MenuEntry[] = [
           title: "Collections",
           links: [
             {
-              to: "/rig-store/collection/prime-picks",
+              to: "/rig/prime-picks",
               label: "Prime Picks",
               description: "Premium essentials",
               badge: "NEW",
@@ -141,7 +149,7 @@ const MENU: MenuEntry[] = [
                 "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100&h=100&fit=crop",
             },
             {
-              to: "/rig-store/collection/apex-arrivals",
+              to: "/rig/apex-arrivals",
               label: "Apex Arrivals",
               description: "Just landed",
               badge: "NEW",
@@ -149,14 +157,14 @@ const MENU: MenuEntry[] = [
                 "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=100&h=100&fit=crop",
             },
             {
-              to: "/rig-store/collection/imbued-icons",
+              to: "/rig/imbued-icons",
               label: "Imbued Icons",
               description: "Iconic designs",
               image:
                 "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=100&h=100&fit=crop",
             },
             {
-              to: "/rig-store/collection/dazzle-drip",
+              to: "/rig/dazzle-drip",
               label: "Dazzle Drip",
               description: "Statement pieces",
               image:
@@ -168,28 +176,28 @@ const MENU: MenuEntry[] = [
           title: "More Styles",
           links: [
             {
-              to: "/rig-store/collection/charmed-cozies",
+              to: "/rig/charmed-cozies",
               label: "Charmed Cozies",
               description: "Comfort wear",
               image:
                 "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=100&h=100&fit=crop",
             },
             {
-              to: "/rig-store/collection/occult-originals",
+              to: "/rig/occult-originals",
               label: "Occult Originals",
               description: "Unique finds",
               image:
                 "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?w=100&h=100&fit=crop",
             },
             {
-              to: "/rig-store/collection/nexus-noggin",
+              to: "/rig/nexus-noggin",
               label: "Nexus Noggin",
               description: "Headwear",
               image:
                 "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=100&h=100&fit=crop",
             },
             {
-              to: "/rig-store/collection/nebula-novelties",
+              to: "/rig/nebula-novelties",
               label: "Nebula Novelties",
               description: "Fun extras",
               image:
@@ -204,7 +212,7 @@ const MENU: MenuEntry[] = [
           "Fresh designs that make a difference. Shop the latest drops.",
         image:
           "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=600&h=400&fit=crop",
-        link: "/rig-store",
+        link: "/rig",
         badge: "New Arrivals",
       },
     },
@@ -547,7 +555,7 @@ export default function Header() {
           <UserProfile />
           <div className="hidden md:block">
             <Button variant="hero" size={isMobile ? "sm" : "default"} asChild>
-              <Link to="/rig-store">Shop</Link>
+              <Link to="/rig">Shop</Link>
             </Button>
           </div>
 

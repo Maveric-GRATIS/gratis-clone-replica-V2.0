@@ -207,7 +207,7 @@ export default function RigStore() {
             {featuredCollections.map((collection, index) => (
               <Link
                 key={collection.id}
-                to={`/rig-store/collection/${collection.slug}`}
+                to={`/rig/collection/${collection.slug}`}
                 className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-black border border-gray-800 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/20"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
@@ -256,7 +256,7 @@ export default function RigStore() {
               .map((collection) => (
                 <Link
                   key={collection.id}
-                  to={`/rig-store/collection/${collection.slug}`}
+                  to={`/rig/collection/${collection.slug}`}
                   className="group relative overflow-hidden rounded-xl bg-gray-900 border border-gray-800 hover:border-primary/50 transition-all duration-300 p-6 hover:scale-105"
                 >
                   <div
@@ -400,7 +400,7 @@ export default function RigStore() {
               {filteredProducts.map((product, index) => (
                 <Link
                   key={product.id}
-                  to={`/rig-store/${product.id}`}
+                  to={`/rig/${product.id}`}
                   className="group relative bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-3xl overflow-hidden transform-gpu transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/10 block animate-fade-in"
                   onMouseEnter={() => setHoveredProduct(product.id)}
                   onMouseLeave={() => setHoveredProduct(null)}

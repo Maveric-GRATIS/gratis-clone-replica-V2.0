@@ -44,7 +44,7 @@ const NotFound = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link to="/rig-store">
+              <Link to="/rig">
                 <ShoppingBag className="mr-2 h-4 w-4" />
                 Shop Products
               </Link>

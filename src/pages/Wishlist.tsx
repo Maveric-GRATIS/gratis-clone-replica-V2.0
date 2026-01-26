@@ -67,7 +67,7 @@ export default function Wishlist() {
               title="Your wishlist is empty"
               description="Start browsing and save your favorite items for later"
               actionLabel="Browse Products"
-              actionHref="/rig-store"
+              actionHref="/rig"
             />
           ) : (
             <div className="space-y-4">
@@ -81,7 +81,7 @@ export default function Wishlist() {
                         className="w-24 h-24 object-cover rounded"
                       />
                       <div className="flex-1">
-                        <Link to={`/rig-store/${item.product_id}`}>
+                        <Link to={`/rig/${item.product_id}`}>
                           <h3 className="text-lg font-semibold hover:text-primary transition-colors">
                             {item.products.name}
                           </h3>

@@ -3,16 +3,14 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
-import { ProductGrid } from "@/components/ProductGrid";
+import ProductGrid from "@/components/ProductGrid";
 import { Star, TrendingUp, ArrowRight } from "lucide-react";
 
 export default function PrimePicks() {
   const { products, loading } = useProducts("merch");
 
   // Get best-selling/featured products
-  const primeProducts = products
-    .filter((p) => p.featured || p.bestseller)
-    .slice(0, 12);
+  const primeProducts = products.filter((p) => p.featured).slice(0, 12);
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,11 +101,7 @@ export default function PrimePicks() {
             </p>
           </div>
 
-          <ProductGrid
-            products={primeProducts}
-            loading={loading}
-            emptyMessage="No prime picks available right now. Check back soon!"
-          />
+          <ProductGrid category="merch" featured={true} showTitle={false} />
         </div>
       </section>
 

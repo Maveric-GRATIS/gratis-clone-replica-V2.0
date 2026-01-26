@@ -3,7 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
-import { ProductGrid } from "@/components/ProductGrid";
+import ProductGrid from "@/components/ProductGrid";
 import { Wind, ArrowRight } from "lucide-react";
 
 export default function CharmedCozies() {
@@ -105,11 +105,7 @@ export default function CharmedCozies() {
             </p>
           </div>
 
-          <ProductGrid
-            products={hoodieProducts}
-            loading={loading}
-            emptyMessage="No hoodies available right now. New drops coming soon!"
-          />
+          <ProductGrid category="merch" showTitle={false} />
         </div>
       </section>
     </div>

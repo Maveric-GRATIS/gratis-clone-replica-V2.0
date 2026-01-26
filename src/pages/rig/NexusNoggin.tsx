@@ -3,7 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
-import { ProductGrid } from "@/components/ProductGrid";
+import ProductGrid from "@/components/ProductGrid";
 import { Crown, ArrowRight } from "lucide-react";
 
 export default function NexusNoggin() {
@@ -106,11 +106,7 @@ export default function NexusNoggin() {
             </p>
           </div>
 
-          <ProductGrid
-            products={hatProducts}
-            loading={loading}
-            emptyMessage="No headwear available right now. New styles dropping soon!"
-          />
+          <ProductGrid category="merch" showTitle={false} />
         </div>
       </section>
     </div>

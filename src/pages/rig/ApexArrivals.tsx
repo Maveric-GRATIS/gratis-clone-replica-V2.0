@@ -3,7 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
-import { ProductGrid } from "@/components/ProductGrid";
+import ProductGrid from "@/components/ProductGrid";
 import { Zap, Calendar, ArrowRight } from "lucide-react";
 
 export default function ApexArrivals() {
@@ -83,11 +83,7 @@ export default function ApexArrivals() {
             </p>
           </div>
 
-          <ProductGrid
-            products={newProducts}
-            loading={loading}
-            emptyMessage="No new arrivals at the moment. Check back soon for fresh drops!"
-          />
+          <ProductGrid category="merch" showTitle={false} />
         </div>
       </section>
 

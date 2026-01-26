@@ -3,7 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
-import { ProductGrid } from "@/components/ProductGrid";
+import ProductGrid from "@/components/ProductGrid";
 import { Shirt, ArrowRight } from "lucide-react";
 
 export default function ImbuedIcons() {
@@ -104,11 +104,7 @@ export default function ImbuedIcons() {
             </p>
           </div>
 
-          <ProductGrid
-            products={teeProducts}
-            loading={loading}
-            emptyMessage="No tees available right now. New designs dropping soon!"
-          />
+          <ProductGrid category="merch" showTitle={false} />
         </div>
       </section>
     </div>

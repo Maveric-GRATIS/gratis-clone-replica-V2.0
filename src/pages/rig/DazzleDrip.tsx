@@ -3,7 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
-import { ProductGrid } from "@/components/ProductGrid";
+import ProductGrid from "@/components/ProductGrid";
 import { Coffee, ArrowRight } from "lucide-react";
 
 export default function DazzleDrip() {
@@ -101,11 +101,7 @@ export default function DazzleDrip() {
             </p>
           </div>
 
-          <ProductGrid
-            products={drinkwareProducts}
-            loading={loading}
-            emptyMessage="No drinkware available right now. Check back soon!"
-          />
+          <ProductGrid category="merch" showTitle={false} />
         </div>
       </section>
     </div>

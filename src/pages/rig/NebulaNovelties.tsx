@@ -3,7 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
-import { ProductGrid } from "@/components/ProductGrid";
+import ProductGrid from "@/components/ProductGrid";
 import { Sparkles, ArrowRight } from "lucide-react";
 
 export default function NebulaNovelties() {
@@ -107,11 +107,7 @@ export default function NebulaNovelties() {
             </p>
           </div>
 
-          <ProductGrid
-            products={accessoryProducts}
-            loading={loading}
-            emptyMessage="No accessories available right now. Check back for new drops!"
-          />
+          <ProductGrid category="merch" showTitle={false} />
         </div>
       </section>
     </div>

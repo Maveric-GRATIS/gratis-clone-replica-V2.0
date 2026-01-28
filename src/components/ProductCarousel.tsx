@@ -5,6 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
+import Autoplay from "embla-carousel-autoplay";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const products = [
   {
@@ -39,6 +42,62 @@ const products = [
 export const ProductCarousel = () => {
   const { addItem } = useCart();
   const { t } = useTranslation();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Track active slide based on scroll position
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      const scrollLeft = scrollContainer.scrollLeft;
+      const itemWidth = scrollContainer.offsetWidth * 0.85; // Approximate item width
+      const newIndex = Math.round(scrollLeft / itemWidth);
+      setActiveIndex(newIndex);
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    let scrollInterval: NodeJS.Timeout;
+
+    const startAutoScroll = () => {
+      if (isPaused) return;
+
+      scrollInterval = setInterval(() => {
+        if (!scrollContainer) return;
+
+        const scrollAmount = scrollContainer.offsetWidth * 0.9; // Scroll by ~90% of container width
+        const currentScroll = scrollContainer.scrollLeft;
+        const maxScroll =
+          scrollContainer.scrollWidth - scrollContainer.clientWidth;
+
+        // If at the end, reset to start
+        if (currentScroll >= maxScroll - 10) {
+          scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          scrollContainer.scrollTo({
+            left: currentScroll + scrollAmount,
+            behavior: "smooth",
+          });
+        }
+      }, 4000); // Auto-scroll every 4 seconds
+    };
+
+    startAutoScroll();
+
+    return () => {
+      clearInterval(scrollInterval);
+    };
+  }, [isPaused]);
 
   const handleAddToCart = (product: (typeof products)[0]) => {
     addItem({
@@ -49,6 +108,27 @@ export const ProductCarousel = () => {
       category: "beverage",
     });
     toast.success(`${product.name} ${t("products.carousel.addedToCart")}`);
+  };
+
+  const scrollToIndex = (index: number) => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const itemWidth = scrollContainer.offsetWidth * 0.85;
+    scrollContainer.scrollTo({
+      left: itemWidth * index,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollPrev = () => {
+    const newIndex = Math.max(0, activeIndex - 1);
+    scrollToIndex(newIndex);
+  };
+
+  const scrollNext = () => {
+    const newIndex = Math.min(products.length - 1, activeIndex + 1);
+    scrollToIndex(newIndex);
   };
 
   return (
@@ -69,8 +149,32 @@ export const ProductCarousel = () => {
 
         {/* Horizontal Scroll Container */}
         <div className="relative">
+          {/* Navigation Buttons (Desktop) */}
+          <button
+            onClick={scrollPrev}
+            disabled={activeIndex === 0}
+            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border-2 border-border hover:bg-background hover:border-primary/50 transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={scrollNext}
+            disabled={activeIndex === products.length - 1}
+            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border-2 border-border hover:bg-background hover:border-primary/50 transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
           {/* Scrollable Product Container */}
-          <div className="flex gap-8 overflow-x-auto snap-x snap-mandatory px-4 lg:px-8 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div
+            ref={scrollContainerRef}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            className="flex gap-8 overflow-x-auto snap-x snap-mandatory px-4 lg:px-8 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth"
+          >
             {products.map((product, index) => (
               <div
                 key={index}
@@ -132,9 +236,24 @@ export const ProductCarousel = () => {
           {/* Scroll Indicator (Mobile) */}
           <div className="flex justify-center gap-2 mt-6 lg:hidden">
             {products.map((_, index) => (
-              <div
+              <button
                 key={index}
-                className="w-2 h-2 rounded-full bg-muted-foreground/30"
+                onClick={() => {
+                  const scrollContainer = scrollContainerRef.current;
+                  if (scrollContainer) {
+                    const itemWidth = scrollContainer.offsetWidth * 0.85;
+                    scrollContainer.scrollTo({
+                      left: itemWidth * index,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  activeIndex === index
+                    ? "bg-primary w-8"
+                    : "bg-muted-foreground/30"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>

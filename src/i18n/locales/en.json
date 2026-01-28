@@ -39,7 +39,34 @@
     "heroSubtitle": "From mountain springs to your hands — in 100% recyclable tetrapacks.",
     "heroCTA": "Drink with Purpose",
     "whyChoose": "Why Choose GRATIS?",
-    "whyChooseSubtitle": "Pure hydration meets street culture"
+    "whyChooseSubtitle": "Pure hydration meets street culture",
+    "seoTitle": "GRATIS — Pure Power, Pure Purpose",
+    "seoDescription": "Pure hydration in 100% recyclable tetrapacks.",
+    "features": {
+      "pureMountain": {
+        "title": "Pure Mountain Source",
+        "description": "Sourced from pristine mountain aquifers, naturally filtered through ancient rock formations."
+      },
+      "sustainable": {
+        "title": "Sustainable Packaging",
+        "description": "100% recyclable tetrapacks with 50% less carbon footprint than plastic bottles."
+      },
+      "socialImpact": {
+        "title": "Social Impact",
+        "description": "Every purchase provides 1 day of clean drinking water to communities in need."
+      },
+      "zeroWaste": {
+        "title": "Zero Waste",
+        "description": "Renewable energy production and plastic-free supply chain."
+      },
+      "cta": {
+        "title": "Ready to Experience the Difference?",
+        "subtitle": "Join thousands who've already made the switch to a better, more sustainable future.",
+        "guarantee": "30-Day Money Back Guarantee",
+        "freeShipping": "Free Shipping on Orders $50+",
+        "impactTracking": "Impact Tracking Dashboard"
+      }
+    }
   },
   "products": {
     "title": "Our Products",
@@ -49,7 +76,25 @@
     "details": "Details",
     "price": "Price",
     "features": "Features",
-    "reviews": "Reviews"
+    "reviews": "Reviews",
+    "carousel": {
+      "title": "THIRST HAS NO BORDERS",
+      "subtitle": "Three sizes. One mission. Zero plastic.",
+      "shopAll": "SHOP ALL SIZES",
+      "water": {
+        "subtitle": "500ML Tetrapack",
+        "description": "Still Water. Pure. Simple."
+      },
+      "theurgy": {
+        "subtitle": "20OZ Tetrapack",
+        "description": "Sparkling Energy. Magic Bubbles."
+      },
+      "fu": {
+        "subtitle": "1 GAL Tetrapack",
+        "description": "Flavored Attitude. Big Impact."
+      },
+      "addedToCart": "added to cart"
+    }
   },
   "water": {
     "title": "Free Water Initiative",
@@ -158,8 +203,40 @@
     "successDescription": "We'll get back to you within 24 hours.",
     "errorTitle": "Failed to send message",
     "errorDescription": "Please try again later or contact us directly."
-  },
-  "gratis": {
+  },  "advertising": {
+    "badge": "Partner With Purpose",
+    "title": "More Than Advertising.",
+    "titleSubtitle": "A Cultural Statement.",
+    "intro": "Every day, thousands of hands reach for GRATIS. Not just for hydration, but as a symbol of sustainable living and street authenticity. Your brand can be part of this story.",
+    "movement": {
+      "title": "The Movement",
+      "description": "From street corners to festival stages, GRATIS has become the hydration choice for urban culture enthusiasts."
+    },
+    "connection": {
+      "title": "The Connection",
+      "description": "Every pack is a daily touchpoint—intimate, authentic, and carried with pride by our community."
+    },
+    "impact": {
+      "title": "The Impact",
+      "description": "Your brand doesn't just get seen. It becomes part of the culture, the movement, the lifestyle."
+    },
+    "whyPartner": "Why Partner With GRATIS?",
+    "benefits": {
+      "reach": "Reach urban, style-conscious demographics",
+      "alignment": "Eco-conscious brand alignment",
+      "visibility": "High-visibility product placement",
+      "custom": "Custom pack designs available"
+    },
+    "cta": {
+      "become": "Become a Partner",
+      "contact": "Contact Us"
+    },
+    "stats": {
+      "packs": "Packs Distributed Monthly",
+      "recyclable": "Recyclable Packaging",
+      "visibility": "Brand Visibility"
+    }
+  },  "gratis": {
     "title": "GRATIS — Premium Hydration for a Purpose",
     "subtitle": "Three revolutionary beverage lines. Infinitely recyclable aluminum bottles. 100% advertising revenue donated to verified NGOs worldwide.",
     "hero": "PREMIUM HYDRATION",

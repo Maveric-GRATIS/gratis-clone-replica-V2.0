@@ -1,4 +1,13 @@
-import { CheckCircle, Leaf, Recycle, Heart, Flame, Palette, Hash } from "lucide-react";
+import {
+  CheckCircle,
+  Leaf,
+  Recycle,
+  Heart,
+  Flame,
+  Palette,
+  Hash,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Feature {
   icon: React.ReactNode;
@@ -13,7 +22,13 @@ interface ProductFeaturesProps {
   subtitle: string;
 }
 
-export default function ProductFeatures({ features, title, subtitle }: ProductFeaturesProps) {
+export default function ProductFeatures({
+  features,
+  title,
+  subtitle,
+}: ProductFeaturesProps) {
+  const { t } = useTranslation();
+
   return (
     <section className="bg-gradient-to-br from-gray-900 to-black py-20">
       <div className="container">
@@ -21,9 +36,7 @@ export default function ProductFeatures({ features, title, subtitle }: ProductFe
           <h2 className="text-4xl md:text-6xl font-black text-white mb-4">
             {title}
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            {subtitle}
-          </p>
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto">{subtitle}</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -65,20 +78,20 @@ export default function ProductFeatures({ features, title, subtitle }: ProductFe
         <div className="mt-20 text-center">
           <div className="inline-block bg-gradient-to-r from-primary to-accent p-8 rounded-3xl">
             <h3 className="text-3xl font-black text-black mb-4">
-              Ready to Experience the Difference?
+              {t("home.features.cta.title")}
             </h3>
             <p className="text-black/80 mb-6 max-w-2xl">
-              Join thousands who've already made the switch to a better, more sustainable future.
+              {t("home.features.cta.subtitle")}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <div className="bg-black/20 backdrop-blur-sm rounded-full px-6 py-3 text-black font-bold">
-                ✓ 30-Day Money Back Guarantee
+                ✓ {t("home.features.cta.guarantee")}
               </div>
               <div className="bg-black/20 backdrop-blur-sm rounded-full px-6 py-3 text-black font-bold">
-                ✓ Free Shipping on Orders $50+
+                ✓ {t("home.features.cta.freeShipping")}
               </div>
               <div className="bg-black/20 backdrop-blur-sm rounded-full px-6 py-3 text-black font-bold">
-                ✓ Impact Tracking Dashboard
+                ✓ {t("home.features.cta.impactTracking")}
               </div>
             </div>
           </div>
@@ -89,83 +102,125 @@ export default function ProductFeatures({ features, title, subtitle }: ProductFe
 }
 
 // Predefined feature sets for different product types
+// Hook to get translated water features
+export const useWaterFeatures = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      icon: <CheckCircle className="w-8 h-8" />,
+      title: t("home.features.pureMountain.title"),
+      description: t("home.features.pureMountain.description"),
+      stat: "100%",
+    },
+    {
+      icon: <Recycle className="w-8 h-8" />,
+      title: t("home.features.sustainable.title"),
+      description: t("home.features.sustainable.description"),
+      stat: "50%",
+    },
+    {
+      icon: <Heart className="w-8 h-8" />,
+      title: t("home.features.socialImpact.title"),
+      description: t("home.features.socialImpact.description"),
+      stat: "1 Day",
+    },
+    {
+      icon: <Leaf className="w-8 h-8" />,
+      title: t("home.features.zeroWaste.title"),
+      description: t("home.features.zeroWaste.description"),
+      stat: "0",
+    },
+  ];
+};
+
 export const waterFeatures: Feature[] = [
   {
     icon: <CheckCircle className="w-8 h-8" />,
     title: "Pure Mountain Source",
-    description: "Sourced from pristine mountain aquifers, naturally filtered through ancient rock formations.",
-    stat: "100%"
+    description:
+      "Sourced from pristine mountain aquifers, naturally filtered through ancient rock formations.",
+    stat: "100%",
   },
   {
     icon: <Recycle className="w-8 h-8" />,
     title: "Sustainable Packaging",
-    description: "100% recyclable tetrapacks with 50% less carbon footprint than plastic bottles.",
-    stat: "50%"
+    description:
+      "100% recyclable tetrapacks with 50% less carbon footprint than plastic bottles.",
+    stat: "50%",
   },
   {
     icon: <Heart className="w-8 h-8" />,
     title: "Social Impact",
-    description: "Every purchase provides 1 day of clean drinking water to communities in need.",
-    stat: "1 Day"
+    description:
+      "Every purchase provides 1 day of clean drinking water to communities in need.",
+    stat: "1 Day",
   },
   {
     icon: <Leaf className="w-8 h-8" />,
     title: "Zero Waste",
     description: "Renewable energy production and plastic-free supply chain.",
-    stat: "0"
-  }
+    stat: "0",
+  },
 ];
 
 export const theurgySparks: Feature[] = [
   {
     icon: <CheckCircle className="w-8 h-8" />,
     title: "Real Fruit Flavors",
-    description: "Authentic citrus, hibiscus, and dragonfruit - no artificial anything.",
-    stat: "100%"
+    description:
+      "Authentic citrus, hibiscus, and dragonfruit - no artificial anything.",
+    stat: "100%",
   },
   {
     icon: <Heart className="w-8 h-8" />,
     title: "Cultural Inspiration",
-    description: "Each flavor celebrates global traditions and cultural rituals.",
-    stat: "∞"
+    description:
+      "Each flavor celebrates global traditions and cultural rituals.",
+    stat: "∞",
   },
   {
     icon: <Leaf className="w-8 h-8" />,
     title: "Art & Music Support",
-    description: "5% of sales fund creative programs in underserved communities.",
-    stat: "5%"
+    description:
+      "5% of sales fund creative programs in underserved communities.",
+    stat: "5%",
   },
   {
     icon: <Recycle className="w-8 h-8" />,
     title: "Sparkling Perfection",
     description: "Perfect carbonation that enhances every natural flavor note.",
-    stat: "Perfect"
-  }
+    stat: "Perfect",
+  },
 ];
 
 export const fuFeatures: Feature[] = [
   {
     icon: <Flame className="w-8 h-8" />,
     title: "Extreme Flavors",
-    description: "Spicy lime, frozen mint, mystery drops. Flavors that challenge convention and aren't for the faint of heart.",
-    stat: "10+"
+    description:
+      "Spicy lime, frozen mint, mystery drops. Flavors that challenge convention and aren't for the faint of heart.",
+    stat: "10+",
   },
   {
     icon: <Palette className="w-8 h-8" />,
     title: "Artist Collaborations",
-    description: "Limited designs from renowned street artists. Each bottle is a canvas, every edition is collectible.",
-    stat: "500"
+    description:
+      "Limited designs from renowned street artists. Each bottle is a canvas, every edition is collectible.",
+    stat: "500",
   },
   {
     icon: <Hash className="w-8 h-8" />,
     title: "Numbered Editions",
-    description: "Every bottle authenticated with a unique edition number. Truly collectible, genuinely limited.",
-    stat: "#1"
+    description:
+      "Every bottle authenticated with a unique edition number. Truly collectible, genuinely limited.",
+    stat: "#1",
   },
   {
     icon: <Heart className="w-8 h-8" />,
     title: "100% to NGOs",
-    description: "Premium pricing means premium impact. Every euro funds clean water projects worldwide.",
-    stat: "100%"
-  }
+    description:
+      "Premium pricing means premium impact. Every euro funds clean water projects worldwide.",
+    stat: "100%",
+  },
 ];

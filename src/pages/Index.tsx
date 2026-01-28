@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
-import ProductFeatures, { waterFeatures } from "@/components/ProductFeatures";
+import ProductFeatures, {
+  useWaterFeatures,
+} from "@/components/ProductFeatures";
 import MerchCarousel from "@/components/MerchCarousel";
 import AdvertisingPartnerCTA from "@/components/AdvertisingPartnerCTA";
 import { ProductCarousel } from "@/components/ProductCarousel";
@@ -25,6 +27,7 @@ const backgroundImages = [
 
 export default function Index() {
   const { t } = useTranslation();
+  const waterFeatures = useWaterFeatures();
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
@@ -89,8 +92,8 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden max-w-full">
       <SEO
-        title="GRATIS — Pure Power, Pure Purpose"
-        description="Pure hydration in 100% recyclable tetrapacks."
+        title={t("home.seoTitle")}
+        description={t("home.seoDescription")}
         canonical={typeof window !== "undefined" ? window.location.href : "/"}
       />
 

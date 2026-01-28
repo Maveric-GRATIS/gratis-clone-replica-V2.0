@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const products = [
   {
     id: "water-500ml",
     name: "W.A.T.E.R",
-    subtitle: "500ML Tetrapack",
-    description: "Still Water. Pure. Simple.",
+    subtitleKey: "products.carousel.water.subtitle",
+    descriptionKey: "products.carousel.water.description",
     price: 4.97,
     size: "500ML",
     image: "/lovable-uploads/c51ea472-b223-4a6a-934c-74b38370615e.png",
@@ -18,8 +19,8 @@ const products = [
   {
     id: "theurgy-20oz",
     name: "THEURGY",
-    subtitle: "20OZ Tetrapack",
-    description: "Sparkling Energy. Magic Bubbles.",
+    subtitleKey: "products.carousel.theurgy.subtitle",
+    descriptionKey: "products.carousel.theurgy.description",
     price: 5.97,
     size: "20OZ",
     image: "/lovable-uploads/cdefb4a2-d74d-4f9f-be84-9100cb927d52.png",
@@ -27,8 +28,8 @@ const products = [
   {
     id: "fu-1gal",
     name: "F.U.",
-    subtitle: "1 GAL Tetrapack",
-    description: "Flavored Attitude. Big Impact.",
+    subtitleKey: "products.carousel.fu.subtitle",
+    descriptionKey: "products.carousel.fu.description",
     price: 12.97,
     size: "1 GAL",
     image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
@@ -37,6 +38,7 @@ const products = [
 
 export const ProductCarousel = () => {
   const { addItem } = useCart();
+  const { t } = useTranslation();
 
   const handleAddToCart = (product: (typeof products)[0]) => {
     addItem({
@@ -46,7 +48,7 @@ export const ProductCarousel = () => {
       image: product.image,
       category: "beverage",
     });
-    toast.success(`${product.name} added to cart`);
+    toast.success(`${product.name} ${t("products.carousel.addedToCart")}`);
   };
 
   return (
@@ -58,10 +60,10 @@ export const ProductCarousel = () => {
             className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase text-foreground mb-3"
             style={{ letterSpacing: "-0.03em" }}
           >
-            THIRST HAS NO BORDERS
+            {t("products.carousel.title")}
           </h2>
           <p className="text-lg text-muted-foreground">
-            Three sizes. One mission. Zero plastic.
+            {t("products.carousel.subtitle")}
           </p>
         </div>
 
@@ -100,12 +102,12 @@ export const ProductCarousel = () => {
 
                       {/* Subtitle */}
                       <p className="text-sm text-muted-foreground font-medium mb-2">
-                        {product.subtitle}
+                        {t(product.subtitleKey)}
                       </p>
 
                       {/* Description */}
                       <p className="text-sm text-muted-foreground/70 mb-4 min-h-[40px]">
-                        {product.description}
+                        {t(product.descriptionKey)}
                       </p>
 
                       {/* Price + CTA */}
@@ -117,7 +119,7 @@ export const ProductCarousel = () => {
                           onClick={() => handleAddToCart(product)}
                           className="w-full font-bold uppercase text-sm"
                         >
-                          ADD TO CART
+                          {t("products.addToCart")}
                         </Button>
                       </div>
                     </div>
@@ -141,7 +143,9 @@ export const ProductCarousel = () => {
         {/* Bottom CTA */}
         <div className="text-center mt-12 px-4">
           <Button variant="hero" size="lg" asChild>
-            <Link to="/rig?category=beverage">SHOP ALL SIZES</Link>
+            <Link to="/rig?category=beverage">
+              {t("products.carousel.shopAll")}
+            </Link>
           </Button>
         </div>
       </div>

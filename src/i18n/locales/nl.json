@@ -39,7 +39,34 @@
     "heroSubtitle": "Van bergbronnen tot jouw handen — in 100% recyclebare tetrapacks.",
     "heroCTA": "Drink met een Doel",
     "whyChoose": "Waarom Kiezen voor GRATIS?",
-    "whyChooseSubtitle": "Pure hydratatie ontmoet straatcultuur"
+    "whyChooseSubtitle": "Pure hydratatie ontmoet straatcultuur",
+    "seoTitle": "GRATIS — Pure Kracht, Pure Doel",
+    "seoDescription": "Pure hydratatie in 100% recyclebare tetrapacks.",
+    "features": {
+      "pureMountain": {
+        "title": "Pure Bergbron",
+        "description": "Afkomstig van ongerepte bergwaterbronnen, natuurlijk gefilterd door eeuwenoude rotsformaties."
+      },
+      "sustainable": {
+        "title": "Duurzame Verpakking",
+        "description": "100% recyclebare tetrapacks met 50% minder CO2-voetafdruk dan plastic flessen."
+      },
+      "socialImpact": {
+        "title": "Sociale Impact",
+        "description": "Elke aankoop zorgt voor 1 dag schoon drinkwater voor gemeenschappen in nood."
+      },
+      "zeroWaste": {
+        "title": "Nul Afval",
+        "description": "Productie met hernieuwbare energie en plasticvrije toeleveringsketen."
+      },
+      "cta": {
+        "title": "Klaar om het Verschil te Ervaren?",
+        "subtitle": "Sluit je aan bij duizenden die al zijn overgestapt op een betere, duurzamere toekomst.",
+        "guarantee": "30 Dagen Geld-Terug-Garantie",
+        "freeShipping": "Gratis Verzending bij Bestellingen $50+",
+        "impactTracking": "Impact Tracking Dashboard"
+      }
+    }
   },
   "products": {
     "title": "Onze Producten",
@@ -49,7 +76,25 @@
     "details": "Details",
     "price": "Prijs",
     "features": "Kenmerken",
-    "reviews": "Beoordelingen"
+    "reviews": "Beoordelingen",
+    "carousel": {
+      "title": "DORST KENT GEEN GRENZEN",
+      "subtitle": "Drie formaten. Eén missie. Nul plastic.",
+      "shopAll": "WINKEL ALLE FORMATEN",
+      "water": {
+        "subtitle": "500ML Tetrapack",
+        "description": "Still Water. Puur. Simpel."
+      },
+      "theurgy": {
+        "subtitle": "20OZ Tetrapack",
+        "description": "Sprankelende Energie. Magische Bubbels."
+      },
+      "fu": {
+        "subtitle": "1 GAL Tetrapack",
+        "description": "Gearomatiseerde Attitude. Grote Impact."
+      },
+      "addedToCart": "toegevoegd aan winkelwagen"
+    }
   },
   "water": {
     "title": "Gratis Water Initiatief",
@@ -158,6 +203,40 @@
     "successDescription": "We nemen binnen 24 uur contact met je op.",
     "errorTitle": "Verzenden mislukt",
     "errorDescription": "Probeer het later opnieuw of neem rechtstreeks contact met ons op."
+  },
+  "advertising": {
+    "badge": "Partner met een Doel",
+    "title": "Meer dan Adverteren.",
+    "titleSubtitle": "Een Cultureel Statement.",
+    "intro": "Elke dag grijpen duizenden handen naar GRATIS. Niet alleen voor hydratatie, maar als symbool van duurzaam leven en straatauthenticiteit. Jouw merk kan deel uitmaken van dit verhaal.",
+    "movement": {
+      "title": "De Beweging",
+      "description": "Van straathoeken tot festivalpodia, GRATIS is de hydratatiekeuze geworden voor liefhebbers van urbane cultuur."
+    },
+    "connection": {
+      "title": "De Connectie",
+      "description": "Elk pak is een dagelijks contactpunt—intiem, authentiek en met trots gedragen door onze gemeenschap."
+    },
+    "impact": {
+      "title": "De Impact",
+      "description": "Jouw merk wordt niet alleen gezien. Het wordt onderdeel van de cultuur, de beweging, de lifestyle."
+    },
+    "whyPartner": "Waarom Partner worden met GRATIS?",
+    "benefits": {
+      "reach": "Bereik urbane, stijlbewuste doelgroepen",
+      "alignment": "Milieubewuste merkalliantie",
+      "visibility": "Hoge zichtbaarheid productplaatsing",
+      "custom": "Aangepaste pakontwerpen beschikbaar"
+    },
+    "cta": {
+      "become": "Word een Partner",
+      "contact": "Neem Contact Op"
+    },
+    "stats": {
+      "packs": "Pakketten Verspreid per Maand",
+      "recyclable": "Recyclebare Verpakking",
+      "visibility": "Zichtbaarheid van het Merk"
+    }
   },
   "gratis": {
     "title": "GRATIS — Premium Hydratatie voor een Doel",

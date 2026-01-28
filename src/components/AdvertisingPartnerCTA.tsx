@@ -1,52 +1,63 @@
-import { Button } from '@/components/ui/button';
-import { Building2, CheckCircle2, TrendingUp, Users, Sparkles, Droplet, Heart, Target } from 'lucide-react';
-import { useState } from 'react';
-import AdvertisingPartnerForm from './AdvertisingPartnerForm';
+import { Button } from "@/components/ui/button";
+import {
+  Building2,
+  CheckCircle2,
+  TrendingUp,
+  Users,
+  Sparkles,
+  Droplet,
+  Heart,
+  Target,
+} from "lucide-react";
+import { useState } from "react";
+import AdvertisingPartnerForm from "./AdvertisingPartnerForm";
+import { useTranslation } from "react-i18next";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 
 export default function AdvertisingPartnerCTA() {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { t } = useTranslation();
 
   const benefits = [
     {
       icon: Users,
-      text: 'Reach urban, style-conscious demographics',
+      text: t("advertising.benefits.reach"),
     },
     {
       icon: Sparkles,
-      text: 'Eco-conscious brand alignment',
+      text: t("advertising.benefits.alignment"),
     },
     {
       icon: TrendingUp,
-      text: 'High-visibility product placement',
+      text: t("advertising.benefits.visibility"),
     },
     {
       icon: CheckCircle2,
-      text: 'Custom pack designs available',
+      text: t("advertising.benefits.custom"),
     },
   ];
 
   const storySteps = [
     {
       icon: Droplet,
-      title: 'The Movement',
-      description: 'From street corners to festival stages, GRATIS has become the hydration choice for urban culture enthusiasts.',
+      title: t("advertising.movement.title"),
+      description: t("advertising.movement.description"),
     },
     {
       icon: Heart,
-      title: 'The Connection',
-      description: 'Every pack is a daily touchpoint—intimate, authentic, and carried with pride by our community.',
+      title: t("advertising.connection.title"),
+      description: t("advertising.connection.description"),
     },
     {
       icon: Target,
-      title: 'The Impact',
-      description: 'Your brand doesn\'t just get seen. It becomes part of the culture, the movement, the lifestyle.',
+      title: t("advertising.impact.title"),
+      description: t("advertising.impact.description"),
     },
   ];
 
@@ -56,23 +67,27 @@ export default function AdvertisingPartnerCTA() {
         {/* Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-accent to-primary opacity-95" />
         <div className="absolute inset-0 bg-[url('/lovable-uploads/cdefb4a2-d74d-4f9f-be84-9100cb927d52.png')] bg-cover bg-center opacity-10" />
-        
+
         <div className="container relative z-10">
           {/* Story Introduction */}
           <div className="max-w-4xl mx-auto text-center mb-16 space-y-6">
             <div className="inline-flex items-center gap-2 bg-white/20 px-5 py-2.5 rounded-full backdrop-blur-sm">
               <Building2 className="h-5 w-5 text-white" />
-              <span className="text-sm font-semibold text-white">Partner With Purpose</span>
+              <span className="text-sm font-semibold text-white">
+                {t("advertising.badge")}
+              </span>
             </div>
-            
+
             <h2 className="text-5xl md:text-6xl font-black leading-tight text-white">
-              More Than Advertising.<br />
-              <span className="text-white/80">A Cultural Statement.</span>
+              {t("advertising.title")}
+              <br />
+              <span className="text-white/80">
+                {t("advertising.titleSubtitle")}
+              </span>
             </h2>
-            
+
             <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Every day, thousands of hands reach for GRATIS. Not just for hydration, but as a symbol of sustainable living 
-              and street authenticity. Your brand can be part of this story.
+              {t("advertising.intro")}
             </p>
           </div>
 
@@ -84,7 +99,9 @@ export default function AdvertisingPartnerCTA() {
                   <step.icon className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-white">{step.title}</h3>
-                <p className="text-white/80 leading-relaxed">{step.description}</p>
+                <p className="text-white/80 leading-relaxed">
+                  {step.description}
+                </p>
               </div>
             ))}
           </div>
@@ -94,7 +111,9 @@ export default function AdvertisingPartnerCTA() {
             {/* Left Side - Benefits & CTA */}
             <div className="space-y-8 text-white">
               <div>
-                <h3 className="text-3xl font-black mb-6">Why Partner With GRATIS?</h3>
+                <h3 className="text-3xl font-black mb-6">
+                  {t("advertising.whyPartner")}
+                </h3>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {benefits.map((benefit, index) => (
                     <div key={index} className="flex items-start gap-3">
@@ -108,21 +127,23 @@ export default function AdvertisingPartnerCTA() {
               </div>
 
               <div className="flex flex-wrap gap-4 pt-4">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   variant="secondary"
                   onClick={() => setIsFormOpen(true)}
                   className="shadow-lg hover:scale-105 transition-transform"
                 >
-                  Become a Partner
+                  {t("advertising.cta.become")}
                 </Button>
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   variant="outline"
                   className="bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
                   asChild
                 >
-                  <a href="mailto:partners@gratis.com">Contact Us</a>
+                  <a href="mailto:partners@gratis.com">
+                    {t("advertising.cta.contact")}
+                  </a>
                 </Button>
               </div>
             </div>
@@ -133,16 +154,28 @@ export default function AdvertisingPartnerCTA() {
                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
                   <div className="space-y-6">
                     <div className="text-center p-6 bg-white/10 rounded-xl transform hover:scale-105 transition-transform">
-                      <div className="text-5xl font-black mb-2 text-white">10,000+</div>
-                      <div className="text-sm text-white/80">Packs Distributed Monthly</div>
+                      <div className="text-5xl font-black mb-2 text-white">
+                        10,000+
+                      </div>
+                      <div className="text-sm text-white/80">
+                        {t("advertising.stats.packs")}
+                      </div>
                     </div>
                     <div className="text-center p-6 bg-white/10 rounded-xl transform hover:scale-105 transition-transform">
-                      <div className="text-5xl font-black mb-2 text-white">100%</div>
-                      <div className="text-sm text-white/80">Recyclable Packaging</div>
+                      <div className="text-5xl font-black mb-2 text-white">
+                        100%
+                      </div>
+                      <div className="text-sm text-white/80">
+                        {t("advertising.stats.recyclable")}
+                      </div>
                     </div>
                     <div className="text-center p-6 bg-white/10 rounded-xl transform hover:scale-105 transition-transform">
-                      <div className="text-5xl font-black mb-2 text-white">24/7</div>
-                      <div className="text-sm text-white/80">Brand Visibility</div>
+                      <div className="text-5xl font-black mb-2 text-white">
+                        24/7
+                      </div>
+                      <div className="text-sm text-white/80">
+                        {t("advertising.stats.visibility")}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -157,7 +190,8 @@ export default function AdvertisingPartnerCTA() {
           <DialogHeader>
             <DialogTitle>Become an Advertising Partner</DialogTitle>
             <DialogDescription>
-              Fill out the form below and we'll contact you within 48 hours to discuss partnership opportunities.
+              Fill out the form below and we'll contact you within 48 hours to
+              discuss partnership opportunities.
             </DialogDescription>
           </DialogHeader>
           <AdvertisingPartnerForm onSuccess={() => setIsFormOpen(false)} />

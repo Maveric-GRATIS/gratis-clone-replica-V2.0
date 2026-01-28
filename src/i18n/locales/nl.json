@@ -262,6 +262,8 @@
   "waterPage": {
     "title": "W.A.T.E.R — Pure Natural Spring Water",
     "description": "Premium natuurlijk bronwater in 100% recyclebare aluminium flessen",
+    "seoTitle": "GRATIS Water — Pure Kracht, Pure Doel",
+    "seoDescription": "Bergbronwater in duurzame tetrapacks. 100% natuurlijk, 0% kunstmatig, oneindig recyclebaar.",
     "selectFlavor": "Selecteer Smaak",
     "selectSize": "Selecteer Grootte",
     "selectPack": "Selecteer Pack",
@@ -281,7 +283,110 @@
     "testimonials": "Getuigenissen",
     "environmentalImpact": "Milieu-impact",
     "distribution": "Distributie",
-    "gallery": "Galerij"
+    "gallery": "Galerij",
+    "product": {
+      "badge": "100K SERIE",
+      "title": "GRATIS WATER",
+      "subtitle": "Bergbron • Tetrapack",
+      "reviews": "beoordelingen",
+      "description": "Van ongerepte bergbronnen naar jouw handen — in 100% recyclebare tetrapacks. Geen plastic. Geen schuldgevoel. Gewoon pure hydratatie die wereldwijd toegang tot schoon water financiert."
+    },
+    "flavors": {
+      "still": "Pure Still",
+      "sparkling": "Sparkling",
+      "flavored": "Gearomatiseerd"
+    },
+    "sizes": {
+      "label": "Formaat",
+      "500ml": "500mL",
+      "750ml": "750mL",
+      "1L": "1 Liter"
+    },
+    "packs": {
+      "label": "Verpakking",
+      "single": "Enkel",
+      "sixPack": "6-Pack",
+      "twelvePack": "12-Pack",
+      "twentyFourPack": "24-Pack"
+    },
+    "pricing": {
+      "save": "Bespaar"
+    },
+    "trustBadges": {
+      "freeShipping": "Gratis Verzending 50€+",
+      "returns": "30 Dagen Retour",
+      "secure": "Veilige Afrekening"
+    },
+    "distributionSection": {
+      "badge": "📍 Vind Gratis Water",
+      "title": "DISTRIBUTIE LOCATIES",
+      "description": "We distribueren gratis GRATIS water op grote treinstations tijdens de spitsuren. Elke fles is door adverteerders gefinancierd en 100% gratis voor jou.",
+      "stats": {
+        "locations": "Distributie Locaties",
+        "locationsSubtitle": "Door heel Europa",
+        "bottles": "Flessen Verspreid",
+        "bottlesSubtitle": "Sinds lancering",
+        "rushHours": "Spitsuren",
+        "rushHoursTime": "07:00-09:00 | 17:00-19:00",
+        "rushHoursSubtitle": "Ma-Vr distributietijden"
+      }
+    },
+    "errors": {
+      "notAvailable": "Product niet beschikbaar",
+      "addToCartFailed": "Toevoegen aan winkelwagen mislukt"
+    },
+    "success": {
+      "addedToCart": "toegevoegd aan winkelwagen!"
+    },
+    "seriesBadge": {
+      "limitedEdition": "Limited Edition",
+      "edition": "Editie",
+      "series": "Serie",
+      "produced": "geproduceerd",
+      "partnershipWith": "In samenwerking met"
+    },
+    "flavorSelector": {
+      "label": "Smaak"
+    },
+    "waterFeatures": {
+      "title": "Waarom GRATIS Water?",
+      "naturalSource": "Natuurlijke Bron",
+      "naturalSourceDesc": "Afkomstig van ongerepte natuurlijke bronnen",
+      "recyclable": "100% Recyclebaar",
+      "recyclableDesc": "Tetrapack verpakking, volledig recyclebaar",
+      "zeroPlastic": "Nul Plastic",
+      "zeroPlasticDesc": "Geen plasticvervuiling, ooit",
+      "fundsWater": "Financiert Schoon Water",
+      "fundsWaterDesc": "Elke aankoop financiert toegang tot schoon water"
+    },
+    "goldenTicket": {
+      "title": "Golden Ticket Zoektocht",
+      "description": "Elke 100K Serie heeft ÉÉN golden ticket verstopt onder de dop. Vind het en claim exclusieve prijzen!",
+      "prizes": "Prijzen zijn onder andere VIP-ervaringen, merchandise, en meer!",
+      "claimPrize": "Claim Prijs"
+    },
+    "environmental": {
+      "title": "Plastic Recycling Is Een Mythe",
+      "description": "Minder dan 9% van al het ooit geproduceerde plastic is gerecycled. Daarom kozen we voor tetrapacks — ze zijn daadwerkelijk recyclebaar en hebben een 3x lagere CO2-voetafdruk dan plastic flessen.",
+      "liters": "Liters Gedistribueerd",
+      "bottlesAvoided": "Plastic Flessen Vermeden",
+      "co2Saved": "CO₂ Bespaard",
+      "countriesReached": "Landen Bereikt",
+      "cta": "Elke GRATIS Water die je drinkt maakt een verschil. Doe mee aan de beweging."
+    },
+    "testimonials": {
+      "title": "Wat Mensen Zeggen",
+      "subtitle": "Sluit je aan bij duizenden die de overstap hebben gemaakt",
+      "review1": "Eindelijk water dat de planeet niet kost. De tetrapack is geniaal.",
+      "review1Name": "Sarah M.",
+      "review1Location": "Amsterdam",
+      "review2": "Ik ben overgestapt van plastic flessen en heb er nooit spijt van gehad. Smaakt ook geweldig!",
+      "review2Name": "Marcus K.",
+      "review2Location": "Berlijn",
+      "review3": "Ik vind het geweldig dat elke fles helpt om schoon water te bieden aan mensen in nood.",
+      "review3Name": "Emma L.",
+      "review3Location": "Londen"
+    }
   },
   "rigStore": {
     "title": "RIG — GRATIS Merch Store",

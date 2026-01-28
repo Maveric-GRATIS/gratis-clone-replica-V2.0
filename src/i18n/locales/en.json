@@ -260,6 +260,8 @@
   "waterPage": {
     "title": "W.A.T.E.R — Pure Natural Spring Water",
     "description": "Premium natural spring water in 100% recyclable aluminum bottles",
+    "seoTitle": "GRATIS Water — Pure Power, Pure Purpose",
+    "seoDescription": "Mountain-sourced water in sustainable tetrapacks. 100% natural, 0% artificial, infinitely recyclable.",
     "selectFlavor": "Select Flavor",
     "selectSize": "Select Size",
     "selectPack": "Select Pack",
@@ -279,7 +281,110 @@
     "testimonials": "Testimonials",
     "environmentalImpact": "Environmental Impact",
     "distribution": "Distribution",
-    "gallery": "Gallery"
+    "gallery": "Gallery",
+    "product": {
+      "badge": "100K SERIES",
+      "title": "GRATIS WATER",
+      "subtitle": "Mountain Spring • Tetrapack",
+      "reviews": "reviews",
+      "description": "From pristine mountain springs to your hands — in 100% recyclable tetrapacks. No plastic. No guilt. Just pure hydration that funds clean water access worldwide."
+    },
+    "flavors": {
+      "still": "Pure Still",
+      "sparkling": "Sparkling",
+      "flavored": "Flavored"
+    },
+    "sizes": {
+      "label": "Size",
+      "500ml": "500mL",
+      "750ml": "750mL",
+      "1L": "1 Liter"
+    },
+    "packs": {
+      "label": "Pack",
+      "single": "Single",
+      "sixPack": "6-Pack",
+      "twelvePack": "12-Pack",
+      "twentyFourPack": "24-Pack"
+    },
+    "pricing": {
+      "save": "Save"
+    },
+    "trustBadges": {
+      "freeShipping": "Free Shipping 50€+",
+      "returns": "30-Day Returns",
+      "secure": "Secure Checkout"
+    },
+    "distributionSection": {
+      "badge": "📍 Find Free Water",
+      "title": "DISTRIBUTION LOCATIONS",
+      "description": "We distribute free GRATIS water at major train stations during rush hours. Every bottle is advertiser-funded and 100% free to you.",
+      "stats": {
+        "locations": "Distribution Locations",
+        "locationsSubtitle": "Across Europe",
+        "bottles": "Bottles Distributed",
+        "bottlesSubtitle": "Since launch",
+        "rushHours": "Rush Hours",
+        "rushHoursTime": "07:00-09:00 | 17:00-19:00",
+        "rushHoursSubtitle": "Mon-Fri distribution times"
+      }
+    },
+    "errors": {
+      "notAvailable": "Product not available",
+      "addToCartFailed": "Failed to add to cart"
+    },
+    "success": {
+      "addedToCart": "added to cart!"
+    },
+    "seriesBadge": {
+      "limitedEdition": "Limited Edition",
+      "edition": "Edition",
+      "series": "Series",
+      "produced": "produced",
+      "partnershipWith": "In partnership with"
+    },
+    "flavorSelector": {
+      "label": "Flavor"
+    },
+    "waterFeatures": {
+      "title": "Why GRATIS Water?",
+      "naturalSource": "Natural Source",
+      "naturalSourceDesc": "Sourced from pristine natural springs",
+      "recyclable": "100% Recyclable",
+      "recyclableDesc": "Tetrapack packaging, fully recyclable",
+      "zeroPlastic": "Zero Plastic",
+      "zeroPlasticDesc": "No plastic pollution, ever",
+      "fundsWater": "Funds Clean Water",
+      "fundsWaterDesc": "Every purchase funds clean water access"
+    },
+    "goldenTicket": {
+      "title": "Golden Ticket Hunt",
+      "description": "Every 100K Series has ONE golden ticket hidden under the cap. Find it and claim exclusive prizes!",
+      "prizes": "Prizes include VIP experiences, merchandise, and more!",
+      "claimPrize": "Claim Prize"
+    },
+    "environmental": {
+      "title": "Plastic Recycling Is A Myth",
+      "description": "Less than 9% of plastic ever produced has been recycled. That's why we chose tetrapacks — they're actually recyclable and have a 3x lower carbon footprint than plastic bottles.",
+      "liters": "Liters Distributed",
+      "bottlesAvoided": "Plastic Bottles Avoided",
+      "co2Saved": "CO₂ Saved",
+      "countriesReached": "Countries Reached",
+      "cta": "Every GRATIS Water you drink makes a difference. Join the movement."
+    },
+    "testimonials": {
+      "title": "What People Are Saying",
+      "subtitle": "Join thousands who've made the switch",
+      "review1": "Finally, water that doesn't cost the planet. The tetrapack is genius.",
+      "review1Name": "Sarah M.",
+      "review1Location": "Amsterdam",
+      "review2": "I switched from plastic bottles and never looked back. Tastes amazing too!",
+      "review2Name": "Marcus K.",
+      "review2Location": "Berlin",
+      "review3": "Love that every bottle helps provide clean water to those in need.",
+      "review3Name": "Emma L.",
+      "review3Location": "London"
+    }
   },
   "rigStore": {
     "title": "RIG — GRATIS Merch Store",

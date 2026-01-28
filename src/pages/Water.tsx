@@ -18,44 +18,29 @@ import { ShoppingCart, Truck, Shield, RotateCcw, Star } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 
-// Flavor options with images
-const flavors = [
+// Flavor options with images (static data)
+const flavorOptions = [
   {
     id: "still",
     name: "W.A.T.E.R",
-    subtitle: "Pure Still",
+    subtitleKey: "waterPage.flavors.still",
     image: "/lovable-uploads/gratis-canal-collection.jpg",
     color: "#3B82F6",
   },
   {
     id: "sparkling",
     name: "THEURGY",
-    subtitle: "Sparkling",
+    subtitleKey: "waterPage.flavors.sparkling",
     image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
     color: "#8B5CF6",
   },
   {
     id: "flavored",
     name: "F.U.",
-    subtitle: "Flavored",
+    subtitleKey: "waterPage.flavors.flavored",
     image: "/lovable-uploads/gratis-neon-tank.jpg",
     color: "#EC4899",
   },
-];
-
-// Size options
-const sizes = [
-  { value: "500ml", label: "500mL" },
-  { value: "750ml", label: "750mL" },
-  { value: "1L", label: "1 Liter" },
-];
-
-// Pack options with price multipliers
-const packs = [
-  { value: "1", label: "Single", price: 0 },
-  { value: "6", label: "6-Pack", price: 4.99 },
-  { value: "12", label: "12-Pack", price: 8.99 },
-  { value: "24", label: "24-Pack", price: 14.99 },
 ];
 
 export default function Water() {
@@ -63,6 +48,25 @@ export default function Water() {
   const { products } = useProducts("beverage");
   const { locations, loading: locationsLoading } = useDistributionLocations();
   const { addItem } = useCart();
+
+  // Translated arrays
+  const flavors = flavorOptions.map((f) => ({
+    ...f,
+    subtitle: t(f.subtitleKey),
+  }));
+
+  const sizes = [
+    { value: "500ml", label: t("waterPage.sizes.500ml") },
+    { value: "750ml", label: t("waterPage.sizes.750ml") },
+    { value: "1L", label: t("waterPage.sizes.1L") },
+  ];
+
+  const packs = [
+    { value: "1", label: t("waterPage.packs.single"), price: 0 },
+    { value: "6", label: t("waterPage.packs.sixPack"), price: 4.99 },
+    { value: "12", label: t("waterPage.packs.twelvePack"), price: 8.99 },
+    { value: "24", label: t("waterPage.packs.twentyFourPack"), price: 14.99 },
+  ];
 
   // Selection state
   const [selectedFlavor, setSelectedFlavor] = useState<string>("still");
@@ -114,7 +118,7 @@ export default function Water() {
 
   const handleAddToCart = () => {
     if (!featuredProduct) {
-      toast.error("Product not available");
+      toast.error(t("waterPage.errors.notAvailable"));
       console.error("No featured product available");
       return;
     }
@@ -139,18 +143,20 @@ export default function Water() {
 
     try {
       addItem(cartItem);
-      toast.success(`Added ${selectedPack}x ${flavorLabel} to cart!`);
+      toast.success(
+        `${t("common.success")} ${selectedPack}x ${flavorLabel} ${t("waterPage.success.addedToCart")}`,
+      );
     } catch (error) {
       console.error("Error adding to cart:", error);
-      toast.error("Failed to add to cart");
+      toast.error(t("waterPage.errors.addToCartFailed"));
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="GRATIS Water — Pure Power, Pure Purpose"
-        description="Mountain-sourced water in sustainable tetrapacks. 100% natural, 0% artificial, infinitely recyclable."
+        title={t("waterPage.seoTitle")}
+        description={t("waterPage.seoDescription")}
         canonical={
           typeof window !== "undefined" ? window.location.href : "/water"
         }
@@ -176,13 +182,13 @@ export default function Water() {
                   variant="secondary"
                   className="mb-3 bg-primary/20 text-primary border-primary/30"
                 >
-                  100K SERIES
+                  {t("waterPage.product.badge")}
                 </Badge>
                 <h1 className="text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
-                  GRATIS WATER
+                  {t("waterPage.product.title")}
                 </h1>
                 <p className="mt-2 text-xl text-muted-foreground">
-                  Mountain Spring • Tetrapack
+                  {t("waterPage.product.subtitle")}
                 </p>
               </div>
 
@@ -197,15 +203,14 @@ export default function Water() {
                   ))}
                 </div>
                 <span className="text-sm text-muted-foreground">
-                  4.9 ({featuredProduct?.reviews_count || 127} reviews)
+                  4.9 ({featuredProduct?.reviews_count || 127}{" "}
+                  {t("waterPage.product.reviews")})
                 </span>
               </div>
 
               {/* Description */}
               <p className="text-muted-foreground leading-relaxed">
-                From pristine mountain springs to your hands — in 100%
-                recyclable tetrapacks. No plastic. No guilt. Just pure hydration
-                that funds clean water access worldwide.
+                {t("waterPage.product.description")}
               </p>
 
               {/* Series Badge (Limited Edition) */}
@@ -225,7 +230,7 @@ export default function Water() {
 
               {/* Size Selector */}
               <SizePackSelector
-                label="Size"
+                label={t("waterPage.sizes.label")}
                 options={sizes}
                 selected={selectedSize}
                 onSelect={setSelectedSize}
@@ -233,7 +238,7 @@ export default function Water() {
 
               {/* Pack Selector */}
               <SizePackSelector
-                label="Pack"
+                label={t("waterPage.packs.label")}
                 options={packs}
                 selected={selectedPack}
                 onSelect={setSelectedPack}
@@ -250,7 +255,8 @@ export default function Water() {
                   )}
                   {packMultiplier > 1 && (
                     <Badge variant="destructive" className="text-xs">
-                      Save {Math.round((1 - packDiscount) * 100)}%
+                      {t("waterPage.pricing.save")}{" "}
+                      {Math.round((1 - packDiscount) * 100)}%
                     </Badge>
                   )}
                 </div>
@@ -261,7 +267,7 @@ export default function Water() {
                   onClick={handleAddToCart}
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
-                  Add to Cart
+                  {t("waterPage.addToCart")}
                 </Button>
 
                 {/* Trust Badges */}
@@ -269,19 +275,19 @@ export default function Water() {
                   <div className="flex flex-col items-center gap-1 text-center">
                     <Truck className="h-5 w-5 text-muted-foreground" />
                     <span className="text-xs text-muted-foreground">
-                      Free Shipping 50€+
+                      {t("waterPage.trustBadges.freeShipping")}
                     </span>
                   </div>
                   <div className="flex flex-col items-center gap-1 text-center">
                     <RotateCcw className="h-5 w-5 text-muted-foreground" />
                     <span className="text-xs text-muted-foreground">
-                      30-Day Returns
+                      {t("waterPage.trustBadges.returns")}
                     </span>
                   </div>
                   <div className="flex flex-col items-center gap-1 text-center">
                     <Shield className="h-5 w-5 text-muted-foreground" />
                     <span className="text-xs text-muted-foreground">
-                      Secure Checkout
+                      {t("waterPage.trustBadges.secure")}
                     </span>
                   </div>
                 </div>
@@ -312,15 +318,13 @@ export default function Water() {
         <div className="container">
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-primary/20 text-primary border-primary/30">
-              📍 Find Free Water
+              {t("waterPage.distributionSection.badge")}
             </Badge>
             <h2 className="text-4xl md:text-5xl font-black mb-4">
-              DISTRIBUTION LOCATIONS
+              {t("waterPage.distributionSection.title")}
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              We distribute free GRATIS water at major train stations during
-              rush hours. Every bottle is advertiser-funded and 100% free to
-              you.
+              {t("waterPage.distributionSection.description")}
             </p>
           </div>
 
@@ -331,8 +335,12 @@ export default function Water() {
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             <div className="bg-card border rounded-xl p-6 text-center">
               <div className="text-4xl font-black text-primary mb-2">15+</div>
-              <div className="font-bold mb-1">Distribution Locations</div>
-              <div className="text-sm text-muted-foreground">Across Europe</div>
+              <div className="font-bold mb-1">
+                {t("waterPage.distributionSection.stats.locations")}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {t("waterPage.distributionSection.stats.locationsSubtitle")}
+              </div>
             </div>
             <div className="bg-card border rounded-xl p-6 text-center">
               <div className="text-4xl font-black text-primary mb-2">
@@ -340,16 +348,22 @@ export default function Water() {
                   .reduce((sum, loc) => sum + (loc.total_distributed || 0), 0)
                   .toLocaleString()}
               </div>
-              <div className="font-bold mb-1">Bottles Distributed</div>
-              <div className="text-sm text-muted-foreground">Since launch</div>
+              <div className="font-bold mb-1">
+                {t("waterPage.distributionSection.stats.bottles")}
+              </div>
+              <div className="text-sm text-muted-foreground">
+                {t("waterPage.distributionSection.stats.bottlesSubtitle")}
+              </div>
             </div>
             <div className="bg-card border rounded-xl p-6 text-center">
               <div className="text-4xl font-black text-primary mb-2">
-                Rush Hours
+                {t("waterPage.distributionSection.stats.rushHours")}
               </div>
-              <div className="font-bold mb-1">07:00-09:00 | 17:00-19:00</div>
+              <div className="font-bold mb-1">
+                {t("waterPage.distributionSection.stats.rushHoursTime")}
+              </div>
               <div className="text-sm text-muted-foreground">
-                Mon-Fri distribution times
+                {t("waterPage.distributionSection.stats.rushHoursSubtitle")}
               </div>
             </div>
           </div>

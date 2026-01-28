@@ -6,6 +6,7 @@ import AdvertisingPartnerCTA from "@/components/AdvertisingPartnerCTA";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import gratisAmsterdamCanal from "@/assets/gratis-amsterdam-canal.jpg";
 import gratisAmsterdamStreet from "@/assets/gratis-amsterdam-street.jpg";
 import gratisMcdonalds from "@/assets/gratis-mcdonalds.jpg";
@@ -23,6 +24,7 @@ const backgroundImages = [
 ];
 
 export default function Index() {
+  const { t } = useTranslation();
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([0]));
@@ -116,21 +118,20 @@ export default function Index() {
           <div className="grid md:grid-cols-2 items-center gap-10">
             <div className="space-y-6 animate-fade-in">
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-tight">
-                <span className="block text-white">Pure Power,</span>
+                <span className="block text-white">{t("home.heroTitle1")}</span>
                 <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                  Pure Purpose
+                  {t("home.heroTitle2")}
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-white/90 max-w-prose">
-                From mountain springs to your hands — in 100% recyclable
-                tetrapacks.
+                {t("home.heroSubtitle")}
               </p>
               <div className="flex gap-4">
                 <Button variant="hero" size="xl" asChild>
-                  <Link to="/hydration">Drink with Purpose</Link>
+                  <Link to="/hydration">{t("home.heroCTA")}</Link>
                 </Button>
                 <Button variant="outline" size="xl" asChild>
-                  <Link to="/water">Learn More</Link>
+                  <Link to="/water">{t("hero.learnMore")}</Link>
                 </Button>
               </div>
             </div>
@@ -147,8 +148,8 @@ export default function Index() {
           <div className="container mx-auto px-4">
             <ProductFeatures
               features={waterFeatures}
-              title="Why Choose GRATIS?"
-              subtitle="Pure hydration meets street culture"
+              title={t("home.whyChoose")}
+              subtitle={t("home.whyChooseSubtitle")}
             />
           </div>
         </section>

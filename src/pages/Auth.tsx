@@ -15,8 +15,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Auth() {
+  const { t } = useTranslation();
   const { signIn, signUp, user } = useAuth();
   const { isAdmin } = useRole();
   const navigate = useNavigate();
@@ -49,8 +51,8 @@ export default function Auth() {
     e.preventDefault();
     if (!signInData.email || !signInData.password) {
       toast({
-        title: "Error",
-        description: "Please fill in all fields.",
+        title: t("common.error"),
+        description: t("auth.fillAllFields"),
         variant: "destructive",
       });
       return;
@@ -62,16 +64,14 @@ export default function Auth() {
 
       if (error) {
         toast({
-          title: "Sign In Failed",
-          description:
-            error.message ||
-            "Failed to sign in. Please check your credentials.",
+          title: t("auth.signInFailed"),
+          description: error.message || t("auth.checkCredentials"),
           variant: "destructive",
         });
       } else {
         toast({
-          title: "Welcome back!",
-          description: "You have successfully signed in.",
+          title: t("auth.welcomeBack"),
+          description: t("auth.signInSuccess"),
         });
         // Check if admin and redirect to admin dashboard
         const userRole = user?.role;
@@ -131,7 +131,7 @@ export default function Auth() {
       const { error } = await signUp(
         signUpData.email,
         signUpData.password,
-        signUpData.displayName
+        signUpData.displayName,
       );
 
       if (error) {

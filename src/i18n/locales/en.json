@@ -1,0 +1,295 @@
+{
+  "nav": {
+    "home": "Home",
+    "gratis": "Gratis",
+    "water": "Water",
+    "theurgy": "Theurgy",
+    "fu": "FU",
+    "arcane": "Arcane",
+    "tribe": "Tribe",
+    "impactTV": "ImpactTV",
+    "spark": "Spark",
+    "store": "Store",
+    "cart": "Cart",
+    "profile": "Profile",
+    "admin": "Admin",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Free Water for Everyone",
+    "subtitle": "Join our mission to make clean, free water accessible to communities worldwide",
+    "cta": "Get Started",
+    "learnMore": "Learn More"
+  },
+  "home": {
+    "welcomeTitle": "Welcome to GRATIS",
+    "welcomeSubtitle": "Empowering communities through free, clean water",
+    "missionTitle": "Our Mission",
+    "missionText": "We believe that access to clean water is a fundamental right. Our mission is to provide free, clean drinking water to communities in need.",
+    "howItWorks": "How It Works",
+    "impactTitle": "Our Impact",
+    "impactDescription": "Together, we're making a difference",
+    "getInvolved": "Get Involved",
+    "donateNow": "Donate Now",
+    "volunteer": "Volunteer",
+    "spread": "Spread the Word",
+    "heroTitle1": "Pure Power,",
+    "heroTitle2": "Pure Purpose",
+    "heroSubtitle": "From mountain springs to your hands — in 100% recyclable tetrapacks.",
+    "heroCTA": "Drink with Purpose",
+    "whyChoose": "Why Choose GRATIS?",
+    "whyChooseSubtitle": "Pure hydration meets street culture"
+  },
+  "products": {
+    "title": "Our Products",
+    "viewAll": "View All",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "details": "Details",
+    "price": "Price",
+    "features": "Features",
+    "reviews": "Reviews"
+  },
+  "water": {
+    "title": "Free Water Initiative",
+    "description": "Access to clean, safe drinking water for everyone",
+    "purificationTitle": "Water Purification",
+    "distributionTitle": "Distribution Network",
+    "sustainabilityTitle": "Sustainability",
+    "impactTitle": "Community Impact"
+  },
+  "spark": {
+    "title": "Spark - Support Our Mission",
+    "donate": "Donate",
+    "volunteer": "Volunteer",
+    "partner": "Become a Partner",
+    "fundraise": "Fundraise"
+  },
+  "impactTV": {
+    "title": "Impact TV",
+    "description": "Stories of change and impact",
+    "watchNow": "Watch Now",
+    "latestStories": "Latest Stories"
+  },
+  "tribe": {
+    "title": "Tribe - Our Community",
+    "heritage": "Heritage",
+    "ethics": "Ethics",
+    "team": "Team",
+    "standards": "Standards",
+    "responsibility": "Responsibility",
+    "accountability": "Accountability",
+    "transparency": "Transparency",
+    "compliance": "Compliance"
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "social": "Follow Us",
+    "newsletter": "Newsletter",
+    "newsletterPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "rights": "All rights reserved"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Add some items to get started",
+    "continueShopping": "Continue Shopping",
+    "checkout": "Proceed to Checkout",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "shipping": "Shipping",
+    "shippingCalculated": "Calculated at checkout"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "displayName": "Display Name",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signInWithGoogle": "Sign in with Google",
+    "or": "or",
+    "welcomeBack": "Welcome back!",
+    "signInSuccess": "You have successfully signed in.",
+    "signUpSuccess": "Account created successfully!",
+    "signInFailed": "Sign In Failed",
+    "signUpFailed": "Sign Up Failed",
+    "fillAllFields": "Please fill in all fields.",
+    "passwordsNoMatch": "Passwords do not match.",
+    "checkCredentials": "Please check your credentials."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success!",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "viewMore": "View More",
+    "showLess": "Show Less"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send",
+    "subject": "Subject",
+    "successMessage": "Message sent!",
+    "successDescription": "We'll get back to you within 24 hours.",
+    "errorTitle": "Failed to send message",
+    "errorDescription": "Please try again later or contact us directly."
+  },
+  "gratis": {
+    "title": "GRATIS — Premium Hydration for a Purpose",
+    "subtitle": "Three revolutionary beverage lines. Infinitely recyclable aluminum bottles. 100% advertising revenue donated to verified NGOs worldwide.",
+    "hero": "PREMIUM HYDRATION",
+    "heroFor": "FOR A PURPOSE",
+    "badge": "G.R.A.T.I.S — Giving Resources to Achieve Transformative and Impactful Change",
+    "exploreWater": "Explore W.A.T.E.R",
+    "shopAll": "Shop All",
+    "waterSubtitle": "Pure Still Water",
+    "waterDesc": "Premium natural spring water in infinitely recyclable aluminum bottles. Pure hydration, zero compromise.",
+    "waterTagline": "Wisdom. Aqua. Thirst. Elemental. Refresh.",
+    "theurgySubtitle": "Wellness Functional Water",
+    "theurgyDesc": "Mystic-positioned functional water infused with adaptogens, vitamins, and natural botanicals. Elevate your hydration ritual.",
+    "theurgyTagline": "Transform. Harmonize. Elevate. Unite. Revive. Grace. Yield.",
+    "fuSubtitle": "Rebellious Functional Water",
+    "fuDesc": "Caffeine-powered energy water with rebellious attitude. For those who refuse to settle. Fuel your fire.",
+    "fuTagline": "Fierce. Unleashed.",
+    "available": "Available",
+    "preOrder": "Pre-Order",
+    "learnMore": "Learn More"
+  },
+  "waterPage": {
+    "title": "W.A.T.E.R — Pure Natural Spring Water",
+    "description": "Premium natural spring water in 100% recyclable aluminum bottles",
+    "selectFlavor": "Select Flavor",
+    "selectSize": "Select Size",
+    "selectPack": "Select Pack",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "freeShipping": "Free Shipping",
+    "shippingOn": "on orders over €50",
+    "securePayment": "Secure Payment",
+    "paymentProtection": "100% secure transactions",
+    "easyReturns": "Easy Returns",
+    "returnsPolicy": "30-day money-back guarantee",
+    "qualityGuarantee": "Quality Guarantee",
+    "guaranteeText": "Premium quality guaranteed",
+    "features": "Features",
+    "testimonials": "Testimonials",
+    "environmentalImpact": "Environmental Impact",
+    "distribution": "Distribution",
+    "gallery": "Gallery"
+  },
+  "rigStore": {
+    "title": "RIG — GRATIS Merch Store",
+    "description": "Premium streetwear and merchandise from GRATIS",
+    "shopAll": "Shop All",
+    "bestSellers": "Best Sellers",
+    "newDrops": "New Drops",
+    "drinkware": "Drinkware",
+    "tanksAndTops": "Tanks + Tops",
+    "hoodiesAndTracksuits": "Hoodies + Tracksuits",
+    "swimwear": "Swimwear",
+    "bottoms": "Bottoms",
+    "capsAndBeanies": "Caps + Beanies",
+    "lifestyle": "Lifestyle",
+    "collabs": "Collabs",
+    "collections": "Collections",
+    "featuredCollections": "Featured Collections",
+    "viewCollection": "View Collection",
+    "quickView": "Quick View",
+    "noProducts": "No products found",
+    "loading": "Loading products...",
+    "error": "Error loading products"
+  },
+  "sparkPage": {
+    "title": "SPARK — Make Your Sip Count",
+    "subtitle": "Donate, invest, volunteer, or join the team.",
+    "description": "Every action ignites change. Choose your path to impact.",
+    "verve": {
+      "title": "Verve",
+      "subtitle": "Giving",
+      "description": "Donate to fund clean water, art programs, and education initiatives worldwide"
+    },
+    "infuse": {
+      "title": "Infuse",
+      "subtitle": "Invest",
+      "description": "Invest in scholarships and microcredit programs with social and financial ROI"
+    },
+    "blaze": {
+      "title": "Blaze",
+      "subtitle": "Volunteer",
+      "description": "Join events, support communities, and make a hands-on impact"
+    },
+    "enlist": {
+      "title": "Enlist",
+      "subtitle": "Employ",
+      "description": "Join our team and help build the future of impact-driven business"
+    },
+    "impactStats": {
+      "litersFunded": "Liters Funded",
+      "artPrograms": "Art Programs",
+      "studentsSupported": "Students Supported",
+      "activeVolunteers": "Active Volunteers"
+    }
+  },
+  "tribePage": {
+    "title": "TRIBE — Our Values",
+    "description": "Heritage, Ethics, Responsibility, Team, Standards.",
+    "subtitle": "Born from the belief that every sip should serve a greater purpose.",
+    "whatWeStandFor": "What We Stand For",
+    "description2": "GRATIS isn't just water. It's a movement built on authenticity, respect, and responsibility. Explore the values that drive everything we do.",
+    "heritage": {
+      "title": "Heritage",
+      "description": "Born from street culture. Built on authenticity. Discover the origin story that shaped our mission."
+    },
+    "ethics": {
+      "title": "Ethics",
+      "description": "Fair trade, cultural respect, and community investment. Our commitment to doing right by everyone."
+    },
+    "accountability": {
+      "title": "Accountability",
+      "description": "Real-time tracking, verified impact, and independent audits. Every euro accounted for."
+    },
+    "team": {
+      "title": "Team",
+      "description": "Meet the diverse crew building GRATIS. Real people from the culture, creating something authentic."
+    },
+    "standards": {
+      "title": "Standards",
+      "description": "Quality without compromise. Safety you can trust. Excellence in every bottle we produce."
+    },
+    "responsibility": {
+      "title": "Responsibility",
+      "description": "Environmental commitments that protect the planet that sustains us all. Action over words."
+    },
+    "transparency": {
+      "title": "Transparency",
+      "description": "Open books, public financials, and radical transparency. No secrets, no spin—just facts."
+    }
+  }
+}

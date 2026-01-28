@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
+import { useTranslation } from "react-i18next";
 
 export default function Tribe() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="GRATIS TRIBE — Our Values"
-        description="Heritage, Ethics, Responsibility, Team, Standards."
+        title={t("tribePage.title")}
+        description={t("tribePage.description")}
         canonical={
           typeof window !== "undefined" ? window.location.href : "/tribe"
         }
@@ -20,7 +22,7 @@ export default function Tribe() {
             TRIBE
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Born from the belief that every sip should serve a greater purpose.
+            {t("tribePage.subtitle")}
           </p>
         </div>
       </section>
@@ -29,50 +31,48 @@ export default function Tribe() {
         <div className="container py-16 space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-2xl md:text-3xl font-bold">
-              What We Stand For
+              {t("tribePage.whatWeStandFor")}
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              GRATIS isn't just water. It's a movement built on authenticity,
-              respect, and responsibility. Explore the values that drive
-              everything we do.
+              {t("tribePage.description2")}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Heritage",
-                body: "Born from street culture. Built on authenticity. Discover the origin story that shaped our mission.",
+                title: t("tribePage.heritage.title"),
+                body: t("tribePage.heritage.description"),
                 to: "/tribe/heritage",
               },
               {
-                title: "Ethics",
-                body: "Fair trade, cultural respect, and community investment. Our commitment to doing right by everyone.",
+                title: t("tribePage.ethics.title"),
+                body: t("tribePage.ethics.description"),
                 to: "/tribe/ethics",
               },
               {
-                title: "Accountability",
-                body: "Real-time tracking, verified impact, and independent audits. Every euro accounted for.",
+                title: t("tribePage.accountability.title"),
+                body: t("tribePage.accountability.description"),
                 to: "/tribe/accountability",
               },
               {
-                title: "Team",
-                body: "Meet the diverse crew building GRATIS. Real people from the culture, creating something authentic.",
+                title: t("tribePage.team.title"),
+                body: t("tribePage.team.description"),
                 to: "/tribe/team",
               },
               {
-                title: "Standards",
-                body: "Quality without compromise. Safety you can trust. Excellence in every bottle we produce.",
+                title: t("tribePage.standards.title"),
+                body: t("tribePage.standards.description"),
                 to: "/tribe/standards",
               },
               {
-                title: "Responsibility",
-                body: "Environmental commitments that protect the planet that sustains us all. Action over words.",
+                title: t("tribePage.responsibility.title"),
+                body: t("tribePage.responsibility.description"),
                 to: "/tribe/responsibility",
               },
               {
-                title: "Transparency",
-                body: "Open books, public financials, and radical transparency. No secrets, no spin—just facts.",
+                title: t("tribePage.transparency.title"),
+                body: t("tribePage.transparency.description"),
                 to: "/tribe/transparency",
               },
             ].map((section) => (
@@ -88,7 +88,7 @@ export default function Tribe() {
                   {section.body}
                 </p>
                 <div className="text-sm font-medium text-primary">
-                  Learn more →
+                  {t("common.viewMore")} →
                 </div>
               </Link>
             ))}

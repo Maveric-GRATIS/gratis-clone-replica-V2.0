@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 type SEOProps = {
   title: string;
@@ -7,8 +8,11 @@ type SEOProps = {
 };
 
 export const SEO = ({ title, description, canonical }: SEOProps) => {
+  const { i18n } = useTranslation();
+
   useEffect(() => {
     document.title = title;
+    document.documentElement.lang = i18n.language;
 
     const ensureMeta = (name: string, content: string) => {
       let el = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
@@ -23,15 +27,21 @@ export const SEO = ({ title, description, canonical }: SEOProps) => {
     if (description) {
       ensureMeta("description", description);
       // Open Graph / Twitter mirrors
-      const ogDesc = document.querySelector('meta[property="og:description"]') as HTMLMetaElement | null;
+      const ogDesc = document.querySelector(
+        'meta[property="og:description"]',
+      ) as HTMLMetaElement | null;
       if (ogDesc) ogDesc.setAttribute("content", description);
     }
 
-    const ogTitle = document.querySelector('meta[property="og:title"]') as HTMLMetaElement | null;
+    const ogTitle = document.querySelector(
+      'meta[property="og:title"]',
+    ) as HTMLMetaElement | null;
     if (ogTitle) ogTitle.setAttribute("content", title);
 
     if (canonical) {
-      let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+      let link = document.querySelector<HTMLLinkElement>(
+        'link[rel="canonical"]',
+      );
       if (!link) {
         link = document.createElement("link");
         link.setAttribute("rel", "canonical");
@@ -39,7 +49,7 @@ export const SEO = ({ title, description, canonical }: SEOProps) => {
       }
       link.setAttribute("href", canonical);
     }
-  }, [title, description, canonical]);
+  }, [title, description, canonical, i18n.language]);
 
   return null;
 };

@@ -21,6 +21,7 @@ import UserProfile from "@/components/UserProfile";
 import { useEffect, useState } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logoGratis from "@/assets/logo-gratis.png";
 import { MegaMenu, MegaMenuSection } from "./MegaMenu";
 import { SearchModal } from "@/components/SearchModal";
@@ -536,6 +537,7 @@ export default function Header() {
             <Search className="h-5 w-5" />
           </Button>
           <ThemeToggle />
+          <LanguageSwitcher />
           <Button
             variant="ghost"
             size="icon"

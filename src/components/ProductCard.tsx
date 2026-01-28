@@ -7,6 +7,7 @@ import { Star, ShoppingCart } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LazyImage } from "@/components/LazyImage";
 import { formatEuro } from "@/lib/currency";
+import { useTranslation } from "react-i18next";
 
 interface ProductCardProps {
   product?: {
@@ -30,6 +31,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, loading }: ProductCardProps) {
+  const { t } = useTranslation();
   const { addToCart } = useCartActions();
 
   if (loading || !product) {

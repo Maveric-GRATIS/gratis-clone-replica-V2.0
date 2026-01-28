@@ -3,6 +3,7 @@ import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Droplet, Sparkles, Zap, ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const beverageLines = [
   {
@@ -47,11 +48,13 @@ const beverageLines = [
 ];
 
 export default function Gratis() {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="GRATIS — Premium Hydration for a Purpose"
-        description="Premium natural water and functional beverages in infinitely recyclable aluminum bottles. 100% ad revenue donated to verified NGOs worldwide."
+        title={t("gratis.title")}
+        description={t("gratis.subtitle")}
         canonical={
           typeof window !== "undefined" ? window.location.href : "/gratis"
         }
@@ -72,28 +75,26 @@ export default function Gratis() {
 
         <div className="relative z-10 container px-4 text-center space-y-8">
           <Badge className="mx-auto text-lg px-4 py-2">
-            G.R.A.T.I.S — Giving Resources to Achieve Transformative and
-            Impactful Change
+            {t("gratis.badge")}
           </Badge>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold">
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              PREMIUM HYDRATION
+              {t("gratis.hero")}
             </span>
             <br />
-            <span className="text-foreground">FOR A PURPOSE</span>
+            <span className="text-foreground">{t("gratis.heroFor")}</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Three revolutionary beverage lines. Infinitely recyclable aluminum
-            bottles. 100% advertising revenue donated to verified NGOs
-            worldwide.
+            {t("gratis.subtitle")}
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center">
             <Button size="lg" asChild className="text-lg px-8">
               <Link to="/gratis/water">
-                Explore W.A.T.E.R <ArrowRight className="ml-2 h-5 w-5" />
+                {t("gratis.exploreWater")}{" "}
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button

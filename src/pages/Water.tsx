@@ -16,6 +16,7 @@ import { WaterImageGallery } from "@/components/water/WaterImageGallery";
 import DistributionMap from "@/components/DistributionMap";
 import { ShoppingCart, Truck, Shield, RotateCcw, Star } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 // Flavor options with images
 const flavors = [
@@ -58,6 +59,7 @@ const packs = [
 ];
 
 export default function Water() {
+  const { t } = useTranslation();
   const { products } = useProducts("beverage");
   const { locations, loading: locationsLoading } = useDistributionLocations();
   const { addItem } = useCart();

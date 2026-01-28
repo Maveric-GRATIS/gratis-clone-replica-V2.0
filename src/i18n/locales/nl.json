@@ -1,0 +1,295 @@
+{
+  "nav": {
+    "home": "Home",
+    "gratis": "Gratis",
+    "water": "Water",
+    "theurgy": "Theurgy",
+    "fu": "FU",
+    "arcane": "Arcane",
+    "tribe": "Tribe",
+    "impactTV": "ImpactTV",
+    "spark": "Spark",
+    "store": "Winkel",
+    "cart": "Winkelwagen",
+    "profile": "Profiel",
+    "admin": "Admin",
+    "login": "Inloggen",
+    "logout": "Uitloggen"
+  },
+  "hero": {
+    "title": "Gratis Water voor Iedereen",
+    "subtitle": "Sluit je aan bij onze missie om schoon, gratis water toegankelijk te maken voor gemeenschappen wereldwijd",
+    "cta": "Start Nu",
+    "learnMore": "Meer Informatie"
+  },
+  "home": {
+    "welcomeTitle": "Welkom bij GRATIS",
+    "welcomeSubtitle": "Empowering communities through free, clean water",
+    "missionTitle": "Onze Missie",
+    "missionText": "Wij geloven dat toegang tot schoon water een fundamenteel recht is. Onze missie is om gratis, schoon drinkwater te leveren aan gemeenschappen in nood.",
+    "howItWorks": "Hoe Het Werkt",
+    "impactTitle": "Onze Impact",
+    "impactDescription": "Samen maken we een verschil",
+    "getInvolved": "Doe Mee",
+    "donateNow": "Doneer Nu",
+    "volunteer": "Word Vrijwilliger",
+    "spread": "Verspreid Het Woord",
+    "heroTitle1": "Pure Kracht,",
+    "heroTitle2": "Pure Doel",
+    "heroSubtitle": "Van bergbronnen tot jouw handen — in 100% recyclebare tetrapacks.",
+    "heroCTA": "Drink met een Doel",
+    "whyChoose": "Waarom Kiezen voor GRATIS?",
+    "whyChooseSubtitle": "Pure hydratatie ontmoet straatcultuur"
+  },
+  "products": {
+    "title": "Onze Producten",
+    "viewAll": "Bekijk Alles",
+    "addToCart": "Toevoegen aan Winkelwagen",
+    "buyNow": "Nu Kopen",
+    "details": "Details",
+    "price": "Prijs",
+    "features": "Kenmerken",
+    "reviews": "Beoordelingen"
+  },
+  "water": {
+    "title": "Gratis Water Initiatief",
+    "description": "Toegang tot schoon, veilig drinkwater voor iedereen",
+    "purificationTitle": "Water Zuivering",
+    "distributionTitle": "Distributie Netwerk",
+    "sustainabilityTitle": "Duurzaamheid",
+    "impactTitle": "Gemeenschaps Impact"
+  },
+  "spark": {
+    "title": "Spark - Steun Onze Missie",
+    "donate": "Doneer",
+    "volunteer": "Vrijwilliger",
+    "partner": "Partner Worden",
+    "fundraise": "Fondsenwerving"
+  },
+  "impactTV": {
+    "title": "Impact TV",
+    "description": "Verhalen van verandering en impact",
+    "watchNow": "Nu Kijken",
+    "latestStories": "Laatste Verhalen"
+  },
+  "tribe": {
+    "title": "Tribe - Onze Gemeenschap",
+    "heritage": "Erfgoed",
+    "ethics": "Ethiek",
+    "team": "Team",
+    "standards": "Normen",
+    "responsibility": "Verantwoordelijkheid",
+    "accountability": "Aansprakelijkheid",
+    "transparency": "Transparantie",
+    "compliance": "Naleving"
+  },
+  "footer": {
+    "about": "Over Ons",
+    "contact": "Contact",
+    "privacy": "Privacy Beleid",
+    "terms": "Algemene Voorwaarden",
+    "cookies": "Cookie Beleid",
+    "social": "Volg Ons",
+    "newsletter": "Nieuwsbrief",
+    "newsletterPlaceholder": "Voer je e-mailadres in",
+    "subscribe": "Abonneren",
+    "rights": "Alle rechten voorbehouden"
+  },
+  "cart": {
+    "title": "Winkelwagen",
+    "empty": "Je winkelwagen is leeg",
+    "emptyDescription": "Voeg wat items toe om te beginnen",
+    "continueShopping": "Verder Winkelen",
+    "checkout": "Afrekenen",
+    "subtotal": "Subtotaal",
+    "total": "Totaal",
+    "remove": "Verwijderen",
+    "quantity": "Aantal",
+    "shipping": "Verzending",
+    "shippingCalculated": "Berekend bij afrekenen"
+  },
+  "auth": {
+    "login": "Inloggen",
+    "signup": "Registreren",
+    "email": "E-mailadres",
+    "password": "Wachtwoord",
+    "confirmPassword": "Bevestig Wachtwoord",
+    "displayName": "Weergavenaam",
+    "forgotPassword": "Wachtwoord Vergeten?",
+    "noAccount": "Nog geen account?",
+    "hasAccount": "Heb je al een account?",
+    "signInWithGoogle": "Inloggen met Google",
+    "or": "of",
+    "welcomeBack": "Welkom terug!",
+    "signInSuccess": "Je bent succesvol ingelogd.",
+    "signUpSuccess": "Account succesvol aangemaakt!",
+    "signInFailed": "Inloggen Mislukt",
+    "signUpFailed": "Registratie Mislukt",
+    "fillAllFields": "Vul alle velden in.",
+    "passwordsNoMatch": "Wachtwoorden komen niet overeen.",
+    "checkCredentials": "Controleer je inloggegevens."
+  },
+  "common": {
+    "loading": "Laden...",
+    "error": "Er is een fout opgetreden",
+    "success": "Succes!",
+    "cancel": "Annuleren",
+    "save": "Opslaan",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "confirm": "Bevestigen",
+    "back": "Terug",
+    "next": "Volgende",
+    "submit": "Verzenden",
+    "search": "Zoeken",
+    "filter": "Filteren",
+    "sort": "Sorteren",
+    "viewMore": "Meer Bekijken",
+    "showLess": "Minder Tonen"
+  },
+  "contact": {
+    "title": "Neem Contact Op",
+    "name": "Naam",
+    "email": "E-mailadres",
+    "message": "Bericht",
+    "send": "Verzenden",
+    "subject": "Onderwerp",
+    "successMessage": "Bericht verzonden!",
+    "successDescription": "We nemen binnen 24 uur contact met je op.",
+    "errorTitle": "Verzenden mislukt",
+    "errorDescription": "Probeer het later opnieuw of neem rechtstreeks contact met ons op."
+  },
+  "gratis": {
+    "title": "GRATIS — Premium Hydratatie voor een Doel",
+    "subtitle": "Drie revolutionaire drankenlijnen. Oneindig recyclebare aluminium flessen. 100% advertentie-inkomsten gedoneerd aan geverifieerde NGO's wereldwijd.",
+    "hero": "PREMIUM HYDRATATIE",
+    "heroFor": "VOOR EEN DOEL",
+    "badge": "G.R.A.T.I.S — Giving Resources to Achieve Transformative and Impactful Change",
+    "exploreWater": "Ontdek W.A.T.E.R",
+    "shopAll": "Winkel Alles",
+    "waterSubtitle": "Pure Still Water",
+    "waterDesc": "Premium natuurlijk bronwater in oneindig recyclebare aluminium flessen. Pure hydratatie, geen compromis.",
+    "waterTagline": "Wisdom. Aqua. Thirst. Elemental. Refresh.",
+    "theurgySubtitle": "Wellness Functioneel Water",
+    "theurgyDesc": "Mystiek gepositioneerd functioneel water verrijkt met adaptogenen, vitamines en natuurlijke botanicals. Verhef je hydratatie ritueel.",
+    "theurgyTagline": "Transform. Harmonize. Elevate. Unite. Revive. Grace. Yield.",
+    "fuSubtitle": "Rebels Functioneel Water",
+    "fuDesc": "Cafeïne-aangedreven energiewater met een rebelse houding. Voor degenen die weigeren te accepteren. Voed je vuur.",
+    "fuTagline": "Fierce. Unleashed.",
+    "available": "Beschikbaar",
+    "preOrder": "Pre-Order",
+    "learnMore": "Meer Informatie"
+  },
+  "waterPage": {
+    "title": "W.A.T.E.R — Pure Natural Spring Water",
+    "description": "Premium natuurlijk bronwater in 100% recyclebare aluminium flessen",
+    "selectFlavor": "Selecteer Smaak",
+    "selectSize": "Selecteer Grootte",
+    "selectPack": "Selecteer Pack",
+    "addToCart": "Toevoegen aan Winkelwagen",
+    "buyNow": "Nu Kopen",
+    "inStock": "Op Voorraad",
+    "outOfStock": "Niet op Voorraad",
+    "freeShipping": "Gratis Verzending",
+    "shippingOn": "op bestellingen boven €50",
+    "securePayment": "Veilige Betaling",
+    "paymentProtection": "100% beveiligde transacties",
+    "easyReturns": "Gemakkelijk Retourneren",
+    "returnsPolicy": "30 dagen geld-terug-garantie",
+    "qualityGuarantee": "Kwaliteitsgarantie",
+    "guaranteeText": "Premium kwaliteit gegarandeerd",
+    "features": "Kenmerken",
+    "testimonials": "Getuigenissen",
+    "environmentalImpact": "Milieu-impact",
+    "distribution": "Distributie",
+    "gallery": "Galerij"
+  },
+  "rigStore": {
+    "title": "RIG — GRATIS Merch Store",
+    "description": "Premium streetwear en merchandise van GRATIS",
+    "shopAll": "Bekijk Alles",
+    "bestSellers": "Bestsellers",
+    "newDrops": "Nieuwe Releases",
+    "drinkware": "Drinkgerei",
+    "tanksAndTops": "Tanks & Tops",
+    "hoodiesAndTracksuits": "Hoodies & Trainingspakken",
+    "swimwear": "Zwemkleding",
+    "bottoms": "Ondergoed",
+    "capsAndBeanies": "Petten & Mutsen",
+    "lifestyle": "Lifestyle",
+    "collabs": "Samenwerkingen",
+    "collections": "Collecties",
+    "featuredCollections": "Uitgelichte Collecties",
+    "viewCollection": "Bekijk Collectie",
+    "quickView": "Snel Bekijken",
+    "noProducts": "Geen producten gevonden",
+    "loading": "Producten laden...",
+    "error": "Fout bij het laden van producten"
+  },
+  "sparkPage": {
+    "title": "SPARK — Maak Je Slok Belangrijk",
+    "subtitle": "Doneer, investeer, word vrijwilliger, of word lid van het team.",
+    "description": "Elke actie ontsteekt verandering. Kies je pad naar impact.",
+    "verve": {
+      "title": "Verve",
+      "subtitle": "Geven",
+      "description": "Doneer om schoon water, kunstprogramma's en onderwijsinitiatieven wereldwijd te financieren"
+    },
+    "infuse": {
+      "title": "Infuse",
+      "subtitle": "Investeren",
+      "description": "Investeer in beurzen en microkredietprogramma's met sociale en financiële ROI"
+    },
+    "blaze": {
+      "title": "Blaze",
+      "subtitle": "Vrijwilligerswerk",
+      "description": "Doe mee aan evenementen, ondersteun gemeenschappen en maak direct impact"
+    },
+    "enlist": {
+      "title": "Enlist",
+      "subtitle": "Werkgelegenheid",
+      "description": "Sluit je aan bij ons team en help de toekomst van impact-gedreven business te bouwen"
+    },
+    "impactStats": {
+      "litersFunded": "Liters Gefinancierd",
+      "artPrograms": "Kunstprogramma's",
+      "studentsSupported": "Studenten Ondersteund",
+      "activeVolunteers": "Actieve Vrijwilligers"
+    }
+  },
+  "tribePage": {
+    "title": "TRIBE — Onze Waarden",
+    "description": "Erfgoed, Ethiek, Verantwoordelijkheid, Team, Normen.",
+    "subtitle": "Geboren uit het geloof dat elke slok een groter doel moet dienen.",
+    "whatWeStandFor": "Waar Wij Voor Staan",
+    "description2": "GRATIS is niet zomaar water. Het is een beweging gebouwd op authenticiteit, respect en verantwoordelijkheid. Ontdek de waarden die alles wat we doen aandrijven.",
+    "heritage": {
+      "title": "Erfgoed",
+      "description": "Geboren uit straatcultuur. Gebouwd op authenticiteit. Ontdek het verhaal dat onze missie vormde."
+    },
+    "ethics": {
+      "title": "Ethiek",
+      "description": "Eerlijke handel, cultureel respect en gemeenschapsinvestering. Onze toewijding om het juiste te doen voor iedereen."
+    },
+    "accountability": {
+      "title": "Verantwoording",
+      "description": "Real-time tracking, geverifieerde impact en onafhankelijke audits. Elke euro verantwoord."
+    },
+    "team": {
+      "title": "Team",
+      "description": "Ontmoet de diverse crew die GRATIS bouwt. Echte mensen uit de cultuur, die iets authentiek creëren."
+    },
+    "standards": {
+      "title": "Normen",
+      "description": "Kwaliteit zonder compromis. Veiligheid waarop je kunt vertrouwen. Uitmuntendheid in elke fles die we produceren."
+    },
+    "responsibility": {
+      "title": "Verantwoordelijkheid",
+      "description": "Milieu-toezeggingen die de planeet beschermen die ons allemaal onderhoudt. Actie boven woorden."
+    },
+    "transparency": {
+      "title": "Transparantie",
+      "description": "Open boeken, openbare financiën en radicale transparantie. Geen geheimen, geen spin—alleen feiten."
+    }
+  }
+}

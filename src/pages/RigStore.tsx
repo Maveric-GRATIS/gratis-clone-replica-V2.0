@@ -15,6 +15,7 @@ import {
   RigCollection,
 } from "@/data/rigCollections";
 import { SEO } from "@/components/SEO";
+import { useTranslation } from "react-i18next";
 
 // GRATIS streetwear merchandise categories
 const merchCategories = [
@@ -32,6 +33,7 @@ const merchCategories = [
 ];
 
 export default function RigStore() {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState("SHOP ALL");
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -50,7 +52,7 @@ export default function RigStore() {
         variant,
       });
     },
-    [addToCart]
+    [addToCart],
   );
 
   // Smooth category transition
@@ -63,7 +65,7 @@ export default function RigStore() {
         setTimeout(() => setIsTransitioning(false), 50);
       }, 150);
     },
-    [selectedCategory]
+    [selectedCategory],
   );
 
   // Filter products based on selected category
@@ -466,7 +468,7 @@ export default function RigStore() {
                           ((Number(product.original_price) -
                             Number(product.price)) /
                             Number(product.original_price)) *
-                            100
+                            100,
                         )}
                         %
                       </div>

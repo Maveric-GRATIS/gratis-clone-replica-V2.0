@@ -1,60 +1,96 @@
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, TrendingUp, Users, Briefcase, Droplets, Palette, GraduationCap } from "lucide-react";
-
-const sparkPaths = [
-  {
-    title: "Verve",
-    subtitle: "Giving",
-    description: "Donate to fund clean water, art programs, and education initiatives worldwide",
-    icon: Heart,
-    href: "/spark/verve",
-    color: "from-pink-500 to-rose-500"
-  },
-  {
-    title: "Infuse",
-    subtitle: "Invest",
-    description: "Invest in scholarships and microcredit programs with social and financial ROI",
-    icon: TrendingUp,
-    href: "/spark/infuse",
-    color: "from-green-500 to-emerald-500"
-  },
-  {
-    title: "Blaze",
-    subtitle: "Volunteer",
-    description: "Join events, support communities, and make a hands-on impact",
-    icon: Users,
-    href: "/spark/blaze",
-    color: "from-orange-500 to-amber-500"
-  },
-  {
-    title: "Enlist",
-    subtitle: "Employ",
-    description: "Join our team and help build the future of impact-driven business",
-    icon: Briefcase,
-    href: "/spark/enlist",
-    color: "from-blue-500 to-cyan-500"
-  }
-];
-
-const impactStats = [
-  { value: "2.5M+", label: "Liters Funded", icon: Droplets },
-  { value: "150+", label: "Art Programs", icon: Palette },
-  { value: "1,000+", label: "Students Supported", icon: GraduationCap },
-  { value: "500+", label: "Active Volunteers", icon: Users },
-];
+import {
+  ArrowRight,
+  Heart,
+  TrendingUp,
+  Users,
+  Briefcase,
+  Droplets,
+  Palette,
+  GraduationCap,
+} from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Spark() {
+  const { t } = useTranslation();
+
+  const sparkPaths = [
+    {
+      title: t("sparkPage.verve.title"),
+      subtitle: t("sparkPage.verve.subtitle"),
+      description: t("sparkPage.verve.description"),
+      icon: Heart,
+      href: "/spark/verve",
+      color: "from-pink-500 to-rose-500",
+    },
+    {
+      title: t("sparkPage.infuse.title"),
+      subtitle: t("sparkPage.infuse.subtitle"),
+      description: t("sparkPage.infuse.description"),
+      icon: TrendingUp,
+      href: "/spark/infuse",
+      color: "from-green-500 to-emerald-500",
+    },
+    {
+      title: t("sparkPage.blaze.title"),
+      subtitle: t("sparkPage.blaze.subtitle"),
+      description: t("sparkPage.blaze.description"),
+      icon: Users,
+      href: "/spark/blaze",
+      color: "from-orange-500 to-amber-500",
+    },
+    {
+      title: t("sparkPage.enlist.title"),
+      subtitle: t("sparkPage.enlist.subtitle"),
+      description: t("sparkPage.enlist.description"),
+      icon: Briefcase,
+      href: "/spark/enlist",
+      color: "from-blue-500 to-cyan-500",
+    },
+  ];
+
+  const impactStats = [
+    {
+      value: "2.5M+",
+      label: t("sparkPage.impactStats.litersFunded"),
+      icon: Droplets,
+    },
+    {
+      value: "150+",
+      label: t("sparkPage.impactStats.artPrograms"),
+      icon: Palette,
+    },
+    {
+      value: "1,000+",
+      label: t("sparkPage.impactStats.studentsSupported"),
+      icon: GraduationCap,
+    },
+    {
+      value: "500+",
+      label: t("sparkPage.impactStats.activeVolunteers"),
+      icon: Users,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="GRATIS SPARK" 
-        description="Make your sip count — donate, invest, volunteer, or join the team." 
-        canonical={typeof window !== 'undefined' ? window.location.href : '/spark'} 
+      <SEO
+        title={t("sparkPage.title")}
+        description={t("sparkPage.subtitle")}
+        canonical={
+          typeof window !== "undefined" ? window.location.href : "/spark"
+        }
       />
-      
+
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-primary/10 to-background" />
@@ -63,10 +99,10 @@ export default function Spark() {
             SPARK
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-4">
-            Make your sip count — donate, invest, volunteer, or join the team.
+            {t("sparkPage.subtitle")}
           </p>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Every action ignites change. Choose your path to impact.
+            {t("sparkPage.description")}
           </p>
         </div>
       </section>
@@ -80,7 +116,9 @@ export default function Spark() {
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
                   <Icon className="h-6 w-6 text-primary" />
                 </div>
-                <div className="text-3xl md:text-4xl font-black text-foreground mb-1">{value}</div>
+                <div className="text-3xl md:text-4xl font-black text-foreground mb-1">
+                  {value}
+                </div>
                 <div className="text-sm text-muted-foreground">{label}</div>
               </div>
             ))}
@@ -96,32 +134,41 @@ export default function Spark() {
               Choose Your Path
             </h2>
             <p className="text-lg text-muted-foreground">
-              Four ways to make an impact. Each path contributes to our mission of creating positive change.
+              Four ways to make an impact. Each path contributes to our mission
+              of creating positive change.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {sparkPaths.map(({ title, subtitle, description, icon: Icon, href, color }) => (
-              <Link key={title} to={href}>
-                <Card className="h-full border-2 hover:border-primary/50 transition-all hover:shadow-xl group">
-                  <CardHeader>
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                      <Icon className="h-7 w-7 text-white" />
-                    </div>
-                    <CardTitle className="text-2xl flex items-center gap-2">
-                      {title}
-                      <span className="text-base font-normal text-muted-foreground">({subtitle})</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base mb-4">{description}</CardDescription>
-                    <div className="flex items-center text-primary font-medium group-hover:gap-3 gap-2 transition-all">
-                      Learn More <ArrowRight className="h-4 w-4" />
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+            {sparkPaths.map(
+              ({ title, subtitle, description, icon: Icon, href, color }) => (
+                <Link key={title} to={href}>
+                  <Card className="h-full border-2 hover:border-primary/50 transition-all hover:shadow-xl group">
+                    <CardHeader>
+                      <div
+                        className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                      >
+                        <Icon className="h-7 w-7 text-white" />
+                      </div>
+                      <CardTitle className="text-2xl flex items-center gap-2">
+                        {title}
+                        <span className="text-base font-normal text-muted-foreground">
+                          ({subtitle})
+                        </span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-base mb-4">
+                        {description}
+                      </CardDescription>
+                      <div className="flex items-center text-primary font-medium group-hover:gap-3 gap-2 transition-all">
+                        Learn More <ArrowRight className="h-4 w-4" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ),
+            )}
           </div>
         </div>
       </section>
@@ -133,7 +180,10 @@ export default function Spark() {
             <div className="space-y-4">
               <h2 className="text-3xl font-black">Impact-First Philosophy</h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Every action you take through SPARK directly fuels clean water initiatives, art and culture programs, and education opportunities worldwide. Your contribution creates ripples of positive change.
+                Every action you take through SPARK directly fuels clean water
+                initiatives, art and culture programs, and education
+                opportunities worldwide. Your contribution creates ripples of
+                positive change.
               </p>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-center gap-3">
@@ -153,7 +203,9 @@ export default function Spark() {
             <div className="space-y-4">
               <h2 className="text-3xl font-black">Join the Movement</h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Whether you contribute time, money, or skills, you become part of a global community committed to making the world better. Every volunteer hour, every donation, every investment matters.
+                Whether you contribute time, money, or skills, you become part
+                of a global community committed to making the world better.
+                Every volunteer hour, every donation, every investment matters.
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
                 <Link to="/spark/verve">
@@ -163,9 +215,7 @@ export default function Spark() {
                   </Button>
                 </Link>
                 <Link to="/spark/blaze">
-                  <Button variant="outline">
-                    Volunteer Now
-                  </Button>
+                  <Button variant="outline">Volunteer Now</Button>
                 </Link>
               </div>
             </div>

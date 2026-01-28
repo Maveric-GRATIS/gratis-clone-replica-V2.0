@@ -10,8 +10,10 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
 import { formatEuro } from "@/lib/currency";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const Cart = () => {
+  const { t } = useTranslation();
   const {
     items,
     isOpen,
@@ -34,18 +36,18 @@ export const Cart = () => {
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">
             <ShoppingCart className="h-5 w-5" />
-            Shopping Cart ({totalItems})
+            {t("cart.title")} ({totalItems})
           </SheetTitle>
         </SheetHeader>
 
         {items.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center py-12">
             <ShoppingCart className="h-16 w-16 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">Your cart is empty</h3>
+            <h3 className="text-lg font-semibold mb-2">{t("cart.empty")}</h3>
             <p className="text-sm text-muted-foreground mb-6">
-              Add some items to get started
+              {t("cart.emptyDescription")}
             </p>
-            <Button onClick={closeCart}>Continue Shopping</Button>
+            <Button onClick={closeCart}>{t("cart.continueShopping")}</Button>
           </div>
         ) : (
           <>
@@ -116,30 +118,30 @@ export const Cart = () => {
             <div className="border-t pt-4 space-y-4">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span>Subtotal</span>
+                  <span>{t("cart.subtotal")}</span>
                   <span>{formatEuro(totalPrice)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Shipping</span>
-                  <span>Calculated at checkout</span>
+                  <span>{t("cart.shipping")}</span>
+                  <span>{t("cart.shippingCalculated")}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between text-base font-semibold">
-                  <span>Total</span>
+                  <span>{t("cart.total")}</span>
                   <span>{formatEuro(totalPrice)}</span>
                 </div>
               </div>
 
               <div className="space-y-2">
                 <Button className="w-full" size="lg" onClick={handleCheckout}>
-                  Proceed to Checkout
+                  {t("cart.checkout")}
                 </Button>
                 <Button
                   variant="outline"
                   className="w-full"
                   onClick={closeCart}
                 >
-                  Continue Shopping
+                  {t("cart.continueShopping")}
                 </Button>
               </div>
             </div>

@@ -315,6 +315,15 @@ export default function Settings() {
 
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">
+          {/* Back Button */}
+          <div className="mb-6">
+            <Link to="/dashboard">
+              <Button variant="outline" size="sm">
+                ← Back to Dashboard
+              </Button>
+            </Link>
+          </div>
+
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="profile">

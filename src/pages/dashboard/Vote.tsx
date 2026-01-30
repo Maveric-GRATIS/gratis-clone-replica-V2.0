@@ -66,8 +66,8 @@ export default function Vote() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasVoted, setHasVoted] = useState(false);
 
-  // Mock user tier - replace with actual data from Firestore
-  const userTier = "insider"; // This should come from user document
+  // User tier - will be loaded from Firestore (currently mock)
+  const userTier: "explorer" | "insider" | "core" | "founder" = "insider";
   const votingWeight = userTier === "founder" ? 2 : 1;
   const canVote = userTier !== "explorer";
 
@@ -263,6 +263,15 @@ export default function Vote() {
 
       <div className="bg-background pb-16">
         <div className="container max-w-3xl mx-auto px-4">
+          {/* Back Button */}
+          <div className="mb-6">
+            <Link to="/dashboard">
+              <Button variant="outline" size="sm">
+                ← Back to Dashboard
+              </Button>
+            </Link>
+          </div>
+
           {/* Vote Info */}
           <Card className="mb-6">
             <CardHeader>

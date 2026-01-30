@@ -175,9 +175,9 @@ export default function Dashboard() {
         title="My Dashboard"
         description="View your orders, impact metrics, and manage your TRIBE membership"
       />
-      Data.firstName ? ", " + userData.firstName
+
       <PageHero
-        title={`Welcome Back${user?.displayName ? ", " + user.displayName.split(" ")[0] : ""}!`}
+        title={`Welcome Back${userData.firstName ? ", " + userData.firstName : ""}!`}
         subtitle="Your GRATIS Impact Dashboard"
       />
       <div className="bg-background pb-16">

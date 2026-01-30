@@ -17,7 +17,8 @@ const theurgyFlavors = [
     id: "citrus-carnival",
     name: "Citrus Carnival",
     subtitle: "Brazil Edition",
-    description: "Explosive citrus blend inspired by Rio's Carnival. Real Brazilian lime and sweet orange essences dance together like samba rhythms.",
+    description:
+      "Explosive citrus blend inspired by Rio's Carnival. Real Brazilian lime and sweet orange essences dance together like samba rhythms.",
     image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
     color: "#FFA500",
     country: "Brazil",
@@ -26,7 +27,8 @@ const theurgyFlavors = [
     id: "hibiscus-bloom",
     name: "Hibiscus Bloom",
     subtitle: "India Edition",
-    description: "A tribute to Diwali's festival of lights. Delicate hibiscus flowers and rose water create a floral symphony.",
+    description:
+      "A tribute to Diwali's festival of lights. Delicate hibiscus flowers and rose water create a floral symphony.",
     image: "/lovable-uploads/gratis-neon-tank.jpg",
     color: "#E91E63",
     country: "India",
@@ -35,7 +37,8 @@ const theurgyFlavors = [
     id: "dragon-fire",
     name: "Dragon Fire",
     subtitle: "China Edition",
-    description: "Celebrates Lunar New Year with exotic dragonfruit and lychee. Luck and prosperity in every sip.",
+    description:
+      "Celebrates Lunar New Year with exotic dragonfruit and lychee. Luck and prosperity in every sip.",
     image: "/lovable-uploads/gratis-geo-bodysuit.jpg",
     color: "#FF5722",
     country: "China",
@@ -44,7 +47,8 @@ const theurgyFlavors = [
     id: "variety-pack",
     name: "Variety Pack",
     subtitle: "World Tour",
-    description: "Experience all three cultural celebrations in one pack. The complete GRATIS Theurgy experience.",
+    description:
+      "Experience all three cultural celebrations in one pack. The complete GRATIS Theurgy experience.",
     image: "/lovable-uploads/gratis-canal-collection.jpg",
     color: "#9C27B0",
     country: "Global",
@@ -53,9 +57,27 @@ const theurgyFlavors = [
 
 // Pack options (no singles - B2B minimum 6)
 const theurgyPacks = [
-  { value: "6", label: "6-Pack", price: 24.99, savings: 0, description: "Starter" },
-  { value: "12", label: "12-Pack", price: 44.99, savings: 10, description: "Team Size" },
-  { value: "24", label: "24-Pack", price: 79.99, savings: 20, description: "Event Ready" },
+  {
+    value: "6",
+    label: "6-Pack",
+    price: 24.99,
+    savings: 0,
+    description: "Starter",
+  },
+  {
+    value: "12",
+    label: "12-Pack",
+    price: 44.99,
+    savings: 10,
+    description: "Team Size",
+  },
+  {
+    value: "24",
+    label: "24-Pack",
+    price: 79.99,
+    savings: 20,
+    description: "Event Ready",
+  },
 ];
 
 // Product images by flavor
@@ -79,13 +101,17 @@ const flavorImages: Record<string, string[]> = {
 };
 
 export default function Theurgy() {
-  const [selectedFlavor, setSelectedFlavor] = useState<string>("citrus-carnival");
+  const [selectedFlavor, setSelectedFlavor] =
+    useState<string>("citrus-carnival");
   const [selectedPack, setSelectedPack] = useState<string>("6");
   const { addItem } = useCart();
 
-  const currentFlavor = theurgyFlavors.find((f) => f.id === selectedFlavor) || theurgyFlavors[0];
-  const currentPack = theurgyPacks.find((p) => p.value === selectedPack) || theurgyPacks[0];
-  const currentImages = flavorImages[selectedFlavor] || flavorImages["citrus-carnival"];
+  const currentFlavor =
+    theurgyFlavors.find((f) => f.id === selectedFlavor) || theurgyFlavors[0];
+  const currentPack =
+    theurgyPacks.find((p) => p.value === selectedPack) || theurgyPacks[0];
+  const currentImages =
+    flavorImages[selectedFlavor] || flavorImages["citrus-carnival"];
 
   const handleAddToCart = () => {
     const cartItem = {
@@ -102,7 +128,9 @@ export default function Theurgy() {
     };
 
     addItem(cartItem);
-    toast.success(`Added ${currentPack.label} of ${currentFlavor.name} to cart!`);
+    toast.success(
+      `Added ${currentPack.label} of ${currentFlavor.name} to cart!`,
+    );
   };
 
   return (
@@ -110,7 +138,9 @@ export default function Theurgy() {
       <SEO
         title="GRATIS Theurgy — Limited Edition Flavored Sparkling"
         description="Premium flavored sparkling water for B2B partnerships. Citrus, Hibiscus, Dragonfruit - cultural celebrations in sustainable tetrapacks."
-        canonical={typeof window !== "undefined" ? window.location.href : "/theurgy"}
+        canonical={
+          typeof window !== "undefined" ? window.location.href : "/theurgy"
+        }
       />
 
       {/* Hero Banner */}
@@ -132,7 +162,8 @@ export default function Theurgy() {
               THEURGY
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Premium flavored sparkling rituals for hospitality, corporate wellness, and partnership programs.
+              Premium flavored sparkling rituals for hospitality, corporate
+              wellness, and partnership programs.
             </p>
           </div>
         </div>
@@ -230,11 +261,15 @@ export default function Theurgy() {
                 </div>
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Truck className="w-6 h-6 text-primary mx-auto mb-1" />
-                  <p className="text-xs text-muted-foreground">Direct Delivery</p>
+                  <p className="text-xs text-muted-foreground">
+                    Direct Delivery
+                  </p>
                 </div>
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Award className="w-6 h-6 text-primary mx-auto mb-1" />
-                  <p className="text-xs text-muted-foreground">Custom Branding</p>
+                  <p className="text-xs text-muted-foreground">
+                    Custom Branding
+                  </p>
                 </div>
               </div>
             </div>
@@ -267,11 +302,16 @@ export default function Theurgy() {
                   {flavor.country === "India" && "🪔"}
                   {flavor.country === "China" && "🐉"}
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2" style={{ color: flavor.color }}>
+                <h3
+                  className="text-2xl font-bold text-white mb-2"
+                  style={{ color: flavor.color }}
+                >
                   {flavor.name}
                 </h3>
                 <p className="text-sm text-gray-400 mb-4">{flavor.subtitle}</p>
-                <p className="text-gray-300 leading-relaxed">{flavor.description}</p>
+                <p className="text-gray-300 leading-relaxed">
+                  {flavor.description}
+                </p>
               </div>
             ))}
           </div>

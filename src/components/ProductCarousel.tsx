@@ -17,7 +17,7 @@ const products = [
     descriptionKey: "products.carousel.water.description",
     price: 4.97,
     size: "500ML",
-    image: "/lovable-uploads/c51ea472-b223-4a6a-934c-74b38370615e.png",
+    image: "/lovable-uploads/Gratis_water_500ml.png",
   },
   {
     id: "theurgy-20oz",
@@ -26,7 +26,7 @@ const products = [
     descriptionKey: "products.carousel.theurgy.description",
     price: 5.97,
     size: "20OZ",
-    image: "/lovable-uploads/cdefb4a2-d74d-4f9f-be84-9100cb927d52.png",
+    image: "/lovable-uploads/Gratis_water_570ml.png",
   },
   {
     id: "fu-1gal",
@@ -35,7 +35,7 @@ const products = [
     descriptionKey: "products.carousel.fu.description",
     price: 12.97,
     size: "1 GAL",
-    image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+    image: "/lovable-uploads/Gratis_water_1gal.png",
   },
   {
     id: "squeezed-death-12oz",

@@ -3,40 +3,40 @@ import { Badge } from "@/components/ui/badge";
 
 const showcaseItems = [
   {
-    id: '1',
+    id: "1",
     seriesNumber: 1,
-    name: 'INFERNO',
-    artist: 'Street Art Collective',
+    name: "INFERNO",
+    artist: "Street Art Collective",
     editionOf: 500,
-    image: '/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png',
-    designStyle: 'Graffiti Fire',
+    image: "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
+    designStyle: "Graffiti Fire",
   },
   {
-    id: '2',
+    id: "2",
     seriesNumber: 2,
-    name: 'ICE STORM',
-    artist: 'Nordic Design Studio',
+    name: "ICE STORM",
+    artist: "Nordic Design Studio",
     editionOf: 500,
-    image: '/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png',
-    designStyle: 'Cryogenic Art',
+    image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+    designStyle: "Cryogenic Art",
   },
   {
-    id: '3',
+    id: "3",
     seriesNumber: 3,
-    name: 'REBEL DROP',
-    artist: 'Underground Artists',
+    name: "REBEL DROP",
+    artist: "Underground Artists",
     editionOf: 300,
-    image: '/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png',
-    designStyle: 'Mystery Pattern',
+    image: "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
+    designStyle: "Mystery Pattern",
   },
   {
-    id: '4',
+    id: "4",
     seriesNumber: 4,
-    name: 'WINNER\'S CHOICE',
-    artist: 'Community Created',
+    name: "WINNER'S CHOICE",
+    artist: "Community Created",
     editionOf: 100,
-    image: '/lovable-uploads/gratis-lifestyle-drink.jpg',
-    designStyle: 'Ultimate Rarity',
+    image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
+    designStyle: "Ultimate Rarity",
   },
 ];
 
@@ -54,7 +54,7 @@ export const FUCollectorShowcase = () => {
             MUSEUM OF F.U.
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Every bottle is a work of art. Numbered editions with unique designs 
+            Every bottle is a work of art. Numbered editions with unique designs
             by international artists. Fully authenticated and collectible.
           </p>
         </div>
@@ -68,8 +68,11 @@ export const FUCollectorShowcase = () => {
             >
               {/* Series Badge */}
               <div className="absolute top-3 left-3 z-10">
-                <Badge variant="secondary" className="bg-red-500 text-white font-black">
-                  #{String(item.seriesNumber).padStart(2, '0')}
+                <Badge
+                  variant="secondary"
+                  className="bg-red-500 text-white font-black"
+                >
+                  #{String(item.seriesNumber).padStart(2, "0")}
                 </Badge>
               </div>
 
@@ -86,7 +89,7 @@ export const FUCollectorShowcase = () => {
               {/* Content Overlay */}
               <div className="absolute bottom-0 left-0 right-0 p-4">
                 <h3 className="text-xl font-black text-white">{item.name}</h3>
-                
+
                 <div className="mt-2 space-y-1">
                   <div className="flex items-center gap-2 text-xs text-gray-400">
                     <Palette className="w-3 h-3" />
@@ -118,7 +121,8 @@ export const FUCollectorShowcase = () => {
               </div>
               <h4 className="font-bold text-white">QR Authenticated</h4>
               <p className="text-sm text-gray-400">
-                Every bottle has a unique QR code linking to its certificate of authenticity
+                Every bottle has a unique QR code linking to its certificate of
+                authenticity
               </p>
             </div>
             <div className="space-y-3">
@@ -127,7 +131,8 @@ export const FUCollectorShowcase = () => {
               </div>
               <h4 className="font-bold text-white">Numbered Edition</h4>
               <p className="text-sm text-gray-400">
-                Each bottle is individually numbered and registered in our collector's database
+                Each bottle is individually numbered and registered in our
+                collector's database
               </p>
             </div>
             <div className="space-y-3">
@@ -136,7 +141,8 @@ export const FUCollectorShowcase = () => {
               </div>
               <h4 className="font-bold text-white">Artist Signed</h4>
               <p className="text-sm text-gray-400">
-                Designs created by verified artists with full attribution and provenance
+                Designs created by verified artists with full attribution and
+                provenance
               </p>
             </div>
           </div>

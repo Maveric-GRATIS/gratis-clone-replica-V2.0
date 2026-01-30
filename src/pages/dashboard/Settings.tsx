@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { db } from "@/firebase";
-import { doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc, getDoc, setDoc } from "firebase/firestore";
 import {
   updatePassword,
   reauthenticateWithCredential,
@@ -78,10 +78,110 @@ export default function Settings() {
     gratisNews: false,
   });
 
-  // Mock user tier data - replace with real data from Firestore
-  const userTier = "insider";
-  const memberSince = "December 15, 2025";
-  const bottlesClaimed = 3;
+  // User tier data from Firestore
+  const [userTier, setUserTier] = useState<string>("explorer");
+  const [memberSince, setMemberSince] = useState<string>("Loading...");
+  const [bottlesClaimed, setBottlesClaimed] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load user data from Firestore on mount
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (!user) return;
+
+      setIsLoading(true);
+      try {
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+
+          // Update profile data
+          setProfileData({
+            firstName: data.firstName || "",
+            lastName: data.lastName || "",
+            email: user.email || "",
+            phone: data.phone || "",
+            street: data.defaultShippingAddress?.street || "",
+            city: data.defaultShippingAddress?.city || "",
+            postalCode: data.defaultShippingAddress?.postalCode || "",
+            country: data.defaultShippingAddress?.country || "NL",
+          });
+
+          // Update notifications
+          if (data.notifications) {
+            setNotifications(data.notifications);
+          }
+
+          // Update tier info
+          setUserTier(data.tribeTier || "explorer");
+          setBottlesClaimed(data.bottlesClaimed || 0);
+
+          // Format member since date
+          if (data.createdAt) {
+            const date = data.createdAt.toDate();
+            setMemberSince(
+              date.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              }),
+            );
+          }
+        } else {
+          // Create user document if it doesn't exist
+          console.log("User document does not exist, creating...");
+          const now = new Date();
+          await setDoc(userRef, {
+            email: user.email || "",
+            firstName: "",
+            lastName: "",
+            phone: "",
+            tribeTier: "explorer",
+            bottlesClaimed: 0,
+            bottlesLimit: 1,
+            totalImpact: 0,
+            notifications: {
+              bottleShipped: true,
+              votingReminders: true,
+              impactReports: true,
+              gratisNews: false,
+            },
+            createdAt: now,
+            updatedAt: now,
+          });
+
+          // Set default values
+          setProfileData({
+            firstName: "",
+            lastName: "",
+            email: user.email || "",
+            phone: "",
+            street: "",
+            city: "",
+            postalCode: "",
+            country: "NL",
+          });
+          setMemberSince(
+            now.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }),
+          );
+          toast.info("Welcome! Please complete your profile.");
+        }
+      } catch (error) {
+        console.error("Error loading user data:", error);
+        toast.error("Failed to load user data");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadUserData();
+  }, [user]);
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,147 +345,158 @@ export default function Settings() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleSaveProfile} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input
-                          id="firstName"
-                          value={profileData.firstName}
-                          onChange={(e) =>
-                            setProfileData({
-                              ...profileData,
-                              firstName: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input
-                          id="lastName"
-                          value={profileData.lastName}
-                          onChange={(e) =>
-                            setProfileData({
-                              ...profileData,
-                              lastName: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
+                  {isLoading ? (
+                    <div className="flex items-center justify-center py-12">
+                      <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
                     </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={profileData.email}
-                        disabled
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Email cannot be changed. Contact support if needed.
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">Phone (Optional)</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        value={profileData.phone}
-                        onChange={(e) =>
-                          setProfileData({
-                            ...profileData,
-                            phone: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-
-                    <div className="pt-4 border-t">
-                      <h3 className="font-semibold mb-4">
-                        Default Shipping Address
-                      </h3>
-
-                      <div className="space-y-4">
+                  ) : (
+                    <form onSubmit={handleSaveProfile} className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <Label htmlFor="street">Street Address</Label>
+                          <Label htmlFor="firstName">First Name</Label>
                           <Input
-                            id="street"
-                            value={profileData.street}
+                            id="firstName"
+                            value={profileData.firstName}
                             onChange={(e) =>
                               setProfileData({
                                 ...profileData,
-                                street: e.target.value,
+                                firstName: e.target.value,
                               })
                             }
                           />
                         </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="city">City</Label>
-                            <Input
-                              id="city"
-                              value={profileData.city}
-                              onChange={(e) =>
-                                setProfileData({
-                                  ...profileData,
-                                  city: e.target.value,
-                                })
-                              }
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="postalCode">Postal Code</Label>
-                            <Input
-                              id="postalCode"
-                              value={profileData.postalCode}
-                              onChange={(e) =>
-                                setProfileData({
-                                  ...profileData,
-                                  postalCode: e.target.value,
-                                })
-                              }
-                            />
-                          </div>
-                        </div>
-
                         <div className="space-y-2">
-                          <Label htmlFor="country">Country</Label>
-                          <Select
-                            value={profileData.country}
-                            onValueChange={(value) =>
-                              setProfileData({ ...profileData, country: value })
+                          <Label htmlFor="lastName">Last Name</Label>
+                          <Input
+                            id="lastName"
+                            value={profileData.lastName}
+                            onChange={(e) =>
+                              setProfileData({
+                                ...profileData,
+                                lastName: e.target.value,
+                              })
                             }
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="NL">Netherlands</SelectItem>
-                              <SelectItem value="DE">Germany</SelectItem>
-                              <SelectItem value="BE">Belgium</SelectItem>
-                              <SelectItem value="FR">France</SelectItem>
-                              <SelectItem value="US">United States</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          />
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex justify-end pt-4">
-                      <Button type="submit" disabled={isSaving}>
-                        {isSaving ? (
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        ) : (
-                          <Check className="mr-2 h-4 w-4" />
-                        )}
-                        Save Changes
-                      </Button>
-                    </div>
-                  </form>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={profileData.email}
+                          disabled
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Email cannot be changed. Contact support if needed.
+                        </p>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone (Optional)</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={profileData.phone}
+                          onChange={(e) =>
+                            setProfileData({
+                              ...profileData,
+                              phone: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+
+                      <div className="pt-4 border-t">
+                        <h3 className="font-semibold mb-4">
+                          Default Shipping Address
+                        </h3>
+
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="street">Street Address</Label>
+                            <Input
+                              id="street"
+                              value={profileData.street}
+                              onChange={(e) =>
+                                setProfileData({
+                                  ...profileData,
+                                  street: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="city">City</Label>
+                              <Input
+                                id="city"
+                                value={profileData.city}
+                                onChange={(e) =>
+                                  setProfileData({
+                                    ...profileData,
+                                    city: e.target.value,
+                                  })
+                                }
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="postalCode">Postal Code</Label>
+                              <Input
+                                id="postalCode"
+                                value={profileData.postalCode}
+                                onChange={(e) =>
+                                  setProfileData({
+                                    ...profileData,
+                                    postalCode: e.target.value,
+                                  })
+                                }
+                              />
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor="country">Country</Label>
+                            <Select
+                              value={profileData.country}
+                              onValueChange={(value) =>
+                                setProfileData({
+                                  ...profileData,
+                                  country: value,
+                                })
+                              }
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="NL">Netherlands</SelectItem>
+                                <SelectItem value="DE">Germany</SelectItem>
+                                <SelectItem value="BE">Belgium</SelectItem>
+                                <SelectItem value="FR">France</SelectItem>
+                                <SelectItem value="US">
+                                  United States
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end pt-4">
+                        <Button type="submit" disabled={isSaving}>
+                          {isSaving ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          ) : (
+                            <Check className="mr-2 h-4 w-4" />
+                          )}
+                          Save Changes
+                        </Button>
+                      </div>
+                    </form>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>

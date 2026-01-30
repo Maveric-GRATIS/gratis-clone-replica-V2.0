@@ -58,6 +58,8 @@ interface UserData {
   bottlesLimit: number;
   totalImpact: number;
   nextVoteDate?: Date;
+  firstName?: string;
+  lastName?: string;
 }
 
 export default function Dashboard() {
@@ -69,6 +71,8 @@ export default function Dashboard() {
     bottlesLimit: 1,
     totalImpact: 0,
     nextVoteDate: new Date(2026, 3, 1), // April 1, 2026
+    firstName: "",
+    lastName: "",
   });
 
   // Real-time listener for user data
@@ -93,6 +97,8 @@ export default function Dashboard() {
           bottlesClaimed: data.bottlesClaimed || 0,
           bottlesLimit:
             tierLimits[data.tribeTier as keyof typeof tierLimits] || 1,
+          firstName: data.firstName || "",
+          lastName: data.lastName || "",
           totalImpact: data.totalImpact || 0,
           nextVoteDate: data.nextVoteDate?.toDate() || new Date(2026, 3, 1),
         });
@@ -169,12 +175,11 @@ export default function Dashboard() {
         title="My Dashboard"
         description="View your orders, impact metrics, and manage your TRIBE membership"
       />
-
+      Data.firstName ? ", " + userData.firstName
       <PageHero
         title={`Welcome Back${user?.displayName ? ", " + user.displayName.split(" ")[0] : ""}!`}
         subtitle="Your GRATIS Impact Dashboard"
       />
-
       <div className="bg-background pb-16">
         <div className="container max-w-6xl mx-auto px-4 space-y-8">
           {/* Quick Stats Cards */}

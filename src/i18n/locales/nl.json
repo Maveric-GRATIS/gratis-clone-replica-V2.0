@@ -93,6 +93,30 @@
         "subtitle": "1 GAL Tetrapack",
         "description": "Gearomatiseerde Attitude. Grote Impact."
       },
+      "squeezed": {
+        "subtitle": "Bruisend Water met Smaak",
+        "description": "Vermoord je dorst. 10 calorieën."
+      },
+      "mango": {
+        "subtitle": "Bruisend Water met Smaak",
+        "description": "Tropische vernietiging. 10 calorieën."
+      },
+      "blueberry": {
+        "subtitle": "IJsthee",
+        "description": "Bessenchaos in elke slok. 20 calorieën."
+      },
+      "grave": {
+        "subtitle": "Bruisend Water met Smaak",
+        "description": "Citrus destructie. 0 calorieën."
+      },
+      "rootbeer": {
+        "subtitle": "Bruisend Water met Smaak",
+        "description": "Koffie ontmoet furie. 0 calorieën."
+      },
+      "green": {
+        "subtitle": "Bruisend Water met Smaak",
+        "description": "Limoen executie. 0 calorieën."
+      },
       "addedToCart": "toegevoegd aan winkelwagen"
     }
   },

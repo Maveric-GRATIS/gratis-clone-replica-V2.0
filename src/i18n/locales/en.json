@@ -93,6 +93,30 @@
         "subtitle": "1 GAL Tetrapack",
         "description": "Flavored Attitude. Big Impact."
       },
+      "squeezed": {
+        "subtitle": "Soda Flavored Sparkling Water",
+        "description": "Murder your thirst. 10 calories."
+      },
+      "mango": {
+        "subtitle": "Soda Flavored Sparkling Water",
+        "description": "Tropical devastation. 10 calories."
+      },
+      "blueberry": {
+        "subtitle": "Iced Tea",
+        "description": "Berry chaos in every sip. 20 calories."
+      },
+      "grave": {
+        "subtitle": "Soda Flavored Sparkling Water",
+        "description": "Citrus destruction. 0 calories."
+      },
+      "rootbeer": {
+        "subtitle": "Soda Flavored Sparkling Water",
+        "description": "Coffee meets fury. 0 calories."
+      },
+      "green": {
+        "subtitle": "Soda Flavored Sparkling Water",
+        "description": "Lime execution. 0 calories."
+      },
       "addedToCart": "added to cart"
     }
   },

@@ -37,6 +37,60 @@ const products = [
     size: "1 GAL",
     image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
   },
+  {
+    id: "squeezed-death-12oz",
+    name: "SQUEEZED TO DEATH",
+    subtitleKey: "products.carousel.squeezed.subtitle",
+    descriptionKey: "products.carousel.squeezed.description",
+    price: 3.97,
+    size: "12OZ",
+    image: "/lovable-uploads/c51ea472-b223-4a6a-934c-74b38370615e.png",
+  },
+  {
+    id: "mango-chainsaw-16oz",
+    name: "MANGO CHAINSAW",
+    subtitleKey: "products.carousel.mango.subtitle",
+    descriptionKey: "products.carousel.mango.description",
+    price: 4.47,
+    size: "16OZ",
+    image: "/lovable-uploads/cdefb4a2-d74d-4f9f-be84-9100cb927d52.png",
+  },
+  {
+    id: "blueberry-buzzsaw-16oz",
+    name: "BLUEBERRY BUZZSAW",
+    subtitleKey: "products.carousel.blueberry.subtitle",
+    descriptionKey: "products.carousel.blueberry.description",
+    price: 4.47,
+    size: "16OZ",
+    image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+  },
+  {
+    id: "grave-fruit-12oz",
+    name: "GRAVE FRUIT",
+    subtitleKey: "products.carousel.grave.subtitle",
+    descriptionKey: "products.carousel.grave.description",
+    price: 3.97,
+    size: "12OZ",
+    image: "/lovable-uploads/c51ea472-b223-4a6a-934c-74b38370615e.png",
+  },
+  {
+    id: "root-beer-wrath-16oz",
+    name: "ROOTBEER WRATH",
+    subtitleKey: "products.carousel.rootbeer.subtitle",
+    descriptionKey: "products.carousel.rootbeer.description",
+    price: 4.47,
+    size: "16OZ",
+    image: "/lovable-uploads/cdefb4a2-d74d-4f9f-be84-9100cb927d52.png",
+  },
+  {
+    id: "green-guillotine-16oz",
+    name: "GREEN GUILLOTINE",
+    subtitleKey: "products.carousel.green.subtitle",
+    descriptionKey: "products.carousel.green.description",
+    price: 4.47,
+    size: "16OZ",
+    image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+  },
 ];
 
 export const ProductCarousel = () => {
@@ -45,6 +99,9 @@ export const ProductCarousel = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   // Track active slide based on scroll position
   useEffect(() => {
@@ -53,12 +110,12 @@ export const ProductCarousel = () => {
 
     const handleScroll = () => {
       const scrollLeft = scrollContainer.scrollLeft;
-      const itemWidth = scrollContainer.offsetWidth * 0.85; // Approximate item width
+      const itemWidth = 280 + 24; // card width + gap
       const newIndex = Math.round(scrollLeft / itemWidth);
-      setActiveIndex(newIndex);
+      setActiveIndex(Math.min(newIndex, products.length - 1));
     };
 
-    scrollContainer.addEventListener("scroll", handleScroll);
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
     return () => scrollContainer.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -75,7 +132,7 @@ export const ProductCarousel = () => {
       scrollInterval = setInterval(() => {
         if (!scrollContainer) return;
 
-        const scrollAmount = scrollContainer.offsetWidth * 0.9; // Scroll by ~90% of container width
+        const itemWidth = 280 + 24; // card width + gap
         const currentScroll = scrollContainer.scrollLeft;
         const maxScroll =
           scrollContainer.scrollWidth - scrollContainer.clientWidth;
@@ -85,11 +142,11 @@ export const ProductCarousel = () => {
           scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
         } else {
           scrollContainer.scrollTo({
-            left: currentScroll + scrollAmount,
+            left: currentScroll + itemWidth,
             behavior: "smooth",
           });
         }
-      }, 4000); // Auto-scroll every 4 seconds
+      }, 3500); // Auto-scroll every 3.5 seconds
     };
 
     startAutoScroll();
@@ -114,7 +171,7 @@ export const ProductCarousel = () => {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) return;
 
-    const itemWidth = scrollContainer.offsetWidth * 0.85;
+    const itemWidth = 280 + 24; // card width + gap
     scrollContainer.scrollTo({
       left: itemWidth * index,
       behavior: "smooth",
@@ -131,141 +188,171 @@ export const ProductCarousel = () => {
     scrollToIndex(newIndex);
   };
 
+  // Drag to scroll functionality
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainer.offsetLeft);
+    setScrollLeft(scrollContainer.scrollLeft);
+    scrollContainer.style.cursor = "grabbing";
+    scrollContainer.style.scrollBehavior = "auto";
+  };
+
+  const handleMouseLeave = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    setIsDragging(false);
+    scrollContainer.style.cursor = "grab";
+    scrollContainer.style.scrollBehavior = "smooth";
+  };
+
+  const handleMouseUp = () => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    setIsDragging(false);
+    scrollContainer.style.cursor = "grab";
+    scrollContainer.style.scrollBehavior = "smooth";
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+
+    e.preventDefault();
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const x = e.pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2; // Multiply for faster scroll
+    scrollContainer.scrollLeft = scrollLeft - walk;
+  };
+
   return (
-    <section className="bg-background py-16 px-0 overflow-hidden">
-      <div className="max-w-[1600px] mx-auto">
+    <section className="bg-background py-20 overflow-hidden">
+      <div className="w-full">
         {/* Section Title */}
-        <div className="text-center mb-12 px-4">
+        <div className="text-center mb-16 px-4">
           <h2
-            className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase text-foreground mb-3"
-            style={{ letterSpacing: "-0.03em" }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-black uppercase text-foreground tracking-tight"
+            style={{ letterSpacing: "-0.05em" }}
           >
             {t("products.carousel.title")}
           </h2>
-          <p className="text-lg text-muted-foreground">
-            {t("products.carousel.subtitle")}
-          </p>
         </div>
 
-        {/* Horizontal Scroll Container */}
+        {/* Horizontal Scroll Container - Full Width */}
         <div className="relative">
-          {/* Navigation Buttons (Desktop) */}
+          {/* Navigation Buttons */}
           <button
             onClick={scrollPrev}
             disabled={activeIndex === 0}
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border-2 border-border hover:bg-background hover:border-primary/50 transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+            className="hidden lg:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-14 h-14 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm hover:bg-black/80 transition-all disabled:opacity-20 disabled:cursor-not-allowed shadow-2xl"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-7 h-7 text-white" />
           </button>
 
           <button
             onClick={scrollNext}
             disabled={activeIndex === products.length - 1}
-            className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 items-center justify-center rounded-full bg-background/80 backdrop-blur-sm border-2 border-border hover:bg-background hover:border-primary/50 transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg"
+            className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-14 h-14 items-center justify-center rounded-full bg-black/60 backdrop-blur-sm hover:bg-black/80 transition-all disabled:opacity-20 disabled:cursor-not-allowed shadow-2xl"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-7 h-7 text-white" />
           </button>
 
           {/* Scrollable Product Container */}
           <div
             ref={scrollContainerRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            className="flex gap-8 overflow-x-auto snap-x snap-mandatory px-4 lg:px-8 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth"
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory px-8 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] scroll-smooth cursor-grab active:cursor-grabbing select-none"
           >
             {products.map((product, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-[85vw] sm:w-[45vw] lg:w-[380px] snap-center group"
+                className="flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[360px] snap-start group"
               >
-                {/* Product Card */}
-                <Card className="border-border/50 bg-card hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_hsl(var(--brand-pink)/0.2)]">
-                  <CardContent className="p-0">
-                    {/* Product Image Container */}
-                    <div className="relative aspect-[3/4] bg-gradient-to-b from-muted/30 to-card overflow-hidden rounded-t-lg">
+                {/* Product Card - Simpler, cleaner design */}
+                <Link
+                  to={`/rig/${product.id}`}
+                  className="block"
+                  onClick={(e) => {
+                    if (isDragging) {
+                      e.preventDefault();
+                    }
+                  }}
+                  draggable={false}
+                >
+                  <div className="relative bg-card rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+                    {/* Product Image Container - Larger, more prominent */}
+                    <div className="relative aspect-[3/4] bg-gradient-to-br from-muted/20 to-background overflow-hidden">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-110 pointer-events-none"
+                        draggable={false}
                       />
 
-                      {/* Size Badge */}
-                      <Badge className="absolute top-4 right-4 bg-foreground text-background font-bold text-xs uppercase rounded-sm">
+                      {/* Size Badge - Top Right */}
+                      <div className="absolute top-4 right-4 bg-foreground/90 text-background px-3 py-1 rounded-md text-xs font-black uppercase">
                         {product.size}
-                      </Badge>
+                      </div>
                     </div>
 
-                    {/* Product Info */}
-                    <div className="text-center p-6">
+                    {/* Product Info - Centered, minimal */}
+                    <div className="p-6 text-center">
                       {/* Product Name */}
-                      <h3 className="text-2xl lg:text-3xl font-black uppercase tracking-tight text-foreground mb-2">
+                      <h3 className="text-xl font-black uppercase tracking-tight text-foreground mb-2 leading-tight">
                         {product.name}
                       </h3>
 
-                      {/* Subtitle */}
-                      <p className="text-sm text-muted-foreground font-medium mb-2">
+                      {/* Subtitle - More prominent */}
+                      <p className="text-sm text-muted-foreground mb-3 font-medium">
                         {t(product.subtitleKey)}
                       </p>
 
-                      {/* Description */}
-                      <p className="text-sm text-muted-foreground/70 mb-4 min-h-[40px]">
+                      {/* Calories */}
+                      <p className="text-xs text-muted-foreground/70 mb-4">
                         {t(product.descriptionKey)}
                       </p>
-
-                      {/* Price + CTA */}
-                      <div className="flex flex-col gap-3 items-center">
-                        <div className="text-2xl font-black text-foreground">
-                          ${product.price.toFixed(2)}
-                        </div>
-                        <Button
-                          onClick={() => handleAddToCart(product)}
-                          className="w-full font-bold uppercase text-sm"
-                        >
-                          {t("products.addToCart")}
-                        </Button>
-                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </Link>
+
+                {/* Add to Cart Button - Below card */}
+                <Button
+                  onClick={() => handleAddToCart(product)}
+                  className="w-full mt-4 font-bold uppercase text-sm h-12"
+                  variant="default"
+                >
+                  ${product.price.toFixed(2)} • {t("products.addToCart")}
+                </Button>
               </div>
             ))}
           </div>
 
-          {/* Scroll Indicator (Mobile) */}
-          <div className="flex justify-center gap-2 mt-6 lg:hidden">
+          {/* Scroll Indicators - Centered below */}
+          <div className="flex justify-center gap-2 mt-8">
             {products.map((_, index) => (
               <button
                 key={index}
-                onClick={() => {
-                  const scrollContainer = scrollContainerRef.current;
-                  if (scrollContainer) {
-                    const itemWidth = scrollContainer.offsetWidth * 0.85;
-                    scrollContainer.scrollTo({
-                      left: itemWidth * index,
-                      behavior: "smooth",
-                    });
-                  }
-                }}
-                className={`w-2 h-2 rounded-full transition-all ${
+                onClick={() => scrollToIndex(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
                   activeIndex === index
-                    ? "bg-primary w-8"
-                    : "bg-muted-foreground/30"
+                    ? "bg-foreground w-8"
+                    : "bg-muted-foreground/30 w-2 hover:bg-muted-foreground/50"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-12 px-4">
-          <Button variant="hero" size="lg" asChild>
-            <Link to="/rig?category=beverage">
-              {t("products.carousel.shopAll")}
-            </Link>
-          </Button>
         </div>
       </div>
     </section>

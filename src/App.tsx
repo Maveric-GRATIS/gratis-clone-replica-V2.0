@@ -59,6 +59,7 @@ import NebulaNovelties from "./pages/rig/NebulaNovelties";
 import HydrationStore from "./pages/HydrationStore";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Orders from "./pages/Orders";
@@ -264,6 +265,7 @@ const App = () => {
                           <Route path="/spark/blaze" element={<Blaze />} />
                           <Route path="/spark/enlist" element={<Enlist />} />
                           <Route path="/contact" element={<Contact />} />
+                          <Route path="/faq" element={<FAQ />} />
                           <Route path="/checkout" element={<Checkout />} />
                           <Route
                             path="/order-confirmation/:orderId"

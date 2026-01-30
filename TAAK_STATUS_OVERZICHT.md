@@ -5,9 +5,9 @@
 
 | Status | Aantal | Percentage |
 |--------|--------|------------|
-| ✅ Compleet | 13 | 57% |
+| ✅ Compleet | 14 | 61% |
 | 🟡 Gedeeltelijk | 5 | 22% |
-| ❌ Nog te maken | 5 | 22% |
+| ❌ Nog te maken | 4 | 17% |
 | **TOTAAL** | **23** | **100%** |
 
 ---
@@ -208,20 +208,26 @@
 
 ---
 
-### ❌ 11. FAQ Page
-**Status:** NOG TE MAKEN
-**Bestand:** Bestaat niet
-**Locatie:** `src/pages/FAQ.tsx` (nieuw)
+### ✅ 11. FAQ Page
+**Status:** COMPLEET
+**Bestand:** `src/pages/FAQ.tsx`
+**Bevat:**
+- ✅ Search functionaliteit
+- ✅ Category filters (General, TRIBE, Bottles, Impact, Account)
+- ✅ Accordion components voor Q&A
+- ✅ Structured data (FAQPage schema)
+- ✅ "Still have questions?" CTA
+- ✅ Link naar Contact page
+- ✅ 30 FAQ items across 5 categories
+- ✅ Real-time filtering
+- ✅ Results counter
+- ✅ Quick links to related pages
 
-**Te maken:**
-- [ ] Search functionaliteit
-- [ ] Category filters (General, TRIBE, Bottles, Impact, Account)
-- [ ] Accordion components voor Q&A
-- [ ] Structured data (FAQPage schema)
-- [ ] "Still have questions?" CTA
-- [ ] Link naar Contact page
+**Nieuwe bestanden gemaakt:**
+- `src/pages/FAQ.tsx`
+- `src/data/faqData.ts`
 
-**Prioriteit:** MEDIUM
+**Prioriteit:** MEDIUM → **COMPLEET** ✅
 
 ---
 

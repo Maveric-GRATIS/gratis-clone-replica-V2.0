@@ -64,6 +64,9 @@ import OrderConfirmation from "./pages/OrderConfirmation";
 import Orders from "./pages/Orders";
 import OrderDetail from "./pages/OrderDetail";
 import Dashboard from "./pages/Dashboard";
+import DashboardBottles from "./pages/dashboard/Bottles";
+import DashboardVote from "./pages/dashboard/Vote";
+import DashboardSettings from "./pages/dashboard/Settings";
 import Wishlist from "./pages/Wishlist";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -272,6 +275,18 @@ const App = () => {
                             element={<OrderDetail />}
                           />
                           <Route path="/dashboard" element={<Dashboard />} />
+                          <Route
+                            path="/dashboard/bottles"
+                            element={<DashboardBottles />}
+                          />
+                          <Route
+                            path="/dashboard/vote"
+                            element={<DashboardVote />}
+                          />
+                          <Route
+                            path="/dashboard/settings"
+                            element={<DashboardSettings />}
+                          />
                           <Route path="/wishlist" element={<Wishlist />} />
 
                           {/* Admin Routes - Single Unified Panel */}

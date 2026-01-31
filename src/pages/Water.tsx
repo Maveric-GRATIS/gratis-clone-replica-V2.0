@@ -1,10 +1,11 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
 import { useDistributionLocations } from "@/hooks/useDistributionLocations";
 import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { FlavorSelector } from "@/components/water/FlavorSelector";
 import { SizePackSelector } from "@/components/water/SizePackSelector";
 import { SeriesBadge } from "@/components/water/SeriesBadge";
@@ -13,10 +14,15 @@ import { WaterFeatures } from "@/components/water/WaterFeatures";
 import { WaterTestimonials } from "@/components/water/WaterTestimonials";
 import { EnvironmentalImpact } from "@/components/water/EnvironmentalImpact";
 import { WaterImageGallery } from "@/components/water/WaterImageGallery";
+import { ClaimBottleCTA } from "@/components/water/ClaimBottleCTA";
+import { ProductTabs } from "@/components/water/ProductTabs";
+import { ProductFAQ } from "@/components/water/ProductFAQ";
 import DistributionMap from "@/components/DistributionMap";
 import { ShoppingCart, Truck, Shield, RotateCcw, Star } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
+import { db } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 // Flavor options with images (static data)
 const flavorOptions = [
@@ -48,6 +54,42 @@ export default function Water() {
   const { products } = useProducts("beverage");
   const { locations, loading: locationsLoading } = useDistributionLocations();
   const { addItem } = useCart();
+  const { user } = useAuth();
+
+  // User TRIBE data
+  const [userTribeData, setUserTribeData] = useState<{
+    tier: string;
+    bottlesClaimed: number;
+    bottlesLimit: number;
+  } | null>(null);
+
+  // Fetch user TRIBE data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!user) {
+        setUserTribeData(null);
+        return;
+      }
+
+      try {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          setUserTribeData({
+            tier: data.tribeTier || "none",
+            bottlesClaimed: data.bottlesClaimed || 0,
+            bottlesLimit: data.bottlesLimit || 0,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [user]);
 
   // Translated arrays
   const flavors = flavorOptions.map((f) => ({
@@ -307,11 +349,28 @@ export default function Water() {
         </div>
       </section>
 
+      {/* TRIBE Member Claim Bottle CTA */}
+      <ClaimBottleCTA
+        userBottlesClaimed={userTribeData?.bottlesClaimed}
+        userBottlesLimit={userTribeData?.bottlesLimit}
+        userTier={userTribeData?.tier}
+      />
+
+      {/* Product Details Tabs */}
+      <section className="py-20">
+        <div className="container max-w-6xl">
+          <ProductTabs />
+        </div>
+      </section>
+
       {/* Environmental Impact */}
       <EnvironmentalImpact />
 
       {/* Testimonials */}
       <WaterTestimonials />
+
+      {/* FAQ Section */}
+      <ProductFAQ />
 
       {/* Free Distribution Map Section */}
       <section className="py-20 bg-gradient-to-br from-muted/50 via-background to-muted/50">

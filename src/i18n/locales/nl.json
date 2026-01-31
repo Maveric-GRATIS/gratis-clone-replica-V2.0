@@ -410,6 +410,107 @@
       "review3": "Ik vind het geweldig dat elke fles helpt om schoon water te bieden aan mensen in nood.",
       "review3Name": "Emma L.",
       "review3Location": "Londen"
+    },
+    "tabs": {
+      "details": "Details",
+      "shipping": "Verzending",
+      "impact": "Impact",
+      "detailsContent": {
+        "title": "Product Details",
+        "description": "GRATIS Water komt uit beschermde bergbronnen en is verpakt in innovatief Tetrapack-materiaal — de enige echt duurzame verpakking voor dranken.",
+        "specifications": "Specificaties",
+        "spec1": "Bron: Natuurlijk bergbronwater",
+        "spec2": "Verpakking: 100% recyclebaar Tetrapack",
+        "spec3": "pH-waarde: 7.2-7.8 (neutraal)",
+        "spec4": "Mineraalgehalte: Natuurlijk gebalanceerd",
+        "spec5": "Houdbaarheidsdatum: 12 maanden ongeopend",
+        "sustainability": "Duurzaamheid",
+        "sust1": "Tetrapack heeft 3x lagere CO2-voetafdruk dan plastic",
+        "sust2": "100% recyclebaar via standaard programma's",
+        "sust3": "Geen microplastic vervuiling",
+        "sust4": "Ondersteunt circulaire economie initiatieven",
+        "badge1": "BPA Vrij",
+        "badge2": "Klimaatneutraal",
+        "badge3": "Kwaliteit Gecertificeerd"
+      },
+      "shippingContent": {
+        "title": "Verzending & Retourneren",
+        "deliveryTime": "Levertijd",
+        "deliveryTimeDesc": "3-5 werkdagen voor Nederland, 5-7 dagen in de EU",
+        "packaging": "Milieuvriendelijke Verpakking",
+        "packagingDesc": "Alle bestellingen worden verzonden in gerecyclede kartonnen dozen",
+        "tracking": "Volg Je Bestelling",
+        "trackingDesc": "Ontvang een trackingnummer per e-mail na verzending",
+        "zones": "Verzendgebieden",
+        "zone1": "Nederland",
+        "zone1Desc": "Bestellingen boven €35",
+        "zone2": "België, Duitsland, Frankrijk",
+        "zone2Desc": "Bestellingen boven €50",
+        "zone3": "Rest van EU",
+        "zone3Desc": "Bestellingen boven €75",
+        "free": "GRATIS",
+        "returns": "Retourbeleid",
+        "returnsDesc": "30 dagen geld-terug-garantie. Producten moeten ongeopend zijn en in originele verpakking. Neem contact op met support@gratis.ngo om een retour te starten."
+      },
+      "impactContent": {
+        "title": "Jouw Impact",
+        "description": "Elke GRATIS Water aankoop financiert toegang tot schoon water, kunstprogramma's en educatieve initiatieven wereldwijd. Hier gaat jouw geld exact naartoe:",
+        "water": "Schoon Water",
+        "waterDesc": "Putten, filters en infrastructuur",
+        "arts": "Kunst & Cultuur",
+        "artsDesc": "Programma's en kunstenaarssubsidies",
+        "education": "Onderwijs",
+        "educationDesc": "Scholen en beurzen",
+        "howItWorks": "Hoe Het Werkt",
+        "step1": "Jij Koopt",
+        "step1Desc": "40% van de winst gaat direct naar geverifieerde NGO-partners",
+        "step2": "Wij Financieren",
+        "step2Desc": "Geld wordt maandelijks verdeeld over water-, kunst- en onderwijsprojecten",
+        "step3": "Jij Volgt",
+        "step3Desc": "TRIBE-leden stemmen over kwartaalallocaties en zien real-time impact",
+        "transparency": "100% Transparant:",
+        "transparencyDesc": "Bekijk volledige financiële rapporten en projectupdates op gratis.ngo/impact"
+      }
+    },
+    "faq": {
+      "badge": "Vragen?",
+      "title": "Veelgestelde Vragen",
+      "subtitle": "Alles wat je moet weten over GRATIS Water",
+      "q1": "Wat maakt GRATIS Water anders dan ander flessenwater?",
+      "a1": "GRATIS Water is het enige watermerk dat 100% door adverteerders wordt gefinancierd op distributiepunten, echt duurzaam Tetrapack-verpakking gebruikt (geen plastic), en 40% van de retailwinst doneert aan schoon water, kunst en onderwijsinitiatieven. Bovendien kunnen TRIBE-leden elke maand gratis flessen claimen.",
+      "q2": "Is Tetrapack echt beter dan plastic?",
+      "a2": "Ja! Tetrapack heeft een 3x lagere CO2-voetafdruk dan plastic flessen, is daadwerkelijk recyclebaar (in tegenstelling tot de meeste plastic die op stortplaatsen belandt), en bevat geen microplastics. Meer dan 90% van het plastic wordt nooit gerecycled — Tetrapack lost dit probleem op.",
+      "q3": "Hoe kan ik als TRIBE-lid gratis flessen claimen?",
+      "a3": "TRIBE-leden krijgen maandelijks gratis flessen op basis van hun tier: Insiders krijgen 2/maand, Core krijgt 4/maand, en Founders krijgen 10/maand. Log gewoon in op je dashboard en klik op 'Claim Fles' — we verzenden het gratis naar jouw adres.",
+      "q4": "Waar komt het water vandaan?",
+      "a4": "Ons water komt uit beschermde natuurlijke bergbronnen in Europa. Elke partij wordt getest op zuiverheid en mineraalbalans. De exacte bron staat op elke verpakking gedrukt als onderdeel van onze transparantieverplichting.",
+      "q5": "Wat gebeurt er met mijn geld als ik GRATIS Water koop?",
+      "a5": "40% van de winst gaat naar geverifieerde NGO-partners (verdeling: 40% schoon water, 30% kunst, 30% onderwijs). Je kunt precies zien waar je geld naartoe gaat op ons Impact Dashboard, dat in real-time wordt bijgewerkt. TRIBE-leden stemmen zelfs over kwartaalallocaties."
+    },
+    "claim": {
+      "nonMember": {
+        "title": "Ontvang Elke Maand Gratis Flessen",
+        "description": "Word lid van TRIBE om 2-10 gratis flessen per maand te claimen, bezorgd bij jou thuis. Leden stemmen ook over waar fondsen naartoe gaan en krijgen exclusieve voordelen.",
+        "cta": "Ontdek TRIBE Lidmaatschap"
+      },
+      "noTier": {
+        "title": "Upgrade naar TRIBE",
+        "description": "TRIBE-leden ontvangen maandelijks gratis flessen. Kies je tier en begin vandaag nog met claimen.",
+        "cta": "Word Lid van TRIBE"
+      },
+      "limitReached": {
+        "title": "Je Hebt Al Je Flessen Deze Maand Geclaimd!",
+        "description": "Je volgende flessen zijn beschikbaar op de 1e van volgende maand. Upgrade je tier om meer flessen per maand te krijgen.",
+        "nextReset": "Reset op 1e van volgende maand",
+        "viewOrders": "Bekijk Mijn Bestellingen"
+      },
+      "available": {
+        "title": "🎁 Claim Je Gratis Fles",
+        "description": "Als TRIBE-lid heb je deze maand gratis flessen beschikbaar. We verzenden ze kosteloos naar jouw adres.",
+        "remaining": "flessen resterend",
+        "tier": "Lid",
+        "cta": "Claim Nu Fles"
+      }
     }
   },
   "rigStore": {
@@ -498,6 +599,648 @@
     "transparency": {
       "title": "Transparantie",
       "description": "Open boeken, openbare financiën en radicale transparantie. Geen geheimen, geen spin—alleen feiten."
+    },
+    "hero": {
+      "badge": "Word Lid van de Beweging",
+      "title": "TRIBE",
+      "subtitle": "Ondersteun impact. Stem over projecten. Ontvang gratis flessen. Wees onderdeel van iets groters.",
+      "cta": "Word Lid van TRIBE",
+      "compareTiers": "Vergelijk Tiers"
+    },
+    "valueProps": {
+      "prop1": {
+        "title": "Directe Impact",
+        "description": "40% van de winst financiert schoon water, kunst en onderwijs wereldwijd"
+      },
+      "prop2": {
+        "title": "Stem over Allocaties",
+        "description": "TRIBE-leden stemmen elk kwartaal over waar fondsen naartoe gaan"
+      },
+      "prop3": {
+        "title": "Exclusieve Voordelen",
+        "description": "Gratis flessen, vroege toegang, kortingen en VIP-evenementen"
+      }
+    },
+    "comparison": {
+      "badge": "Kies Je Tier",
+      "title": "Vind Je Fit",
+      "subtitle": "Van gratis lidmaatschap tot levenslang founding lidmaatschap — er is een tier voor iedereen.",
+      "mostPopular": "Meest Populair",
+      "limited": "Beperkte Plekken",
+      "selectTier": "Selecteer Tier",
+      "features": {
+        "title": "Functies",
+        "newsletter": "Maandelijkse impact nieuwsbrief",
+        "impactReports": "Kwartaalrapporten",
+        "bottles": "Gratis flessen per maand",
+        "voting": "Kwartaal allocatie stemmen",
+        "earlyAccess": "Vroege toegang tot producten",
+        "discount": "Winkelkorting",
+        "events": "Exclusieve evenementen",
+        "badge": "Digitale ledenbadge",
+        "merchBundle": "Founder merch bundel",
+        "lifetime": "Levenslang lidmaatschap"
+      },
+      "explorer": {
+        "name": "Explorer",
+        "price": "Gratis",
+        "description": "Blijf verbonden met de beweging"
+      },
+      "insider": {
+        "name": "Insider",
+        "period": "/maand",
+        "description": "Doe mee met gratis flessen & stemmen"
+      },
+      "core": {
+        "name": "Core",
+        "period": "/jaar",
+        "description": "Volledige toegang + VIP voordelen"
+      },
+      "founder": {
+        "name": "Founder",
+        "period": "eenmalig",
+        "description": "Levenslange founding member status"
+      }
+    },
+    "tierCards": {
+      "title": "Gedetailleerde Tier Uitsplitsing",
+      "subtitle": "Ontdek wat elk lidmaatschap omvat en vind de perfecte match voor jouw impact doelen.",
+      "mostPopular": "Meest Populair",
+      "limited": "Beperkt",
+      "limitations": "Beperkingen",
+      "showMore": "Toon alle functies",
+      "showLess": "Toon minder",
+      "selectTier": "Selecteer Deze Tier",
+      "explorer": {
+        "name": "Explorer",
+        "tagline": "Gratis om lid te worden, altijd",
+        "price": "Gratis",
+        "feature1": "Maandelijkse impact nieuwsbrief met projectupdates",
+        "feature2": "Kwartaal transparantierapporten",
+        "feature3": "Toegang tot communityforum",
+        "feature4": "10% korting op RIG merch store",
+        "limit1": "Geen gratis flessen",
+        "limit2": "Geen stemrecht"
+      },
+      "insider": {
+        "name": "Insider",
+        "tagline": "Doe mee, ontvang gratis water",
+        "period": "/maand",
+        "feature1": "2 gratis flessen maandelijks geleverd",
+        "feature2": "Kwartaalstemming over fondsallocatie",
+        "feature3": "Vroege toegang tot nieuwe producten",
+        "feature4": "10% korting op alle aankopen",
+        "feature5": "Prioriteit klantenondersteuning",
+        "feature6": "Digitale Insider badge",
+        "limit1": "Annuleer wanneer je maar wilt, geen verplichting"
+      },
+      "core": {
+        "name": "Core",
+        "tagline": "Volledige toegang + VIP behandeling",
+        "period": "/jaar",
+        "feature1": "4 gratis flessen maandelijks geleverd (48/jaar)",
+        "feature2": "Kwartaalstemming met dubbel gewicht",
+        "feature3": "15% korting op alle aankopen",
+        "feature4": "Exclusieve Core member evenementen",
+        "feature5": "Jaarlijks impactrapport met je persoonlijke statistieken",
+        "feature6": "Core member badge & certificaat",
+        "feature7": "VIP klantenondersteuning"
+      },
+      "founder": {
+        "name": "Founder",
+        "tagline": "Levenslange impact, legendarische status",
+        "period": "eenmalige betaling",
+        "feature1": "10 gratis flessen elke maand, voor altijd",
+        "feature2": "Levenslang stemrecht op alle allocaties",
+        "feature3": "20% korting op alle aankopen, levenslang",
+        "feature4": "Exclusieve Founder merch bundel (€100 waarde)",
+        "feature5": "Je naam op de Founder Wall",
+        "feature6": "Privé Founder evenementen & meetups",
+        "feature7": "Directe lijn naar leiderschapsteam",
+        "feature8": "Levenslange toegang tot alle toekomstige voordelen"
+      }
+    },
+    "voting": {
+      "badge": "Democratische Impact",
+      "title": "Jij Beslist Waar Fondsen Naartoe Gaan",
+      "subtitle": "Insider, Core en Founder leden stemmen elk kwartaal over hoe 40% van de winst wordt toegewezen aan water-, kunst- en onderwijsprojecten.",
+      "step1": {
+        "title": "Kwartaal Stemperiode Opent",
+        "description": "Elk kwartaal ontvangen TRIBE-leden een stemformulier met voorgestelde projectallocaties. Bekijk projectdetails, budgetten en verwachte impact."
+      },
+      "step2": {
+        "title": "Breng Je Stem Uit",
+        "description": "Stem op je voorkeursverdeling. Core leden krijgen dubbel gewicht. Founders krijgen drievoudig gewicht. Democratie in actie."
+      },
+      "step3": {
+        "title": "Resultaten Geïmplementeerd",
+        "description": "Resultaten worden transparant geteld. Winnende allocaties worden onmiddellijk gefinancierd. Je ziet precies waar je stem leidde tot impact in de echte wereld."
+      },
+      "benefit1": {
+        "title": "Echte Invloed",
+        "description": "Jouw stem bepaalt direct welke projecten gefinancierd worden"
+      },
+      "benefit2": {
+        "title": "Community Gedreven",
+        "description": "Geen corporate board beslist—jij en medleden doen dat"
+      },
+      "benefit3": {
+        "title": "Volledige Transparantie",
+        "description": "Alle stemmen en resultaten openbaar gepubliceerd na elk kwartaal"
+      },
+      "example": {
+        "title": "Voorbeeld Stemformulier",
+        "subtitle": "Q1 2026 Fondsallocatie Stemming",
+        "option1": "Schoon Water Infrastructuur (Nigeria)",
+        "option2": "Jeugd Kunstprogramma's (Amsterdam)",
+        "option3": "Schoolbibliotheken (Guatemala)",
+        "note": "Dit is een mockup voorbeeld. Echte stemformulieren bevatten echte projecten met gedetailleerde voorstellen."
+      }
+    },
+    "testimonials": {
+      "badge": "Ledenverhalen",
+      "title": "Wat TRIBE-Leden Zeggen",
+      "subtitle": "Sluit je aan bij duizenden die GRATIS onderdeel hebben gemaakt van hun dagelijkse impact.",
+      "testimonial1": {
+        "name": "Sophie Laurent",
+        "role": "Grafisch Ontwerper",
+        "tier": "Core Lid",
+        "quote": "Kunnen stemmen over waar fondsen naartoe gaan geeft me het gevoel echt verbonden te zijn met de impact. Plus, de gratis flessen zijn van geweldige kwaliteit."
+      },
+      "testimonial2": {
+        "name": "Marcus Chen",
+        "role": "Software Engineer",
+        "tier": "Founder",
+        "quote": "Ik werd Founder omdat ik in lange termijn denken geloof. De levenslange voordelen zijn ongelooflijk, en ik ben trots deze missie voor altijd te ondersteunen."
+      },
+      "testimonial3": {
+        "name": "Amara Okafor",
+        "role": "Milieuwetenschap",
+        "tier": "Insider",
+        "quote": "Eindelijk een merk dat radicaal transparant is. Ik kan precies zien waar mijn lidmaatschapsgeld naartoe gaat, en het maakt echt uit."
+      },
+      "stat1": "Actieve Leden",
+      "stat2": "Gemiddelde Beoordeling",
+      "stat3": "Verlengingspercentage",
+      "stat4": "Landen"
+    },
+    "founderCounter": {
+      "title": "Founder Plekken Resterend",
+      "spotsLeft": "plekken over",
+      "claimed": "geclaimd",
+      "filled": "gevuld",
+      "warning": "Zodra alle 1.000 Founder plekken zijn geclaimd, sluit deze tier voor altijd.",
+      "benefit1": "Eenmalige betaling",
+      "benefit2": "flessen/maand",
+      "benefit3": "Levenslange toegang"
+    },
+    "faq": {
+      "badge": "Vragen?",
+      "title": "TRIBE Lidmaatschap FAQ",
+      "subtitle": "Alles wat je moet weten over lid worden van TRIBE",
+      "q1": "Wat is het verschil tussen de tiers?",
+      "a1": "Explorer is gratis en geeft je nieuwsbrief toegang. Insider (€9,99/maand) krijgt 2 gratis flessen en stemrecht. Core (€97/jaar) verdubbelt je flessen en voordelen. Founder (€247 eenmalig) is levenslang lidmaatschap met maximale voordelen.",
+      "q2": "Kan ik mijn lidmaatschap altijd opzeggen?",
+      "a2": "Ja! Insider en Core lidmaatschappen kunnen altijd worden opgezegd zonder boetes. Founder is een eenmalige betaling voor levenslange toegang (niet terugbetaalbaar na 30 dagen).",
+      "q3": "Hoe werkt het stemsysteem?",
+      "a3": "Elk kwartaal ontvangen Insider+ leden een stemformulier om te stemmen over fondsallocatie over water-, kunst- en onderwijsprojecten. Stemmen van Core leden tellen 2x, die van Founders 3x. Resultaten worden onmiddellijk geïmplementeerd en transparant gepubliceerd.",
+      "q4": "Wanneer krijg ik mijn gratis flessen?",
+      "a4": "Gratis flessen worden gereset op de 1e van elke maand. Je kunt ze op elk moment tijdens de maand claimen via je dashboard. We verzenden binnen 3-5 werkdagen.",
+      "q5": "Wat gebeurt er als ik mijn tier upgrade?",
+      "a5": "Je kunt altijd upgraden! Je krijgt directe toegang tot hogere tier voordelen. Als je op een betaalde tier zit, berekenen we het verschil pro rata. Founder is een eenmalige upgrade vanaf elke tier.",
+      "q6": "Zijn er verborgen kosten?",
+      "a6": "Absoluut niet. De prijs die je ziet is de prijs die je betaalt. Geen aanmeldkosten, geen verborgen kosten. Gratis verzending op geclaimde flessen.",
+      "q7": "Kan ik een lidmaatschap cadeau doen?",
+      "a7": "Ja! Neem contact op met support@gratis.ngo en we regelen een cadeau lidmaatschap voor je. Perfect voor bewuste cadeau gevers.",
+      "q8": "Wat als de Founder tier uitverkocht is?",
+      "a8": "Zodra alle 1.000 Founder plekken zijn geclaimd, sluit de tier voor altijd. Degenen die het hebben beveiligd blijven levenslange Founders met alle toekomstige voordelen inbegrepen.",
+      "stillHaveQuestions": "Nog Steeds Vragen?",
+      "contactPrompt": "Ons team helpt je graag de perfecte tier te vinden.",
+      "contactUs": "Neem Contact Op",
+      "viewAllFaq": "Bekijk Alle FAQs"
+    },
+    "finalCta": {
+      "title": "Klaar om Lid te Worden van TRIBE?",
+      "subtitle": "Kies je tier en begin vandaag nog impact te maken.",
+      "cta": "Kies Je Tier"
+    },
+    "signup": {
+      "seoTitle": "Word Lid van TRIBE — GRATIS Lidmaatschap",
+      "seoDescription": "Word TRIBE-lid en ondersteun wereldwijde impact terwijl je gratis flessen, stemrecht en exclusieve voordelen krijgt.",
+      "step": "Stap",
+      "of": "van",
+      "continue": "Doorgaan",
+      "creating": "Account aanmaken...",
+      "createAccount": "Account Aanmaken",
+      "processing": "Verwerken...",
+      "completePayment": "Betaling Voltooien",
+      "bottlesPerMonth": "flessen/maand",
+      "noBottles": "Alleen nieuwsbrief toegang",
+      "helpText": "Hulp nodig?",
+      "contactSupport": "Neem contact op met support",
+      "success": "Welkom bij TRIBE! 🎉",
+      "step1": {
+        "title": "Kies Je Tier",
+        "subtitle": "Selecteer het lidmaatschapsniveau dat bij je impact doelen past."
+      },
+      "step2": {
+        "title": "Maak Je Account Aan",
+        "subtitle": "Word lid van de TRIBE community",
+        "displayName": "Weergavenaam",
+        "displayNamePlaceholder": "Hoe moeten we je noemen?",
+        "email": "E-mailadres",
+        "emailPlaceholder": "jouw@email.nl",
+        "password": "Wachtwoord",
+        "passwordPlaceholder": "Min. 6 tekens",
+        "passwordHint": "Minimaal 6 tekens",
+        "agreeTerms": "Ik ga akkoord met de",
+        "terms": "Gebruiksvoorwaarden",
+        "privacy": "Privacybeleid"
+      },
+      "step3": {
+        "title": "Betaling Voltooien",
+        "subtitle": "Voltooi je TRIBE lidmaatschap",
+        "subtotal": "Subtotaal",
+        "tax": "BTW",
+        "total": "Totaal",
+        "mockupNotice": "MOCKUP MODUS:",
+        "mockupDescription": "Dit is een demo checkout. Er wordt geen echte betaling verwerkt. De Stripe integratie wordt later toegevoegd."
+      },
+      "step4": {
+        "title": "Welkom bij TRIBE! 🎉",
+        "subtitle": "Je lidmaatschap is nu actief. Tijd om impact te maken!",
+        "nextSteps": "Volgende Stappen:",
+        "step1": "Check je e-mail voor een welkomstbericht met tips om te beginnen",
+        "step2": "Verken je dashboard en claim je eerste gratis flessen",
+        "step3": "Let op de aankondiging van de volgende kwartaalstemperiode",
+        "goToDashboard": "Ga naar Mijn Dashboard"
+      },
+      "errors": {
+        "agreeTerms": "Ga akkoord met de Voorwaarden en Privacybeleid om door te gaan",
+        "createAccount": "Kan account niet aanmaken. Probeer het opnieuw.",
+        "payment": "Betaling mislukt. Probeer het opnieuw."
+      }
+    }
+  },
+  "impactPage": {
+    "meta": {
+      "title": "Onze Impact — GRATIS",
+      "description": "Zie de real-time impact die we samen maken. Transparante toewijzing, geverifieerde resultaten, en de verhalen achter elke donatie."
+    },
+    "hero": {
+      "badge": "Live Impact Tracker",
+      "title": "Impact in Real-Time",
+      "subtitle": "Elke geclaimde fles, elk lidmaatschap en elke donatie creëert meetbare verandering. Dit is precies waar jouw steun naartoe gaat."
+    },
+    "stats": {
+      "totalDonated": "Totaal Gedoneerd",
+      "bottlesDistributed": "Flessen Verspreid",
+      "ngosSupported": "NGO's Ondersteund",
+      "tribeMembers": "TRIBE Leden"
+    },
+    "lastUpdated": "Laatst bijgewerkt:",
+    "allocation": {
+      "title": "Waar Je Geld Naartoe Gaat",
+      "subtitle": "Transparante 40/30/30 verdeling over drie pijlers",
+      "water": "Watertoegang",
+      "arts": "Kunst & Cultuur",
+      "education": "Onderwijs",
+      "total": "Totaal Toegewezen"
+    },
+    "personal": {
+      "title": "Jouw Persoonlijke Impact",
+      "totalContributed": "Totaal Bijgedragen",
+      "bottlesClaimed": "Flessen Geclaimd",
+      "memberSince": "Lid Sinds",
+      "yourImpact": "Jouw Impact Verdeling",
+      "viewDashboard": "Bekijk Volledig Dashboard"
+    },
+    "timeline": {
+      "title": "Tijdlijn van Mijlpalen",
+      "subtitle": "Belangrijke momenten in onze reis om blijvende impact te creëren",
+      "milestone1": {
+        "title": "€50.000 aan Totale Donaties Bereikt",
+        "description": "Een belangrijke mijlpaal dankzij onze groeiende gemeenschap van supporters en TRIBE-leden."
+      },
+      "milestone2": {
+        "title": "Samenwerking met 5 Nieuwe NGO's",
+        "description": "Onze reikwijdte uitbreiden over Watertoegang, Kunst & Cultuur, en Onderwijsinitiatieven."
+      },
+      "milestone3": {
+        "title": "€25.000 Verdeeld naar Onderwijsprojecten",
+        "description": "Financiering van beurzen, schoolbenodigdheden en leerprogramma's voor achtergestelde gemeenschappen."
+      },
+      "milestone4": {
+        "title": "Eerste Kwartaal Voltooid",
+        "description": "Succesvol GRATIS Water gelanceerd en onze impact-reis met de gemeenschap begonnen."
+      },
+      "types": {
+        "donation": "Donatie",
+        "partner": "Partnerschap",
+        "milestone": "Mijlpaal",
+        "impact": "Impact"
+      }
+    },
+    "partners": {
+      "title": "Onze NGO Partners",
+      "subtitle": "Samenwerken met geverifieerde organisaties om impact te maximaliseren",
+      "amountReceived": "Ontvangen Bedrag",
+      "projectsSupported": "Projecten",
+      "learnMore": "Meer Informatie",
+      "viewAll": "Bekijk Alle Partners",
+      "locations": {
+        "kenya": "Kenia",
+        "netherlands": "Nederland",
+        "uganda": "Oeganda",
+        "tanzania": "Tanzania",
+        "belgium": "België",
+        "rwanda": "Rwanda"
+      }
+    },
+    "reports": {
+      "title": "Kwartaal Impact Rapporten",
+      "subtitle": "Gedetailleerde uitsplitsingen van elke gedoneerde euro en de impact ervan",
+      "q4_2025": "Q4 2025 Impact Rapport",
+      "q3_2025": "Q3 2025 Impact Rapport",
+      "download": "Download PDF"
+    },
+    "cta": {
+      "title": "Wees Deel van de Impact",
+      "subtitle": "Word lid van TRIBE en help bepalen waar fondsen naartoe gaan, of doe een eenmalige donatie om onze missie te ondersteunen.",
+      "joinTribe": "Word Lid van TRIBE",
+      "makedonation": "Doe een Donatie"
+    }
+  },
+  "aboutPage": {
+    "problem": {
+      "title": "Het Probleem Dat We Oplossen",
+      "subtitle": "Begrijp waarom GRATIS bestaat en de verandering die we creëren",
+      "problemTitle": "Het Probleem",
+      "point1": "Miljarden plastic flessen belanden elk jaar op stortplaatsen en in oceanen, met onomkeerbare milieuschade tot gevolg",
+      "point2": "Traditionele reclamebudgetten voor dranken gaan naar bedrijven in plaats van goede doelen die steun nodig hebben",
+      "point3": "Consumenten hebben geen transparantie over waar hun geld naartoe gaat bij een aankoop",
+      "point4": "NGO's worstelen om duurzame financieringsbronnen te vinden voor hun vitale werk",
+      "solutionTitle": "Onze Oplossing",
+      "solution1": "Oneindig recyclebare aluminium flessen die plastic afval uit de vergelijking elimineren",
+      "solution2": "100% van reclame-inkomsten worden doorgestuurd naar geverifieerde NGO's die werken aan kritieke wereldwijde uitdagingen",
+      "solution3": "Volledige transparantie met real-time impact tracking en kwartaalrapporten",
+      "solution4": "Een duurzaam bedrijfsmodel dat groeit naarmate onze gemeenschap groeit, waardoor meer impact wordt gefinancierd"
+    },
+    "howItWorks": {
+      "title": "Hoe Het Werkt",
+      "subtitle": "Drie eenvoudige stappen van jouw aankoop naar echte impact",
+      "step1": {
+        "title": "Jij Koopt GRATIS",
+        "description": "Koop een GRATIS drank—W.A.T.E.R, THEURGY, of F.U.—in onze winkel of bij partners. Elke fles financiert verandering."
+      },
+      "step2": {
+        "title": "Wij Verkopen Reclame",
+        "description": "Onze flessen worden premium reclameruimte voor merken die zich willen aansluiten bij doelgerichte consumenten."
+      },
+      "step3": {
+        "title": "100% Gaat Naar NGO's",
+        "description": "Elke euro aan reclame-inkomsten wordt verdeeld onder geverifieerde NGO-partners. TRIBE-leden stemmen elk kwartaal over prioriteiten."
+      }
+    },
+    "pillars": {
+      "badge": "Onze Basis",
+      "title": "Gebouwd op Drie Pijlers",
+      "subtitle": "De principes die elke beslissing leiden",
+      "transparency": {
+        "title": "Radicale Transparantie",
+        "description": "Volledige zichtbaarheid in onze financiën, operaties en impact. Geen verborgen kosten, geen bedrijfsgeheimen—gewoon eerlijk zakendoen.",
+        "feature1": "Real-time impact dashboard dagelijks bijgewerkt",
+        "feature2": "Kwartaalrapporten openbaar gepubliceerd",
+        "feature3": "Open-source toewijzingsmethodologie",
+        "feature4": "Onafhankelijke audits van alle claims"
+      },
+      "verification": {
+        "title": "Rigoureuze Verificatie",
+        "description": "Elke NGO-partner wordt grondig gescreend. Elke claim wordt onafhankelijk geverifieerd. Vertrouwen opgebouwd door bewijs, niet beloftes.",
+        "feature1": "Meerfasig NGO-screeningproces",
+        "feature2": "Impact verificatie ter plaatse",
+        "feature3": "Jaarlijkse externe audits",
+        "feature4": "Gedocumenteerde casestudies en resultaten"
+      },
+      "community": {
+        "title": "Door Gemeenschap Gedreven",
+        "description": "TRIBE-leden ondersteunen niet alleen de missie—ze vormen deze. Democratische stemming over fondstoewijzing houdt macht waar het hoort: bij de mensen.",
+        "feature1": "Kwartaalstemming over toewijzingsprioriteiten",
+        "feature2": "Open forum voor NGO-nominaties",
+        "feature3": "Feedback van leden vormtproductontwikkeling",
+        "feature4": "Transparante governance structuur"
+      }
+    },
+    "timeline": {
+      "badge": "Onze Reis",
+      "title": "Het Verhaal Tot Nu Toe",
+      "subtitle": "Belangrijke mijlpalen van concept tot wereldwijde beweging",
+      "event1": {
+        "date": "Januari 2025",
+        "title": "GRATIS Opgericht",
+        "description": "De visie begint: premium dranken die echte verandering financieren. Initiële conceptontwikkeling en bedrijfsmodelvalidatie."
+      },
+      "event2": {
+        "date": "Maart 2025",
+        "title": "Eerste W.A.T.E.R Lancering",
+        "description": "GRATIS W.A.T.E.R komt op de markt. Eerste 1.000 flessen verkocht binnen 48 uur. Gemeenschap begint vorm te krijgen."
+      },
+      "event3": {
+        "date": "Juni 2025",
+        "title": "TRIBE Lidmaatschap Gelanceerd",
+        "description": "Introductie van gelaagd lidmaatschap met democratische stemrechten. De gemeenschap empoweren om fondsen te sturen."
+      },
+      "event4": {
+        "date": "Q1 2026",
+        "title": "Expansie: THEURGY & F.U.",
+        "description": "Twee nieuwe productlijnen gelanceerd. Diversificatie van aanbod met behoud van kernmissie. Pre-orders overtreffen verwachtingen."
+      }
+    },
+    "commitments": {
+      "badge": "Onze Belofte",
+      "title": "Onze Verplichtingen aan Jou",
+      "subtitle": "De niet-onderhandelbare principes die definiëren hoe we opereren",
+      "transparency": {
+        "title": "100% Financiële Transparantie",
+        "description": "Elke euro wordt gevolgd. Elke toewijzing wordt gepubliceerd. Real-time dashboard toont precies waar reclame-inkomsten naartoe gaan.",
+        "linkText": "Bekijk Impact Dashboard"
+      },
+      "verification": {
+        "title": "Alleen Geverifieerde NGO Partners",
+        "description": "Rigoureus meerfasig screeningproces. Verificatie ter plaatse. Jaarlijkse audits. Alleen bewezen organisaties krijgen financiering.",
+        "linkText": "Bekijk Onze Partners"
+      },
+      "community": {
+        "title": "Gemeenschap Eerst, Altijd",
+        "description": "TRIBE-leden stemmen over fondstoewijzing. Jouw stem telt. Democratisch bestuur zorgt ervoor dat macht bij de mensen blijft.",
+        "linkText": "Word Lid van TRIBE"
+      },
+      "certifications": {
+        "title": "Certificeringen & Compliance",
+        "description": "We houden onszelf aan de hoogste normen van transparantie, duurzaamheid en ethische zakenpraktijken."
+      }
+    },
+    "team": {
+      "badge": "De Mensen Achter GRATIS",
+      "title": "Ontmoet het Team",
+      "subtitle": "Gepassioneerde individuen verenigd door een missie om blijvende verandering te creëren",
+      "member1": {
+        "name": "Alex van der Berg",
+        "role": "Oprichter & CEO",
+        "bio": "Voormalig duurzaamheidsconsultant die social entrepreneur werd. Gelooft dat business een kracht voor goed kan zijn."
+      },
+      "member2": {
+        "name": "Maya Okonkwo",
+        "role": "Hoofd Impact",
+        "bio": "10+ jaar in internationale ontwikkeling. Zorgt ervoor dat elke euro maximale positieve verandering creëert."
+      },
+      "member3": {
+        "name": "Lucas Fernandez",
+        "role": "Creative Director",
+        "bio": "Bekroond ontwerper die doelgerichte merken tot leven brengt door gedurfde visuele storytelling."
+      },
+      "member4": {
+        "name": "Dr. Sarah Chen",
+        "role": "Duurzaamheidsleider",
+        "bio": "Milieuwetenschapper toegewijd aan het elimineren van plastic afval en het bouwen van circulaire economie-oplossingen."
+      },
+      "cta": {
+        "title": "Wil Je Onze Missie Versterken?",
+        "description": "We zijn altijd op zoek naar gepassioneerde mensen die hun vaardigheden willen gebruiken om positieve verandering te creëren.",
+        "button": "Bekijk Volledig Team & Carrières"
+      }
+    }
+  },
+  "corporatePage": {
+    "meta": {
+      "title": "Corporate Giving Programma — GRATIS",
+      "description": "Partner met GRATIS voor duurzame zakelijke gifting en bulkbestellingen. Custom branding, volumekortingen en meetbare impact voor jouw bedrijf."
+    },
+    "hero": {
+      "badge": "Zakelijke Partnerschappen",
+      "title": "Hydrateer Je Team, Financier Wereldwijde Verandering",
+      "subtitle": "Premium drankenoplossingen voor bedrijven die om impact geven. Custom branding, bulkbestellingen en transparante NGO-financiering bij elke fles.",
+      "cta": "Aan De Slag",
+      "downloadBrochure": "Download Brochure"
+    },
+    "benefits": {
+      "title": "Waarom GRATIS Kiezen voor Jouw Bedrijf",
+      "subtitle": "Meer dan alleen hydratatie—een partnerschap dat je merk versterkt en echte impact creëert",
+      "brand": {
+        "title": "Versterk Merkimago",
+        "description": "Sluit je aan bij een purpose-driven merk dat resoneert met bewuste consumenten en medewerkers."
+      },
+      "employees": {
+        "title": "Verhoog Medewerkersengagement",
+        "description": "Toon je team dat je geeft om duurzaamheid en sociale impact met premium dranken."
+      },
+      "impact": {
+        "title": "Meetbare Impact",
+        "description": "Volg precies hoe jouw partnerschap NGO-projecten financiert met onze transparante rapportage."
+      },
+      "flexible": {
+        "title": "Flexibele Oplossingen",
+        "description": "Van kantoorpantry's tot relatiegeschenken tot event sponsoring—wij passen aan jouw behoeften aan."
+      }
+    },
+    "features": {
+      "title": "Wat Is Inbegrepen",
+      "subtitle": "Uitgebreide oplossingen ontworpen voor moderne bedrijven",
+      "bulkOrdering": {
+        "title": "Bulkbestellingen Gemakkelijk Gemaakt",
+        "point1": "Minimale bestelling: 500 flessen (mix & match W.A.T.E.R, THEURGY, F.U.)",
+        "point2": "Toegewijde accountmanager voor naadloze bestellingen",
+        "point3": "Flexibele leveringsschema's aangepast aan jouw behoeften"
+      },
+      "customBranding": {
+        "title": "Custom Branding Opties",
+        "point1": "Voeg je bedrijfslogo toe aan fleshoezen (min. 2.000 flessen)",
+        "point2": "Co-branded verpakking voor zakelijke geschenken",
+        "point3": "Custom messaging voor events of campagnes"
+      }
+    },
+    "pricing": {
+      "title": "Prijsniveaus",
+      "subtitle": "Volumegebaseerde prijzen met toenemende impact",
+      "minOrder": "Min. Bestelling",
+      "bottles": "flessen",
+      "getQuote": "Vraag Offerte Aan",
+      "popular": "Meest Populair",
+      "starter": {
+        "name": "Starter",
+        "price": "€1,80/fles",
+        "feature1": "500-1.999 flessen",
+        "feature2": "Standaard levering",
+        "feature3": "Kwartaal impactrapporten",
+        "feature4": "Email ondersteuning"
+      },
+      "growth": {
+        "name": "Groei",
+        "price": "€1,50/fles",
+        "feature1": "2.000-4.999 flessen",
+        "feature2": "Prioriteitslevering",
+        "feature3": "Custom branding beschikbaar",
+        "feature4": "Maandelijkse impactrapporten",
+        "feature5": "Toegewijde accountmanager"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Custom prijzen",
+        "feature1": "5.000+ flessen",
+        "feature2": "White-glove service",
+        "feature3": "Volledige custom branding",
+        "feature4": "Real-time impact dashboard",
+        "feature5": "Co-marketing mogelijkheden",
+        "feature6": "VIP event toegang"
+      }
+    },
+    "caseStudies": {
+      "badge": "Succesverhalen",
+      "title": "Vertrouwd Door Toonaangevende Bedrijven",
+      "subtitle": "Zie hoe bedrijven zoals jij impact maken",
+      "orderSize": "Bestelgrootte",
+      "result": "Resultaat",
+      "case1": {
+        "company": "TechStart Amsterdam",
+        "industry": "Technologie",
+        "orderSize": "2.500 flessen/kwartaal",
+        "result": "€12.500 gefinancierd naar onderwijs-NGO's",
+        "quote": "Onze medewerkers houden van de premium kwaliteit en weten dat hun hydratatie echte verandering financiert."
+      },
+      "case2": {
+        "company": "GreenBuilders NL",
+        "industry": "Bouw",
+        "orderSize": "5.000 flessen voor jaarlijks event",
+        "result": "€25.000 naar watertoegangsprojecten",
+        "quote": "Perfecte afstemming met onze duurzaamheidswaarden. Klanten waren onder de indruk van de custom branding."
+      },
+      "case3": {
+        "company": "FinanceHub Rotterdam",
+        "industry": "Financiën",
+        "orderSize": "1.000 flessen/maand",
+        "result": "€60.000/jaar naar geverifieerde NGO's",
+        "quote": "Gemakkelijk bestellen, betrouwbare levering en meetbare impact. Precies wat we nodig hadden voor ons CSR-programma."
+      }
+    },
+    "form": {
+      "title": "Start Jouw Partnerschap",
+      "subtitle": "Vertel ons over je behoeften en we maken een custom voorstel",
+      "companyName": "Bedrijfsnaam",
+      "contactName": "Contactpersoon",
+      "email": "E-mailadres",
+      "phone": "Telefoonnummer",
+      "companySize": "Bedrijfsgrootte",
+      "companySizePlaceholder": "bijv. 50 medewerkers",
+      "interest": "Geschat Bestelvolume",
+      "interestPlaceholder": "bijv. 1.000 flessen/maand",
+      "message": "Vertel Ons Over Je Behoeften",
+      "messagePlaceholder": "Waar zoek je naar? Events, kantoorvoorraad, relatiegeschenken, etc.",
+      "submit": "Verstuur Aanvraag",
+      "submitting": "Versturen...",
+      "successMessage": "Bedankt! We nemen binnen 24 uur contact op.",
+      "errorMessage": "Er ging iets mis. Probeer het opnieuw of email ons direct.",
+      "emailUs": "Email Ons",
+      "callUs": "Bel Ons"
     }
   }
 }

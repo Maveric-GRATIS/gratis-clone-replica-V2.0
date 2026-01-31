@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
+import { TierComparison } from "@/components/tribe/TierComparison";
+import { DetailedTierCards } from "@/components/tribe/DetailedTierCards";
+import { VotingExplainer } from "@/components/tribe/VotingExplainer";
+import { TribeTestimonials } from "@/components/tribe/TribeTestimonials";
+import { FounderSpotCounter } from "@/components/tribe/FounderSpotCounter";
+import { TribeFAQ } from "@/components/tribe/TribeFAQ";
+import { Crown, Zap, Heart } from "lucide-react";
 
 export default function Tribe() {
   const { t } = useTranslation();
@@ -18,81 +27,112 @@ export default function Tribe() {
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            TRIBE
+          <Badge className="mb-6 text-lg px-4 py-2">
+            <Crown className="mr-2 h-4 w-4" />
+            {t("tribePage.hero.badge")}
+          </Badge>
+          <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            {t("tribePage.hero.title")}
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            {t("tribePage.subtitle")}
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            {t("tribePage.hero.subtitle")}
           </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link to="/tribe/signup">
+              <Button size="lg" className="text-lg">
+                <Zap className="mr-2 h-5 w-5" />
+                {t("tribePage.hero.cta")}
+              </Button>
+            </Link>
+            <Button size="lg" variant="outline" className="text-lg" asChild>
+              <a href="#comparison">{t("tribePage.hero.compareTiers")}</a>
+            </Button>
+          </div>
         </div>
       </section>
 
-      <section className="border-t border-border">
-        <div className="container py-16 space-y-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-2xl md:text-3xl font-bold">
-              {t("tribePage.whatWeStandFor")}
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {t("tribePage.description2")}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: t("tribePage.heritage.title"),
-                body: t("tribePage.heritage.description"),
-                to: "/tribe/heritage",
-              },
-              {
-                title: t("tribePage.ethics.title"),
-                body: t("tribePage.ethics.description"),
-                to: "/tribe/ethics",
-              },
-              {
-                title: t("tribePage.accountability.title"),
-                body: t("tribePage.accountability.description"),
-                to: "/tribe/accountability",
-              },
-              {
-                title: t("tribePage.team.title"),
-                body: t("tribePage.team.description"),
-                to: "/tribe/team",
-              },
-              {
-                title: t("tribePage.standards.title"),
-                body: t("tribePage.standards.description"),
-                to: "/tribe/standards",
-              },
-              {
-                title: t("tribePage.responsibility.title"),
-                body: t("tribePage.responsibility.description"),
-                to: "/tribe/responsibility",
-              },
-              {
-                title: t("tribePage.transparency.title"),
-                body: t("tribePage.transparency.description"),
-                to: "/tribe/transparency",
-              },
-            ].map((section) => (
-              <Link
-                key={section.title}
-                to={section.to}
-                className="group bg-muted/10 hover:bg-muted/20 rounded-lg p-6 transition-colors space-y-4"
-              >
-                <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
-                  {section.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {section.body}
-                </p>
-                <div className="text-sm font-medium text-primary">
-                  {t("common.viewMore")} →
+      {/* Value Proposition */}
+      <section className="border-t border-border py-16">
+        <div className="container">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="text-center">
+              <div className="mb-4 flex justify-center">
+                <div className="p-4 rounded-full bg-primary/10">
+                  <Heart className="h-8 w-8 text-primary" />
                 </div>
-              </Link>
-            ))}
+              </div>
+              <h3 className="text-xl font-bold mb-2">
+                {t("tribePage.valueProps.prop1.title")}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {t("tribePage.valueProps.prop1.description")}
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="mb-4 flex justify-center">
+                <div className="p-4 rounded-full bg-primary/10">
+                  <Zap className="h-8 w-8 text-primary" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-2">
+                {t("tribePage.valueProps.prop2.title")}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {t("tribePage.valueProps.prop2.description")}
+              </p>
+            </div>
+            <div className="text-center">
+              <div className="mb-4 flex justify-center">
+                <div className="p-4 rounded-full bg-primary/10">
+                  <Crown className="h-8 w-8 text-primary" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold mb-2">
+                {t("tribePage.valueProps.prop3.title")}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {t("tribePage.valueProps.prop3.description")}
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* Tier Comparison Table */}
+      <div id="comparison">
+        <TierComparison />
+      </div>
+
+      {/* Detailed Tier Cards */}
+      <DetailedTierCards />
+
+      {/* Founder Spot Counter */}
+      <FounderSpotCounter />
+
+      {/* Voting Explainer */}
+      <VotingExplainer />
+
+      {/* Testimonials */}
+      <TribeTestimonials />
+
+      {/* FAQ */}
+      <TribeFAQ />
+
+      {/* Final CTA */}
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-background to-accent/10">
+        <div className="container max-w-4xl text-center">
+          <h2 className="text-4xl md:text-5xl font-black mb-4">
+            {t("tribePage.finalCta.title")}
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            {t("tribePage.finalCta.subtitle")}
+          </p>
+          <Link to="/tribe/signup">
+            <Button size="lg" className="text-lg">
+              <Crown className="mr-2 h-5 w-5" />
+              {t("tribePage.finalCta.cta")}
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Droplet, Sparkles, Zap, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { ProblemSolution } from "@/components/about/ProblemSolution";
+import { HowItWorksVisual } from "@/components/about/HowItWorksVisual";
+import { ThreePillarsDetailed } from "@/components/about/ThreePillarsDetailed";
+import { StoryTimeline } from "@/components/about/StoryTimeline";
+import { CommitmentStatements } from "@/components/about/CommitmentStatements";
+import { TeamTeaser } from "@/components/about/TeamTeaser";
 
 const beverageLines = [
   {
@@ -108,6 +114,12 @@ export default function Gratis() {
           </div>
         </div>
       </section>
+
+      {/* The Problem & Solution */}
+      <ProblemSolution />
+
+      {/* How It Works Visual Diagram */}
+      <HowItWorksVisual />
 
       {/* Beverage Lines */}
       <section className="border-t border-border">
@@ -217,6 +229,18 @@ export default function Gratis() {
           </div>
         </div>
       </section>
+
+      {/* Three Pillars Detailed */}
+      <ThreePillarsDetailed />
+
+      {/* Story Timeline */}
+      <StoryTimeline />
+
+      {/* Commitment Statements */}
+      <CommitmentStatements />
+
+      {/* Team Teaser */}
+      <TeamTeaser />
 
       {/* Features Grid */}
       <section className="border-t border-border">

@@ -408,6 +408,107 @@
       "review3": "Love that every bottle helps provide clean water to those in need.",
       "review3Name": "Emma L.",
       "review3Location": "London"
+    },
+    "tabs": {
+      "details": "Details",
+      "shipping": "Shipping",
+      "impact": "Impact",
+      "detailsContent": {
+        "title": "Product Details",
+        "description": "GRATIS Water is sourced from protected mountain springs and packaged in innovative Tetrapack material — the only truly sustainable beverage packaging.",
+        "specifications": "Specifications",
+        "spec1": "Source: Natural mountain spring water",
+        "spec2": "Packaging: 100% recyclable Tetrapack",
+        "spec3": "pH Level: 7.2-7.8 (neutral)",
+        "spec4": "Mineral Content: Naturally balanced",
+        "spec5": "Shelf Life: 12 months unopened",
+        "sustainability": "Sustainability",
+        "sust1": "Tetrapack has 3x lower carbon footprint vs plastic",
+        "sust2": "100% recyclable through standard programs",
+        "sust3": "No microplastic contamination",
+        "sust4": "Supports circular economy initiatives",
+        "badge1": "BPA Free",
+        "badge2": "Carbon Neutral",
+        "badge3": "Quality Certified"
+      },
+      "shippingContent": {
+        "title": "Shipping & Returns",
+        "deliveryTime": "Delivery Time",
+        "deliveryTimeDesc": "3-5 business days for Netherlands, 5-7 days EU-wide",
+        "packaging": "Eco-Friendly Packaging",
+        "packagingDesc": "All orders shipped in recycled cardboard boxes",
+        "tracking": "Track Your Order",
+        "trackingDesc": "Receive tracking number via email after dispatch",
+        "zones": "Shipping Zones",
+        "zone1": "Netherlands",
+        "zone1Desc": "Orders over €35",
+        "zone2": "Belgium, Germany, France",
+        "zone2Desc": "Orders over €50",
+        "zone3": "Rest of EU",
+        "zone3Desc": "Orders over €75",
+        "free": "FREE",
+        "returns": "Returns Policy",
+        "returnsDesc": "30-day money-back guarantee. Products must be unopened and in original packaging. Contact support@gratis.ngo to initiate a return."
+      },
+      "impactContent": {
+        "title": "Your Impact",
+        "description": "Every GRATIS Water purchase funds clean water access, arts programs, and education initiatives worldwide. Here's exactly where your money goes:",
+        "water": "Clean Water",
+        "waterDesc": "Wells, filters, and infrastructure",
+        "arts": "Arts & Culture",
+        "artsDesc": "Programs and artist grants",
+        "education": "Education",
+        "educationDesc": "Schools and scholarships",
+        "howItWorks": "How It Works",
+        "step1": "You Purchase",
+        "step1Desc": "40% of profits go directly to verified NGO partners",
+        "step2": "We Fund",
+        "step2Desc": "Money is distributed monthly to water, arts, and education projects",
+        "step3": "You Track",
+        "step3Desc": "TRIBE members vote on quarterly allocations and see real-time impact",
+        "transparency": "100% Transparent:",
+        "transparencyDesc": "View full financial reports and project updates at gratis.ngo/impact"
+      }
+    },
+    "faq": {
+      "badge": "Questions?",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about GRATIS Water",
+      "q1": "What makes GRATIS Water different from other bottled water?",
+      "a1": "GRATIS Water is the only water brand that's 100% advertiser-funded at distribution points, uses truly sustainable Tetrapack packaging (not plastic), and donates 40% of retail profits to clean water, arts, and education initiatives. Plus, TRIBE members can claim free bottles monthly.",
+      "q2": "Is Tetrapack really better than plastic?",
+      "a2": "Yes! Tetrapack has a 3x lower carbon footprint than plastic bottles, is actually recyclable (unlike most plastic which ends up in landfills), and contains zero microplastics. Over 90% of plastic is never recycled — Tetrapack solves this problem.",
+      "q3": "How can I claim free bottles as a TRIBE member?",
+      "a3": "TRIBE members get monthly free bottles based on their tier: Insiders get 2/month, Core get 4/month, and Founders get 10/month. Simply log into your dashboard and click 'Claim Bottle' — we'll ship it free to your address.",
+      "q4": "Where does the water come from?",
+      "a4": "Our water is sourced from protected natural mountain springs in Europe. Each batch is tested for purity and mineral balance. The exact source is printed on every package as part of our transparency commitment.",
+      "q5": "What happens to my money when I buy GRATIS Water?",
+      "a5": "40% of profits go to verified NGO partners (split: 40% clean water, 30% arts, 30% education). You can see exactly where your money goes on our Impact Dashboard, updated in real-time. TRIBE members even vote on quarterly allocations."
+    },
+    "claim": {
+      "nonMember": {
+        "title": "Get Free Bottles Every Month",
+        "description": "Join TRIBE to claim 2-10 free bottles monthly, shipped to your door. Members also vote on where funds go and get exclusive perks.",
+        "cta": "Explore TRIBE Membership"
+      },
+      "noTier": {
+        "title": "Upgrade to TRIBE",
+        "description": "TRIBE members get monthly free bottles delivered. Choose your tier and start claiming today.",
+        "cta": "Join TRIBE"
+      },
+      "limitReached": {
+        "title": "You've Claimed All Your Bottles This Month!",
+        "description": "Your next bottles will be available on the 1st of next month. Upgrade your tier to get more bottles per month.",
+        "nextReset": "Resets on 1st of next month",
+        "viewOrders": "View My Orders"
+      },
+      "available": {
+        "title": "🎁 Claim Your Free Bottle",
+        "description": "As a TRIBE member, you have free bottles available this month. We'll ship them to your address at no cost.",
+        "remaining": "bottles remaining",
+        "tier": "Member",
+        "cta": "Claim Bottle Now"
+      }
     }
   },
   "rigStore": {
@@ -496,6 +597,648 @@
     "transparency": {
       "title": "Transparency",
       "description": "Open books, public financials, and radical transparency. No secrets, no spin—just facts."
+    },
+    "hero": {
+      "badge": "Join the Movement",
+      "title": "TRIBE",
+      "subtitle": "Support impact. Vote on projects. Get free bottles. Be part of something bigger.",
+      "cta": "Join TRIBE",
+      "compareTiers": "Compare Tiers"
+    },
+    "valueProps": {
+      "prop1": {
+        "title": "Direct Impact",
+        "description": "40% of profits fund clean water, arts, and education worldwide"
+      },
+      "prop2": {
+        "title": "Vote on Allocations",
+        "description": "TRIBE members vote quarterly on where funds go"
+      },
+      "prop3": {
+        "title": "Exclusive Perks",
+        "description": "Free bottles, early access, discounts, and VIP events"
+      }
+    },
+    "comparison": {
+      "badge": "Choose Your Tier",
+      "title": "Find Your Fit",
+      "subtitle": "From free membership to lifetime founding membership — there's a tier for everyone.",
+      "mostPopular": "Most Popular",
+      "limited": "Limited Spots",
+      "selectTier": "Select Tier",
+      "features": {
+        "title": "Features",
+        "newsletter": "Monthly impact newsletter",
+        "impactReports": "Quarterly impact reports",
+        "bottles": "Free bottles per month",
+        "voting": "Quarterly allocation voting",
+        "earlyAccess": "Early access to products",
+        "discount": "Store discount",
+        "events": "Exclusive events access",
+        "badge": "Digital member badge",
+        "merchBundle": "Founder merch bundle",
+        "lifetime": "Lifetime membership"
+      },
+      "explorer": {
+        "name": "Explorer",
+        "price": "Free",
+        "description": "Stay connected to the movement"
+      },
+      "insider": {
+        "name": "Insider",
+        "period": "/month",
+        "description": "Get involved with free bottles & voting"
+      },
+      "core": {
+        "name": "Core",
+        "period": "/year",
+        "description": "Full access + VIP perks"
+      },
+      "founder": {
+        "name": "Founder",
+        "period": "one-time",
+        "description": "Lifetime founding member status"
+      }
+    },
+    "tierCards": {
+      "title": "Detailed Tier Breakdown",
+      "subtitle": "Explore what each membership tier includes and find the perfect fit for your impact goals.",
+      "mostPopular": "Most Popular",
+      "limited": "Limited",
+      "limitations": "Limitations",
+      "showMore": "Show all features",
+      "showLess": "Show less",
+      "selectTier": "Select This Tier",
+      "explorer": {
+        "name": "Explorer",
+        "tagline": "Free to join, always",
+        "price": "Free",
+        "feature1": "Monthly impact newsletter with project updates",
+        "feature2": "Quarterly transparency reports",
+        "feature3": "Community forum access",
+        "feature4": "10% discount on RIG merch store",
+        "limit1": "No free bottles",
+        "limit2": "No voting rights"
+      },
+      "insider": {
+        "name": "Insider",
+        "tagline": "Get involved, get free water",
+        "period": "/month",
+        "feature1": "2 free bottles delivered monthly",
+        "feature2": "Quarterly voting on fund allocation",
+        "feature3": "Early access to new products",
+        "feature4": "10% discount on all purchases",
+        "feature5": "Priority customer support",
+        "feature6": "Digital Insider badge",
+        "limit1": "Cancel anytime, no commitment"
+      },
+      "core": {
+        "name": "Core",
+        "tagline": "Full access + VIP treatment",
+        "period": "/year",
+        "feature1": "4 free bottles delivered monthly (48/year)",
+        "feature2": "Quarterly voting with double weight",
+        "feature3": "15% discount on all purchases",
+        "feature4": "Exclusive Core member events",
+        "feature5": "Annual impact report with your personal stats",
+        "feature6": "Core member badge & certificate",
+        "feature7": "VIP customer support"
+      },
+      "founder": {
+        "name": "Founder",
+        "tagline": "Lifetime impact, legendary status",
+        "period": "one-time payment",
+        "feature1": "10 free bottles every month, forever",
+        "feature2": "Lifetime voting rights on all allocations",
+        "feature3": "20% discount on all purchases, lifetime",
+        "feature4": "Exclusive Founder merch bundle (€100 value)",
+        "feature5": "Your name on the Founder Wall",
+        "feature6": "Private Founder events & meetups",
+        "feature7": "Direct line to leadership team",
+        "feature8": "Lifetime access to all future perks"
+      }
+    },
+    "voting": {
+      "badge": "Democratic Impact",
+      "title": "You Decide Where Funds Go",
+      "subtitle": "Insider, Core, and Founder members vote quarterly on how 40% of profits are allocated across water, arts, and education projects.",
+      "step1": {
+        "title": "Quarterly Voting Period Opens",
+        "description": "Every quarter, TRIBE members receive a ballot with proposed project allocations. Review project details, budgets, and expected impact."
+      },
+      "step2": {
+        "title": "Cast Your Vote",
+        "description": "Vote on your preferred allocation split. Core members get double weight. Founders get triple weight. Democracy in action."
+      },
+      "step3": {
+        "title": "Results Implemented",
+        "description": "Results are tallied transparently. Winning allocations are funded immediately. You see exactly where your vote led to real-world impact."
+      },
+      "benefit1": {
+        "title": "Real Influence",
+        "description": "Your vote directly determines which projects get funded"
+      },
+      "benefit2": {
+        "title": "Community Driven",
+        "description": "No corporate board decides—you and fellow members do"
+      },
+      "benefit3": {
+        "title": "Full Transparency",
+        "description": "All votes and results published publicly after each quarter"
+      },
+      "example": {
+        "title": "Example Ballot",
+        "subtitle": "Q1 2026 Fund Allocation Vote",
+        "option1": "Clean Water Infrastructure (Nigeria)",
+        "option2": "Youth Arts Programs (Amsterdam)",
+        "option3": "School Libraries (Guatemala)",
+        "note": "This is a mockup example. Actual ballots will feature real projects with detailed proposals."
+      }
+    },
+    "testimonials": {
+      "badge": "Member Stories",
+      "title": "What TRIBE Members Say",
+      "subtitle": "Join thousands who've made GRATIS part of their daily impact.",
+      "testimonial1": {
+        "name": "Sophie Laurent",
+        "role": "Graphic Designer",
+        "tier": "Core Member",
+        "quote": "Being able to vote on where funds go makes me feel genuinely connected to the impact. Plus, the free bottles are amazing quality."
+      },
+      "testimonial2": {
+        "name": "Marcus Chen",
+        "role": "Software Engineer",
+        "tier": "Founder",
+        "quote": "I joined as a Founder because I believe in long-term thinking. The lifetime perks are incredible, and I'm proud to support this mission forever."
+      },
+      "testimonial3": {
+        "name": "Amara Okafor",
+        "role": "Environmental Scientist",
+        "tier": "Insider",
+        "quote": "Finally, a brand that's radically transparent. I can see exactly where my membership money goes, and it actually matters."
+      },
+      "stat1": "Active Members",
+      "stat2": "Average Rating",
+      "stat3": "Renewal Rate",
+      "stat4": "Countries"
+    },
+    "founderCounter": {
+      "title": "Founder Spots Remaining",
+      "spotsLeft": "spots left",
+      "claimed": "claimed",
+      "filled": "filled",
+      "warning": "Once all 1,000 Founder spots are claimed, this tier closes forever.",
+      "benefit1": "One-time payment",
+      "benefit2": "bottles/month",
+      "benefit3": "Lifetime access"
+    },
+    "faq": {
+      "badge": "Questions?",
+      "title": "TRIBE Membership FAQ",
+      "subtitle": "Everything you need to know about joining TRIBE",
+      "q1": "What's the difference between the tiers?",
+      "a1": "Explorer is free and gives you newsletter access. Insider (€9.99/month) gets you 2 free bottles and voting rights. Core (€97/year) doubles your bottles and perks. Founder (€247 one-time) is lifetime membership with maximum benefits.",
+      "q2": "Can I cancel my membership anytime?",
+      "a2": "Yes! Insider and Core memberships can be canceled anytime with no penalties. Founder is a one-time payment for lifetime access (non-refundable after 30 days).",
+      "q3": "How does the voting system work?",
+      "a3": "Every quarter, Insider+ members receive a ballot to vote on fund allocation across water, arts, and education projects. Core members' votes count 2x, Founders' count 3x. Results are implemented immediately and published transparently.",
+      "q4": "When do I get my free bottles?",
+      "a4": "Free bottles reset on the 1st of each month. You can claim them anytime during the month via your dashboard. We ship within 3-5 business days.",
+      "q5": "What happens if I upgrade my tier?",
+      "a5": "You can upgrade anytime! You'll get immediate access to higher tier perks. If you're on a paid tier, we'll prorate the difference. Founder is a one-time upgrade from any tier.",
+      "q6": "Are there any hidden fees?",
+      "a6": "Absolutely not. The price you see is the price you pay. No signup fees, no hidden charges. Free shipping on claimed bottles.",
+      "q7": "Can I gift a membership?",
+      "a7": "Yes! Contact support@gratis.ngo and we'll set up a gift membership for you. Perfect for conscious gift-givers.",
+      "q8": "What if the Founder tier sells out?",
+      "a8": "Once all 1,000 Founder spots are claimed, the tier closes forever. Those who secured it will remain lifetime Founders with all future perks included.",
+      "stillHaveQuestions": "Still Have Questions?",
+      "contactPrompt": "Our team is here to help you find the perfect tier.",
+      "contactUs": "Contact Us",
+      "viewAllFaq": "View All FAQs"
+    },
+    "finalCta": {
+      "title": "Ready to Join TRIBE?",
+      "subtitle": "Pick your tier and start making an impact today.",
+      "cta": "Choose Your Tier"
+    },
+    "signup": {
+      "seoTitle": "Join TRIBE — GRATIS Membership",
+      "seoDescription": "Become a TRIBE member and support global impact while getting free bottles, voting rights, and exclusive perks.",
+      "step": "Step",
+      "of": "of",
+      "continue": "Continue",
+      "creating": "Creating account...",
+      "createAccount": "Create Account",
+      "processing": "Processing...",
+      "completePayment": "Complete Payment",
+      "bottlesPerMonth": "bottles/month",
+      "noBottles": "Newsletter access only",
+      "helpText": "Need help?",
+      "contactSupport": "Contact support",
+      "success": "Welcome to TRIBE! 🎉",
+      "step1": {
+        "title": "Choose Your Tier",
+        "subtitle": "Select the membership level that fits your impact goals."
+      },
+      "step2": {
+        "title": "Create Your Account",
+        "subtitle": "Join the TRIBE community",
+        "displayName": "Display Name",
+        "displayNamePlaceholder": "How should we call you?",
+        "email": "Email Address",
+        "emailPlaceholder": "your@email.com",
+        "password": "Password",
+        "passwordPlaceholder": "Min. 6 characters",
+        "passwordHint": "Minimum 6 characters",
+        "agreeTerms": "I agree to the",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy"
+      },
+      "step3": {
+        "title": "Complete Payment",
+        "subtitle": "Finalize your TRIBE membership",
+        "subtotal": "Subtotal",
+        "tax": "Tax (VAT)",
+        "total": "Total",
+        "mockupNotice": "MOCKUP MODE:",
+        "mockupDescription": "This is a demo checkout. No real payment will be processed. The Stripe integration will be added later."
+      },
+      "step4": {
+        "title": "Welcome to TRIBE! 🎉",
+        "subtitle": "Your membership is now active. Time to start making an impact!",
+        "nextSteps": "What's Next:",
+        "step1": "Check your email for a welcome message with getting started tips",
+        "step2": "Explore your dashboard and claim your first free bottles",
+        "step3": "Watch for the next quarterly voting period announcement",
+        "goToDashboard": "Go to My Dashboard"
+      },
+      "errors": {
+        "agreeTerms": "Please agree to the Terms and Privacy Policy to continue",
+        "createAccount": "Failed to create account. Please try again.",
+        "payment": "Payment failed. Please try again."
+      }
+    }
+  },
+  "impactPage": {
+    "meta": {
+      "title": "Our Impact — GRATIS",
+      "description": "See the real-time impact we're making together. Transparent allocation, verified results, and the stories behind every donation."
+    },
+    "hero": {
+      "badge": "Live Impact Tracker",
+      "title": "Impact in Real-Time",
+      "subtitle": "Every bottle claimed, every membership, and every donation creates measurable change. Here's exactly where your support goes."
+    },
+    "stats": {
+      "totalDonated": "Total Donated",
+      "bottlesDistributed": "Bottles Distributed",
+      "ngosSupported": "NGOs Supported",
+      "tribeMembers": "TRIBE Members"
+    },
+    "lastUpdated": "Last updated:",
+    "allocation": {
+      "title": "Where Your Money Goes",
+      "subtitle": "Transparent 40/30/30 allocation split across three pillars",
+      "water": "Water Access",
+      "arts": "Arts & Culture",
+      "education": "Education",
+      "total": "Total Allocated"
+    },
+    "personal": {
+      "title": "Your Personal Impact",
+      "totalContributed": "Total Contributed",
+      "bottlesClaimed": "Bottles Claimed",
+      "memberSince": "Member Since",
+      "yourImpact": "Your Impact Breakdown",
+      "viewDashboard": "View Full Dashboard"
+    },
+    "timeline": {
+      "title": "Timeline of Milestones",
+      "subtitle": "Key moments in our journey to create lasting impact",
+      "milestone1": {
+        "title": "Reached €50,000 in Total Donations",
+        "description": "A major milestone thanks to our growing community of supporters and TRIBE members."
+      },
+      "milestone2": {
+        "title": "Partnered with 5 New NGOs",
+        "description": "Expanding our reach across Water Access, Arts & Culture, and Education initiatives."
+      },
+      "milestone3": {
+        "title": "Distributed €25,000 to Education Projects",
+        "description": "Funding scholarships, school supplies, and learning programs for underserved communities."
+      },
+      "milestone4": {
+        "title": "First Quarter Complete",
+        "description": "Successfully launched GRATIS Water and began our impact journey with the community."
+      },
+      "types": {
+        "donation": "Donation",
+        "partner": "Partnership",
+        "milestone": "Milestone",
+        "impact": "Impact"
+      }
+    },
+    "partners": {
+      "title": "Our NGO Partners",
+      "subtitle": "Working with verified organizations to maximize impact",
+      "amountReceived": "Amount Received",
+      "projectsSupported": "Projects",
+      "learnMore": "Learn More",
+      "viewAll": "View All Partners",
+      "locations": {
+        "kenya": "Kenya",
+        "netherlands": "Netherlands",
+        "uganda": "Uganda",
+        "tanzania": "Tanzania",
+        "belgium": "Belgium",
+        "rwanda": "Rwanda"
+      }
+    },
+    "reports": {
+      "title": "Quarterly Impact Reports",
+      "subtitle": "Detailed breakdowns of every euro donated and its impact",
+      "q4_2025": "Q4 2025 Impact Report",
+      "q3_2025": "Q3 2025 Impact Report",
+      "download": "Download PDF"
+    },
+    "cta": {
+      "title": "Be Part of the Impact",
+      "subtitle": "Join TRIBE and help decide where funds go next, or make a one-time donation to support our mission.",
+      "joinTribe": "Join TRIBE",
+      "makedonation": "Make a Donation"
+    }
+  },
+  "aboutPage": {
+    "problem": {
+      "title": "The Problem We're Solving",
+      "subtitle": "Understanding why GRATIS exists and the change we're creating",
+      "problemTitle": "The Problem",
+      "point1": "Billions of plastic bottles end up in landfills and oceans every year, causing irreversible environmental damage",
+      "point2": "Traditional beverage advertising budgets go to corporations instead of causes that need support",
+      "point3": "Consumers lack transparency about where their money goes when they buy products",
+      "point4": "NGOs struggle to find sustainable funding sources for their vital work",
+      "solutionTitle": "Our Solution",
+      "solution1": "Infinitely recyclable aluminum bottles that eliminate plastic waste from the equation",
+      "solution2": "100% of advertising revenue redirected to verified NGOs working on critical global challenges",
+      "solution3": "Complete transparency with real-time impact tracking and quarterly financial reports",
+      "solution4": "A sustainable business model that grows as our community grows, funding more impact"
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "subtitle": "Three simple steps from your purchase to real-world impact",
+      "step1": {
+        "title": "You Buy GRATIS",
+        "description": "Purchase any GRATIS beverage—W.A.T.E.R, THEURGY, or F.U.—from our store or partners. Every bottle funds change."
+      },
+      "step2": {
+        "title": "We Sell Advertising",
+        "description": "Our bottles become premium advertising space for brands who want to align with purpose-driven consumers."
+      },
+      "step3": {
+        "title": "100% Goes to NGOs",
+        "description": "Every euro of advertising revenue is distributed to verified NGO partners. TRIBE members vote on allocation priorities quarterly."
+      }
+    },
+    "pillars": {
+      "badge": "Our Foundation",
+      "title": "Built on Three Pillars",
+      "subtitle": "The principles that guide every decision we make",
+      "transparency": {
+        "title": "Radical Transparency",
+        "description": "Complete visibility into our finances, operations, and impact. No hidden costs, no corporate secrets—just honest business.",
+        "feature1": "Real-time impact dashboard updated daily",
+        "feature2": "Quarterly financial reports published publicly",
+        "feature3": "Open-source allocation methodology",
+        "feature4": "Third-party audits of all claims"
+      },
+      "verification": {
+        "title": "Rigorous Verification",
+        "description": "Every NGO partner is thoroughly vetted. Every claim is independently verified. Trust built through evidence, not promises.",
+        "feature1": "Multi-stage NGO vetting process",
+        "feature2": "On-the-ground impact verification",
+        "feature3": "Annual third-party audits",
+        "feature4": "Documented case studies and outcomes"
+      },
+      "community": {
+        "title": "Community-Driven",
+        "description": "TRIBE members don't just support the mission—they shape it. Democratic voting on fund allocation keeps power where it belongs: with the people.",
+        "feature1": "Quarterly voting on allocation priorities",
+        "feature2": "Open forum for NGO nominations",
+        "feature3": "Member feedback shapes product development",
+        "feature4": "Transparent governance structure"
+      }
+    },
+    "timeline": {
+      "badge": "Our Journey",
+      "title": "The Story So Far",
+      "subtitle": "Key milestones from concept to global movement",
+      "event1": {
+        "date": "January 2025",
+        "title": "GRATIS Founded",
+        "description": "The vision begins: premium beverages that fund real change. Initial concept development and business model validation."
+      },
+      "event2": {
+        "date": "March 2025",
+        "title": "First W.A.T.E.R Launch",
+        "description": "GRATIS W.A.T.E.R hits the market. First 1,000 bottles sold within 48 hours. Community begins to form."
+      },
+      "event3": {
+        "date": "June 2025",
+        "title": "TRIBE Membership Launched",
+        "description": "Introducing tiered membership with democratic voting rights. Empowering the community to direct funds."
+      },
+      "event4": {
+        "date": "Q1 2026",
+        "title": "Expansion: THEURGY & F.U.",
+        "description": "Two new product lines launched. Diversifying offerings while maintaining core mission. Pre-orders exceed expectations."
+      }
+    },
+    "commitments": {
+      "badge": "Our Promise",
+      "title": "Our Commitments to You",
+      "subtitle": "The non-negotiable principles that define how we operate",
+      "transparency": {
+        "title": "100% Financial Transparency",
+        "description": "Every euro tracked. Every allocation published. Real-time dashboard shows exactly where advertising revenue goes.",
+        "linkText": "View Impact Dashboard"
+      },
+      "verification": {
+        "title": "Verified NGO Partners Only",
+        "description": "Rigorous multi-stage vetting process. On-the-ground verification. Annual audits. Only proven organizations get funded.",
+        "linkText": "See Our Partners"
+      },
+      "community": {
+        "title": "Community First, Always",
+        "description": "TRIBE members vote on fund allocation. Your voice matters. Democratic governance ensures power stays with the people.",
+        "linkText": "Join TRIBE"
+      },
+      "certifications": {
+        "title": "Certifications & Compliance",
+        "description": "We hold ourselves to the highest standards of transparency, sustainability, and ethical business practices."
+      }
+    },
+    "team": {
+      "badge": "The People Behind GRATIS",
+      "title": "Meet the Team",
+      "subtitle": "Passionate individuals united by a mission to create lasting change",
+      "member1": {
+        "name": "Alex van der Berg",
+        "role": "Founder & CEO",
+        "bio": "Former sustainability consultant turned social entrepreneur. Believes business can be a force for good."
+      },
+      "member2": {
+        "name": "Maya Okonkwo",
+        "role": "Head of Impact",
+        "bio": "10+ years in international development. Ensures every euro creates maximum positive change."
+      },
+      "member3": {
+        "name": "Lucas Fernandez",
+        "role": "Creative Director",
+        "bio": "Award-winning designer who brings purpose-driven brands to life through bold visual storytelling."
+      },
+      "member4": {
+        "name": "Dr. Sarah Chen",
+        "role": "Sustainability Lead",
+        "bio": "Environmental scientist dedicated to eliminating plastic waste and building circular economy solutions."
+      },
+      "cta": {
+        "title": "Want to Join Our Mission?",
+        "description": "We're always looking for passionate people who want to use their skills to create positive change.",
+        "button": "View Full Team & Careers"
+      }
+    }
+  },
+  "corporatePage": {
+    "meta": {
+      "title": "Corporate Giving Program — GRATIS",
+      "description": "Partner with GRATIS for sustainable corporate gifting and bulk orders. Custom branding, volume discounts, and measurable impact for your business."
+    },
+    "hero": {
+      "badge": "Corporate Partnerships",
+      "title": "Hydrate Your Team, Fund Global Change",
+      "subtitle": "Premium beverage solutions for businesses that care about impact. Custom branding, bulk ordering, and transparent NGO funding with every bottle.",
+      "cta": "Get Started",
+      "downloadBrochure": "Download Brochure"
+    },
+    "benefits": {
+      "title": "Why Choose GRATIS for Your Business",
+      "subtitle": "More than just hydration—a partnership that elevates your brand and creates real impact",
+      "brand": {
+        "title": "Enhance Brand Image",
+        "description": "Align with a purpose-driven brand that resonates with conscious consumers and employees."
+      },
+      "employees": {
+        "title": "Boost Employee Engagement",
+        "description": "Show your team you care about sustainability and social impact with premium beverages."
+      },
+      "impact": {
+        "title": "Measurable Impact",
+        "description": "Track exactly how your partnership funds NGO projects with our transparent reporting."
+      },
+      "flexible": {
+        "title": "Flexible Solutions",
+        "description": "From office pantries to client gifts to event sponsorships—we customize to your needs."
+      }
+    },
+    "features": {
+      "title": "What's Included",
+      "subtitle": "Comprehensive solutions designed for modern businesses",
+      "bulkOrdering": {
+        "title": "Bulk Ordering Made Easy",
+        "point1": "Minimum order: 500 bottles (mix & match W.A.T.E.R, THEURGY, F.U.)",
+        "point2": "Dedicated account manager for seamless ordering",
+        "point3": "Flexible delivery schedules to match your needs"
+      },
+      "customBranding": {
+        "title": "Custom Branding Options",
+        "point1": "Add your company logo to bottle sleeves (min. 2,000 bottles)",
+        "point2": "Co-branded packaging for corporate gifts",
+        "point3": "Custom messaging for events or campaigns"
+      }
+    },
+    "pricing": {
+      "title": "Pricing Tiers",
+      "subtitle": "Volume-based pricing with increasing impact",
+      "minOrder": "Min. Order",
+      "bottles": "bottles",
+      "getQuote": "Get a Quote",
+      "popular": "Most Popular",
+      "starter": {
+        "name": "Starter",
+        "price": "€1.80/bottle",
+        "feature1": "500-1,999 bottles",
+        "feature2": "Standard delivery",
+        "feature3": "Quarterly impact reports",
+        "feature4": "Email support"
+      },
+      "growth": {
+        "name": "Growth",
+        "price": "€1.50/bottle",
+        "feature1": "2,000-4,999 bottles",
+        "feature2": "Priority delivery",
+        "feature3": "Custom branding available",
+        "feature4": "Monthly impact reports",
+        "feature5": "Dedicated account manager"
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Custom pricing",
+        "feature1": "5,000+ bottles",
+        "feature2": "White-glove service",
+        "feature3": "Full custom branding",
+        "feature4": "Real-time impact dashboard",
+        "feature5": "Co-marketing opportunities",
+        "feature6": "VIP event access"
+      }
+    },
+    "caseStudies": {
+      "badge": "Success Stories",
+      "title": "Trusted by Leading Companies",
+      "subtitle": "See how businesses like yours are making an impact",
+      "orderSize": "Order Size",
+      "result": "Result",
+      "case1": {
+        "company": "TechStart Amsterdam",
+        "industry": "Technology",
+        "orderSize": "2,500 bottles/quarter",
+        "result": "€12,500 funded to education NGOs",
+        "quote": "Our employees love the premium quality and knowing their hydration funds real change."
+      },
+      "case2": {
+        "company": "GreenBuilders NL",
+        "industry": "Construction",
+        "orderSize": "5,000 bottles for annual event",
+        "result": "€25,000 to water access projects",
+        "quote": "Perfect alignment with our sustainability values. Clients were impressed with the custom branding."
+      },
+      "case3": {
+        "company": "FinanceHub Rotterdam",
+        "industry": "Finance",
+        "orderSize": "1,000 bottles/month",
+        "result": "€60,000/year to verified NGOs",
+        "quote": "Easy ordering, reliable delivery, and measurable impact. Exactly what we needed for our CSR program."
+      }
+    },
+    "form": {
+      "title": "Start Your Partnership",
+      "subtitle": "Tell us about your needs and we'll create a custom proposal",
+      "companyName": "Company Name",
+      "contactName": "Contact Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "companySize": "Company Size",
+      "companySizePlaceholder": "e.g., 50 employees",
+      "interest": "Estimated Order Volume",
+      "interestPlaceholder": "e.g., 1,000 bottles/month",
+      "message": "Tell Us About Your Needs",
+      "messagePlaceholder": "What are you looking for? Events, office supply, client gifts, etc.",
+      "submit": "Submit Inquiry",
+      "submitting": "Submitting...",
+      "successMessage": "Thank you! We'll be in touch within 24 hours.",
+      "errorMessage": "Something went wrong. Please try again or email us directly.",
+      "emailUs": "Email Us",
+      "callUs": "Call Us"
     }
   }
 }

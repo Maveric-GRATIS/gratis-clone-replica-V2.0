@@ -69,3 +69,39 @@ export const AnimatedCounter = ({
     </span>
   );
 };
+
+/**
+ * Compact number formatter for large numbers
+ */
+export const AnimatedCounterCompact = ({
+  end,
+  duration = 2000,
+  className = "",
+}: {
+  end: number;
+  duration?: number;
+  className?: string;
+}) => {
+  const formatCompact = (num: number): { value: number; suffix: string } => {
+    if (num >= 1000000) {
+      return { value: num / 1000000, suffix: "M" };
+    }
+    if (num >= 1000) {
+      return { value: num / 1000, suffix: "K" };
+    }
+    return { value: num, suffix: "" };
+  };
+
+  const { value, suffix } = formatCompact(end);
+
+  return (
+    <span className={className}>
+      <AnimatedCounter
+        end={value}
+        duration={duration}
+        decimals={value < 10 ? 1 : 0}
+        suffix={suffix}
+      />
+    </span>
+  );
+};

@@ -75,6 +75,8 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
+import Videos from "./pages/Videos";
+import VideoDetail from "./pages/VideoDetail";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Partners from "./pages/Partners";
@@ -264,6 +266,14 @@ const App = () => {
                           />
                           <Route path="/impact-tv/icon" element={<Icon />} />
                           <Route path="/impact-tv/tales" element={<Tales />} />
+
+                          {/* Video Platform Routes */}
+                          <Route path="/videos" element={<Videos />} />
+                          <Route
+                            path="/videos/:slug"
+                            element={<VideoDetail />}
+                          />
+
                           <Route path="/spark" element={<Spark />} />
                           <Route path="/spark/donate" element={<Donate />} />
                           <Route path="/spark/verve" element={<Verve />} />

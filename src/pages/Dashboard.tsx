@@ -203,7 +203,7 @@ export default function Dashboard() {
           </div>
 
           {/* Subscription Management - Show for paid tiers */}
-          {userData.tribeTier !== \"explorer\" && user && (
+          {userData.tribeTier !== "explorer" && user && (
             <SubscriptionManagement userId={user.uid} />
           )}
 

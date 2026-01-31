@@ -29,8 +29,8 @@ export default function Index() {
 
       {/* Video Hero Section */}
       <VideoHero
-        videoUrl="https://assets.mixkit.co/videos/preview/mixkit-people-pouring-a-warm-drink-around-a-campfire-513-large.mp4"
-        posterUrl="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=1920&q=80"
+        videoUrl="https://assets.mixkit.co/videos/preview/mixkit-pouring-water-into-a-glass-4486-large.mp4"
+        posterUrl="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=1920&q=80"
         title={t("home.heroTitle1") + " " + t("home.heroTitle2")}
         subtitle={t("home.heroSubtitle")}
         ctaText={t("home.heroCTA")}

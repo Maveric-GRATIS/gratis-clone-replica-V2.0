@@ -69,6 +69,8 @@ import DashboardBottles from "./pages/dashboard/Bottles";
 import DashboardVote from "./pages/dashboard/Vote";
 import DashboardSettings from "./pages/dashboard/Settings";
 import Wishlist from "./pages/Wishlist";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Partners from "./pages/Partners";
@@ -290,6 +292,8 @@ const App = () => {
                             element={<DashboardSettings />}
                           />
                           <Route path="/wishlist" element={<Wishlist />} />
+                          <Route path="/profile" element={<Profile />} />
+                          <Route path="/settings" element={<Settings />} />
 
                           {/* Admin Routes - Single Unified Panel */}
                           <Route

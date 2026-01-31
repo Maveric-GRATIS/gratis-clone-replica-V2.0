@@ -1,0 +1,316 @@
+# GRATIS.NGO - ENTERPRISE PLATFORM DEVELOPMENT PROMPTS
+## Part 3: Social Integration, TRIBE Membership & Donation Systems
+
+---
+
+# 15. SOCIAL MEDIA INTEGRATION SYSTEM
+
+Build a comprehensive social media integration system for sharing, feeds, and analytics.
+
+## SOCIAL SHARING COMPONENT (src/components/features/SocialShare.tsx)
+
+Features:
+- Multi-platform sharing: Facebook, Twitter, LinkedIn, WhatsApp, Email, Telegram, Reddit, Pinterest
+- Native share API for mobile devices
+- QR code generation with QRCode library
+- Share tracking analytics via /api/analytics/track
+- Variants: buttons, icons, dropdown, modal
+- Copy link functionality with clipboard API
+
+## Share URLs Format:
+
+const shareUrls = {
+  facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url),
+  twitter: 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(title),
+  linkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url),
+  whatsapp: 'https://wa.me/?text=' + encodeURIComponent(title + '\n\n' + url),
+  telegram: 'https://t.me/share/url?url=' + encodeURIComponent(url),
+  email: 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(description + '\n\n' + url),
+  reddit: 'https://reddit.com/submit?url=' + encodeURIComponent(url),
+  pinterest: 'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(url),
+};
+
+## SOCIAL FEED API (src/app/api/social/feed/route.ts)
+
+Aggregates posts from multiple platforms:
+- Twitter API integration
+- Instagram API integration
+- Facebook API integration
+- YouTube API integration
+
+Returns unified SocialPost interface:
+
+interface SocialPost {
+  id: string;
+  platform: 'twitter' | 'instagram' | 'facebook' | 'youtube' | 'linkedin';
+  content: string;
+  author: {
+    name: string;
+    username: string;
+    avatar: string;
+    verified: boolean;
+  };
+  media?: {
+    type: 'image' | 'video';
+    url: string;
+    thumbnail?: string;
+  }[];
+  stats: {
+    likes: number;
+    comments: number;
+    shares: number;
+  };
+  url: string;
+  createdAt: string;
+}
+
+## SOCIAL FEED DISPLAY (src/components/features/SocialFeed.tsx)
+
+Features:
+- Platform filtering with color-coded badges
+- Grid/masonry/carousel/list layouts
+- Auto-refresh with configurable interval
+- Post stats: likes, comments, shares
+- Media support (images, videos with thumbnails)
+- formatDistanceToNow for timestamps
+- Follow CTA with platform links
+- Loading skeletons and empty states
+
+Platform Config:
+const platformConfig = {
+  twitter: { icon: Twitter, color: '#1DA1F2', name: 'Twitter' },
+  instagram: { icon: Instagram, color: '#E4405F', name: 'Instagram' },
+  facebook: { icon: Facebook, color: '#1877F2', name: 'Facebook' },
+  youtube: { icon: Youtube, color: '#FF0000', name: 'YouTube' },
+  linkedin: { icon: Linkedin, color: '#0A66C2', name: 'LinkedIn' },
+};
+
+---
+
+# 16. COMPLETE TRIBE MEMBERSHIP SYSTEM
+
+Build the complete TRIBE membership system with all tiers, benefits, and management.
+
+## MEMBERSHIP TIERS
+
+const tiers = [
+  {
+    id: 'explorer',
+    name: 'Explorer',
+    tagline: 'Start Your Journey',
+    price: 0,
+    period: 'forever',
+    color: '#888888',
+    icon: Star,
+    description: 'Perfect for discovering what GRATIS is all about.',
+    benefits: [
+      { text: '1 free bottle per month', included: true },
+      { text: 'Impact dashboard access', included: true },
+      { text: 'Newsletter subscription', included: true },
+      { text: 'Community forum access', included: true },
+      { text: 'Quarterly voting rights', included: false },
+      { text: 'Member events access', included: false },
+      { text: 'Exclusive merchandise', included: false },
+      { text: 'Priority support', included: false },
+      { text: 'Founding member status', included: false },
+    ],
+  },
+  {
+    id: 'insider',
+    name: 'Insider',
+    tagline: 'Go Deeper',
+    price: 9.99,
+    period: 'month',
+    color: '#00AFFF',
+    icon: Zap,
+    popular: true,
+    description: 'For those ready to make a bigger impact.',
+    benefits: [
+      { text: '3 free bottles per month', included: true },
+      { text: 'Quarterly voting rights', included: true },
+      { text: 'Member events access', included: true },
+      // ... all explorer benefits included
+    ],
+  },
+  {
+    id: 'core',
+    name: 'Core',
+    tagline: 'Lead the Movement',
+    price: 97,
+    period: 'year',
+    color: '#FF0077',
+    icon: Crown,
+    description: 'Serious supporters who want maximum impact.',
+    benefits: [
+      { text: '6 free bottles per month', included: true },
+      { text: 'Exclusive merchandise', included: true },
+      { text: 'Priority support', included: true },
+      // ... all insider benefits included
+    ],
+  },
+  {
+    id: 'founder',
+    name: 'Founder',
+    tagline: 'Shape the Future',
+    price: 247,
+    period: 'lifetime',
+    color: '#FF5F00',
+    icon: Sparkles,
+    description: 'Limited to 1,000 visionaries. Lifetime access.',
+    limitedSpots: 1000,
+    spotsTaken: 347,
+    benefits: [
+      { text: 'Unlimited bottles per month', included: true },
+      { text: 'Founding member status', included: true },
+      { text: 'Name on founder wall', included: true },
+      { text: 'Direct impact allocation', included: true },
+      { text: 'Annual founder summit', included: true },
+      // ... all core benefits included
+    ],
+  },
+];
+
+## TRIBE PAGE SECTIONS
+
+1. Hero with animated gradient background
+2. Live stats: 50,000+ members, €2.1M donated, 127 NGOs, 23 countries
+3. Tier cards with pricing and benefits
+4. Benefits comparison table
+5. Benefit showcase cards:
+   - Premium Water Bottles
+   - Democratic Giving (voting)
+   - Exclusive Events
+   - Impact Recognition
+   - Exclusive Merchandise
+   - Partner Perks
+6. Final CTA section
+
+## Additional Components to Build:
+- Signup flow with multi-step wizard
+- Member dashboard with stats
+- Bottle claiming system
+- Quarterly voting interface
+- Membership management (upgrade/downgrade/cancel)
+
+---
+
+# 17. COMPLETE DONATION SYSTEM
+
+Build comprehensive donation system with one-time, recurring, and campaign-based donations.
+
+## DONATION PAGE (src/app/[locale]/(public)/donate/page.tsx)
+
+Multi-step form with React Hook Form + Zod validation
+
+### Step 1: Amount Selection
+- Frequency tabs: one_time, monthly, quarterly, annually
+- Preset amounts: €25, €50, €100, €250, €500, €1000
+- Impact examples per amount ("€25 provides clean water for 5 people")
+- Custom amount input
+- Interactive allocation sliders:
+  - Water (40% default) - #00AFFF
+  - Arts (30% default) - #FF0077
+  - Education (30% default) - #FF5F00
+- Real-time pie chart visualization
+- Cover processing fees checkbox (2.9% + €0.30)
+
+### Step 2: Donor Details
+- First/Last name
+- Email
+- Phone (optional)
+- Company (optional)
+- Anonymous donation option
+- Terms acceptance
+- Dedication feature (in honor/memory)
+
+### Step 3: Payment
+- Stripe Elements integration
+- PaymentElement with accordion layout
+- Payment methods: card, iDEAL, SEPA
+- Amount summary display
+- Error handling
+
+### Step 4: Confirmation
+- Success animation with checkmark
+- Allocation breakdown display
+- Receipt notification
+- Donation ID
+- CTA: "See Your Impact", "Share Your Donation"
+
+## Trust Badges
+- 256-bit SSL Encryption
+- PCI DSS Compliant
+- 100% Tax Deductible
+
+## Validation Schema
+
+const donationSchema = z.object({
+  amount: z.number().min(1).max(100000),
+  frequency: z.enum(['one_time', 'monthly', 'quarterly', 'annually']),
+  allocation: z.object({
+    water: z.number().min(0).max(100),
+    arts: z.number().min(0).max(100),
+    education: z.number().min(0).max(100),
+  }).refine((data) => data.water + data.arts + data.education === 100),
+  donorInfo: z.object({
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+    email: z.string().email(),
+    phone: z.string().optional(),
+    company: z.string().optional(),
+    isAnonymous: z.boolean().default(false),
+  }),
+  coverFees: z.boolean().default(false),
+  dedication: z.object({
+    enabled: z.boolean().default(false),
+    type: z.enum(['in_honor', 'in_memory']).optional(),
+    name: z.string().optional(),
+    notifyRecipient: z.boolean().default(false),
+    recipientEmail: z.string().email().optional(),
+    message: z.string().optional(),
+  }),
+  acceptedTerms: z.boolean().refine((val) => val === true),
+});
+
+## Additional Features to Build:
+- Recurring donation management
+- Campaign-specific donations
+- Peer-to-peer fundraising
+- Corporate matching gifts
+- PDF receipt generation
+- Tax documents
+- Donor dashboard
+- Impact tracking per donation
+
+---
+
+# TECHNICAL STACK SUMMARY
+
+## Frontend
+- Next.js 14 with App Router
+- TypeScript strict mode
+- React Hook Form + Zod validation
+- Framer Motion for animations
+- Tailwind CSS
+- shadcn/ui + Radix UI primitives
+- date-fns for date formatting
+- Recharts for data visualization
+
+## Backend/Services
+- Firebase/Firestore for data
+- Stripe SDK + Elements for payments
+- Mux for video hosting
+- QRCode library for QR generation
+
+## Key Patterns
+- Server Components where possible
+- Client Components for interactivity
+- Optimistic updates
+- Error boundaries
+- Loading skeletons
+- Mobile-first responsive design
+- Accessibility (ARIA labels, keyboard navigation)
+
+---
+
+[END OF PART 3 - Continue to Part 4 for Admin Panel, CMS, Analytics & Notifications]

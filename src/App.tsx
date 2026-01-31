@@ -61,6 +61,8 @@ import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import Checkout from "./pages/Checkout";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutCancel from "./pages/CheckoutCancel";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import Orders from "./pages/Orders";
 import OrderDetail from "./pages/OrderDetail";
@@ -71,6 +73,8 @@ import DashboardSettings from "./pages/dashboard/Settings";
 import Wishlist from "./pages/Wishlist";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
+import Events from "./pages/Events";
+import EventDetail from "./pages/EventDetail";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import Partners from "./pages/Partners";
@@ -270,6 +274,14 @@ const App = () => {
                           <Route path="/faq" element={<FAQ />} />
                           <Route path="/checkout" element={<Checkout />} />
                           <Route
+                            path="/checkout/success"
+                            element={<CheckoutSuccess />}
+                          />
+                          <Route
+                            path="/checkout/cancel"
+                            element={<CheckoutCancel />}
+                          />
+                          <Route
                             path="/order-confirmation/:orderId"
                             element={<OrderConfirmation />}
                           />
@@ -294,6 +306,13 @@ const App = () => {
                           <Route path="/wishlist" element={<Wishlist />} />
                           <Route path="/profile" element={<Profile />} />
                           <Route path="/settings" element={<Settings />} />
+
+                          {/* Events Routes */}
+                          <Route path="/events" element={<Events />} />
+                          <Route
+                            path="/events/:slug"
+                            element={<EventDetail />}
+                          />
 
                           {/* Admin Routes - Single Unified Panel */}
                           <Route

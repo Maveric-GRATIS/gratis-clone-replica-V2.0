@@ -1,0 +1,520 @@
+# GRATIS.NGO - ENTERPRISE PLATFORM DEVELOPMENT PROMPTS
+## Part 2: Homepage, Events, Video & Payment Systems
+
+---
+
+# 11. HOMEPAGE - ENTERPRISE GRADE
+
+Build a stunning, conversion-optimized homepage for GRATIS.NGO with real-time data, video integration, and smooth animations.
+
+## HOMEPAGE COMPONENT (src/app/[locale]/(public)/page.tsx)
+
+'use client';
+
+import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import Image from 'next/image';
+import { 
+  Play, 
+  ArrowRight, 
+  Droplets, 
+  Palette, 
+  GraduationCap,
+  Users,
+  Heart,
+  Globe,
+  ChevronDown,
+  Star,
+  Check,
+  Eye,
+} from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { useImpactStats } from '@/hooks/useImpactStats';
+
+// Lazy load heavy components
+const MuxPlayer = dynamic(() => import('@mux/mux-player-react'), { ssr: false });
+const AnimatedCounter = dynamic(() => import('@/components/ui/AnimatedCounter'), { ssr: false });
+
+export default function HomePage() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
+  
+  const { stats, loading: statsLoading } = useImpactStats();
+  const isStatsInView = useInView(statsRef, { once: true, margin: '-100px' });
+  
+  return (
+    <main className="relative">
+      {/* ===== HERO SECTION ===== */}
+      <section
+        ref={heroRef}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-jet-black"
+      >
+        {/* Video Background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-40"
+            poster="/images/hero-poster.jpg"
+          >
+            <source src="/videos/hero-background.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-jet-black/50 via-transparent to-jet-black" />
+        </div>
+        
+        {/* Hero Content */}
+        <motion.div
+          style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
+          className="relative z-10 container mx-auto px-4 text-center"
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Badge variant="outline" className="border-hot-lime text-hot-lime mb-6">
+              CHARITY NEVER LOOKED THIS BOLD
+            </Badge>
+            
+            <h1 className="text-display-xl md:text-[5rem] lg:text-[6rem] font-heading font-bold text-white leading-[0.9] tracking-tight">
+              GET{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-hot-lime via-electric-blue to-hot-magenta animate-gradient-x">
+                FREE
+              </span>
+              <br />
+              WATER.
+              <br />
+              <span className="text-medium-gray">GIVE BACK.</span>
+            </h1>
+            
+            <p className="mt-8 text-xl md:text-2xl text-medium-gray max-w-2xl mx-auto">
+              Premium water bottles, funded by tasteful ads. 
+              <span className="text-white"> 100% of net profits</span> go to charity. 
+              You choose where.
+            </p>
+            
+            {/* CTA Buttons */}
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button size="xl" variant="primary" asChild>
+                <Link href="/get-started">
+                  GET FREE WATER
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
+              </Button>
+              
+              <Button size="xl" variant="secondary" className="border-white/30 text-white hover:bg-white/10" asChild>
+                <Link href="/tribe">
+                  JOIN THE TRIBE
+                </Link>
+              </Button>
+            </div>
+            
+            {/* Trust Indicators */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mt-12 flex flex-wrap items-center justify-center gap-6 text-medium-gray"
+            >
+              <div className="flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Image
+                      key={i}
+                      src={'/images/avatars/member-' + i + '.jpg'}
+                      alt=""
+                      width={32}
+                      height={32}
+                      className="w-8 h-8 rounded-full border-2 border-jet-black"
+                    />
+                  ))}
+                </div>
+                <span className="text-sm">50,000+ members</span>
+              </div>
+              
+              <div className="flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star key={i} className="w-4 h-4 fill-hot-lime text-hot-lime" />
+                ))}
+                <span className="text-sm ml-1">4.9/5 rating</span>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4" />
+                <span className="text-sm">23 countries</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </section>
+      
+      {/* ===== LIVE IMPACT STATS BAR ===== */}
+      <section
+        ref={statsRef}
+        className="sticky top-16 z-40 bg-jet-black border-y border-white/10"
+      >
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-4">
+            {[
+              { 
+                label: 'Total Donated', 
+                value: stats?.totalDonated || 2100000, 
+                prefix: '€',
+                color: 'text-hot-lime',
+              },
+              { 
+                label: 'Bottles Given', 
+                value: stats?.bottlesDistributed || 150000,
+                color: 'text-electric-blue',
+              },
+              { 
+                label: 'NGO Partners', 
+                value: stats?.ngoPartnersCount || 127,
+                color: 'text-hot-magenta',
+              },
+              { 
+                label: 'TRIBE Members', 
+                value: stats?.tribeMembersTotal || 50000,
+                color: 'text-solar-orange',
+              },
+            ].map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isStatsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className={'text-2xl md:text-3xl font-heading font-bold ' + stat.color}>
+                  {isStatsInView && (
+                    <AnimatedCounter
+                      value={stat.value}
+                      prefix={stat.prefix}
+                      duration={2}
+                    />
+                  )}
+                </div>
+                <div className="text-xs text-medium-gray uppercase tracking-wider mt-1">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* ===== VIDEO EXPLAINER SECTION ===== */}
+      <section ref={videoRef} className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <Badge className="mb-4">HOW IT WORKS</Badge>
+            <h2 className="text-display-md font-heading font-bold text-jet-black">
+              Charity Made Simple
+            </h2>
+            <p className="mt-4 text-lg text-medium-gray">
+              Watch how GRATIS is revolutionizing charitable giving in just 2 minutes.
+            </p>
+          </div>
+          
+          <VideoPlayer />
+        </div>
+      </section>
+      
+      {/* ===== HOW IT WORKS STEPS ===== */}
+      <section className="py-24 bg-soft-gray">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-display-md font-heading font-bold text-jet-black">
+              4 Simple Steps
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                step: 1,
+                title: 'Join Free',
+                description: 'Create your account in seconds. No credit card required.',
+                icon: Users,
+                color: 'bg-hot-lime',
+              },
+              {
+                step: 2,
+                title: 'Claim Bottle',
+                description: 'Choose your premium bottle with sponsor branding.',
+                icon: Droplets,
+                color: 'bg-electric-blue',
+              },
+              {
+                step: 3,
+                title: 'Vote on Impact',
+                description: 'Decide where funds go: water, arts, or education.',
+                icon: Heart,
+                color: 'bg-hot-magenta',
+              },
+              {
+                step: 4,
+                title: 'Track Impact',
+                description: 'See exactly where your contribution makes a difference.',
+                icon: Globe,
+                color: 'bg-solar-orange',
+              },
+            ].map((item, index) => (
+              <HowItWorksCard key={item.step} {...item} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+// VideoPlayer Component
+function VideoPlayer() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: '-100px' });
+  
+  return (
+    <motion.div
+      ref={containerRef}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className="relative aspect-video max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl"
+    >
+      {!isPlaying ? (
+        <div className="relative w-full h-full">
+          <Image
+            src="/images/video-poster.jpg"
+            alt="GRATIS explainer video"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-jet-black/30 flex items-center justify-center">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsPlaying(true)}
+              className="w-24 h-24 rounded-full bg-hot-lime flex items-center justify-center shadow-glow-lime"
+            >
+              <Play className="w-10 h-10 text-jet-black ml-1" fill="currentColor" />
+            </motion.button>
+          </div>
+        </div>
+      ) : (
+        <MuxPlayer
+          playbackId={process.env.NEXT_PUBLIC_MUX_EXPLAINER_PLAYBACK_ID}
+          autoPlay
+          className="w-full h-full"
+          accentColor="#C1FF00"
+        />
+      )}
+    </motion.div>
+  );
+}
+
+// HowItWorksCard Component
+function HowItWorksCard({ step, title, description, icon: Icon, color, index }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay: index * 0.15 }}
+      className="relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow"
+    >
+      <div className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-jet-black text-white flex items-center justify-center font-bold">
+        {step}
+      </div>
+      <div className={'w-16 h-16 ' + color + ' rounded-2xl flex items-center justify-center mb-6'}>
+        <Icon className="w-8 h-8 text-jet-black" />
+      </div>
+      <h3 className="text-xl font-heading font-bold text-jet-black mb-2">{title}</h3>
+      <p className="text-medium-gray">{description}</p>
+    </motion.div>
+  );
+}
+
+---
+
+# 12. COMPLETE EVENTS SYSTEM
+
+Build a full-featured events system with listings, detail pages, registration, virtual events, and check-in.
+
+## Event Interface
+
+interface Event {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  type: 'conference' | 'workshop' | 'meetup' | 'webinar' | 'fundraiser' | 'volunteer' | 'social';
+  format: 'in_person' | 'virtual' | 'hybrid';
+  status: 'draft' | 'published' | 'cancelled' | 'completed';
+  coverImage: string;
+  startDate: Date;
+  endDate: Date;
+  timezone: string;
+  location?: {
+    name: string;
+    address: string;
+    city: string;
+    country: string;
+  };
+  virtual?: {
+    platform: string;
+    url?: string;
+  };
+  registration: {
+    maxAttendees: number;
+    currentAttendees: number;
+    waitlistEnabled: boolean;
+  };
+  accessLevel: 'public' | 'members_only' | 'invite_only';
+  ticketTiers: {
+    id: string;
+    name: string;
+    price: number;
+    available: number;
+  }[];
+}
+
+## Key Features to Implement:
+- Event listing page with grid/list/calendar views
+- Advanced filtering (type, format, time)
+- Search functionality
+- Event detail page with full info
+- Registration flow with Stripe
+- Calendar integration (Google, Apple, Outlook)
+- QR code ticket generation
+- Check-in system for organizers
+- Virtual event join links
+- Waitlist management
+- Post-event recordings
+
+---
+
+# 13. VIDEO & MEDIA PLATFORM
+
+Build a complete video platform with Mux integration for hosting, streaming, and analytics.
+
+## MUX CONFIGURATION (src/lib/mux/client.ts)
+
+import Mux from '@mux/mux-node';
+
+export const mux = new Mux(
+  process.env.MUX_TOKEN_ID,
+  process.env.MUX_TOKEN_SECRET
+);
+
+export const { Video, Data } = mux;
+
+export async function createVideoAsset(input: string, options?: {
+  passthrough?: string;
+  playbackPolicy?: 'public' | 'signed';
+}) {
+  const asset = await Video.Assets.create({
+    input,
+    playback_policy: [options?.playbackPolicy || 'public'],
+    passthrough: options?.passthrough,
+    mp4_support: 'standard',
+    master_access: 'temporary',
+  });
+  return asset;
+}
+
+## Video Interface
+
+interface Video {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  category: 'impact' | 'tutorials' | 'events' | 'stories' | 'behind-scenes';
+  thumbnail: string;
+  duration: number;
+  viewCount: number;
+  muxPlaybackId: string;
+  accessLevel: 'public' | 'members_only' | 'premium';
+  publishedAt: Date;
+  featured: boolean;
+}
+
+## Key Features:
+- Video library page with categories
+- Featured video hero
+- Grid/list views
+- Access control by membership tier
+- Mux player integration
+- View count tracking
+- Video upload (admin)
+- Live streaming support
+- Chapters/timestamps
+- Transcripts
+
+---
+
+# 14. COMPLETE PAYMENT SYSTEM
+
+Build comprehensive Stripe payment infrastructure for all transaction types.
+
+## STRIPE SERVER (src/lib/stripe/server.ts)
+
+import Stripe from 'stripe';
+import { db } from '@/lib/firebase/admin';
+import { FieldValue } from 'firebase-admin/firestore';
+
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+  typescript: true,
+});
+
+export const PRODUCTS = {
+  membership: {
+    insider: { monthly: { priceId: process.env.STRIPE_INSIDER_MONTHLY_PRICE_ID!, amount: 999 } },
+    core: { yearly: { priceId: process.env.STRIPE_CORE_YEARLY_PRICE_ID!, amount: 9700 } },
+    founder: { lifetime: { priceId: process.env.STRIPE_FOUNDER_LIFETIME_PRICE_ID!, amount: 24700 } },
+  },
+};
+
+export const PAYMENT_METHODS = ['card', 'ideal', 'sepa_debit', 'bancontact'];
+
+## Key Functions:
+
+1. getOrCreateStripeCustomer(userId, email, name) - Creates/retrieves Stripe customer
+2. createMembershipCheckout(options) - Creates checkout for TRIBE membership
+3. createDonationCheckout(options) - Creates checkout for donations with allocation
+4. createEventTicketCheckout(options) - Creates checkout for event tickets
+5. cancelSubscription(subscriptionId) - Cancels subscription at period end
+6. createCustomerPortalSession(customerId, returnUrl) - Opens customer portal
+
+## Webhook Handler (src/app/api/webhooks/stripe/route.ts)
+
+Handles these events:
+- checkout.session.completed → handleMembershipCheckout, handleDonationCheckout, handleEventTicketCheckout
+- customer.subscription.updated → updates user membership status
+- customer.subscription.deleted → downgrades user to explorer
+- invoice.payment_failed → marks subscription as past_due
+
+---
+
+[END OF PART 2 - Continue to Part 3 for Social, Membership & Donation systems]

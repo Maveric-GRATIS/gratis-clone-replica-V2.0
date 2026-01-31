@@ -5,9 +5,10 @@ type SEOProps = {
   title: string;
   description?: string;
   canonical?: string;
+  image?: string;
 };
 
-export const SEO = ({ title, description, canonical }: SEOProps) => {
+export const SEO = ({ title, description, canonical, image }: SEOProps) => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
@@ -38,6 +39,18 @@ export const SEO = ({ title, description, canonical }: SEOProps) => {
     ) as HTMLMetaElement | null;
     if (ogTitle) ogTitle.setAttribute("content", title);
 
+    if (image) {
+      const ogImage = document.querySelector(
+        'meta[property="og:image"]',
+      ) as HTMLMetaElement | null;
+      if (ogImage) ogImage.setAttribute("content", image);
+
+      const twitterImage = document.querySelector(
+        'meta[name="twitter:image"]',
+      ) as HTMLMetaElement | null;
+      if (twitterImage) twitterImage.setAttribute("content", image);
+    }
+
     if (canonical) {
       let link = document.querySelector<HTMLLinkElement>(
         'link[rel="canonical"]',
@@ -49,7 +62,7 @@ export const SEO = ({ title, description, canonical }: SEOProps) => {
       }
       link.setAttribute("href", canonical);
     }
-  }, [title, description, canonical, i18n.language]);
+  }, [title, description, canonical, image, i18n.language]);
 
   return null;
 };

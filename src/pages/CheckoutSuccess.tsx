@@ -11,6 +11,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Calendar, Download, Mail } from "lucide-react";
 import { SEO } from "@/components/SEO";
+import { EventTicket } from "@/components/events/EventTicket";
+import { Timestamp } from "firebase/firestore";
 
 export default function CheckoutSuccess() {
   const [searchParams] = useSearchParams();
@@ -32,6 +34,42 @@ export default function CheckoutSuccess() {
           amount: 2500,
           currency: "eur",
           customerEmail: "user@example.com",
+          customerName: "John Doe",
+          ticket: {
+            id: "ticket_123",
+            eventId: "event_1",
+            userId: "user_123",
+            ticketTierId: "tier_1",
+            ticketTierName: "Free Entry",
+            orderNumber:
+              "ORD-" +
+              Math.random().toString(36).substring(2, 10).toUpperCase(),
+            qrCodeData: "",
+            status: "valid" as const,
+            checkedIn: false,
+            checkedInAt: null,
+            checkedInBy: null,
+            purchasedAt: Timestamp.now(),
+            createdAt: Timestamp.now(),
+            updatedAt: Timestamp.now(),
+          },
+          event: {
+            id: "event_1",
+            title: "Amsterdam Water Festival 2026",
+            slug: "amsterdam-water-festival-2026",
+            description: "Join us for a celebration of clean water",
+            startDate: Timestamp.fromDate(new Date("2026-06-15T10:00:00")),
+            endDate: Timestamp.fromDate(new Date("2026-06-15T18:00:00")),
+            timezone: "Europe/Amsterdam",
+            location: {
+              name: "Vondelpark",
+              address: "Vondelpark 1",
+              city: "Amsterdam",
+              state: "",
+              postalCode: "1071 AA",
+              country: "Netherlands",
+            },
+          },
         });
         setLoading(false);
       }, 1000);
@@ -125,18 +163,20 @@ export default function CheckoutSuccess() {
               </div>
             </div>
 
-            {checkoutData.type === "event_ticket" && (
-              <div className="space-y-3">
-                <Button className="w-full" size="lg">
-                  <Download className="mr-2 h-4 w-4" />
-                  Download Ticket
-                </Button>
-                <Button variant="outline" className="w-full">
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Add to Calendar
-                </Button>
-              </div>
-            )}
+            {checkoutData.type === "event_ticket" &&
+              checkoutData.ticket &&
+              checkoutData.event && (
+                <div className="mt-6">
+                  <EventTicket
+                    ticket={checkoutData.ticket}
+                    event={checkoutData.event}
+                    userEmail={checkoutData.customerEmail}
+                    userName={
+                      checkoutData.customerName || checkoutData.customerEmail
+                    }
+                  />
+                </div>
+              )}
 
             {checkoutData.type === "membership" && (
               <div className="text-center">

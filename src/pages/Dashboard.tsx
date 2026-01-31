@@ -42,6 +42,7 @@ import { QuickStatsCards } from "@/components/dashboard/QuickStatsCards";
 import { ClaimBottleCTA } from "@/components/dashboard/ClaimBottleCTA";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { ImpactSummary } from "@/components/dashboard/ImpactSummary";
+import { SubscriptionManagement } from "@/components/subscription/SubscriptionManagement";
 import { useEffect, useState } from "react";
 
 interface Order {
@@ -200,6 +201,11 @@ export default function Dashboard() {
             {/* Impact Summary */}
             <ImpactSummary totalImpact={userData.totalImpact} />
           </div>
+
+          {/* Subscription Management - Show for paid tiers */}
+          {userData.tribeTier !== \"explorer\" && user && (
+            <SubscriptionManagement userId={user.uid} />
+          )}
 
           {/* Active Vote Section (if voting period is active) */}
           {userData.tribeTier !== "explorer" && (

@@ -79,6 +79,7 @@ import Videos from "./pages/Videos";
 import VideoDetail from "./pages/VideoDetail";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminEventCheckIn from "./pages/admin/EventCheckIn";
 import Partners from "./pages/Partners";
 import CollectionDetail from "./pages/CollectionDetail";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
@@ -325,6 +326,14 @@ const App = () => {
                           />
 
                           {/* Admin Routes - Single Unified Panel */}
+                          <Route
+                            path="/admin/event-checkin"
+                            element={
+                              <ProtectedRoute requireAdmin>
+                                <AdminEventCheckIn />
+                              </ProtectedRoute>
+                            }
+                          />
                           <Route
                             path="/admin/*"
                             element={

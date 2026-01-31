@@ -1,18 +1,19 @@
-import { ReactNode } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useRole } from '@/hooks/useRole';
-import { Button } from '@/components/ui/button';
-import { 
-  LayoutDashboard, 
-  Package, 
-  ShoppingCart, 
-  Users, 
-  Video, 
+import { ReactNode } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useRole } from "@/hooks/useRole";
+import { Button } from "@/components/ui/button";
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+  Users,
+  Video,
   Megaphone,
   Calendar,
   ArrowLeft,
-  FileText
-} from 'lucide-react';
+  FileText,
+  QrCode,
+} from "lucide-react";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -23,24 +24,25 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
   const { isAdmin, isMarketing } = useRole();
 
   const adminLinks = [
-    { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-    { path: '/admin/products', label: 'Products', icon: Package },
-    { path: '/admin/orders', label: 'Orders', icon: ShoppingCart },
-    { path: '/admin/users', label: 'Users', icon: Users },
+    { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
+    { path: "/admin/products", label: "Products", icon: Package },
+    { path: "/admin/orders", label: "Orders", icon: ShoppingCart },
+    { path: "/admin/users", label: "Users", icon: Users },
   ];
 
   const marketingLinks = [
-    { path: '/admin/videos', label: 'Videos', icon: Video },
-    { path: '/admin/campaigns', label: 'Campaigns', icon: Megaphone },
-    { path: '/admin/events', label: 'Events', icon: Calendar },
-    { path: '/admin/blog', label: 'Blog Posts', icon: FileText },
+    { path: "/admin/videos", label: "Videos", icon: Video },
+    { path: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
+    { path: "/admin/events", label: "Events", icon: Calendar },
+    { path: "/admin/event-checkin", label: "Event Check-In", icon: QrCode },
+    { path: "/admin/blog", label: "Blog Posts", icon: FileText },
   ];
 
-  const links = isAdmin 
-    ? [...adminLinks, ...marketingLinks] 
-    : isMarketing 
-    ? [adminLinks[0], ...marketingLinks]
-    : [];
+  const links = isAdmin
+    ? [...adminLinks, ...marketingLinks]
+    : isMarketing
+      ? [adminLinks[0], ...marketingLinks]
+      : [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -49,7 +51,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-foreground">GRATIS Admin</h2>
           <p className="text-sm text-muted-foreground">
-            {isAdmin ? 'Administrator' : 'Marketing Team'}
+            {isAdmin ? "Administrator" : "Marketing Team"}
           </p>
         </div>
 
@@ -59,7 +61,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
             return (
               <Link key={path} to={path}>
                 <Button
-                  variant={isActive ? 'default' : 'ghost'}
+                  variant={isActive ? "default" : "ghost"}
                   className="w-full justify-start gap-3"
                 >
                   <Icon className="h-5 w-5" />
@@ -81,9 +83,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       </aside>
 
       {/* Main Content */}
-      <main className="ml-64 p-8">
-        {children}
-      </main>
+      <main className="ml-64 p-8">{children}</main>
     </div>
   );
 };

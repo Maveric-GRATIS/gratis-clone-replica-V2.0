@@ -233,3 +233,20 @@ export interface RegisterEventInput {
   }[];
   customFields?: Record<string, any>;
 }
+
+export interface Ticket {
+  id: string;
+  eventId: string;
+  userId: string | null;
+  ticketTierId: string;
+  ticketTierName: string;
+  orderNumber: string;
+  qrCodeData: string;
+  status: 'valid' | 'used' | 'cancelled';
+  checkedIn: boolean;
+  checkedInAt: Timestamp | null;
+  checkedInBy: string | null;
+  purchasedAt: Timestamp;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+}

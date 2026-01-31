@@ -19,6 +19,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { EventRegistration } from "@/components/events/EventRegistration";
+import { AddToCalendar } from "@/components/events/AddToCalendar";
+import { EventWaitlist } from "@/components/events/EventWaitlist";
 import {
   Calendar,
   MapPin,
@@ -33,6 +35,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { format } from "date-fns";
+import type { Event } from "@/types/event";
 
 // Mock event data - in productie van Firestore
 const getEventBySlug = (slug: string) => {
@@ -676,23 +679,32 @@ export default function EventDetail() {
                     </div>
                   ))}
 
-                  <Button
-                    className="w-full"
-                    size="lg"
-                    disabled={isSoldOut || !selectedTicket}
-                    onClick={() => setShowRegistration(true)}
-                  >
-                    {isSoldOut
-                      ? "Sold Out"
-                      : selectedTicket
-                        ? "Continue to Registration"
-                        : "Select a Ticket"}
-                  </Button>
-
-                  {event.registration.waitlistEnabled && isSoldOut && (
-                    <Button variant="outline" className="w-full">
-                      Join Waitlist ({event.registration.waitlistCount})
-                    </Button>
+                  {!isSoldOut ? (
+                    <>
+                      <Button
+                        className="w-full"
+                        size="lg"
+                        disabled={!selectedTicket}
+                        onClick={() => setShowRegistration(true)}
+                      >
+                        {selectedTicket
+                          ? "Continue to Registration"
+                          : "Select a Ticket"}
+                      </Button>
+                      <AddToCalendar event={event as unknown as Event} />
+                    </>
+                  ) : (
+                    event.registration.waitlistEnabled && (
+                      <EventWaitlist
+                        event={event as unknown as Event}
+                        ticketTypes={event.ticketTiers.map((t) => ({
+                          id: t.id,
+                          name: t.name,
+                          price: t.price,
+                          available: t.available || 0,
+                        }))}
+                      />
+                    )
                   )}
                 </CardContent>
               </Card>

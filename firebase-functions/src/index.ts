@@ -1,8 +1,14 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { CallableContext } from "firebase-functions/v1/https";
+import Stripe from "stripe";
 
 admin.initializeApp();
+
+// Initialize Stripe
+const stripe = new Stripe(functions.config().stripe.secret_key, {
+  apiVersion: "2023-10-16",
+});
 
 // Rate limiting map (in-memory, for production use Redis/Firestore)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();

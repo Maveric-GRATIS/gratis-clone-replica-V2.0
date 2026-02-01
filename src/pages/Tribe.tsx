@@ -9,6 +9,8 @@ import { VotingExplainer } from "@/components/tribe/VotingExplainer";
 import { TribeTestimonials } from "@/components/tribe/TribeTestimonials";
 import { FounderSpotCounter } from "@/components/tribe/FounderSpotCounter";
 import { TribeFAQ } from "@/components/tribe/TribeFAQ";
+import { BenefitShowcase } from "@/components/tribe/BenefitShowcase";
+import { TribeLiveStats } from "@/components/tribe/TribeLiveStats";
 import { Crown, Zap, Heart } from "lucide-react";
 
 export default function Tribe() {
@@ -98,6 +100,9 @@ export default function Tribe() {
         </div>
       </section>
 
+      {/* Live Stats */}
+      <TribeLiveStats />
+
       {/* Tier Comparison Table */}
       <div id="comparison">
         <TierComparison />
@@ -105,6 +110,9 @@ export default function Tribe() {
 
       {/* Detailed Tier Cards */}
       <DetailedTierCards />
+
+      {/* Benefit Showcase */}
+      <BenefitShowcase />
 
       {/* Founder Spot Counter */}
       <FounderSpotCounter />

@@ -356,16 +356,37 @@ export default function Index() {
                   </div>
                 </div>
               </div>
+              <div className="text-center mt-8">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-hot-lime text-hot-lime hover:bg-hot-lime/10"
+                >
+                  <Link to="/gratis">
+                    Learn More About Our Impact{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
             </motion.div>
           </div>
         </section>
 
         {/* ===== MUX VIDEO EXPLAINER (INTEGRATED) ===== */}
-        <MuxVideoPlayer
-          title="See How GRATIS Works"
-          description="Watch how we're revolutionizing charitable giving with transparency, innovation, and real impact. Every view supports our mission."
-          badge="2 MINUTE EXPLAINER"
-        />
+        <div>
+          <MuxVideoPlayer
+            title="See How GRATIS Works"
+            description="Watch how we're revolutionizing charitable giving with transparency, innovation, and real impact. Every view supports our mission."
+            badge="2 MINUTE EXPLAINER"
+          />
+          <div className="container text-center -mt-8 pb-12">
+            <Button asChild variant="outline" className="border-2">
+              <Link to="/impact-tv">
+                Watch More Videos <Play className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
 
         {/* ===== THREE PILLARS SECTION WITH ANIMATIONS ===== */}
         <section
@@ -538,6 +559,17 @@ export default function Index() {
                 title={t("home.whyChoose")}
                 subtitle={t("home.whyChooseSubtitle")}
               />
+              <div className="text-center mt-12">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-electric-blue text-white hover:bg-electric-blue/90"
+                >
+                  <Link to="/hydration">
+                    Shop Water Bottles <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
             </FadeInWhenVisible>
           </div>
         </section>
@@ -646,6 +678,19 @@ export default function Index() {
                     </div>
                     <TrustIndicators />
                   </div>
+
+                  {/* CTA Button */}
+                  <div className="mt-8 text-center">
+                    <Button
+                      asChild
+                      size="lg"
+                      className="bg-hot-lime text-jet-black hover:bg-hot-lime/90"
+                    >
+                      <Link to="/tribe">
+                        Join Now <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
                 </motion.div>
               </div>
             </FadeInWhenVisible>
@@ -660,6 +705,13 @@ export default function Index() {
         {/* Merch Collection - Compact Carousel */}
         <FadeInWhenVisible direction="up">
           <MerchCarousel />
+          <div className="container text-center mt-8 mb-12">
+            <Button asChild size="lg" variant="outline" className="border-2">
+              <Link to="/rig">
+                Browse All Merch <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </FadeInWhenVisible>
 
         {/* ===== FINAL CTA SECTION WITH PARALLAX ===== */}

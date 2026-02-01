@@ -33,6 +33,9 @@ import Compliance from "@/pages/tribe/Compliance";
 import Terms from "@/pages/tribe/Terms";
 import Privacy from "@/pages/tribe/Privacy";
 import Cookies from "@/pages/tribe/Cookies";
+import TribeSignup from "@/pages/tribe/Signup";
+import TribeDashboard from "@/pages/tribe/Dashboard";
+import TribeVoting from "@/pages/tribe/Voting";
 import * as LegalPages from "@/pages/legal";
 import ImpactTV from "@/pages/ImpactTV";
 import Nexus from "@/pages/impactTV/Nexus";
@@ -175,6 +178,25 @@ const AppContent = () => {
             <Route path="/tribe/terms" element={<Terms />} />
             <Route path="/tribe/privacy" element={<Privacy />} />
             <Route path="/tribe/cookies" element={<Cookies />} />
+
+            {/* TRIBE Membership Routes */}
+            <Route path="/tribe/signup" element={<TribeSignup />} />
+            <Route
+              path="/tribe/dashboard"
+              element={
+                <ProtectedRoute>
+                  <TribeDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tribe/voting"
+              element={
+                <ProtectedRoute>
+                  <TribeVoting />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Legal Pages */}
             <Route path="/legal/privacy" element={<LegalPages.Privacy />} />

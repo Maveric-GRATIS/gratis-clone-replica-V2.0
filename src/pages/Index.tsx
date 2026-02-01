@@ -9,6 +9,8 @@ import { ProductCarousel } from "@/components/ProductCarousel";
 import { VideoHero } from "@/components/VideoHero";
 import { TrustIndicators } from "@/components/TrustIndicators";
 import { HowItWorksCard } from "@/components/HowItWorksCard";
+import { MuxVideoPlayer } from "@/components/MuxVideoPlayer";
+import { LiveStatsBar } from "@/components/LiveStatsBar";
 import { FadeInWhenVisible } from "@/components/ScrollAnimations";
 import { motion } from "framer-motion";
 import { Droplet, Heart, Users, Sparkles } from "lucide-react";
@@ -27,17 +29,21 @@ export default function Index() {
         canonical={typeof window !== "undefined" ? window.location.href : "/"}
       />
 
-      {/* Video Hero Section */}
+      {/* Enterprise Video Hero Section with Parallax */}
       <VideoHero
         videoUrl="https://assets.mixkit.co/videos/preview/mixkit-pouring-water-into-a-glass-4486-large.mp4"
         posterUrl="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=1920&q=80"
-        title={t("home.heroTitle1") + " " + t("home.heroTitle2")}
+        title="GRATIS WATER"
         subtitle={t("home.heroSubtitle")}
         ctaText={t("home.heroCTA")}
         ctaLink="/hydration"
         secondaryCtaText={t("hero.learnMore")}
         secondaryCtaLink="/water"
+        badge="CHARITY NEVER LOOKED THIS BOLD"
       />
+
+      {/* Live Impact Stats Bar - Sticky */}
+      <LiveStatsBar />
 
       {/* Trust Indicators */}
       <FadeInWhenVisible>
@@ -51,17 +57,24 @@ export default function Index() {
       </FadeInWhenVisible>
 
       <main className="space-y-0 overflow-x-hidden max-w-full">
-        {/* How It Works Section with Scroll Animations */}
+        {/* How It Works Section with Enterprise Animations */}
         <section className="py-20 bg-background">
           <div className="container">
             <FadeInWhenVisible>
               <div className="text-center mb-16 space-y-4">
-                <h2 className="text-4xl md:text-5xl font-bold">
-                  How GRATIS Works
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Making impact accessible through innovation
-                </p>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h2 className="text-4xl md:text-5xl font-bold">
+                    4 Simple Steps
+                  </h2>
+                  <p className="text-xl text-muted-foreground max-w-2xl mx-auto mt-4">
+                    Making impact accessible through innovation
+                  </p>
+                </motion.div>
               </div>
             </FadeInWhenVisible>
 
@@ -72,6 +85,7 @@ export default function Index() {
                 description="Receive premium spring water with no upfront costs. Every bottle funds clean water projects."
                 step={1}
                 index={0}
+                color="lime"
               />
               <HowItWorksCard
                 icon={Heart}
@@ -79,6 +93,7 @@ export default function Index() {
                 description="Your purchase directly supports local artists and educational programs in underserved communities."
                 step={2}
                 index={1}
+                color="magenta"
               />
               <HowItWorksCard
                 icon={Users}
@@ -86,6 +101,7 @@ export default function Index() {
                 description="Become part of a movement. Access exclusive content, events, and impact reports."
                 step={3}
                 index={2}
+                color="blue"
               />
               <HowItWorksCard
                 icon={Sparkles}
@@ -93,10 +109,18 @@ export default function Index() {
                 description="Track your personal impact dashboard. See exactly how your choices create change."
                 step={4}
                 index={3}
+                color="orange"
               />
             </div>
           </div>
         </section>
+
+        {/* Mux Video Explainer Section */}
+        <MuxVideoPlayer
+          title="See How GRATIS Works"
+          description="Watch how GRATIS is revolutionizing charitable giving in just 2 minutes."
+          badge="HOW IT WORKS"
+        />
 
         {/* Product Carousel - Primary Focus */}
         <ProductCarousel />
@@ -114,31 +138,7 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Impact Video Section */}
-        <FadeInWhenVisible>
-          <section className="py-20 bg-gradient-to-b from-background to-muted/30">
-            <div className="container">
-              <div className="max-w-4xl mx-auto text-center space-y-8">
-                <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                    See The Impact In Action
-                  </h2>
-                  <p className="text-xl text-muted-foreground mb-8">
-                    Watch how GRATIS is transforming communities worldwide
-                  </p>
-                  <Button asChild size="lg" variant="default">
-                    <Link to="/videos">Watch Impact Stories →</Link>
-                  </Button>
-                </motion.div>
-              </div>
-            </div>
-          </section>
-        </FadeInWhenVisible>
+        {/* Impact Stats Section - Removed redundant video section */}
 
         {/* Advertising Partner CTA */}
         <FadeInWhenVisible direction="up">

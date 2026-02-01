@@ -79,15 +79,387 @@ import Videos from "./pages/Videos";
 import VideoDetail from "./pages/VideoDetail";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
+// New Admin Panel Pages (Part 4)
+import NewAdminDashboard from "./pages/admin/Dashboard";
+import AdminProducts from "./pages/admin/Products";
+import AdminOrders from "./pages/admin/Orders";
+import AdminUsers from "./pages/admin/Users";
+import AdminVideos from "./pages/admin/Videos";
+import AdminCampaigns from "./pages/admin/Campaigns";
+import AdminEvents from "./pages/admin/Events";
+import AdminBlogPosts from "./pages/admin/BlogPosts";
 import AdminEventCheckIn from "./pages/admin/EventCheckIn";
+import AdminDonations from "./pages/admin/Donations";
+import AdminDonationCampaigns from "./pages/admin/DonationCampaigns";
+import AdminTribeMembers from "./pages/admin/TribeMembers";
+import AdminPartners from "./pages/admin/Partners";
+import AdminPartnerApplications from "./pages/admin/PartnerApplications";
+import AdminVoting from "./pages/admin/Voting";
+import AdminVotingResults from "./pages/admin/VotingResults";
+import AdminEmails from "./pages/admin/Emails";
+import AdminNotifications from "./pages/admin/Notifications";
+import AdminAnalytics from "./pages/admin/Analytics";
+import AdminAnalyticsTraffic from "./pages/admin/AnalyticsTraffic";
+import AdminAnalyticsImpact from "./pages/admin/AnalyticsImpact";
+import AdminSettings from "./pages/admin/Settings";
+import AdminSettingsIntegrations from "./pages/admin/SettingsIntegrations";
 import Partners from "./pages/Partners";
 import CollectionDetail from "./pages/CollectionDetail";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
 import { PageTransition } from "@/components/PageTransition";
+import { useLocation } from "react-router-dom";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith("/admin");
+
+  return (
+    <div className="max-w-full">
+      <ScrollProgressBar />
+      <OfflineIndicator />
+      <CookieConsent />
+      {!isAdminPage && <Header />}
+      {!isAdminPage && <Cart />}
+      {!isAdminPage && <FloatingCartButton />}
+      <div className="overflow-x-hidden">
+        <PageTransition>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/rig" element={<RigStore />} />
+            <Route path="/rig/prime-picks" element={<PrimePicks />} />
+            <Route path="/rig/apex-arrivals" element={<ApexArrivals />} />
+            <Route path="/rig/imbued-icons" element={<ImbuedIcons />} />
+            <Route path="/rig/dazzle-drip" element={<DazzleDrip />} />
+            <Route path="/rig/charmed-cozies" element={<CharmedCozies />} />
+            <Route path="/rig/occult-originals" element={<OccultOriginals />} />
+            <Route path="/rig/nexus-noggin" element={<NexusNoggin />} />
+            <Route path="/rig/nebula-novelties" element={<NebulaNovelties />} />
+            <Route
+              path="/rig/collection/:slug"
+              element={<CollectionDetail />}
+            />
+            <Route path="/rig/:slug" element={<ProductDetail />} />
+            {/* Legacy route redirect */}
+            <Route path="/rig-store" element={<RigStore />} />
+            <Route
+              path="/rig-store/collection/:slug"
+              element={<CollectionDetail />}
+            />
+            <Route path="/rig-store/:slug" element={<ProductDetail />} />
+            <Route path="/hydration" element={<HydrationStore />} />
+            <Route path="/hydration/:slug" element={<ProductDetail />} />
+            <Route path="/gratis" element={<Gratis />} />
+            <Route path="/gratis/water" element={<Water />} />
+            <Route path="/gratis/theurgy" element={<Theurgy />} />
+            <Route path="/gratis/fu" element={<FU />} />
+            {/* Legacy route redirects */}
+            <Route path="/water" element={<Water />} />
+            <Route path="/theurgy" element={<Theurgy />} />
+            <Route path="/fu" element={<FU />} />
+            <Route path="/arcane" element={<Arcane />} />
+            <Route path="/partners" element={<Partners />} />
+            <Route path="/tribe" element={<Tribe />} />
+            <Route path="/tribe/heritage" element={<Heritage />} />
+            <Route path="/tribe/ethics" element={<Ethics />} />
+            <Route path="/tribe/team" element={<Team />} />
+            <Route path="/tribe/standards" element={<Standards />} />
+            <Route path="/tribe/responsibility" element={<Responsibility />} />
+            <Route path="/tribe/accountability" element={<Accountability />} />
+            <Route path="/tribe/transparency" element={<Transparency />} />
+            <Route path="/tribe/compliance" element={<Compliance />} />
+            <Route path="/tribe/terms" element={<Terms />} />
+            <Route path="/tribe/privacy" element={<Privacy />} />
+            <Route path="/tribe/cookies" element={<Cookies />} />
+
+            {/* Legal Pages */}
+            <Route path="/legal/privacy" element={<LegalPages.Privacy />} />
+            <Route path="/legal/terms" element={<LegalPages.Terms />} />
+            <Route path="/legal/cookies" element={<LegalPages.Cookies />} />
+            <Route
+              path="/legal/donor-privacy"
+              element={<LegalPages.DonorPrivacy />}
+            />
+            <Route
+              path="/legal/accessibility"
+              element={<LegalPages.Accessibility />}
+            />
+            <Route
+              path="/legal/disclaimer"
+              element={<LegalPages.Disclaimer />}
+            />
+
+            <Route path="/impact-tv" element={<ImpactTV />} />
+            <Route path="/impact-tv/nexus" element={<Nexus />} />
+            <Route path="/impact-tv/yarns" element={<Yarns />} />
+            <Route path="/impact-tv/unveil" element={<Unveil />} />
+            <Route path="/impact-tv/icon" element={<Icon />} />
+            <Route path="/impact-tv/tales" element={<Tales />} />
+
+            {/* Video Platform Routes */}
+            <Route path="/videos" element={<Videos />} />
+            <Route path="/videos/:slug" element={<VideoDetail />} />
+
+            <Route path="/spark" element={<Spark />} />
+            <Route path="/spark/donate" element={<Donate />} />
+            <Route path="/spark/verve" element={<Verve />} />
+            <Route path="/spark/infuse" element={<Infuse />} />
+            <Route path="/spark/blaze" element={<Blaze />} />
+            <Route path="/spark/enlist" element={<Enlist />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
+            <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+            <Route
+              path="/order-confirmation/:orderId"
+              element={<OrderConfirmation />}
+            />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/orders/:orderId" element={<OrderDetail />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/bottles" element={<DashboardBottles />} />
+            <Route path="/dashboard/vote" element={<DashboardVote />} />
+            <Route path="/dashboard/settings" element={<DashboardSettings />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+
+            {/* Events Routes */}
+            <Route path="/events" element={<Events />} />
+            <Route path="/events/:slug" element={<EventDetail />} />
+
+            {/* Admin Routes - New Admin Panel with Enhanced Layout */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <NewAdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/products"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminProducts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/orders"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminUsers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/videos"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminVideos />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/campaigns"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminCampaigns />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/events"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminEvents />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/blog"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminBlogPosts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/event-checkin"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminEventCheckIn />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Donations */}
+            <Route
+              path="/admin/donations"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminDonations />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/donations/campaigns"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminDonationCampaigns />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Users & TRIBE */}
+            <Route
+              path="/admin/users/tribe"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminTribeMembers />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Partners */}
+            <Route
+              path="/admin/partners"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminPartners />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/partners/applications"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminPartnerApplications />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Voting */}
+            <Route
+              path="/admin/voting"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminVoting />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/voting/results"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminVotingResults />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Communications */}
+            <Route
+              path="/admin/emails"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminEmails />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/notifications"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminNotifications />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Analytics */}
+            <Route
+              path="/admin/analytics"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminAnalytics />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/analytics/traffic"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminAnalyticsTraffic />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/analytics/impact"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminAnalyticsImpact />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Settings */}
+            <Route
+              path="/admin/settings"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminSettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/settings/integrations"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminSettingsIntegrations />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Legacy Admin Routes (keep for backwards compatibility) */}
+            <Route
+              path="/admin/dashboard"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/old/*"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </PageTransition>
+      </div>
+      {!isAdminPage && <Footer />}
+    </div>
+  );
+};
 
 const App = () => {
   useEffect(() => {
@@ -109,247 +481,7 @@ const App = () => {
                 <Toaster />
                 <Sonner />
                 <BrowserRouter>
-                  <Routes>
-                    {/* Admin Dashboard - Separate Layout (No Header/Footer) */}
-                    <Route
-                      path="/admin/dashboard"
-                      element={
-                        <ProtectedRoute requireAdmin>
-                          <AdminDashboard />
-                        </ProtectedRoute>
-                      }
-                    />
-                  </Routes>
-                  <div className="max-w-full">
-                    <ScrollProgressBar />
-                    <OfflineIndicator />
-                    <CookieConsent />
-                    <Header />
-                    <Cart />
-                    <FloatingCartButton />
-                    <div className="overflow-x-hidden">
-                      <PageTransition>
-                        <Routes>
-                          <Route path="/" element={<Index />} />
-                          <Route path="/auth" element={<Auth />} />
-                          <Route path="/rig" element={<RigStore />} />
-                          <Route
-                            path="/rig/prime-picks"
-                            element={<PrimePicks />}
-                          />
-                          <Route
-                            path="/rig/apex-arrivals"
-                            element={<ApexArrivals />}
-                          />
-                          <Route
-                            path="/rig/imbued-icons"
-                            element={<ImbuedIcons />}
-                          />
-                          <Route
-                            path="/rig/dazzle-drip"
-                            element={<DazzleDrip />}
-                          />
-                          <Route
-                            path="/rig/charmed-cozies"
-                            element={<CharmedCozies />}
-                          />
-                          <Route
-                            path="/rig/occult-originals"
-                            element={<OccultOriginals />}
-                          />
-                          <Route
-                            path="/rig/nexus-noggin"
-                            element={<NexusNoggin />}
-                          />
-                          <Route
-                            path="/rig/nebula-novelties"
-                            element={<NebulaNovelties />}
-                          />
-                          <Route
-                            path="/rig/collection/:slug"
-                            element={<CollectionDetail />}
-                          />
-                          <Route
-                            path="/rig/:slug"
-                            element={<ProductDetail />}
-                          />
-                          {/* Legacy route redirect */}
-                          <Route path="/rig-store" element={<RigStore />} />
-                          <Route
-                            path="/rig-store/collection/:slug"
-                            element={<CollectionDetail />}
-                          />
-                          <Route
-                            path="/rig-store/:slug"
-                            element={<ProductDetail />}
-                          />
-                          <Route
-                            path="/hydration"
-                            element={<HydrationStore />}
-                          />
-                          <Route
-                            path="/hydration/:slug"
-                            element={<ProductDetail />}
-                          />
-                          <Route path="/gratis" element={<Gratis />} />
-                          <Route path="/gratis/water" element={<Water />} />
-                          <Route path="/gratis/theurgy" element={<Theurgy />} />
-                          <Route path="/gratis/fu" element={<FU />} />
-                          {/* Legacy route redirects */}
-                          <Route path="/water" element={<Water />} />
-                          <Route path="/theurgy" element={<Theurgy />} />
-                          <Route path="/fu" element={<FU />} />
-                          <Route path="/arcane" element={<Arcane />} />
-                          <Route path="/partners" element={<Partners />} />
-                          <Route path="/tribe" element={<Tribe />} />
-                          <Route
-                            path="/tribe/heritage"
-                            element={<Heritage />}
-                          />
-                          <Route path="/tribe/ethics" element={<Ethics />} />
-                          <Route path="/tribe/team" element={<Team />} />
-                          <Route
-                            path="/tribe/standards"
-                            element={<Standards />}
-                          />
-                          <Route
-                            path="/tribe/responsibility"
-                            element={<Responsibility />}
-                          />
-                          <Route
-                            path="/tribe/accountability"
-                            element={<Accountability />}
-                          />
-                          <Route
-                            path="/tribe/transparency"
-                            element={<Transparency />}
-                          />
-                          <Route
-                            path="/tribe/compliance"
-                            element={<Compliance />}
-                          />
-                          <Route path="/tribe/terms" element={<Terms />} />
-                          <Route path="/tribe/privacy" element={<Privacy />} />
-                          <Route path="/tribe/cookies" element={<Cookies />} />
-
-                          {/* Legal Pages */}
-                          <Route
-                            path="/legal/privacy"
-                            element={<LegalPages.Privacy />}
-                          />
-                          <Route
-                            path="/legal/terms"
-                            element={<LegalPages.Terms />}
-                          />
-                          <Route
-                            path="/legal/cookies"
-                            element={<LegalPages.Cookies />}
-                          />
-                          <Route
-                            path="/legal/donor-privacy"
-                            element={<LegalPages.DonorPrivacy />}
-                          />
-                          <Route
-                            path="/legal/accessibility"
-                            element={<LegalPages.Accessibility />}
-                          />
-                          <Route
-                            path="/legal/disclaimer"
-                            element={<LegalPages.Disclaimer />}
-                          />
-
-                          <Route path="/impact-tv" element={<ImpactTV />} />
-                          <Route path="/impact-tv/nexus" element={<Nexus />} />
-                          <Route path="/impact-tv/yarns" element={<Yarns />} />
-                          <Route
-                            path="/impact-tv/unveil"
-                            element={<Unveil />}
-                          />
-                          <Route path="/impact-tv/icon" element={<Icon />} />
-                          <Route path="/impact-tv/tales" element={<Tales />} />
-
-                          {/* Video Platform Routes */}
-                          <Route path="/videos" element={<Videos />} />
-                          <Route
-                            path="/videos/:slug"
-                            element={<VideoDetail />}
-                          />
-
-                          <Route path="/spark" element={<Spark />} />
-                          <Route path="/spark/donate" element={<Donate />} />
-                          <Route path="/spark/verve" element={<Verve />} />
-                          <Route path="/spark/infuse" element={<Infuse />} />
-                          <Route path="/spark/blaze" element={<Blaze />} />
-                          <Route path="/spark/enlist" element={<Enlist />} />
-                          <Route path="/contact" element={<Contact />} />
-                          <Route path="/faq" element={<FAQ />} />
-                          <Route path="/checkout" element={<Checkout />} />
-                          <Route
-                            path="/checkout/success"
-                            element={<CheckoutSuccess />}
-                          />
-                          <Route
-                            path="/checkout/cancel"
-                            element={<CheckoutCancel />}
-                          />
-                          <Route
-                            path="/order-confirmation/:orderId"
-                            element={<OrderConfirmation />}
-                          />
-                          <Route path="/orders" element={<Orders />} />
-                          <Route
-                            path="/orders/:orderId"
-                            element={<OrderDetail />}
-                          />
-                          <Route path="/dashboard" element={<Dashboard />} />
-                          <Route
-                            path="/dashboard/bottles"
-                            element={<DashboardBottles />}
-                          />
-                          <Route
-                            path="/dashboard/vote"
-                            element={<DashboardVote />}
-                          />
-                          <Route
-                            path="/dashboard/settings"
-                            element={<DashboardSettings />}
-                          />
-                          <Route path="/wishlist" element={<Wishlist />} />
-                          <Route path="/profile" element={<Profile />} />
-                          <Route path="/settings" element={<Settings />} />
-
-                          {/* Events Routes */}
-                          <Route path="/events" element={<Events />} />
-                          <Route
-                            path="/events/:slug"
-                            element={<EventDetail />}
-                          />
-
-                          {/* Admin Routes - Single Unified Panel */}
-                          <Route
-                            path="/admin/event-checkin"
-                            element={
-                              <ProtectedRoute requireAdmin>
-                                <AdminEventCheckIn />
-                              </ProtectedRoute>
-                            }
-                          />
-                          <Route
-                            path="/admin/*"
-                            element={
-                              <ProtectedRoute requireAdmin>
-                                <Admin />
-                              </ProtectedRoute>
-                            }
-                          />
-
-                          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                          <Route path="*" element={<NotFound />} />
-                        </Routes>
-                      </PageTransition>
-                    </div>
-                    <Footer />
-                  </div>
+                  <AppContent />
                 </BrowserRouter>
               </TooltipProvider>
             </CartProvider>

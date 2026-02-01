@@ -55,7 +55,7 @@ import {
   doc,
   Timestamp,
 } from "firebase/firestore";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface LiveStreamManagerProps {
   onSuccess?: () => void;

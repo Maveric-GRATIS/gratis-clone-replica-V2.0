@@ -45,7 +45,7 @@ import { VIDEO_CATEGORIES } from "@/lib/mux/config";
 import type { CreateVideoInput, VideoCategory } from "@/types/video";
 import { db } from "@/firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface VideoUploadDialogProps {
   onSuccess?: () => void;

@@ -252,14 +252,16 @@ export default function Index() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0 }}
               >
-                <HowItWorksCard
-                  icon={Droplet}
-                  title="Get FREE Water"
-                  description="Premium spring water at no cost. Every bottle funds clean water projects globally."
-                  step={1}
-                  index={0}
-                  color="lime"
-                />
+                <Link to="/hydration">
+                  <HowItWorksCard
+                    icon={Droplet}
+                    title="Get FREE Water"
+                    description="Premium spring water at no cost. Every bottle funds clean water projects globally."
+                    step={1}
+                    index={0}
+                    color="lime"
+                  />
+                </Link>
               </motion.div>
 
               {/* Step 2 */}
@@ -269,14 +271,16 @@ export default function Index() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <HowItWorksCard
-                  icon={Palette}
-                  title="Support Arts"
-                  description="Your choice directly supports local artists and creative programs in communities."
-                  step={2}
-                  index={1}
-                  color="magenta"
-                />
+                <Link to="/theurgy">
+                  <HowItWorksCard
+                    icon={Palette}
+                    title="Support Arts"
+                    description="Your choice directly supports local artists and creative programs in communities."
+                    step={2}
+                    index={1}
+                    color="magenta"
+                  />
+                </Link>
               </motion.div>
 
               {/* Step 3 */}
@@ -286,14 +290,16 @@ export default function Index() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
-                <HowItWorksCard
-                  icon={GraduationCap}
-                  title="Fund Education"
-                  description="Empower the next generation with access to quality education and learning resources."
-                  step={3}
-                  index={2}
-                  color="blue"
-                />
+                <Link to="/fu">
+                  <HowItWorksCard
+                    icon={GraduationCap}
+                    title="Fund Education"
+                    description="Empower the next generation with access to quality education and learning resources."
+                    step={3}
+                    index={2}
+                    color="blue"
+                  />
+                </Link>
               </motion.div>
 
               {/* Step 4 */}
@@ -303,14 +309,16 @@ export default function Index() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
-                <HowItWorksCard
-                  icon={Sparkles}
-                  title="Track Impact"
-                  description="See exactly where your impact goes with real-time dashboards and verified reports."
-                  step={4}
-                  index={3}
-                  color="orange"
-                />
+                <Link to="/dashboard">
+                  <HowItWorksCard
+                    icon={Sparkles}
+                    title="Track Impact"
+                    description="See exactly where your impact goes with real-time dashboards and verified reports."
+                    step={4}
+                    index={3}
+                    color="orange"
+                  />
+                </Link>
               </motion.div>
             </div>
 
@@ -420,6 +428,15 @@ export default function Index() {
                     <span>100% project completion</span>
                   </div>
                 </div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full mt-4 text-hot-lime hover:text-hot-lime hover:bg-hot-lime/10"
+                >
+                  <Link to="/water">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </motion.div>
 
               {/* Pillar 2: Arts */}
@@ -453,6 +470,15 @@ export default function Index() {
                     <span>50+ exhibitions funded</span>
                   </div>
                 </div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full mt-4 text-hot-magenta hover:text-hot-magenta hover:bg-hot-magenta/10"
+                >
+                  <Link to="/theurgy">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </motion.div>
 
               {/* Pillar 3: Education */}
@@ -486,6 +512,15 @@ export default function Index() {
                     <span>€125K in scholarships</span>
                   </div>
                 </div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full mt-4 text-electric-blue hover:text-electric-blue hover:bg-electric-blue/10"
+                >
+                  <Link to="/fu">
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </motion.div>
             </div>
           </div>

@@ -17,7 +17,7 @@ const db = getFirestore(app);
 
 async function addAdminRole() {
   try {
-    const userId = "o2VNTdUnyVYJdUAxaLpXAjm2Eif1";
+    const userId = "qvPtEb2ZjWc8HHRMU28IToj2KWu2";
 
     console.log(`Adding admin role to user: ${userId}...`);
 

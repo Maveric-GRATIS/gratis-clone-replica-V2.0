@@ -2,6 +2,7 @@
  * Mux API Functions
  *
  * Client-side wrappers for Firebase Cloud Functions that interact with Mux API
+ * Updated: Feb 2026
  */
 
 import {

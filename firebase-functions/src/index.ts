@@ -12,6 +12,10 @@ export * from "./mux-functions";
 export * from "./stripe-functions";
 export * from "./stripe-webhooks";
 
+// Export Email and Notification services (available for import in other functions)
+export * from "./email-service";
+export * from "./notification-service";
+
 // Initialize Stripe
 const stripe = new Stripe(functions.config().stripe.secret_key, {
   apiVersion: "2023-10-16",

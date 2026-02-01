@@ -8,7 +8,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -34,11 +40,25 @@ import {
   Leaf,
 } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from "recharts";
 import jsPDF from "jspdf";
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "");
+const stripePromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "",
+);
 
 // Step 1: Amount Selection
 const amountSchema = z.object({
@@ -119,12 +139,14 @@ const allocationCategories = [
 
 export function DonationWizard() {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState<Partial<{
-    amount: AmountFormData;
-    allocation: AllocationFormData;
-    donorInfo: DonorInfoFormData;
-    payment: PaymentFormData;
-  }>>({});
+  const [formData, setFormData] = useState<
+    Partial<{
+      amount: AmountFormData;
+      allocation: AllocationFormData;
+      donorInfo: DonorInfoFormData;
+      payment: PaymentFormData;
+    }>
+  >({});
   const { toast } = useToast();
 
   const totalSteps = 5;
@@ -156,10 +178,7 @@ export function DonationWizard() {
       </div>
 
       {step === 1 && (
-        <Step1Amount
-          onNext={handleNextStep}
-          defaultValues={formData.amount}
-        />
+        <Step1Amount onNext={handleNextStep} defaultValues={formData.amount} />
       )}
       {step === 2 && (
         <Step2Allocation
@@ -199,12 +218,12 @@ function Step1Amount({
   defaultValues?: AmountFormData;
 }) {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(
-    defaultValues?.amount || null
+    defaultValues?.amount || null,
   );
   const [customAmount, setCustomAmount] = useState("");
-  const [frequency, setFrequency] = useState<"once" | "monthly" | "quarterly" | "annually">(
-    defaultValues?.frequency || "once"
-  );
+  const [frequency, setFrequency] = useState<
+    "once" | "monthly" | "quarterly" | "annually"
+  >(defaultValues?.frequency || "once");
 
   const {
     handleSubmit,
@@ -251,7 +270,9 @@ function Step1Amount({
             <DollarSign className="h-5 w-5" />
             Choose Your Donation Amount
           </CardTitle>
-          <CardDescription>Select a preset amount or enter a custom amount</CardDescription>
+          <CardDescription>
+            Select a preset amount or enter a custom amount
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Frequency Selection */}
@@ -319,7 +340,9 @@ function Step1Amount({
               onChange={(e) => handleCustomAmount(e.target.value)}
             />
             {errors.amount && (
-              <p className="text-sm text-destructive">{errors.amount.message}</p>
+              <p className="text-sm text-destructive">
+                {errors.amount.message}
+              </p>
             )}
           </div>
 
@@ -332,7 +355,8 @@ function Step1Amount({
                   <p className="font-semibold text-sm mb-1">Your Impact</p>
                   {frequency === "monthly" && (
                     <p className="text-sm text-muted-foreground">
-                      €{selectedAmount * 12}/year - Sustainable recurring support
+                      €{selectedAmount * 12}/year - Sustainable recurring
+                      support
                     </p>
                   )}
                   {frequency === "quarterly" && (
@@ -355,7 +379,12 @@ function Step1Amount({
             </div>
           )}
 
-          <Button type="submit" className="w-full" size="lg" disabled={!selectedAmount}>
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={!selectedAmount}
+          >
             Continue <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </CardContent>
@@ -382,12 +411,15 @@ function Step2Allocation({
       education: 30,
       healthcare: 20,
       environment: 10,
-    }
+    },
   );
 
   const handleSliderChange = (category: string, value: number[]) => {
     const newValue = value[0];
-    const currentTotal = Object.values(allocation).reduce((sum, val) => sum + val, 0);
+    const currentTotal = Object.values(allocation).reduce(
+      (sum, val) => sum + val,
+      0,
+    );
     const currentValue = allocation[category];
     const availableToAdd = 100 - (currentTotal - currentValue);
 
@@ -437,7 +469,8 @@ function Step2Allocation({
       <CardHeader>
         <CardTitle>Allocate Your Impact</CardTitle>
         <CardDescription>
-          Choose how your €{amount} donation will be distributed across our initiatives
+          Choose how your €{amount} donation will be distributed across our
+          initiatives
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -477,7 +510,10 @@ function Step2Allocation({
           </ResponsiveContainer>
           <div className="text-center mt-4">
             <p className="text-sm text-muted-foreground">
-              Total: {total}% {total !== 100 && <span className="text-amber-600">(adjust to 100%)</span>}
+              Total: {total}%{" "}
+              {total !== 100 && (
+                <span className="text-amber-600">(adjust to 100%)</span>
+              )}
             </p>
           </div>
         </div>
@@ -493,11 +529,17 @@ function Step2Allocation({
               <div key={category.id} className="space-y-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Icon className="h-4 w-4" style={{ color: category.color }} />
+                    <Icon
+                      className="h-4 w-4"
+                      style={{ color: category.color }}
+                    />
                     <Label className="font-medium">{category.name}</Label>
                   </div>
                   <div className="text-right">
-                    <Badge variant="outline" style={{ borderColor: category.color }}>
+                    <Badge
+                      variant="outline"
+                      style={{ borderColor: category.color }}
+                    >
                       {value}% - €{euroAmount}
                     </Badge>
                   </div>
@@ -513,7 +555,9 @@ function Step2Allocation({
                     "--slider-thumb": category.color,
                   }}
                 />
-                <p className="text-xs text-muted-foreground">{category.description}</p>
+                <p className="text-xs text-muted-foreground">
+                  {category.description}
+                </p>
               </div>
             );
           })}
@@ -537,7 +581,12 @@ function Step2Allocation({
         </Button>
 
         <div className="flex gap-3">
-          <Button type="button" variant="outline" onClick={onBack} className="flex-1">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onBack}
+            className="flex-1"
+          >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back
           </Button>
           <Button
@@ -585,14 +634,18 @@ function Step3DonorInfo({
       <Card>
         <CardHeader>
           <CardTitle>Your Information</CardTitle>
-          <CardDescription>Help us send your receipt and stay connected</CardDescription>
+          <CardDescription>
+            Help us send your receipt and stay connected
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Anonymous Donation */}
           <div className="flex items-center gap-3 p-3 border rounded-lg">
             <Checkbox {...register("anonymous")} />
             <div>
-              <p className="font-medium text-sm">Make this donation anonymous</p>
+              <p className="font-medium text-sm">
+                Make this donation anonymous
+              </p>
               <p className="text-xs text-muted-foreground">
                 Your name won't be displayed publicly
               </p>
@@ -606,14 +659,18 @@ function Step3DonorInfo({
                   <Label htmlFor="firstName">First Name *</Label>
                   <Input id="firstName" {...register("firstName")} />
                   {errors.firstName && (
-                    <p className="text-sm text-destructive">{errors.firstName.message}</p>
+                    <p className="text-sm text-destructive">
+                      {errors.firstName.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName">Last Name *</Label>
                   <Input id="lastName" {...register("lastName")} />
                   {errors.lastName && (
-                    <p className="text-sm text-destructive">{errors.lastName.message}</p>
+                    <p className="text-sm text-destructive">
+                      {errors.lastName.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -645,7 +702,9 @@ function Step3DonorInfo({
               <label className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-accent">
                 <Checkbox {...register("taxReceipt")} defaultChecked />
                 <div>
-                  <p className="font-medium text-sm">Send tax-deductible receipt</p>
+                  <p className="font-medium text-sm">
+                    Send tax-deductible receipt
+                  </p>
                   <p className="text-xs text-muted-foreground">
                     Receive a PDF receipt for tax purposes
                   </p>
@@ -654,7 +713,9 @@ function Step3DonorInfo({
               <label className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-accent">
                 <Checkbox {...register("newsletter")} defaultChecked />
                 <div>
-                  <p className="font-medium text-sm">Subscribe to our newsletter</p>
+                  <p className="font-medium text-sm">
+                    Subscribe to our newsletter
+                  </p>
                   <p className="text-xs text-muted-foreground">
                     Get impact updates and stories from the field
                   </p>
@@ -664,7 +725,12 @@ function Step3DonorInfo({
           </div>
 
           <div className="flex gap-3">
-            <Button type="button" variant="outline" onClick={onBack} className="flex-1">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onBack}
+              className="flex-1"
+            >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
             <Button type="submit" className="flex-1">
@@ -846,7 +912,9 @@ function Step4Payment({
             </span>
           </label>
           {errors.acceptTerms && (
-            <p className="text-sm text-destructive">{errors.acceptTerms.message}</p>
+            <p className="text-sm text-destructive">
+              {errors.acceptTerms.message}
+            </p>
           )}
 
           <div className="flex gap-3">
@@ -859,7 +927,11 @@ function Step4Payment({
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back
             </Button>
-            <Button type="submit" className="flex-1" disabled={isProcessing || !stripe}>
+            <Button
+              type="submit"
+              className="flex-1"
+              disabled={isProcessing || !stripe}
+            >
               {isProcessing ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -886,48 +958,60 @@ function Step5Confirmation({ formData }: { formData: any }) {
 
   const generatePDFReceipt = () => {
     const doc = new jsPDF();
-    
+
     // Header
     doc.setFontSize(20);
     doc.text("GRATIS Foundation", 20, 20);
     doc.setFontSize(16);
     doc.text("Donation Receipt", 20, 30);
-    
+
     // Donor Info
     doc.setFontSize(12);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 50);
     doc.text(`Receipt ID: DON-${Date.now()}`, 20, 60);
-    
+
     if (!formData.donorInfo?.anonymous) {
-      doc.text(`Donor: ${formData.donorInfo?.firstName} ${formData.donorInfo?.lastName}`, 20, 70);
+      doc.text(
+        `Donor: ${formData.donorInfo?.firstName} ${formData.donorInfo?.lastName}`,
+        20,
+        70,
+      );
       if (formData.donorInfo?.company) {
         doc.text(`Company: ${formData.donorInfo?.company}`, 20, 80);
       }
     }
-    
+
     // Donation Details
     doc.text(`Amount: €${amount}`, 20, 100);
     doc.text(`Frequency: ${frequency}`, 20, 110);
-    
+
     // Allocation
     doc.text("Impact Allocation:", 20, 130);
     let y = 140;
     allocationCategories.forEach((cat) => {
       const value = formData.allocation?.[cat.id] || 0;
       if (value > 0) {
-        doc.text(`${cat.name}: ${value}% (€${((value / 100) * amount).toFixed(2)})`, 30, y);
+        doc.text(
+          `${cat.name}: ${value}% (€${((value / 100) * amount).toFixed(2)})`,
+          30,
+          y,
+        );
         y += 10;
       }
     });
-    
+
     // Footer
     doc.setFontSize(10);
     doc.text("Thank you for your generous support!", 20, 200);
-    doc.text("GRATIS Foundation is a registered 501(c)(3) nonprofit organization.", 20, 210);
+    doc.text(
+      "GRATIS Foundation is a registered 501(c)(3) nonprofit organization.",
+      20,
+      210,
+    );
     doc.text("Tax ID: XX-XXXXXXX", 20, 220);
-    
+
     doc.save(`GRATIS_Receipt_${Date.now()}.pdf`);
-    
+
     toast({
       title: "Receipt Downloaded",
       description: "Your tax receipt has been saved to your downloads folder.",
@@ -958,12 +1042,17 @@ function Step5Confirmation({ formData }: { formData: any }) {
               if (value > 0) {
                 const Icon = cat.icon;
                 return (
-                  <div key={cat.id} className="flex items-center justify-between">
+                  <div
+                    key={cat.id}
+                    className="flex items-center justify-between"
+                  >
                     <div className="flex items-center gap-2">
                       <Icon className="h-4 w-4" style={{ color: cat.color }} />
                       <span className="text-sm">{cat.name}</span>
                     </div>
-                    <span className="font-medium">€{((value / 100) * amount).toFixed(2)}</span>
+                    <span className="font-medium">
+                      €{((value / 100) * amount).toFixed(2)}
+                    </span>
                   </div>
                 );
               }
@@ -972,7 +1061,12 @@ function Step5Confirmation({ formData }: { formData: any }) {
           {frequency !== "once" && (
             <div className="pt-3 border-t text-sm text-muted-foreground">
               <p>Recurring {frequency} donation</p>
-              <p>Next charge: {new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}</p>
+              <p>
+                Next charge:{" "}
+                {new Date(
+                  Date.now() + 30 * 24 * 60 * 60 * 1000,
+                ).toLocaleDateString()}
+              </p>
             </div>
           )}
         </div>
@@ -987,7 +1081,12 @@ function Step5Confirmation({ formData }: { formData: any }) {
         {/* Actions */}
         <div className="flex flex-col gap-2">
           {formData.donorInfo?.taxReceipt && (
-            <Button size="lg" variant="outline" className="w-full" onClick={generatePDFReceipt}>
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-full"
+              onClick={generatePDFReceipt}
+            >
               <Download className="mr-2 h-4 w-4" />
               Download Tax Receipt (PDF)
             </Button>

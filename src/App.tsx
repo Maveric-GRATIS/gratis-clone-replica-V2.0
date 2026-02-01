@@ -45,6 +45,8 @@ import Icon from "@/pages/impactTV/Icon";
 import Tales from "@/pages/impactTV/Tales";
 import Spark from "@/pages/Spark";
 import Donate from "@/pages/spark/Donate";
+import DonateNew from "./pages/spark/DonateNew";
+import ManageRecurringDonations from "./pages/spark/ManageRecurringDonations";
 import Verve from "@/pages/spark/Verve";
 import Infuse from "@/pages/spark/Infuse";
 import Blaze from "@/pages/spark/Blaze";
@@ -227,7 +229,16 @@ const AppContent = () => {
             <Route path="/videos/:slug" element={<VideoDetail />} />
 
             <Route path="/spark" element={<Spark />} />
-            <Route path="/spark/donate" element={<Donate />} />
+            <Route path="/spark/donate" element={<DonateNew />} />
+            <Route path="/spark/donate/legacy" element={<Donate />} />
+            <Route
+              path="/spark/donate/manage"
+              element={
+                <ProtectedRoute>
+                  <ManageRecurringDonations />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/spark/verve" element={<Verve />} />
             <Route path="/spark/infuse" element={<Infuse />} />
             <Route path="/spark/blaze" element={<Blaze />} />

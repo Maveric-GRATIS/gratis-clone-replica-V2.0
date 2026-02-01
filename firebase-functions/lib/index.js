@@ -32,11 +32,27 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateUserWrite = exports.updateUserRole = exports.manageProduct = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
+const stripe_1 = __importDefault(require("stripe"));
 admin.initializeApp();
+// Export Mux functions
+__exportStar(require("./mux-functions"), exports);
+// Export Stripe functions
+__exportStar(require("./stripe-functions"), exports);
+__exportStar(require("./stripe-webhooks"), exports);
+// Initialize Stripe
+const stripe = new stripe_1.default(functions.config().stripe.secret_key, {
+    apiVersion: "2023-10-16",
+});
 // Rate limiting map (in-memory, for production use Redis/Firestore)
 const rateLimitMap = new Map();
 /**

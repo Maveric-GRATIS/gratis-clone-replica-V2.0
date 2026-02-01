@@ -13,7 +13,7 @@ const muxClient = new Mux({
   tokenSecret: functions.config().mux.token_secret,
 });
 
-const { Video } = muxClient;
+const Video = (muxClient as any).Video;
 
 /**
  * Verify admin role

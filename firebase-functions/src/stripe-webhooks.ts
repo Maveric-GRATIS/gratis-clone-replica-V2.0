@@ -8,8 +8,8 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import Stripe from "stripe";
 
-// Initialize Stripe (requires Firebase config: firebase functions:config:set stripe.secret_key="sk_..." stripe.webhook_secret="whsec_...")
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
+// Initialize Stripe
+const stripe = new Stripe(functions.config().stripe?.secret_key || process.env.STRIPE_SECRET_KEY || "", {
   apiVersion: "2026-01-28.clover",
 });
 
@@ -28,14 +28,15 @@ export const stripeWebhook = functions.https.onRequest(async (req, res) => {
   let event: Stripe.Event;
 
   try {
+    const webhookSecret = functions.config().stripe?.webhook_secret || process.env.STRIPE_WEBHOOK_SECRET;
     event = stripe.webhooks.constructEvent(
       req.rawBody,
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET || ""
+      webhookSecret || ""
     );
-  } catch (err) {
+  } catch (err: any) {
     functions.logger.error("Webhook signature verification failed:", err);
-    res.status(400).send(`Webhook Error: ${err}`);
+    res.status(400).send(`Webhook Error: ${err.message}`);
     return;
   }
 
@@ -87,15 +88,19 @@ export const stripeWebhook = functions.https.onRequest(async (req, res) => {
  * Handle successful checkout session
  */
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
-  const { client_reference_id, customer, metadata } = session;
+  const { customer, metadata } = session;
 
-  if (!client_reference_id) {
-    functions.logger.warn("No client_reference_id in checkout session");
+  const userId = metadata?.userId;
+  if (!userId || userId === "anonymous") {
+    functions.logger.warn("No userId in checkout session");
+    // Still process anonymous donations
+    if (metadata?.type === "donation") {
+      await handleAnonymousDonation(session);
+    }
     return;
   }
 
   const db = admin.firestore();
-  const userId = client_reference_id;
   const purchaseType = metadata?.type || "unknown";
 
   functions.logger.info(`Checkout completed for user ${userId}, type: ${purchaseType}`);
@@ -130,12 +135,35 @@ async function handleMembershipPurchase(
   session: Stripe.Checkout.Session
 ) {
   const db = admin.firestore();
-  const tier = session.metadata?.tier || "Insider";
+
+  // Get subscription to determine tier
+  let tier = "insider";
+  if (session.subscription) {
+    const subscription = await stripe.subscriptions.retrieve(
+      session.subscription as string,
+      { expand: ["items.data.price.product"] }
+    );
+
+    const product = subscription.items.data[0]?.price?.product as Stripe.Product;
+    tier = product?.metadata?.tier || "insider";
+  }
 
   await db.collection("users").doc(userId).update({
     membershipTier: tier,
     membershipStatus: "active",
     membershipStartDate: admin.firestore.FieldValue.serverTimestamp(),
+    stripeSubscriptionId: session.subscription || null,
+  });
+
+  // Create membership record
+  await db.collection("memberships").add({
+    userId,
+    tier,
+    status: "active",
+    stripeSessionId: session.id,
+    stripeSubscriptionId: session.subscription,
+    startDate: admin.firestore.FieldValue.serverTimestamp(),
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
   });
 
   functions.logger.info(`Membership activated for ${userId}: ${tier}`);
@@ -153,23 +181,53 @@ async function handleDonationPurchase(
   const allocation = session.metadata?.allocation
     ? JSON.parse(session.metadata.allocation)
     : {};
+  const isMonthly = session.metadata?.monthly === "true";
 
-  await db.collection("donations").add({
+  const donationData = {
     userId,
     amount,
     currency: session.currency,
     allocation,
     stripeSessionId: session.id,
+    stripeSubscriptionId: session.subscription || null,
     status: "completed",
+    recurring: isMonthly,
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
-  });
+  };
+
+  await db.collection("donations").add(donationData);
 
   await db.collection("users").doc(userId).update({
     totalDonated: admin.firestore.FieldValue.increment(amount),
     lastDonationAt: admin.firestore.FieldValue.serverTimestamp(),
   });
 
-  functions.logger.info(`Donation recorded: ${amount} EUR from ${userId}`);
+  functions.logger.info(`Donation recorded: €${amount} from ${userId}`);
+}
+
+/**
+ * Handle anonymous donation
+ */
+async function handleAnonymousDonation(session: Stripe.Checkout.Session) {
+  const db = admin.firestore();
+  const amount = session.amount_total ? session.amount_total / 100 : 0;
+  const allocation = session.metadata?.allocation
+    ? JSON.parse(session.metadata.allocation)
+    : {};
+
+  await db.collection("donations").add({
+    userId: "anonymous",
+    email: session.customer_details?.email || null,
+    amount,
+    currency: session.currency,
+    allocation,
+    stripeSessionId: session.id,
+    status: "completed",
+    recurring: session.metadata?.monthly === "true",
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+  });
+
+  functions.logger.info(`Anonymous donation recorded: €${amount}`);
 }
 
 /**
@@ -181,35 +239,72 @@ async function handleEventTicketPurchase(
 ) {
   const db = admin.firestore();
   const eventId = session.metadata?.eventId;
-  const ticketType = session.metadata?.ticketType;
+  const ticketTypeId = session.metadata?.ticketTypeId;
   const quantity = parseInt(session.metadata?.quantity || "1");
+  const attendeeInfo = session.metadata?.attendeeInfo
+    ? JSON.parse(session.metadata.attendeeInfo)
+    : {};
 
-  if (!eventId) {
-    functions.logger.error("Missing eventId in ticket purchase");
+  if (!eventId || !ticketTypeId) {
+    functions.logger.error("Missing eventId or ticketTypeId in ticket purchase");
     return;
   }
 
   const batch = db.batch();
-  const orderNumber = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  const orderNumber = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
+  // Get event and ticket type details
+  const eventDoc = await db.collection("events").doc(eventId).get();
+  const event = eventDoc.data();
+  const ticketType = event?.ticketTypes?.find((t: any) => t.id === ticketTypeId);
+
+  // Create tickets
+  const ticketIds: string[] = [];
   for (let i = 0; i < quantity; i++) {
-    const ticketRef = db.collection("tickets").doc();
+    const ticketRef = db.collection("event_registrations").doc();
+    const ticketNumber = `${orderNumber}-${i + 1}`;
+
     batch.set(ticketRef, {
       id: ticketRef.id,
       eventId,
       userId,
-      type: ticketType,
+      ticketNumber,
       orderNumber,
+      ticketType: ticketType?.name || "General",
+      ticketTypeId,
+      price: ticketType?.price || 0,
+      status: "valid",
+      attendee: attendeeInfo[i] || {
+        firstName: session.customer_details?.name?.split(" ")[0] || "",
+        lastName: session.customer_details?.name?.split(" ").slice(1).join(" ") || "",
+        email: session.customer_details?.email || "",
+      },
       purchasedAt: admin.firestore.FieldValue.serverTimestamp(),
       checkedIn: false,
-      status: "valid",
+      stripeSessionId: session.id,
     });
+
+    ticketIds.push(ticketRef.id);
   }
 
-  await batch.commit();
-  await notifyWaitlist(eventId, quantity);
+  // Update ticket sold count
+  const eventRef = db.collection("events").doc(eventId);
+  const ticketTypes = event?.ticketTypes || [];
+  const updatedTicketTypes = ticketTypes.map((t: any) => {
+    if (t.id === ticketTypeId) {
+      return {
+        ...t,
+        soldCount: (t.soldCount || 0) + quantity,
+      };
+    }
+    return t;
+  });
 
-  functions.logger.info(`Created ${quantity} tickets for event ${eventId}`);
+  batch.update(eventRef, { ticketTypes: updatedTicketTypes });
+
+  await batch.commit();
+
+  functions.logger.info(`${quantity} ticket(s) created for event ${eventId}, user ${userId}`);
 }
 
 /**
@@ -231,14 +326,27 @@ async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
   }
 
   const userId = userQuery.docs[0].id;
-  const tier = subscription.metadata?.tier || "Insider";
-  const subAny = subscription as any;
+
+  // Determine tier from product metadata
+  let tier = "insider";
+  if (subscription.items.data[0]) {
+    const price = await stripe.prices.retrieve(
+      subscription.items.data[0].price.id,
+      { expand: ["product"] }
+    );
+    const product = price.product as Stripe.Product;
+    tier = product.metadata?.tier || "insider";
+  }
+
+  const currentPeriodEnd = (subscription as any).current_period_end;
 
   await db.collection("users").doc(userId).update({
     membershipTier: tier,
     membershipStatus: subscription.status,
-    subscriptionId: subscription.id,
-    currentPeriodEnd: new Date((subAny.current_period_end || 0) * 1000),
+    stripeSubscriptionId: subscription.id,
+    currentPeriodEnd: currentPeriodEnd
+      ? admin.firestore.Timestamp.fromDate(new Date(currentPeriodEnd * 1000))
+      : null,
   });
 
   functions.logger.info(`Subscription updated for ${userId}: ${subscription.status}`);
@@ -257,7 +365,10 @@ async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
     .limit(1)
     .get();
 
-  if (userQuery.empty) return;
+  if (userQuery.empty) {
+    functions.logger.warn(`No user found for customer ${customerId}`);
+    return;
+  }
 
   const userId = userQuery.docs[0].id;
 
@@ -275,17 +386,50 @@ async function handleSubscriptionCanceled(subscription: Stripe.Subscription) {
 async function handleInvoicePaid(invoice: Stripe.Invoice) {
   const customerId = invoice.customer as string;
   const db = admin.firestore();
+  const subscriptionId = (invoice as any).subscription;
 
-  await db.collection("invoices").add({
-    stripeInvoiceId: invoice.id,
-    customerId,
-    amount: invoice.amount_paid / 100,
-    currency: invoice.currency,
-    status: "paid",
-    paidAt: admin.firestore.FieldValue.serverTimestamp(),
-  });
+  if (subscriptionId) {
+    // Recurring payment
+    const userQuery = await db
+      .collection("users")
+      .where("stripeCustomerId", "==", customerId)
+      .limit(1)
+      .get();
 
-  functions.logger.info(`Invoice ${invoice.id} paid`);
+    if (!userQuery.empty) {
+      const userId = userQuery.docs[0].id;
+
+      // Check if it's a donation subscription
+      const subscription = await stripe.subscriptions.retrieve(subscriptionId as string);
+      if (subscription.metadata?.type === "donation") {
+        const amount = invoice.amount_paid / 100;
+        const allocation = subscription.metadata?.allocation
+          ? JSON.parse(subscription.metadata.allocation)
+          : {};
+
+        await db.collection("donations").add({
+          userId,
+          amount,
+          currency: invoice.currency,
+          allocation,
+          stripeInvoiceId: invoice.id,
+          stripeSubscriptionId: subscription.id,
+          status: "completed",
+          recurring: true,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+        await db.collection("users").doc(userId).update({
+          totalDonated: admin.firestore.FieldValue.increment(amount),
+          lastDonationAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+        functions.logger.info(`Recurring donation processed: €${amount} from ${userId}`);
+      }
+    }
+  }
+
+  functions.logger.info(`Invoice paid: ${invoice.id}`);
 }
 
 /**
@@ -301,35 +445,38 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
     .limit(1)
     .get();
 
-  if (userQuery.empty) return;
+  if (!userQuery.empty) {
+    const userId = userQuery.docs[0].id;
 
-  const userId = userQuery.docs[0].id;
+    await db.collection("users").doc(userId).update({
+      paymentFailedAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
 
-  await db.collection("users").doc(userId).update({
-    membershipStatus: "past_due",
-    lastPaymentFailedAt: admin.firestore.FieldValue.serverTimestamp(),
-  });
-
-  functions.logger.warn(`Payment failed for ${userId}, invoice ${invoice.id}`);
+    // TODO: Send email notification about payment failure
+    functions.logger.warn(`Payment failed for user ${userId}, invoice ${invoice.id}`);
+  }
 }
 
 /**
- * Handle successful payment
+ * Handle successful payment intent
  */
 async function handlePaymentSucceeded(paymentIntent: Stripe.PaymentIntent) {
-  functions.logger.info(`Payment succeeded: ${paymentIntent.id}`);
+  functions.logger.info(`Payment succeeded: ${paymentIntent.id}, amount: ${paymentIntent.amount / 100}`);
+  // Additional logic if needed
 }
 
 /**
- * Handle failed payment
+ * Handle failed payment intent
  */
 async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent) {
-  functions.logger.error(`Payment failed: ${paymentIntent.id}`);
+  functions.logger.warn(`Payment failed: ${paymentIntent.id}`);
+  // Additional logic if needed
 }
 
 /**
- * Notify waitlist when tickets become available
+ * Notify waitlist when tickets become available (unused - for future use)
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function notifyWaitlist(eventId: string, availableTickets: number) {
   const db = admin.firestore();
 

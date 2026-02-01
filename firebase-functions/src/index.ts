@@ -8,6 +8,10 @@ admin.initializeApp();
 // Export Mux functions
 export * from "./mux-functions";
 
+// Export Stripe functions
+export * from "./stripe-functions";
+export * from "./stripe-webhooks";
+
 // Initialize Stripe
 const stripe = new Stripe(functions.config().stripe.secret_key, {
   apiVersion: "2023-10-16",

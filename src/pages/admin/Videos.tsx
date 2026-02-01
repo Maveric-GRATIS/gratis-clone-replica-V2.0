@@ -18,7 +18,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Edit, Trash, Eye, EyeOff } from "lucide-react";
+import {
+  Plus,
+  Edit,
+  Trash,
+  Eye,
+  EyeOff,
+  Clock,
+  FileText,
+  Radio,
+} from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { db } from "@/firebase";
 import {
@@ -32,6 +41,9 @@ import {
 } from "firebase/firestore";
 import { toast } from "sonner";
 import { VideoUploadDialog } from "@/components/admin/VideoUploadDialog";
+import { VideoChaptersEditor } from "@/components/admin/VideoChaptersEditor";
+import { VideoTranscriptManager } from "@/components/admin/VideoTranscriptManager";
+import { LiveStreamManager } from "@/components/admin/LiveStreamManager";
 
 interface Video {
   id: string;
@@ -40,6 +52,10 @@ interface Video {
   views_count: number;
   published: boolean;
   featured: boolean;
+  muxAssetId?: string;
+  duration?: number;
+  chapters?: any[];
+  subtitles?: any[];
   created_at: { seconds: number; nanoseconds: number };
 }
 
@@ -108,11 +124,18 @@ export default function AdminVideos() {
             <h1 className="text-3xl font-bold text-foreground">Videos</h1>
             <p className="text-muted-foreground">Manage ImpactTV content</p>
           </div>
-          <VideoUploadDialog
-            onSuccess={() =>
-              queryClient.invalidateQueries({ queryKey: ["admin-videos"] })
-            }
-          />
+          <div className="flex gap-3">
+            <LiveStreamManager
+              onSuccess={() =>
+                queryClient.invalidateQueries({ queryKey: ["admin-videos"] })
+              }
+            />
+            <VideoUploadDialog
+              onSuccess={() =>
+                queryClient.invalidateQueries({ queryKey: ["admin-videos"] })
+              }
+            />
+          </div>
         </div>
 
         <Card>
@@ -178,7 +201,31 @@ export default function AdminVideos() {
                         )}
                       </TableCell>
                       <TableCell className="text-right">
-                        <div className="flex gap-2 justify-end">
+                        <div className="flex gap-1 justify-end">
+                          {video.muxAssetId && video.duration && (
+                            <>
+                              <VideoChaptersEditor
+                                videoId={video.id}
+                                existingChapters={video.chapters}
+                                videoDuration={video.duration}
+                                onSuccess={() =>
+                                  queryClient.invalidateQueries({
+                                    queryKey: ["admin-videos"],
+                                  })
+                                }
+                              />
+                              <VideoTranscriptManager
+                                videoId={video.id}
+                                muxAssetId={video.muxAssetId}
+                                existingSubtitles={video.subtitles}
+                                onSuccess={() =>
+                                  queryClient.invalidateQueries({
+                                    queryKey: ["admin-videos"],
+                                  })
+                                }
+                              />
+                            </>
+                          )}
                           <Button
                             variant="ghost"
                             size="icon"

@@ -5,7 +5,10 @@
  */
 
 import { Timestamp } from 'firebase/firestore';
-import { VideoCategory, VideoAccessLevel } from '@/lib/mux/config';
+import { VideoCategory as VideoCategoryType, VideoAccessLevel } from '@/lib/mux/config';
+
+// Export VideoCategory type
+export type VideoCategory = VideoCategoryType;
 
 export interface Video {
   id: string;

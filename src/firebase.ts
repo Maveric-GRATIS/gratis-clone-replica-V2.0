@@ -29,4 +29,4 @@ const functions = getFunctions(app);
 const storage = getStorage(app);
 const analytics = getAnalytics(app);
 
-export { auth, db, functions, storage, analytics };
+export { app, auth, db, functions, storage, analytics };

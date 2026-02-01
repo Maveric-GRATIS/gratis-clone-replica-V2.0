@@ -7,14 +7,9 @@
 import {
   CreateVideoInput,
   UpdateVideoInput,
-  VideoUploadProgress,
-  LiveStream
 } from '@/types/video';
-import { getFunctions, httpsCallable } from 'firebase/functions';
-import { app } from '@/firebase';
-
-// Initialize Firebase Functions
-const functions = getFunctions(app);
+import { functions } from '@/firebase';
+import { httpsCallable } from 'firebase/functions';
 
 /**
  * Create a Mux video asset from a URL
@@ -40,6 +35,9 @@ export const createAssetFromUrl = async (
   });
 
   const data = result.data as any;
+  return {
+    assetId: data.asset_id,
+    playbackId: data.playback_id,
   };
 };
 
@@ -168,29 +166,7 @@ export const createLiveStream = async (
   streamKey: string;
   playbackId: string;
 }> => {
-  const response = await fetch('/api/mux/createLiveStream', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      playback_policy: params.accessLevel === 'public' ? 'public' : 'signed',
-      new_asset_settings: params.recordingEnabled
-        ? {
-            playback_policy: [params.accessLevel === 'public' ? 'public' : 'signed'],
-          }
-        : undefined,
-      reconnect_window: 60,
-      reduced_latency: true,
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to create live stream');
-  }
-
-  const data = await response.json();
-  returncreateStream = httpsCallable(functions, 'createMuxLiveStream');
+  const createStream = httpsCallable(functions, 'createMuxLiveStream');
 
   const result = await createStream({
     playback_policy: params.accessLevel === 'public' ? 'public' : 'signed',
@@ -226,19 +202,21 @@ export const getLiveStream = async (streamId: string) => {
 export const deleteLiveStream = async (streamId: string) => {
   const deleteStream = httpsCallable(functions, 'deleteMuxLiveStream');
   const result = await deleteStream({ stream_id: streamId });
-  return result.data
-  if (!response.ok) {
-    throw new Error('Failed to add chapters');
-  }
-
-  return response.json();
+  return result.data;
 };
 
 /**
- * Add subtitles/transcripts to a video
+ * Add chapters/timestamps to a video
  */
-export interface AddSubtitlesParams {
-  assetId: string;
+export interface VideoChapter {
+  startTime: number; // seconds
+  title: string;
+}
+
+export const addVideoChapters = async (
+  assetId: string,
+  chapters: VideoChapter[]
+) => {
   // Chapters are stored in Firestore, not directly in Mux
   // They will be used by the video player UI
   return { success: true, chapters };
@@ -283,4 +261,6 @@ export const generateSignedPlaybackUrl = async (
     expires_in: expiresIn,
   });
 
-  const data = result.data as any
+  const data = result.data as any;
+  return data.signed_url;
+};

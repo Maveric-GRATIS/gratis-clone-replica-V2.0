@@ -1,23 +1,37 @@
-
-import { useState } from 'react';
-import { AdminLayout } from '@/components/admin/AdminLayout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { db } from '@/firebase';
-import { 
-  collection, 
-  getDocs, 
-  orderBy, 
-  doc, 
-  updateDoc, 
-  deleteDoc 
-} from 'firebase/firestore';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Plus, Edit, Trash, Eye, EyeOff } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { db } from "@/firebase";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
+import { toast } from "sonner";
+import { VideoUploadDialog } from "@/components/admin/VideoUploadDialog";
 
 interface Video {
   id: string;
@@ -31,49 +45,59 @@ interface Video {
 
 export default function AdminVideos() {
   const queryClient = useQueryClient();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { data: videos, isLoading } = useQuery<Video[], Error>({
-    queryKey: ['admin-videos'],
+    queryKey: ["admin-videos"],
     queryFn: async () => {
-      const videosCollection = collection(db, 'videos');
-      const q = query(videosCollection, orderBy('created_at', 'desc'));
+      const videosCollection = collection(db, "videos");
+      const q = query(videosCollection, orderBy("created_at", "desc"));
       const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Video));
-    }
+      return snapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() }) as Video,
+      );
+    },
   });
 
   const togglePublished = useMutation({
-    mutationFn: async ({ id, published }: { id: string; published: boolean }) => {
-      const videoRef = doc(db, 'videos', id);
+    mutationFn: async ({
+      id,
+      published,
+    }: {
+      id: string;
+      published: boolean;
+    }) => {
+      const videoRef = doc(db, "videos", id);
       await updateDoc(videoRef, { published: !published });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-videos'] });
-      toast.success('Video status updated');
+      queryClient.invalidateQueries({ queryKey: ["admin-videos"] });
+      toast.success("Video status updated");
     },
     onError: () => {
-      toast.error('Failed to update video status');
-    }
+      toast.error("Failed to update video status");
+    },
   });
 
   const deleteVideo = useMutation({
     mutationFn: async (id: string) => {
-      const videoRef = doc(db, 'videos', id);
+      const videoRef = doc(db, "videos", id);
       await deleteDoc(videoRef);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-videos'] });
-      toast.success('Video deleted');
+      queryClient.invalidateQueries({ queryKey: ["admin-videos"] });
+      toast.success("Video deleted");
     },
     onError: () => {
-      toast.error('Failed to delete video');
-    }
+      toast.error("Failed to delete video");
+    },
   });
 
-  const filteredVideos = videos?.filter(video =>
-    video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (video.category && video.category.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredVideos = videos?.filter(
+    (video) =>
+      video.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (video.category &&
+        video.category.toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
   return (
@@ -84,10 +108,11 @@ export default function AdminVideos() {
             <h1 className="text-3xl font-bold text-foreground">Videos</h1>
             <p className="text-muted-foreground">Manage ImpactTV content</p>
           </div>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Add Video
-          </Button>
+          <VideoUploadDialog
+            onSuccess={() =>
+              queryClient.invalidateQueries({ queryKey: ["admin-videos"] })
+            }
+          />
         </div>
 
         <Card>
@@ -107,9 +132,13 @@ export default function AdminVideos() {
             </div>
 
             {isLoading ? (
-              <p className="text-center text-muted-foreground py-8">Loading videos...</p>
+              <p className="text-center text-muted-foreground py-8">
+                Loading videos...
+              </p>
             ) : filteredVideos?.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">No videos found</p>
+              <p className="text-center text-muted-foreground py-8">
+                No videos found
+              </p>
             ) : (
               <Table>
                 <TableHeader>
@@ -125,27 +154,46 @@ export default function AdminVideos() {
                 <TableBody>
                   {filteredVideos?.map((video) => (
                     <TableRow key={video.id}>
-                      <TableCell className="font-medium">{video.title}</TableCell>
-                      <TableCell>
-                        {video.category && <Badge variant="outline">{video.category}</Badge>}
+                      <TableCell className="font-medium">
+                        {video.title}
                       </TableCell>
-                      <TableCell>{video.views_count?.toLocaleString() || 0}</TableCell>
                       <TableCell>
-                        <Badge variant={video.published ? 'default' : 'secondary'}>
-                          {video.published ? 'Published' : 'Draft'}
+                        {video.category && (
+                          <Badge variant="outline">{video.category}</Badge>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {video.views_count?.toLocaleString() || 0}
+                      </TableCell>
+                      <TableCell>
+                        <Badge
+                          variant={video.published ? "default" : "secondary"}
+                        >
+                          {video.published ? "Published" : "Draft"}
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {video.featured && <Badge variant="default">Featured</Badge>}
+                        {video.featured && (
+                          <Badge variant="default">Featured</Badge>
+                        )}
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex gap-2 justify-end">
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => togglePublished.mutate({ id: video.id, published: video.published })}
+                            onClick={() =>
+                              togglePublished.mutate({
+                                id: video.id,
+                                published: video.published,
+                              })
+                            }
                           >
-                            {video.published ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                            {video.published ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
                           </Button>
                           <Button variant="ghost" size="icon">
                             <Edit className="h-4 w-4" />

@@ -21,6 +21,7 @@ import {
 import { EventRegistration } from "@/components/events/EventRegistration";
 import { AddToCalendar } from "@/components/events/AddToCalendar";
 import { EventWaitlist } from "@/components/events/EventWaitlist";
+import { VirtualEventJoin } from "@/components/events/VirtualEventJoin";
 import {
   Calendar,
   MapPin,
@@ -631,6 +632,15 @@ export default function EventDetail() {
 
             {/* Sidebar */}
             <div className="space-y-6">
+              {/* Virtual Event Join (if virtual/hybrid) */}
+              {(event.format === "virtual" || event.format === "hybrid") && (
+                <VirtualEventJoin
+                  event={event as unknown as Event}
+                  userRegistered={false} // TODO: Check if user is registered
+                  userTicketId={undefined}
+                />
+              )}
+
               {/* Registration Card */}
               <Card className="sticky top-4">
                 <CardHeader>

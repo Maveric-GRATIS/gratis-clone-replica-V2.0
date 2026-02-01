@@ -5,6 +5,9 @@ import Stripe from "stripe";
 
 admin.initializeApp();
 
+// Export Mux functions
+export * from "./mux-functions";
+
 // Initialize Stripe
 const stripe = new Stripe(functions.config().stripe.secret_key, {
   apiVersion: "2023-10-16",

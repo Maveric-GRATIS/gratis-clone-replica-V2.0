@@ -4,6 +4,7 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
+  "rootDirectory": "gratis-clone-replica-V2.0",
   "rewrites": [
     {
       "source": "/(.*)",

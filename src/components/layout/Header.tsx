@@ -390,6 +390,7 @@ const MENU: MenuEntry[] = [
     items: [
       { to: "/community", label: "Community" },
       { to: "/leaderboard", label: "Leaderboard" },
+      { to: "/volunteer", label: "Volunteer" },
       { to: "/partners", label: "Partners" },
       { to: "/corporate", label: "Corporate" },
       { to: "/press", label: "Press & Media" },
@@ -400,6 +401,8 @@ const MENU: MenuEntry[] = [
       { to: "/ngo-application", label: "NGO Application" },
       { to: "/contact", label: "Contact" },
       { to: "/faq", label: "FAQ" },
+      { to: "/part8-test", label: "Part 8 Features" },
+      { to: "/part9-test", label: "Part 9 Features" },
     ],
     megaMenu: {
       sections: [

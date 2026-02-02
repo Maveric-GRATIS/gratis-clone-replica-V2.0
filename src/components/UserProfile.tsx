@@ -24,6 +24,7 @@ import {
   MessageCircle,
   Trophy,
   Headphones,
+  Bell,
 } from "lucide-react";
 
 export default function UserProfile() {
@@ -140,6 +141,17 @@ export default function UserProfile() {
         <DropdownMenuItem onClick={() => navigate("/wishlist")}>
           <Heart className="mr-2 h-4 w-4" />
           <span>Wishlist</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => navigate("/settings/notifications")}>
+          <Bell className="mr-2 h-4 w-4" />
+          <span>Notifications</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => navigate("/settings/push-notifications")}
+        >
+          <Bell className="mr-2 h-4 w-4" />
+          <span>Push Notifications</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate("/profile")}>
           <User className="mr-2 h-4 w-4" />

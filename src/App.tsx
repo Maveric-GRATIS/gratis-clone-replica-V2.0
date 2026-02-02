@@ -150,6 +150,12 @@ import GamificationProfile from "./pages/GamificationProfile";
 import SupportTickets from "./pages/SupportTickets";
 import Leaderboard from "./pages/Leaderboard";
 import AdminSupportDashboard from "./pages/AdminSupportDashboard";
+// Part 9: Push Notifications, A/B Testing, Analytics, Volunteers
+import PushNotificationSettings from "./pages/PushNotificationSettings";
+import ABTestingDashboard from "./pages/ABTestingDashboard";
+import AnalyticsDashboard from "./pages/AnalyticsDashboard";
+import VolunteerOpportunities from "./pages/VolunteerOpportunities";
+import Part9Test from "./pages/Part9Test";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -639,6 +645,34 @@ const AppContent = () => {
                 </ProtectedRoute>
               }
             />
+
+            {/* Part 9: Push Notifications, A/B Testing, Analytics, Volunteers */}
+            <Route
+              path="/settings/push-notifications"
+              element={
+                <ProtectedRoute requireAuth>
+                  <PushNotificationSettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/experiments"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <ABTestingDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/analytics-advanced"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AnalyticsDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/volunteer" element={<VolunteerOpportunities />} />
+            <Route path="/part9-test" element={<Part9Test />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

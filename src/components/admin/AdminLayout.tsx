@@ -144,6 +144,8 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         { name: "Overview", href: "/admin/analytics" },
         { name: "Traffic", href: "/admin/analytics/traffic" },
         { name: "Impact", href: "/admin/analytics/impact" },
+        { name: "Advanced Analytics", href: "/admin/analytics-advanced" },
+        { name: "Experiments", href: "/admin/experiments" },
       ],
     },
     {

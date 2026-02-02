@@ -141,6 +141,8 @@ export default function Footer() {
             { label: "Team (Programs)", to: "/tribe/team" },
             { label: "Corporate Partnerships", to: "/corporate" },
             { label: "Our Impact", to: "/impact" },
+            { label: "Impact Projects", to: "/impact/projects" },
+            { label: "Referral Program", to: "/referrals" },
             { label: "Partner Application", to: "/ngo-application" },
           ]}
         />

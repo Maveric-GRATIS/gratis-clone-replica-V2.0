@@ -391,6 +391,7 @@ const MENU: MenuEntry[] = [
       { to: "/corporate", label: "Corporate" },
       { to: "/press", label: "Press & Media" },
       { to: "/impact", label: "Our Impact" },
+      { to: "/impact/projects", label: "Impact Projects" },
       { to: "/events", label: "Events" },
       { to: "/videos", label: "Videos" },
       { to: "/ngo-application", label: "NGO Application" },

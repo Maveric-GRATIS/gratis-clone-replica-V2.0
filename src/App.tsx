@@ -117,6 +117,9 @@ import NGOApplication from "./pages/NGOApplication";
 import SocialDemo from "./pages/SocialDemo";
 import RouteTest from "./pages/RouteTest";
 import Community from "./pages/Community";
+import ImpactProjects from "./pages/ImpactProjects";
+import ProjectDetail from "./pages/ProjectDetail";
+import Referrals from "./pages/Referrals";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -178,6 +181,8 @@ const AppContent = () => {
             <Route path="/corporate" element={<Corporate />} />
             <Route path="/press" element={<Press />} />
             <Route path="/impact" element={<Impact />} />
+            <Route path="/impact/projects" element={<ImpactProjects />} />
+            <Route path="/impact/projects/:slug" element={<ProjectDetail />} />
             <Route path="/ngo-application" element={<NGOApplication />} />
             <Route path="/community" element={<Community />} />
             <Route path="/social-demo" element={<SocialDemo />} />
@@ -272,6 +277,7 @@ const AppContent = () => {
             <Route path="/dashboard/bottles" element={<DashboardBottles />} />
             <Route path="/dashboard/vote" element={<DashboardVote />} />
             <Route path="/dashboard/settings" element={<DashboardSettings />} />
+            <Route path="/referrals" element={<Referrals />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:userId" element={<Profile />} />

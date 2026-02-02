@@ -116,6 +116,7 @@ import Impact from "./pages/Impact";
 import NGOApplication from "./pages/NGOApplication";
 import SocialDemo from "./pages/SocialDemo";
 import RouteTest from "./pages/RouteTest";
+import Community from "./pages/Community";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -178,6 +179,7 @@ const AppContent = () => {
             <Route path="/press" element={<Press />} />
             <Route path="/impact" element={<Impact />} />
             <Route path="/ngo-application" element={<NGOApplication />} />
+            <Route path="/community" element={<Community />} />
             <Route path="/social-demo" element={<SocialDemo />} />
             <Route path="/route-test" element={<RouteTest />} />
             <Route path="/tribe" element={<Tribe />} />
@@ -272,6 +274,7 @@ const AppContent = () => {
             <Route path="/dashboard/settings" element={<DashboardSettings />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:userId" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
 
             {/* Events Routes */}

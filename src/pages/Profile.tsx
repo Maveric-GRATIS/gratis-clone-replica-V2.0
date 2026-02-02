@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useProfile } from "@/hooks/useProfile";
 import {
   Card,
@@ -29,15 +29,20 @@ import {
 import { toast } from "sonner";
 
 export default function Profile() {
+  const { userId } = useParams<{ userId?: string }>();
   const { user, loading: authLoading } = useAuth();
   const { profile, loading: profileLoading } = useProfile();
   const navigate = useNavigate();
 
+  // If viewing someone else's profile (userId param present), show read-only view
+  const isViewingOtherProfile = userId && userId !== user?.uid;
+
   useEffect(() => {
-    if (!authLoading && !user) {
+    // Only redirect to auth if viewing own profile and not logged in
+    if (!userId && !authLoading && !user) {
       navigate("/auth");
     }
-  }, [user, authLoading, navigate]);
+  }, [userId, user, authLoading, navigate]);
 
   if (authLoading || profileLoading) {
     return (
@@ -47,8 +52,34 @@ export default function Profile() {
     );
   }
 
-  if (!user) {
+  // If no userId param and not logged in, return null (redirect will happen)
+  if (!userId && !user) {
     return null;
+  }
+
+  // For viewing other profiles, show a placeholder message for now
+  if (isViewingOtherProfile) {
+    return (
+      <>
+        <SEO title="User Profile" description="View user profile on GRATIS" />
+        <PageHero
+          title="User Profile"
+          subtitle="View community member profile"
+          compact
+        />
+        <div className="container py-12 text-center">
+          <p className="text-lg text-muted-foreground">
+            Viewing profile for user: {userId}
+          </p>
+          <p className="text-sm text-muted-foreground mt-4">
+            Full profile viewing features coming soon!
+          </p>
+          <Button onClick={() => navigate("/community")} className="mt-6">
+            Back to Community
+          </Button>
+        </div>
+      </>
+    );
   }
 
   const displayName =

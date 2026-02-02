@@ -386,6 +386,7 @@ const MENU: MenuEntry[] = [
   {
     label: "MORE",
     items: [
+      { to: "/community", label: "Community" },
       { to: "/partners", label: "Partners" },
       { to: "/corporate", label: "Corporate" },
       { to: "/press", label: "Press & Media" },

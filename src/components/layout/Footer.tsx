@@ -132,6 +132,7 @@ export default function Footer() {
           links={[
             { label: "Contact", to: "/contact" },
             { label: "FAQ", to: "/faq" },
+            { label: "Community", to: "/community" },
             { label: "Organization (NGO)", to: "/tribe" },
             { label: "News", to: "/impact-tv" },
             { label: "Network (Partners)", to: "/partners" },

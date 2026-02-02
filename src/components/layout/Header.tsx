@@ -222,6 +222,7 @@ const MENU: MenuEntry[] = [
   {
     label: "TRIBE",
     items: [
+      { to: "/tribe", label: "About TRIBE" },
       { to: "/tribe/heritage", label: "Heritage" },
       { to: "/tribe/ethics", label: "Ethics" },
       { to: "/tribe/accountability", label: "Accountability" },
@@ -229,6 +230,7 @@ const MENU: MenuEntry[] = [
       { to: "/tribe/standards", label: "Standards" },
       { to: "/tribe/responsibility", label: "Responsibility" },
       { to: "/tribe/transparency", label: "Transparency" },
+      { to: "/tribe/signup", label: "Join TRIBE", badge: "Membership" },
     ],
     megaMenu: {
       sections: [
@@ -236,6 +238,11 @@ const MENU: MenuEntry[] = [
           title: "About Us - HEART",
           description: "Heritage, Ethics, Actions, Responsibility, Trust",
           links: [
+            {
+              to: "/tribe",
+              label: "About TRIBE",
+              description: "Learn about our mission",
+            },
             {
               to: "/tribe/heritage",
               label: "Heritage",
@@ -252,6 +259,11 @@ const MENU: MenuEntry[] = [
               description: "Verified impact tracking",
             },
             { to: "/tribe/team", label: "Team", description: "Meet the crew" },
+          ],
+        },
+        {
+          title: "Transparency & Trust",
+          links: [
             {
               to: "/tribe/standards",
               label: "Standards",
@@ -266,6 +278,12 @@ const MENU: MenuEntry[] = [
               to: "/tribe/transparency",
               label: "Transparency",
               description: "Open books & data",
+            },
+            {
+              to: "/tribe/signup",
+              label: "Join TRIBE",
+              description: "Become a member",
+              badge: "Membership",
             },
           ],
         },
@@ -363,6 +381,79 @@ const MENU: MenuEntry[] = [
         link: "/spark/verve",
         badge: "Start Today",
       },
+    },
+  },
+  {
+    label: "MORE",
+    items: [
+      { to: "/partners", label: "Partners" },
+      { to: "/corporate", label: "Corporate" },
+      { to: "/press", label: "Press & Media" },
+      { to: "/impact", label: "Our Impact" },
+      { to: "/events", label: "Events" },
+      { to: "/videos", label: "Videos" },
+      { to: "/ngo-application", label: "NGO Application" },
+      { to: "/contact", label: "Contact" },
+      { to: "/faq", label: "FAQ" },
+    ],
+    megaMenu: {
+      sections: [
+        {
+          title: "Resources",
+          links: [
+            {
+              to: "/partners",
+              label: "Partners",
+              description: "Our network of changemakers",
+            },
+            {
+              to: "/corporate",
+              label: "Corporate Partnerships",
+              description: "Business collaboration opportunities",
+            },
+            {
+              to: "/press",
+              label: "Press & Media",
+              description: "Press releases and media kit",
+            },
+            {
+              to: "/impact",
+              label: "Our Impact",
+              description: "Real-time impact dashboard",
+            },
+          ],
+        },
+        {
+          title: "Connect",
+          links: [
+            {
+              to: "/events",
+              label: "Events",
+              description: "Upcoming events and gatherings",
+            },
+            {
+              to: "/videos",
+              label: "Videos",
+              description: "Watch our impact stories",
+            },
+            {
+              to: "/ngo-application",
+              label: "NGO Application",
+              description: "Apply to receive support",
+            },
+            {
+              to: "/contact",
+              label: "Contact",
+              description: "Get in touch with us",
+            },
+            {
+              to: "/faq",
+              label: "FAQ",
+              description: "Frequently asked questions",
+            },
+          ],
+        },
+      ],
     },
   },
 ];

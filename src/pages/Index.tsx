@@ -214,6 +214,33 @@ export default function Index() {
       <LiveStatsBar />
 
       <main className="space-y-0 overflow-x-hidden max-w-full">
+        {/* ===== PRODUCT CAROUSEL - MOVED UP ===== */}
+        <ProductCarousel />
+
+        {/* Product Features with Stagger Animation */}
+        <section className="bg-muted/30 py-20">
+          <div className="container mx-auto px-4">
+            <FadeInWhenVisible>
+              <ProductFeatures
+                features={waterFeatures}
+                title={t("home.whyChoose")}
+                subtitle={t("home.whyChooseSubtitle")}
+              />
+              <div className="text-center mt-12">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-electric-blue text-white hover:bg-electric-blue/90"
+                >
+                  <Link to="/hydration">
+                    Shop Water Bottles <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </FadeInWhenVisible>
+          </div>
+        </section>
+
         {/* ===== 4-STEP ANIMATED CARDS (HOW IT WORKS) ===== */}
         <section className="py-24 bg-background relative overflow-hidden">
           {/* Background Pattern */}
@@ -544,33 +571,6 @@ export default function Index() {
                 </Button>
               </motion.div>
             </div>
-          </div>
-        </section>
-
-        {/* Product Carousel - Primary Focus */}
-        <ProductCarousel />
-
-        {/* Product Features with Stagger Animation */}
-        <section className="bg-muted/30 py-20">
-          <div className="container mx-auto px-4">
-            <FadeInWhenVisible>
-              <ProductFeatures
-                features={waterFeatures}
-                title={t("home.whyChoose")}
-                subtitle={t("home.whyChooseSubtitle")}
-              />
-              <div className="text-center mt-12">
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-electric-blue text-white hover:bg-electric-blue/90"
-                >
-                  <Link to="/hydration">
-                    Shop Water Bottles <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </FadeInWhenVisible>
           </div>
         </section>
 

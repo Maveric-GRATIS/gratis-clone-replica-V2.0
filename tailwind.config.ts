@@ -12,12 +12,29 @@ export default {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '1rem',
 			screens: {
+				sm: '640px',
+				md: '768px',
+				lg: '1024px',
+				xl: '1280px',
 				'2xl': '1400px'
 			}
 		},
 		extend: {
+			fontFamily: {
+				heading: ['var(--font-heading)', 'sans-serif'],
+				body: ['var(--font-body)', 'sans-serif'],
+				mono: ['var(--font-mono)', 'monospace'],
+			},
+			fontSize: {
+				'display-2xl': ['4.5rem', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '700' }],
+				'display-xl': ['3.75rem', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '700' }],
+				'display-lg': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.02em', fontWeight: '700' }],
+				'display-md': ['2.25rem', { lineHeight: '1.2', letterSpacing: '-0.01em', fontWeight: '700' }],
+				'display-sm': ['1.875rem', { lineHeight: '1.3', letterSpacing: '-0.01em', fontWeight: '600' }],
+				'display-xs': ['1.5rem', { lineHeight: '1.4', fontWeight: '600' }],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -76,6 +93,11 @@ export default {
 				'warning': '#FFB300',
 				'error': '#FF1744',
 				'info': '#00B0FF',
+				// Surface variants
+				'surface': {
+					DEFAULT: '#FFFFFF',
+					dark: '#1A1A1A',
+				},
 			},
 			spacing: {
 				'18': '4.5rem',
@@ -99,6 +121,11 @@ export default {
 			backgroundImage: {
 				'gradient-gratis': 'linear-gradient(135deg, #C1FF00 0%, #00AFFF 50%, #FF0077 100%)',
 				'gradient-dark': 'linear-gradient(180deg, #0D0D0D 0%, #1A1A1A 100%)',
+				'gradient-radial': 'radial-gradient(ellipse at center, var(--tw-gradient-stops))',
+			},
+			transitionTimingFunction: {
+				'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+				'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -166,6 +193,12 @@ export default {
 					'0%': { opacity: '0', transform: 'translateX(-20px)' },
 					'100%': { opacity: '1', transform: 'translateX(0)' },
 				},
+				'gradient-xy': {
+					'0%, 100%': { 'background-position': '0% 0%' },
+					'25%': { 'background-position': '100% 0%' },
+					'50%': { 'background-position': '100% 100%' },
+					'75%': { 'background-position': '0% 100%' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -182,6 +215,7 @@ export default {
 				'fade-in-down': 'fade-in-down 0.5s ease-out',
 				'gradient-x': 'gradient-x 3s ease infinite',
 				'gradient-y': 'gradient-y 3s ease infinite',
+				'gradient-xy': 'gradient-xy 3s ease infinite',
 				'pulse-slow': 'pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 				'bounce-slow': 'bounce 2s infinite',
 				'spin-slow': 'spin 3s linear infinite',
@@ -190,5 +224,8 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/typography"),
+	],
 } satisfies Config;

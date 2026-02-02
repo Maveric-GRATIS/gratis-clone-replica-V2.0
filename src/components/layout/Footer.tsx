@@ -136,14 +136,24 @@ export default function Footer() {
             { label: "News", to: "/impact-tv" },
             { label: "Network (Partners)", to: "/partners" },
             { label: "Employment (Careers)", to: "/spark/enlist" },
-            { label: "Communications (Press & Media)", to: "/contact" },
+            { label: "Communications (Press & Media)", to: "/press" },
             { label: "Team (Programs)", to: "/tribe/team" },
+            { label: "Corporate Partnerships", to: "/corporate" },
+            { label: "Our Impact", to: "/impact" },
+            { label: "Partner Application", to: "/ngo-application" },
           ]}
         />
       </div>
       <div className="border-t border-border">
-        <div className="container py-6 text-xs text-foreground/60">
-          © {currentYear} G.R.A.T.I.S. Empower Change with Every Pack.
+        <div className="container py-6 text-xs text-foreground/60 flex items-center justify-between">
+          <span>
+            © {currentYear} G.R.A.T.I.S. Empower Change with Every Pack.
+          </span>
+          {process.env.NODE_ENV === "development" && (
+            <Link to="/route-test" className="text-primary hover:underline">
+              🧪 Route Test
+            </Link>
+          )}
         </div>
       </div>
     </footer>

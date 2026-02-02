@@ -110,6 +110,12 @@ import AdminSettings from "./pages/admin/Settings";
 import AdminSettingsIntegrations from "./pages/admin/SettingsIntegrations";
 import Partners from "./pages/Partners";
 import CollectionDetail from "./pages/CollectionDetail";
+import Corporate from "./pages/Corporate";
+import Press from "./pages/Press";
+import Impact from "./pages/Impact";
+import NGOApplication from "./pages/NGOApplication";
+import SocialDemo from "./pages/SocialDemo";
+import RouteTest from "./pages/RouteTest";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -168,6 +174,12 @@ const AppContent = () => {
             <Route path="/fu" element={<FU />} />
             <Route path="/arcane" element={<Arcane />} />
             <Route path="/partners" element={<Partners />} />
+            <Route path="/corporate" element={<Corporate />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/impact" element={<Impact />} />
+            <Route path="/ngo-application" element={<NGOApplication />} />
+            <Route path="/social-demo" element={<SocialDemo />} />
+            <Route path="/route-test" element={<RouteTest />} />
             <Route path="/tribe" element={<Tribe />} />
             <Route path="/tribe/heritage" element={<Heritage />} />
             <Route path="/tribe/ethics" element={<Ethics />} />

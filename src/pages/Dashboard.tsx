@@ -43,6 +43,7 @@ import { ClaimBottleCTA } from "@/components/dashboard/ClaimBottleCTA";
 import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { ImpactSummary } from "@/components/dashboard/ImpactSummary";
 import { SubscriptionManagement } from "@/components/subscription/SubscriptionManagement";
+import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { useEffect, useState } from "react";
 
 interface Order {
@@ -181,6 +182,7 @@ export default function Dashboard() {
         title={`Welcome Back${userData.firstName ? ", " + userData.firstName : ""}!`}
         subtitle="Your GRATIS Impact Dashboard"
       />
+      <DashboardNav />
       <div className="bg-background pb-16">
         <div className="container max-w-6xl mx-auto px-4 space-y-8">
           {/* Quick Stats Cards */}

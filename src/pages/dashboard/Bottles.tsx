@@ -1,4 +1,5 @@
 import { useAuth } from "@/contexts/AuthContext";
+import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { db } from "@/firebase";
 import {
   collection,

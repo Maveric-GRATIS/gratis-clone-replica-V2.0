@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { db } from "@/firebase";
 import { doc, updateDoc, deleteDoc, getDoc, setDoc } from "firebase/firestore";
 import {
@@ -312,6 +313,7 @@ export default function Settings() {
         title="Settings"
         subtitle="Manage your account and preferences"
       />
+      <DashboardNav />
 
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">

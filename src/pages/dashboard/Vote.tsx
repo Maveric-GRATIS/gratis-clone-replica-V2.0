@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { db } from "@/firebase";
 import {
   collection,
@@ -126,6 +127,7 @@ export default function Vote() {
           title="Vote on Impact"
           subtitle="Shape where GRATIS donations go"
         />
+        <DashboardNav />
 
         <div className="bg-background pb-16">
           <div className="container max-w-3xl mx-auto px-4">
@@ -156,6 +158,7 @@ export default function Vote() {
           title="Vote on Impact"
           subtitle="Shape where GRATIS donations go"
         />
+        <DashboardNav />
 
         <div className="bg-background pb-16">
           <div className="container max-w-3xl mx-auto px-4">
@@ -216,6 +219,7 @@ export default function Vote() {
           title="Vote on Impact"
           subtitle="Shape where GRATIS donations go"
         />
+        <DashboardNav />
 
         <div className="bg-background pb-16">
           <div className="container max-w-3xl mx-auto px-4">
@@ -260,6 +264,7 @@ export default function Vote() {
         title="Vote on Impact"
         subtitle="Shape where GRATIS donations go"
       />
+      <DashboardNav />
 
       <div className="bg-background pb-16">
         <div className="container max-w-3xl mx-auto px-4">

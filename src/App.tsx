@@ -122,6 +122,22 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Referrals from "./pages/Referrals";
 import Notifications from "./pages/Notifications";
 import NotificationSettings from "./pages/settings/NotificationSettings";
+// Part 6: Partner System
+import PartnerApplicationPage from "./pages/partners/Apply";
+import ApplicationConfirmation from "./pages/partners/ApplicationConfirmation";
+import AdminApplicationsList from "./pages/admin/partners/ApplicationsList";
+import AdminApplicationReview from "./pages/admin/partners/ApplicationReview";
+import PartnerDashboardLayout from "./components/partner/PartnerDashboardLayout";
+import PartnerDashboard from "./pages/partner/Dashboard";
+import PartnerProjects from "./pages/partner/Projects";
+import PartnerAnalytics from "./pages/partner/Analytics";
+import PartnerDonations from "./pages/partner/Donations";
+import PartnerTeam from "./pages/partner/Team";
+import PartnerReports from "./pages/partner/Reports";
+import PartnerSettings from "./pages/partner/Settings";
+import PartnerNotifications from "./pages/partner/PartnerNotifications";
+import PartnerSupport from "./pages/partner/Support";
+import ProjectForm from "./pages/partner/ProjectForm";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -511,6 +527,56 @@ const AppContent = () => {
                 </ProtectedRoute>
               }
             />
+
+            {/* Part 6: Partner System - Public Pages */}
+            <Route
+              path="/partners/apply"
+              element={<PartnerApplicationPage />}
+            />
+            <Route
+              path="/partners/apply/confirmation"
+              element={<ApplicationConfirmation />}
+            />
+
+            {/* Part 6: Partner System - Admin Pages */}
+            <Route
+              path="/admin/partners/applications"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminApplicationsList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/partners/applications/:id"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminApplicationReview />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Part 6: Partner Dashboard - Protected Area */}
+            <Route
+              path="/partner"
+              element={
+                <ProtectedRoute requireAuth>
+                  <PartnerDashboardLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<PartnerDashboard />} />
+              <Route path="projects" element={<PartnerProjects />} />
+              <Route path="projects/new" element={<ProjectForm />} />
+              <Route path="projects/:id" element={<ProjectForm />} />
+              <Route path="donations" element={<PartnerDonations />} />
+              <Route path="analytics" element={<PartnerAnalytics />} />
+              <Route path="team" element={<PartnerTeam />} />
+              <Route path="reports" element={<PartnerReports />} />
+              <Route path="notifications" element={<PartnerNotifications />} />
+              <Route path="settings" element={<PartnerSettings />} />
+              <Route path="support" element={<PartnerSupport />} />
+            </Route>
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

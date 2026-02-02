@@ -403,6 +403,7 @@ const MENU: MenuEntry[] = [
       { to: "/faq", label: "FAQ" },
       { to: "/part8-test", label: "Part 8 Features" },
       { to: "/part9-test", label: "Part 9 Features" },
+      { to: "/part10-test", label: "Part 10 Features" },
     ],
     megaMenu: {
       sections: [

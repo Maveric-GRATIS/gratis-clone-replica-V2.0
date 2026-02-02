@@ -149,6 +149,16 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       ],
     },
     {
+      name: "Operations",
+      icon: Settings,
+      children: [
+        { name: "Inventory", href: "/admin/inventory" },
+        { name: "Tax Receipts", href: "/admin/tax-receipts" },
+        { name: "Integrations", href: "/admin/integrations" },
+        { name: "White-label", href: "/admin/white-label" },
+      ],
+    },
+    {
       name: "Settings",
       icon: Settings,
       children: [

@@ -156,6 +156,12 @@ import ABTestingDashboard from "./pages/ABTestingDashboard";
 import AnalyticsDashboard from "./pages/AnalyticsDashboard";
 import VolunteerOpportunities from "./pages/VolunteerOpportunities";
 import Part9Test from "./pages/Part9Test";
+// Part 10: Inventory, Tax Receipts, Integrations, White-label
+import InventoryManagement from "./pages/InventoryManagement";
+import TaxReceipts from "./pages/TaxReceipts";
+import IntegrationMarketplace from "./pages/IntegrationMarketplace";
+import WhiteLabelConfig from "./pages/WhiteLabelConfig";
+import Part10Test from "./pages/Part10Test";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -673,6 +679,41 @@ const AppContent = () => {
             />
             <Route path="/volunteer" element={<VolunteerOpportunities />} />
             <Route path="/part9-test" element={<Part9Test />} />
+
+            {/* Part 10: Inventory, Tax Receipts, Integrations, White-label */}
+            <Route
+              path="/admin/inventory"
+              element="{
+                <ProtectedRoute requireAdmin>
+                  <InventoryManagement />
+                </ProtectedRoute>
+              }"
+            />
+            <Route
+              path="/admin/tax-receipts"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <TaxReceipts />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/integrations"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <IntegrationMarketplace />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/white-label"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <WhiteLabelConfig />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/part10-test" element={<Part10Test />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -138,6 +138,13 @@ import PartnerSettings from "./pages/partner/Settings";
 import PartnerNotifications from "./pages/partner/PartnerNotifications";
 import PartnerSupport from "./pages/partner/Support";
 import ProjectForm from "./pages/partner/ProjectForm";
+// Part 7: Discovery, Search, Messaging, PWA
+import PartnersDirectory from "./pages/public/PartnersDirectory";
+import PartnerProfile from "./pages/public/PartnerProfile";
+import MessagingCenter from "./pages/MessagingCenter";
+import OfflinePage from "./pages/Offline";
+import Part7Test from "./pages/Part7Test";
+import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -155,6 +162,7 @@ const AppContent = () => {
       <ScrollProgressBar />
       <OfflineIndicator />
       <CookieConsent />
+      <InstallPrompt />
       {!isAdminPage && <Header />}
       {!isAdminPage && <Cart />}
       {!isAdminPage && <FloatingCartButton />}
@@ -195,7 +203,7 @@ const AppContent = () => {
             <Route path="/theurgy" element={<Theurgy />} />
             <Route path="/fu" element={<FU />} />
             <Route path="/arcane" element={<Arcane />} />
-            <Route path="/partners" element={<Partners />} />
+            {/* Partners route moved to Part 7 section */}
             <Route path="/corporate" element={<Corporate />} />
             <Route path="/press" element={<Press />} />
             <Route path="/impact" element={<Impact />} />
@@ -577,6 +585,26 @@ const AppContent = () => {
               <Route path="settings" element={<PartnerSettings />} />
               <Route path="support" element={<PartnerSupport />} />
             </Route>
+
+            {/* Part 7: Public Partner Directory & Discovery */}
+            <Route path="/partners" element={<PartnersDirectory />} />
+            <Route path="/partners/:slug" element={<PartnerProfile />} />
+
+            {/* Part 7: Messaging System */}
+            <Route
+              path="/messages"
+              element={
+                <ProtectedRoute requireAuth>
+                  <MessagingCenter />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Part 7: PWA Offline Page */}
+            <Route path="/offline" element={<OfflinePage />} />
+
+            {/* Part 7: Test Page */}
+            <Route path="/part7-test" element={<Part7Test />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

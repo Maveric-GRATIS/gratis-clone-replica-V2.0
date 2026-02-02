@@ -25,6 +25,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logoGratis from "@/assets/logo-gratis.png";
 import { MegaMenu, MegaMenuSection } from "./MegaMenu";
 import { SearchModal } from "@/components/SearchModal";
+import { GlobalSearch } from "@/components/search/GlobalSearch";
 import { NotificationCenter } from "@/components/NotificationCenter";
 
 // Navigation structure with mega menu configurations
@@ -466,6 +467,7 @@ export default function Header() {
   const location = useLocation();
   const { totalItems, openCart } = useCart();
   const [showSearch, setShowSearch] = React.useState(false);
+  const [showGlobalSearch, setShowGlobalSearch] = React.useState(false);
 
   const [openMenu, setOpenMenu] = React.useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -625,8 +627,9 @@ export default function Header() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setShowSearch(true)}
+            onClick={() => setShowGlobalSearch(true)}
             className="hidden md:flex"
+            title="Search (⌘K)"
           >
             <Search className="h-5 w-5" />
           </Button>
@@ -788,6 +791,12 @@ export default function Header() {
 
       {/* Search Modal */}
       <SearchModal open={showSearch} onOpenChange={setShowSearch} />
+
+      {/* Global Search (Part 7) */}
+      <GlobalSearch
+        open={showGlobalSearch}
+        onOpenChange={setShowGlobalSearch}
+      />
     </header>
   );
 }

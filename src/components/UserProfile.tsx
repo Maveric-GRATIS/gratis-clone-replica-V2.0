@@ -21,6 +21,7 @@ import {
   LayoutDashboard,
   Heart,
   Shield,
+  MessageCircle,
 } from "lucide-react";
 
 export default function UserProfile() {
@@ -39,7 +40,7 @@ export default function UserProfile() {
     "user.role:",
     user?.role,
     "isAdminUser:",
-    isAdminUser
+    isAdminUser,
   );
 
   if (authLoading) {
@@ -121,6 +122,10 @@ export default function UserProfile() {
         <DropdownMenuItem onClick={() => navigate("/dashboard")}>
           <LayoutDashboard className="mr-2 h-4 w-4" />
           <span>Dashboard</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/messages")}>
+          <MessageCircle className="mr-2 h-4 w-4" />
+          <span>Messages</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate("/wishlist")}>
           <Heart className="mr-2 h-4 w-4" />

@@ -120,6 +120,8 @@ import Community from "./pages/Community";
 import ImpactProjects from "./pages/ImpactProjects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Referrals from "./pages/Referrals";
+import Notifications from "./pages/Notifications";
+import NotificationSettings from "./pages/settings/NotificationSettings";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
@@ -278,10 +280,15 @@ const AppContent = () => {
             <Route path="/dashboard/vote" element={<DashboardVote />} />
             <Route path="/dashboard/settings" element={<DashboardSettings />} />
             <Route path="/referrals" element={<Referrals />} />
+            <Route path="/notifications" element={<Notifications />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/:userId" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
+            <Route
+              path="/settings/notifications"
+              element={<NotificationSettings />}
+            />
 
             {/* Events Routes */}
             <Route path="/events" element={<Events />} />

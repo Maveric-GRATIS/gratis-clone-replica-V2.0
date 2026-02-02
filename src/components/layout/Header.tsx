@@ -25,6 +25,7 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import logoGratis from "@/assets/logo-gratis.png";
 import { MegaMenu, MegaMenuSection } from "./MegaMenu";
 import { SearchModal } from "@/components/SearchModal";
+import { NotificationCenter } from "@/components/NotificationCenter";
 
 // Navigation structure with mega menu configurations
 type SubLink = {
@@ -631,6 +632,7 @@ export default function Header() {
           </Button>
           <ThemeToggle />
           <LanguageSwitcher />
+          <NotificationCenter />
           <Button
             variant="ghost"
             size="icon"

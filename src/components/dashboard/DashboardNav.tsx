@@ -10,6 +10,7 @@ import {
   User,
   Droplet,
   Users,
+  Bell,
 } from "lucide-react";
 
 interface NavItem {
@@ -55,6 +56,11 @@ const NAV_ITEMS: NavItem[] = [
     to: "/referrals",
     label: "Referrals",
     icon: Users,
+  },
+  {
+    to: "/notifications",
+    label: "Notifications",
+    icon: Bell,
   },
   {
     to: "/wishlist",

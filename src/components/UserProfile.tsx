@@ -22,6 +22,8 @@ import {
   Heart,
   Shield,
   MessageCircle,
+  Trophy,
+  Headphones,
 } from "lucide-react";
 
 export default function UserProfile() {
@@ -126,6 +128,14 @@ export default function UserProfile() {
         <DropdownMenuItem onClick={() => navigate("/messages")}>
           <MessageCircle className="mr-2 h-4 w-4" />
           <span>Messages</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/gamification")}>
+          <Trophy className="mr-2 h-4 w-4" />
+          <span>Gamification</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/support")}>
+          <Headphones className="mr-2 h-4 w-4" />
+          <span>Support</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate("/wishlist")}>
           <Heart className="mr-2 h-4 w-4" />

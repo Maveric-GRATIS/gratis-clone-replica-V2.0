@@ -144,6 +144,12 @@ import PartnerProfile from "./pages/public/PartnerProfile";
 import MessagingCenter from "./pages/MessagingCenter";
 import OfflinePage from "./pages/Offline";
 import Part7Test from "./pages/Part7Test";
+import Part8Test from "./pages/Part8Test";
+// Part 8: Gamification, Support, Leaderboards
+import GamificationProfile from "./pages/GamificationProfile";
+import SupportTickets from "./pages/SupportTickets";
+import Leaderboard from "./pages/Leaderboard";
+import AdminSupportDashboard from "./pages/AdminSupportDashboard";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -605,6 +611,34 @@ const AppContent = () => {
 
             {/* Part 7: Test Page */}
             <Route path="/part7-test" element={<Part7Test />} />
+
+            {/* Part 8: Gamification & Community */}
+            <Route
+              path="/gamification"
+              element={
+                <ProtectedRoute requireAuth>
+                  <GamificationProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/support"
+              element={
+                <ProtectedRoute requireAuth>
+                  <SupportTickets />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/part8-test" element={<Part8Test />} />
+            <Route
+              path="/admin/support"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminSupportDashboard />
+                </ProtectedRoute>
+              }
+            />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

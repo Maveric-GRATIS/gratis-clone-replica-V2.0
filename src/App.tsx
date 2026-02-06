@@ -177,6 +177,11 @@ import RoleManager from "./pages/RoleManager";
 import AuditLogViewer from "./pages/AuditLogViewer";
 import Part11Test from "./pages/Part11Test";
 import Part12Test from "./pages/Part12Test";
+import Part13Test from "./pages/Part13Test";
+import EmailLogsPage from "./pages/admin/EmailLogsPage";
+import EmailTemplatesPage from "./pages/admin/EmailTemplatesPage";
+import ErrorTrackingDashboard from "./pages/admin/ErrorTrackingDashboard";
+import MediaManagerPage from "./pages/admin/MediaManagerPage";
 import SystemMonitor from "./pages/SystemMonitor";
 import HealthCheck from "./pages/HealthCheck";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
@@ -215,6 +220,7 @@ const AppContent = () => {
             <Route path="/part6-test" element={<Part6Test />} />
             <Route path="/part11-test" element={<Part11Test />} />
             <Route path="/part12-test" element={<Part12Test />} />
+            <Route path="/part13-test" element={<Part13Test />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/rig" element={<RigStore />} />
             <Route path="/rig/prime-picks" element={<PrimePicks />} />
@@ -511,10 +517,42 @@ const AppContent = () => {
               }
             />
             <Route
+              path="/admin/emails/logs"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <EmailLogsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/emails/templates"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <EmailTemplatesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/admin/notifications"
               element={
                 <ProtectedRoute requireAdmin>
                   <AdminNotifications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/errors"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <ErrorTrackingDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/media"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <MediaManagerPage />
                 </ProtectedRoute>
               }
             />

@@ -135,6 +135,8 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       icon: Mail,
       children: [
         { name: "Email Campaigns", href: "/admin/emails" },
+        { name: "Email Logs", href: "/admin/emails/logs" },
+        { name: "Email Templates", href: "/admin/emails/templates" },
         { name: "Notifications", href: "/admin/notifications" },
       ],
     },
@@ -167,6 +169,8 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         { name: "Role Manager", href: "/admin/roles" },
         { name: "Audit Logs", href: "/admin/audit-logs" },
         { name: "System Monitor", href: "/admin/monitoring" },
+        { name: "Error Tracking", href: "/admin/errors" },
+        { name: "Media Manager", href: "/admin/media" },
       ],
     },
     {

@@ -215,13 +215,14 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       <aside
         className={`
           fixed inset-y-0 left-0 z-50 w-64 bg-card border-r
+          flex flex-col
           transform transition-transform duration-200 ease-in-out
           lg:translate-x-0
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center justify-between px-4 border-b">
+        <div className="h-16 flex items-center justify-between px-4 border-b flex-shrink-0">
           <Link to="/admin" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <span className="font-bold text-primary-foreground">G</span>
@@ -237,7 +238,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 min-h-0">
           {filteredNavigation.map((item) => (
             <div key={item.name}>
               {item.children ? (
@@ -310,7 +311,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t">
+        <div className="p-4 border-t flex-shrink-0">
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">
               <AvatarImage src={profile?.photoURL || undefined} />

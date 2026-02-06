@@ -23,10 +23,23 @@ service cloud.firestore {
       return isAuthenticated() && (getUserRole() == 'marketing' || isAdmin());
     }
 
+    // User roles collection
+    match /user_roles/{roleId} {
+      // Users can read their own roles, admins can read all
+      allow read: if isAuthenticated() && (resource.data.user_id == request.auth.uid || isAdmin());
+
+      // Only admins can create/update/delete roles
+      allow write: if isAdmin();
+    }
+
     // Users collection
     match /users/{userId} {
       // Users can read their own data, admins can read all
       allow read: if isOwner(userId) || isAdmin();
+
+      // TEMPORARY: Allow specific user to set admin role
+      allow create, update: if isAuthenticated()
+                            && request.auth.uid == 'qvPtEb2ZjWc8HHRMU28IToj2KWu2';
 
       // Users can create their own profile on signup
       allow create: if isAuthenticated() && isOwner(userId)

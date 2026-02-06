@@ -1,0 +1,265 @@
+PRIVACY POLICY
+G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change)
+Last Updated: January 14, 2026 | Effective: February 14, 2026
+1. Introduction and Scope
+G.R.A.T.I.S. (Giving Resources to Achieve Transformative and Impactful Change) ("we," "our," "us," or "GRATIS") is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, disclose, retain, and safeguard your personal information when you visit our website (gratis.ngo), use our services, make purchases or donations, or interact with us in any way.
+This Privacy Policy is designed to comply with:
+• The General Data Protection Regulation (GDPR) (EU) 2016/679
+• The Dutch Implementation Act GDPR (Uitvoeringswet AVG)
+• The ePrivacy Directive 2002/58/EC
+• The Dutch Telecommunications Act (Telecommunicatiewet)
+• The California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA)
+• The Virginia Consumer Data Protection Act (VCDPA)
+• The Colorado Privacy Act (CPA)
+• The Connecticut Data Privacy Act (CTDPA)
+• Other applicable US state privacy laws
+• IRS regulations applicable to 501(c)(3) organizations
+By accessing our website or using our services, you acknowledge that you have read and understood this Privacy Policy. If you do not agree with our practices, please do not use our services.
+2. Data Controller Information
+The data controller responsible for your personal data is:
+Stichting G.R.A.T.I.S.
+Registered Address: [Registered Address], Amsterdam, Netherlands
+Chamber of Commerce (KVK): [To be assigned]
+ANBI Status: [Pending/Approved]
+USA Registration: [State Registration Numbers - Pending]
+Data Protection Officer (DPO): privacy@gratis.ngo
+General Inquiries: info@gratis.ngo
+Legal Department: legal@gratis.ngo
+We have appointed a Data Protection Officer (DPO) who is responsible for overseeing questions related to this Privacy Policy. If you have any questions about this Privacy Policy or our privacy practices, please contact our DPO using the contact details above.
+3. Personal Data We Collect
+3.1 Information You Provide Directly
+We collect information that you voluntarily provide to us when you:
+• Create an account or register on our website
+• Make a purchase or donation
+• Subscribe to our newsletter or marketing communications
+• Join our TRIBE membership program
+• Apply for volunteer, employment, or partnership opportunities
+• Submit an NGO partnership application
+• Apply for educational scholarships
+• Participate in surveys, contests, or promotional activities
+• Contact us with inquiries or feedback
+• Post content or engage with our community features
+This information may include:
+CategoryData TypesPurposeIdentity DataFull name, title, date of birth, gender, profile photoAccount creation, verification, personalizationContact DataEmail address, phone number, postal addressCommunications, shipping, customer serviceFinancial DataPayment card details (via Stripe), bank account info for donations, cryptocurrency wallet addressesProcessing purchases and donationsTransaction DataPurchase history, donation history, order details, amounts, datesOrder fulfillment, tax receipts, reportingMembership DataTRIBE tier, subscription dates, benefits used, member IDMembership management, benefits deliveryApplication DataCV/resume, qualifications, references, motivation statementsJob, volunteer, NGO, scholarship applicationsCommunication DataCorrespondence records, feedback, support ticketsCustomer service, improving servicesPreference DataMarketing preferences, communication preferences, languagePersonalization, relevant communicationsUser ContentComments, reviews, forum posts, uploaded mediaCommunity features, social proof3.2 Information Collected Automatically
+When you visit our website, we automatically collect certain information:
+CategoryData TypesCollection MethodDevice DataDevice type, operating system, browser type and version, screen resolutionServer logs, JavaScriptTechnical DataIP address (anonymized after 30 days), unique device identifiersServer logsUsage DataPages visited, time spent, click patterns, scroll depth, referral sourceAnalytics toolsLocation DataCountry, region, city (derived from IP address)Geolocation servicesCookie DataSession identifiers, preferences, authentication tokensCookies and similar technologies3.3 Information from Third Parties
+We may receive information about you from third-party sources:
+• Payment processors (Stripe, PayPal): Transaction confirmation, fraud scores
+• Cryptocurrency processors (Coinbase Commerce): Transaction confirmations
+• Social media platforms: If you connect social accounts or interact with our social media
+• Public databases: For verification of NGO applications
+• Analytics providers: Aggregated demographic information
+3.4 Special Categories of Data
+We do not intentionally collect sensitive personal data (special category data) such as racial or ethnic origin, political opinions, religious beliefs, genetic data, biometric data, health data, or sexual orientation. If such data is inadvertently provided, we will delete it unless you have given explicit consent or processing is necessary for legal compliance.
+4. Legal Basis for Processing (GDPR Article 6)
+We process your personal data only when we have a valid legal basis to do so. The legal bases we rely on include:
+4.1 Performance of Contract (Article 6(1)(b))
+We process data when necessary to perform a contract with you or take steps at your request before entering into a contract:
+• Processing purchases and delivering products
+• Managing your account and membership
+• Providing customer support for orders
+• Processing donation transactions
+• Issuing tax receipts and donation confirmations
+4.2 Consent (Article 6(1)(a))
+We process data based on your freely given, specific, informed, and unambiguous consent:
+• Sending marketing emails and newsletters
+• Placing non-essential cookies (analytics, marketing)
+• Processing applications for special programs
+• Publishing user-generated content with attribution
+You may withdraw consent at any time. Withdrawal does not affect the lawfulness of processing before withdrawal.
+4.3 Legitimate Interests (Article 6(1)(f))
+We process data when necessary for our legitimate interests, provided these are not overridden by your rights:
+• Fraud prevention and security monitoring
+• Improving our website and services
+• Analyzing usage patterns to enhance user experience
+• Defending legal claims
+• Internal administrative purposes
+We conduct balancing tests to ensure our interests do not override your fundamental rights.
+4.4 Legal Obligation (Article 6(1)(c))
+We process data when required by law:
+• Tax compliance and financial reporting (Dutch tax law, IRS requirements)
+• ANBI reporting requirements
+• Responding to lawful requests from authorities
+• Anti-money laundering obligations
+• Consumer protection compliance
+4.5 Public Interest (Article 6(1)(e))
+As a charitable organization, certain processing may be necessary for tasks carried out in the public interest:
+• Reporting on charitable impact and donations
+• Transparency reporting as required for ANBI/501(c)(3) status
+5. How We Use Your Personal Data
+5.1 Service Delivery
+• Process and fulfill orders for products
+• Manage your account and preferences
+• Provide customer support and respond to inquiries
+• Send transactional communications (order confirmations, shipping updates)
+• Process and acknowledge donations
+• Issue tax receipts and donation documentation
+• Administer TRIBE membership benefits
+5.2 Communications
+• Send service-related notices (security alerts, policy updates)
+• Send marketing communications (with consent)
+• Respond to your inquiries and requests
+• Notify you about impact of your donations
+5.3 Improvement and Analytics
+• Analyze website usage and user behavior
+• Improve our products, services, and website functionality
+• Conduct research and analysis for business planning
+• Personalize your experience
+5.4 Security and Legal
+• Detect and prevent fraud, abuse, and security threats
+• Enforce our Terms of Use and other policies
+• Comply with legal obligations and regulatory requirements
+• Establish, exercise, or defend legal claims
+5.5 Charitable Operations
+• Track donation allocation and impact
+• Prepare public transparency reports
+• Manage NGO partner relationships
+• Administer scholarship and grant programs
+6. Data Sharing and Disclosure
+We do not sell your personal data. We share your information only in the following circumstances:
+6.1 Service Providers
+We share data with trusted third-party service providers who assist in operating our business:
+ProviderServiceData SharedLocationSafeguardsFirebase/Google CloudHosting, database, authenticationAccount data, usage dataEU/USSCCs, DPAStripePayment processingPayment data, transaction dataUSPCI-DSS, SCCs, DPAPayPalPayment processingPayment dataUS/EUSCCs, DPACoinbase CommerceCryptocurrency paymentsWallet addresses, transactionsUSSCCs, DPAPrintifyProduct fulfillmentShipping addresses, order detailsEU/USSCCs, DPAGoogle AnalyticsWebsite analyticsAnonymized usage dataUSIP anonymization, SCCsMailchimp/SendGridEmail communicationsEmail addresses, preferencesUSSCCs, DPAHotjarUser experience analyticsAnonymized behavior dataEUDPACloudflareCDN, securityIP addresses, technical dataGlobalSCCs, DPAAll service providers are bound by Data Processing Agreements (DPAs) compliant with GDPR Article 28.
+6.2 Legal and Regulatory Disclosure
+We may disclose your data when required by law or in response to:
+• Valid legal process (subpoenas, court orders, government requests)
+• Requests from law enforcement or regulatory authorities
+• Protection of our legal rights and property
+• Prevention of fraud or illegal activities
+• Emergency situations involving potential harm
+6.3 Business Transfers
+In the event of a merger, acquisition, reorganization, or sale of assets, your personal data may be transferred to the acquiring entity. We will notify you of any such transfer and any choices you may have regarding your data.
+6.4 Charitable Reporting
+As required by ANBI and 501(c)(3) regulations, we may disclose aggregated, anonymized donation data in public reports. Individual donor information is never disclosed without explicit consent, except as required by law.
+6.5 With Your Consent
+We may share your data with third parties when you have given explicit consent to do so.
+7. International Data Transfers
+Your personal data may be transferred to, stored, and processed in countries outside the European Economic Area (EEA), including the United States. When we transfer your data outside the EEA, we ensure appropriate safeguards are in place:
+7.1 Adequacy Decisions
+We may transfer data to countries that the European Commission has determined provide an adequate level of data protection.
+7.2 Standard Contractual Clauses (SCCs)
+For transfers to the United States and other countries without adequacy decisions, we use Standard Contractual Clauses approved by the European Commission (Commission Implementing Decision (EU) 2021/914).
+7.3 Supplementary Measures
+In addition to SCCs, we implement supplementary technical and organizational measures:
+• End-to-end encryption for data in transit
+• Encryption at rest for stored data
+• IP address anonymization
+• Data minimization practices
+• Access controls and audit logging
+• Regular security assessments
+7.4 EU-US Data Privacy Framework
+Where applicable, we work with service providers certified under the EU-US Data Privacy Framework.
+8. Data Retention
+We retain your personal data only for as long as necessary to fulfill the purposes for which it was collected and to comply with legal obligations.
+Data CategoryRetention PeriodLegal BasisAccount dataDuration of account + 2 years after closureContract, legitimate interestsTransaction data7 years from transaction dateDutch tax law (Art. 52 AWR)Donation records7 years from donation dateANBI requirements, Dutch/US tax lawMarketing consentUntil withdrawal + 1 yearDemonstrating complianceCommunication records3 years from last contactLegitimate interests, legal defenseAnalytics data14 months, then anonymizedLegitimate interestsIP addresses30 days, then anonymizedSecurity, fraud preventionJob applicationsUnsuccessful: 4 weeks (or 1 year with consent), Successful: employment duration + 7 yearsLegal obligation, legitimate interestsNGO applicationsDuration of partnership + 7 yearsLegal compliance, audit requirementsScholarship records7 years from award completionLegal compliance, reportingTRIBE membershipMembership duration + 2 yearsContract, legitimate interestsLegal disputesDuration of dispute + 10 yearsLegal defenseAfter the retention period expires, data is securely deleted or anonymized in accordance with our data destruction procedures.
+9. Your Rights Under GDPR
+As a data subject, you have the following rights under the GDPR:
+9.1 Right of Access (Article 15)
+You have the right to obtain confirmation of whether we process your personal data and to receive a copy of that data along with information about how we process it.
+9.2 Right to Rectification (Article 16)
+You have the right to have inaccurate personal data corrected and incomplete data completed.
+9.3 Right to Erasure (Article 17)
+You have the right to request deletion of your personal data in certain circumstances, including when the data is no longer necessary, you withdraw consent, or you object to processing. This right does not apply where we have a legal obligation to retain the data.
+9.4 Right to Restriction (Article 18)
+You have the right to request restriction of processing while we verify accuracy of data, assess an objection, or where processing is unlawful but you prefer restriction over erasure.
+9.5 Right to Data Portability (Article 20)
+You have the right to receive your personal data in a structured, commonly used, machine-readable format (e.g., JSON, CSV) and to transmit that data to another controller.
+9.6 Right to Object (Article 21)
+You have the right to object to processing based on legitimate interests or for direct marketing purposes. For direct marketing, we will stop processing upon your objection.
+9.7 Rights Related to Automated Decision-Making (Article 22)
+You have the right not to be subject to decisions based solely on automated processing that significantly affect you. We do not currently use automated decision-making that produces legal or similarly significant effects.
+9.8 Right to Withdraw Consent (Article 7(3))
+Where processing is based on consent, you have the right to withdraw consent at any time without affecting the lawfulness of processing before withdrawal.
+9.9 Exercising Your Rights
+To exercise any of these rights, please contact us at privacy@gratis.ngo. We will respond to your request within 30 days. We may need to verify your identity before processing your request. There is no fee for exercising your rights unless requests are manifestly unfounded or excessive.
+10. Your Rights Under US State Privacy Laws
+If you are a resident of California, Virginia, Colorado, Connecticut, or other US states with comprehensive privacy laws, you have additional rights:
+10.1 California Rights (CCPA/CPRA)
+• Right to Know: Request disclosure of personal information collected, used, shared, or sold
+• Right to Delete: Request deletion of personal information
+• Right to Correct: Request correction of inaccurate personal information
+• Right to Opt-Out: Opt out of sale or sharing of personal information (we do not sell personal information)
+• Right to Limit: Limit use of sensitive personal information
+• Right to Non-Discrimination: Not be discriminated against for exercising your rights
+California residents may designate an authorized agent to make requests on their behalf.
+10.2 Virginia, Colorado, Connecticut Rights
+Residents of these states have similar rights to access, correct, delete, and obtain a copy of personal data, as well as the right to opt out of targeted advertising and profiling.
+10.3 Do Not Sell My Personal Information
+We do not sell personal information as defined under CCPA/CPRA or other US state privacy laws. We do not share personal information for cross-context behavioral advertising.
+10.4 Exercising US State Rights
+To exercise your rights under US state privacy laws, contact us at privacy@gratis.ngo or call our toll-free number: [To be assigned]. We will verify your identity and respond within the timeframe required by applicable law (generally 45 days).
+11. Cookies and Similar Technologies
+We use cookies and similar technologies to enhance your experience, analyze usage, and deliver relevant content. Please refer to our separate Cookie Policy for detailed information about the cookies we use, their purposes, and how to manage your preferences.
+Key points:
+• Essential cookies are required for website functionality and cannot be disabled
+• Analytics cookies help us understand how visitors use our website
+• Marketing cookies are used to deliver relevant advertisements
+• You can manage cookie preferences through our consent banner or browser settings
+Full Cookie Policy available at: gratis.ngo/legal/cookies
+12. Data Security
+We implement appropriate technical and organizational measures to protect your personal data:
+12.1 Technical Measures
+• TLS/SSL encryption for all data transmission
+• AES-256 encryption for data at rest
+• Firebase security rules and access controls
+• Regular security audits and vulnerability assessments
+• PCI-DSS compliant payment processing (via Stripe)
+• Two-factor authentication for administrative access
+• Intrusion detection and prevention systems
+• DDoS protection (via Cloudflare)
+12.2 Organizational Measures
+• Data protection training for all staff
+• Access granted on a need-to-know basis
+• Confidentiality agreements with all personnel
+• Data Processing Agreements with all processors
+• Regular policy reviews and updates
+• Incident response procedures
+12.3 Data Breach Notification
+In the event of a personal data breach, we will notify the Autoriteit Persoonsgegevens within 72 hours of becoming aware of the breach (as required by GDPR Article 33). If the breach is likely to result in high risk to your rights and freedoms, we will also notify you directly and without undue delay (GDPR Article 34).
+For US operations, we will comply with all applicable state breach notification laws.
+13. Children's Privacy
+Our services are not directed to children under 16 years of age. We do not knowingly collect personal data from children under 16 without verified parental consent. If we discover that we have collected personal data from a child under 16 without appropriate consent, we will delete that information immediately.
+For US operations, we comply with the Children's Online Privacy Protection Act (COPPA) for children under 13.
+If you believe a child has provided us with personal data, please contact us at privacy@gratis.ngo.
+14. Third-Party Links
+Our website may contain links to third-party websites, services, or applications. This Privacy Policy does not apply to those third parties. We encourage you to review the privacy policies of any third-party sites you visit. We are not responsible for the privacy practices or content of third-party sites.
+15. Changes to This Privacy Policy
+We may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal requirements, or for other operational reasons. We will notify you of material changes by:
+• Posting a prominent notice on our website
+• Sending an email notification to account holders
+• Updating the 'Last Updated' date at the top of this policy
+We encourage you to review this Privacy Policy periodically. Continued use of our services after changes constitutes acceptance of the updated policy.
+16. Supervisory Authority and Complaints
+If you have concerns about how we handle your personal data, we encourage you to contact us first so we can try to resolve your concerns.
+You also have the right to lodge a complaint with a supervisory authority. The lead supervisory authority for GRATIS is:
+Autoriteit Persoonsgegevens (Dutch Data Protection Authority)
+Bezuidenhoutseweg 30, 2594 AV The Hague, Netherlands
+Phone: +31 70 888 8500
+Website: https://autoriteitpersoonsgegevens.nl
+If you are located in another EU Member State, you may also contact your local supervisory authority.
+For US residents, you may contact:
+• Federal Trade Commission (FTC): ftc.gov
+• Your state Attorney General's office
+• California Privacy Protection Agency (for CA residents): cppa.ca.gov
+17. Contact Information
+For any questions, concerns, or requests regarding this Privacy Policy or your personal data:
+Data Protection Officer
+Email: privacy@gratis.ngo
+Legal Department
+Email: legal@gratis.ngo
+General Inquiries
+Email: info@gratis.ngo
+Postal Address
+Stichting G.R.A.T.I.S.
+[Registered Address]
+Amsterdam, Netherlands
+18. Governing Law
+This Privacy Policy and any disputes arising from it shall be governed by the laws of the Netherlands, without regard to conflict of law principles. For EU residents, this does not affect your statutory rights under your local consumer protection laws. For US residents, applicable US federal and state privacy laws apply in addition to this policy.
+
+
+END OF PRIVACY POLICY
+Document Version: 2.0 | Stichting G.R.A.T.I.S.
+Stichting G.R.A.T.I.S. - Privacy Policy
+
+Page 1 | CONFIDENTIAL - For Legal Review | gratis.ngo
+

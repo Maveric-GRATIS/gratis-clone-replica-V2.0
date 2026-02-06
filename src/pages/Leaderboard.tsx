@@ -191,7 +191,7 @@ export default function Leaderboard() {
   };
 
   return (
-    <div className="container max-w-4xl mx-auto px-4 py-8">
+    <div className="container max-w-4xl mx-auto px-4 pt-24 pb-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">

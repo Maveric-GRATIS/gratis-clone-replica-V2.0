@@ -25,6 +25,7 @@ import {
   Trophy,
   Headphones,
   Bell,
+  RefreshCw,
 } from "lucide-react";
 
 export default function UserProfile() {
@@ -141,6 +142,10 @@ export default function UserProfile() {
         <DropdownMenuItem onClick={() => navigate("/wishlist")}>
           <Heart className="mr-2 h-4 w-4" />
           <span>Wishlist</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate("/donations/subscribe")}>
+          <RefreshCw className="mr-2 h-4 w-4" />
+          <span>Recurring Donations</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigate("/settings/notifications")}>

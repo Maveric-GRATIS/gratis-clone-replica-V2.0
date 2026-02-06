@@ -122,6 +122,7 @@ export default function Footer() {
             { label: "Privacy Policy", to: "/legal/privacy" },
             { label: "Cookie Policy", to: "/legal/cookies" },
             { label: "Donor Privacy", to: "/legal/donor-privacy" },
+            { label: "Privacy Settings", to: "/privacy" },
             { label: "Accessibility", to: "/legal/accessibility" },
             { label: "Disclaimer", to: "/legal/disclaimer" },
             { label: "Brand Protection", to: "/tribe/standards" },

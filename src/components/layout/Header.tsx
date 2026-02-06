@@ -404,6 +404,8 @@ const MENU: MenuEntry[] = [
       { to: "/part8-test", label: "Part 8 Features" },
       { to: "/part9-test", label: "Part 9 Features" },
       { to: "/part10-test", label: "Part 10 Features" },
+      { to: "/part11-test", label: "Part 11 Enterprise" },
+      { to: "/part12-test", label: "Part 12 DevOps" },
     ],
     megaMenu: {
       sections: [

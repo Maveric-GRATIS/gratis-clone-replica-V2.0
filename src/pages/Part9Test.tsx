@@ -151,7 +151,7 @@ export default function Part9Test() {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto pt-24 pb-12 px-6">
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-3">
           Part 9: Mobile Push, A/B Testing, Analytics & Volunteer

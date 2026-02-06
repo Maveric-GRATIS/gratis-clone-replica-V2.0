@@ -208,7 +208,7 @@ export default function Part10Test() {
   ];
 
   return (
-    <div className="container mx-auto py-8 space-y-8">
+    <div className="container mx-auto pt-24 pb-8 space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full">

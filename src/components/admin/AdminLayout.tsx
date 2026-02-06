@@ -31,6 +31,7 @@ import {
   Mail,
   BarChart3,
   Settings,
+  Shield,
   ChevronDown,
   ChevronRight,
   Menu,
@@ -156,6 +157,16 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         { name: "Tax Receipts", href: "/admin/tax-receipts" },
         { name: "Integrations", href: "/admin/integrations" },
         { name: "White-label", href: "/admin/white-label" },
+      ],
+    },
+    {
+      name: "Enterprise",
+      icon: Shield,
+      children: [
+        { name: "Refund Manager", href: "/admin/refunds" },
+        { name: "Role Manager", href: "/admin/roles" },
+        { name: "Audit Logs", href: "/admin/audit-logs" },
+        { name: "System Monitor", href: "/admin/monitoring" },
       ],
     },
     {

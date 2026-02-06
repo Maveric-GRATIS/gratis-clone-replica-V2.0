@@ -162,6 +162,16 @@ import TaxReceipts from "./pages/TaxReceipts";
 import IntegrationMarketplace from "./pages/IntegrationMarketplace";
 import WhiteLabelConfig from "./pages/WhiteLabelConfig";
 import Part10Test from "./pages/Part10Test";
+import AdvancedAnalyticsDashboard from "./pages/AdvancedAnalyticsDashboard";
+import GDPRComplianceDashboard from "./pages/GDPRComplianceDashboard";
+import SubscriptionManagement from "./pages/SubscriptionManagement";
+import RefundManagement from "./pages/RefundManagement";
+import RoleManager from "./pages/RoleManager";
+import AuditLogViewer from "./pages/AuditLogViewer";
+import Part11Test from "./pages/Part11Test";
+import Part12Test from "./pages/Part12Test";
+import SystemMonitor from "./pages/SystemMonitor";
+import HealthCheck from "./pages/HealthCheck";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -188,6 +198,9 @@ const AppContent = () => {
         <PageTransition>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/api/health" element={<HealthCheck />} />
+            <Route path="/part11-test" element={<Part11Test />} />
+            <Route path="/part12-test" element={<Part12Test />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/rig" element={<RigStore />} />
             <Route path="/rig/prime-picks" element={<PrimePicks />} />
@@ -714,6 +727,57 @@ const AppContent = () => {
               }
             />
             <Route path="/part10-test" element={<Part10Test />} />
+
+            {/* PART 11 ROUTES - Enterprise Features (Sections 43-48) */}
+            <Route
+              path="/admin/analytics-advanced"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdvancedAnalyticsDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/privacy" element={<GDPRComplianceDashboard />} />
+            <Route
+              path="/donations/subscribe"
+              element={
+                <ProtectedRoute requireAuth>
+                  <SubscriptionManagement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/refunds"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <RefundManagement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/roles"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <RoleManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/audit-logs"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AuditLogViewer />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/monitoring"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <SystemMonitor />
+                </ProtectedRoute>
+              }
+            />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

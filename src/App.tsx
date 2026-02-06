@@ -162,6 +162,13 @@ import TaxReceipts from "./pages/TaxReceipts";
 import IntegrationMarketplace from "./pages/IntegrationMarketplace";
 import WhiteLabelConfig from "./pages/WhiteLabelConfig";
 import Part10Test from "./pages/Part10Test";
+// Part 1-6: Foundation, Marketing, Social, Projects
+import Part1Test from "./pages/Part1Test";
+import Part2Test from "./pages/Part2Test";
+import Part3Test from "./pages/Part3Test";
+import Part4Test from "./pages/Part4Test";
+import Part5Test from "./pages/Part5Test";
+import Part6Test from "./pages/Part6Test";
 import AdvancedAnalyticsDashboard from "./pages/AdvancedAnalyticsDashboard";
 import GDPRComplianceDashboard from "./pages/GDPRComplianceDashboard";
 import SubscriptionManagement from "./pages/SubscriptionManagement";
@@ -199,6 +206,13 @@ const AppContent = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/api/health" element={<HealthCheck />} />
+            {/* Part Test Pages */}
+            <Route path="/part1-test" element={<Part1Test />} />
+            <Route path="/part2-test" element={<Part2Test />} />
+            <Route path="/part3-test" element={<Part3Test />} />
+            <Route path="/part4-test" element={<Part4Test />} />
+            <Route path="/part5-test" element={<Part5Test />} />
+            <Route path="/part6-test" element={<Part6Test />} />
             <Route path="/part11-test" element={<Part11Test />} />
             <Route path="/part12-test" element={<Part12Test />} />
             <Route path="/auth" element={<Auth />} />

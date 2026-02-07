@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { useWishlist } from '@/hooks/useWishlist';
-import { useAuth } from '@/contexts/AuthContext';
-import { Trash2, ShoppingCart, Heart } from 'lucide-react';
-import { formatEuro } from '@/lib/currency';
-import { useCart } from '@/contexts/CartContext';
-import SEO from '@/components/SEO';
-import { PageHero } from '@/components/PageHero';
-import { EmptyState } from '@/components/EmptyState';
+import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useWishlist } from "@/hooks/useWishlist";
+import { useAuth } from "@/hooks/useAuth";
+import { Trash2, ShoppingCart, Heart } from "lucide-react";
+import { formatEuro } from "@/lib/currency";
+import { useCart } from "@/contexts/CartContext";
+import SEO from "@/components/SEO";
+import { PageHero } from "@/components/PageHero";
+import { EmptyState } from "@/components/EmptyState";
 
 export default function Wishlist() {
   const { user } = useAuth();
@@ -18,8 +18,8 @@ export default function Wishlist() {
   if (!user) {
     return (
       <>
-        <PageHero 
-          title="My Wishlist" 
+        <PageHero
+          title="My Wishlist"
           subtitle="Save your favorite items for later"
         />
         <div className="container max-w-4xl mx-auto px-4 pb-16">
@@ -41,26 +41,28 @@ export default function Wishlist() {
       name: product.name,
       price: product.price,
       image: product.image_url,
-      category: product.category
+      category: product.category,
     });
   };
 
   return (
     <>
-      <SEO 
+      <SEO
         title="My Wishlist"
         description="View and manage your wishlist items"
       />
-      
-      <PageHero 
-        title="My Wishlist" 
+
+      <PageHero
+        title="My Wishlist"
         subtitle="Save your favorite items for later"
       />
 
       <div className="bg-background pb-16">
         <div className="container max-w-4xl mx-auto px-4">
           {isLoading ? (
-            <p className="text-center text-muted-foreground py-12">Loading wishlist...</p>
+            <p className="text-center text-muted-foreground py-12">
+              Loading wishlist...
+            </p>
           ) : wishlist.length === 0 ? (
             <EmptyState
               icon={Heart}
@@ -89,7 +91,9 @@ export default function Wishlist() {
                         <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
                           {item.products.description}
                         </p>
-                        <p className="text-xl font-bold mt-2">{formatEuro(item.products.price)}</p>
+                        <p className="text-xl font-bold mt-2">
+                          {formatEuro(item.products.price)}
+                        </p>
                       </div>
                       <div className="flex flex-col gap-2 justify-center">
                         <Button
@@ -105,7 +109,9 @@ export default function Wishlist() {
                           variant="ghost"
                           size="sm"
                           className="gap-2"
-                          onClick={() => removeFromWishlist.mutate(item.product_id)}
+                          onClick={() =>
+                            removeFromWishlist.mutate(item.product_id)
+                          }
                         >
                           <Trash2 className="h-4 w-4" />
                           Remove

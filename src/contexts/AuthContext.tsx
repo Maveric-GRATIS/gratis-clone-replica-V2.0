@@ -35,14 +35,16 @@ interface AuthContextType {
   signUp: (
     email: string,
     password: string,
-    displayName?: string
+    displayName?: string,
   ) => Promise<{ error: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<{ error: any }>;
   loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined,
+);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -79,7 +81,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
             // If Firestore is not enabled or fails, just use Firebase Auth user
             console.warn(
               "Firestore not available, using auth user only:",
-              firestoreError
+              firestoreError,
             );
             setUser(firebaseUser as User);
           }
@@ -100,13 +102,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const signUp = async (
     email: string,
     password: string,
-    displayName?: string
+    displayName?: string,
   ) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
       const firebaseUser = userCredential.user;
 
@@ -130,7 +132,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       } catch (firestoreError) {
         console.warn(
           "Firestore creation failed, using auth user only:",
-          firestoreError
+          firestoreError,
         );
         setUser(firebaseUser as User);
       }
@@ -147,7 +149,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
       const firebaseUser = userCredential.user;
 
@@ -168,7 +170,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         // If Firestore fails, just use Firebase Auth user
         console.warn(
           "Firestore update failed, using auth user only:",
-          firestoreError
+          firestoreError,
         );
         setUser(firebaseUser as User);
       }
@@ -208,12 +210,4 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       {!loading && children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
 };

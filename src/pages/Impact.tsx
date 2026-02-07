@@ -11,7 +11,7 @@ import {
   limit,
   getDocs,
 } from "firebase/firestore";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { AnimatedCounter } from "@/components/AnimatedCounter";
 import { ImpactDonutChart } from "@/components/ImpactDonutChart";
 import { ImpactTimeline } from "@/components/ImpactTimeline";

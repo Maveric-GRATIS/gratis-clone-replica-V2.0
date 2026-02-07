@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { db } from '@/firebase';
 import { doc, getDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Profile {
   id: string; // This will be the UID

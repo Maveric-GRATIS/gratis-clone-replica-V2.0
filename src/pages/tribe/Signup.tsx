@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { db } from "@/firebase";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import SEO from "@/components/SEO";

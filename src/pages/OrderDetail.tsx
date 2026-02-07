@@ -1,16 +1,22 @@
-
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { db } from '@/firebase';
-import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { formatEuro } from '@/lib/currency';
-import { Loader2, ArrowLeft, Package, MapPin } from 'lucide-react';
-import { SEO } from '@/components/SEO';
-import { useAuth } from '@/contexts/AuthContext';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { db } from "@/firebase";
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { formatEuro } from "@/lib/currency";
+import { Loader2, ArrowLeft, Package, MapPin } from "lucide-react";
+import { SEO } from "@/components/SEO";
+import { useAuth } from "@/hooks/useAuth";
 
 // Interfaces remain the same
 interface OrderItem {
@@ -57,7 +63,7 @@ export default function OrderDetail() {
     const fetchOrderDetails = async () => {
       if (!orderId) return;
       if (!user) {
-        navigate('/auth');
+        navigate("/auth");
         return;
       }
 
@@ -65,11 +71,11 @@ export default function OrderDetail() {
 
       try {
         // Fetch the order
-        const orderRef = doc(db, 'orders', orderId);
+        const orderRef = doc(db, "orders", orderId);
         const orderSnap = await getDoc(orderRef);
 
         if (!orderSnap.exists() || orderSnap.data().user_id !== user.uid) {
-          console.error('Order not found or access denied.');
+          console.error("Order not found or access denied.");
           setLoading(false);
           return;
         }
@@ -78,24 +84,28 @@ export default function OrderDetail() {
         setOrder(orderData);
 
         // Fetch order items
-        const itemsRef = collection(db, 'order_items');
-        const itemsQuery = query(itemsRef, where('order_id', '==', orderId));
+        const itemsRef = collection(db, "order_items");
+        const itemsQuery = query(itemsRef, where("order_id", "==", orderId));
         const itemsSnap = await getDocs(itemsQuery);
-        const itemsData = itemsSnap.docs.map(d => ({ id: d.id, ...d.data() } as OrderItem));
+        const itemsData = itemsSnap.docs.map(
+          (d) => ({ id: d.id, ...d.data() }) as OrderItem,
+        );
         setItems(itemsData);
 
         // Fetch shipping address
         // Assuming one address per order, or you might need a different lookup
-        const addressRef = collection(db, 'shipping_addresses');
-        const addressQuery = query(addressRef, where('order_id', '==', orderId));
+        const addressRef = collection(db, "shipping_addresses");
+        const addressQuery = query(
+          addressRef,
+          where("order_id", "==", orderId),
+        );
         const addressSnap = await getDocs(addressQuery);
         if (!addressSnap.empty) {
           const addressData = addressSnap.docs[0].data() as ShippingAddress;
           setAddress(addressData);
         }
-
       } catch (error) {
-        console.error('Error fetching order details:', error);
+        console.error("Error fetching order details:", error);
       } finally {
         setLoading(false);
       }
@@ -104,7 +114,7 @@ export default function OrderDetail() {
     fetchOrderDetails();
   }, [orderId, user, navigate]);
 
-    if (loading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -117,22 +127,21 @@ export default function OrderDetail() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="p-8 text-center">
           <p className="text-muted-foreground mb-4">Order not found</p>
-          <Button onClick={() => navigate('/orders')}>Back to Orders</Button>
+          <Button onClick={() => navigate("/orders")}>Back to Orders</Button>
         </Card>
       </div>
     );
   }
-  
+
   // Convert Firestore Timestamp to Date for formatting
   const getOrderDate = () => {
-    if (order?.created_at && 'toDate' in order.created_at) {
+    if (order?.created_at && "toDate" in order.created_at) {
       return order.created_at.toDate();
     } else if (order?.created_at) {
       return new Date(order.created_at);
     }
     return new Date();
   };
-
 
   return (
     <>
@@ -144,7 +153,7 @@ export default function OrderDetail() {
         <div className="container max-w-4xl mx-auto px-4">
           <Button
             variant="ghost"
-            onClick={() => navigate('/orders')}
+            onClick={() => navigate("/orders")}
             className="mb-6"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -153,14 +162,17 @@ export default function OrderDetail() {
 
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold mb-2">Order {order.order_number}</h1>
+              <h1 className="text-3xl font-bold mb-2">
+                Order {order.order_number}
+              </h1>
               <p className="text-muted-foreground">
-                Placed on {getOrderDate().toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
+                Placed on{" "}
+                {getOrderDate().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
                 })}
               </p>
             </div>
@@ -179,23 +191,29 @@ export default function OrderDetail() {
                 {items.map((item) => (
                   <div key={item.id} className="flex gap-4">
                     <img
-                      src={item.product_image || '/placeholder.svg'}
+                      src={item.product_image || "/placeholder.svg"}
                       alt={item.product_name}
                       className="w-20 h-20 object-cover rounded"
                     />
                     <div className="flex-1">
                       <h3 className="font-semibold">{item.product_name}</h3>
-                      {item.variants && typeof item.variants === 'object' && Object.keys(item.variants).length > 0 && (
-                        <p className="text-sm text-muted-foreground">
-                          {(item.variants as any).size && `Size: ${(item.variants as any).size}`}
-                          {(item.variants as any).color && ` • Color: ${(item.variants as any).color}`}
-                        </p>
-                      )}
+                      {item.variants &&
+                        typeof item.variants === "object" &&
+                        Object.keys(item.variants).length > 0 && (
+                          <p className="text-sm text-muted-foreground">
+                            {(item.variants as any).size &&
+                              `Size: ${(item.variants as any).size}`}
+                            {(item.variants as any).color &&
+                              ` • Color: ${(item.variants as any).color}`}
+                          </p>
+                        )}
                       <p className="text-sm mt-1">
                         Qty: {item.quantity} × {formatEuro(item.unit_price)}
                       </p>
                     </div>
-                    <p className="font-semibold">{formatEuro(item.total_price)}</p>
+                    <p className="font-semibold">
+                      {formatEuro(item.total_price)}
+                    </p>
                   </div>
                 ))}
               </div>

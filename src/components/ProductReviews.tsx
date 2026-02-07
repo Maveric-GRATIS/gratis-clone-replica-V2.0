@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useProductReviews, useCreateReview } from '@/hooks/useReviews';
-import { useAuth } from '@/contexts/AuthContext';
-import { format } from 'date-fns';
+import { useState } from "react";
+import { Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useProductReviews, useCreateReview } from "@/hooks/useReviews";
+import { useAuth } from "@/hooks/useAuth";
+import { format } from "date-fns";
 
 interface ProductReviewsProps {
   productId: string;
@@ -16,22 +16,23 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
   const { data: reviews, isLoading } = useProductReviews(productId);
   const createReview = useCreateReview();
   const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
-    
+
     await createReview.mutateAsync({ productId, rating, comment });
-    setComment('');
+    setComment("");
     setRating(5);
     setShowForm(false);
   };
 
-  const averageRating = reviews && reviews.length > 0
-    ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
-    : 0;
+  const averageRating =
+    reviews && reviews.length > 0
+      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+      : 0;
 
   return (
     <div className="space-y-6">
@@ -45,8 +46,8 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
                   key={star}
                   className={`h-5 w-5 ${
                     star <= Math.round(averageRating)
-                      ? 'fill-primary text-primary'
-                      : 'text-muted-foreground'
+                      ? "fill-primary text-primary"
+                      : "text-muted-foreground"
                   }`}
                 />
               ))}
@@ -82,8 +83,8 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
                       <Star
                         className={`h-6 w-6 ${
                           star <= rating
-                            ? 'fill-primary text-primary'
-                            : 'text-muted-foreground'
+                            ? "fill-primary text-primary"
+                            : "text-muted-foreground"
                         }`}
                       />
                     </button>
@@ -92,7 +93,9 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
               </div>
 
               <div>
-                <label className="text-sm font-medium mb-2 block">Your Review</label>
+                <label className="text-sm font-medium mb-2 block">
+                  Your Review
+                </label>
                 <Textarea
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
@@ -104,7 +107,7 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
 
               <div className="flex gap-2">
                 <Button type="submit" disabled={createReview.isPending}>
-                  {createReview.isPending ? 'Submitting...' : 'Submit Review'}
+                  {createReview.isPending ? "Submitting..." : "Submit Review"}
                 </Button>
                 <Button
                   type="button"
@@ -133,14 +136,14 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
                         key={star}
                         className={`h-4 w-4 ${
                           star <= review.rating
-                            ? 'fill-primary text-primary'
-                            : 'text-muted-foreground'
+                            ? "fill-primary text-primary"
+                            : "text-muted-foreground"
                         }`}
                       />
                     ))}
                   </div>
                   <span className="text-sm text-muted-foreground">
-                    {format(new Date(review.created_at), 'MMM dd, yyyy')}
+                    {format(new Date(review.created_at), "MMM dd, yyyy")}
                   </span>
                 </div>
                 {review.comment && (
@@ -156,7 +159,9 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
           ))}
         </div>
       ) : (
-        <p className="text-muted-foreground">No reviews yet. Be the first to review!</p>
+        <p className="text-muted-foreground">
+          No reviews yet. Be the first to review!
+        </p>
       )}
     </div>
   );

@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { Bell, Check, CheckCheck, X, Trash2 } from "lucide-react";
 import {
   DropdownMenu,

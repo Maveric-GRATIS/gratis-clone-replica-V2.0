@@ -348,7 +348,7 @@ export function validateContactForm(data: {
 // In your AuthContext or App component:
 
 import { notificationService } from '@/lib/services/notificationService';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 
 function App() {

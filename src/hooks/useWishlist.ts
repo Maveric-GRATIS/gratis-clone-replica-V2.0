@@ -12,7 +12,7 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { toast } from 'sonner';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 import { Product } from '@/types'; // Assuming you have a Product type defined
 
 interface WishlistItem {

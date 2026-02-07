@@ -24,7 +24,7 @@ import {
 import { useProducts } from "@/hooks/useProducts";
 import { useAllProducts } from "@/hooks/useAllProducts";
 import { useUsers } from "@/hooks/useUsers";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -605,7 +605,7 @@ export default function AdminDashboard() {
                 (item) =>
                   item.value !== "users" &&
                   item.value !== "overview" &&
-                  item.value !== "products"
+                  item.value !== "products",
               )
               .map((item) => (
                 <TabsContent

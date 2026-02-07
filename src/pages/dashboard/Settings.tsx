@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { db } from "@/firebase";
 import { doc, updateDoc, deleteDoc, getDoc, setDoc } from "firebase/firestore";

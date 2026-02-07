@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Loader2, Heart, Users, Home, GraduationCap } from "lucide-react";
 import { getFunctions, httpsCallable } from "firebase/functions";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
 interface AllocationCategory {

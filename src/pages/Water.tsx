@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
 import { useDistributionLocations } from "@/hooks/useDistributionLocations";
 import { useCart } from "@/contexts/CartContext";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { FlavorSelector } from "@/components/water/FlavorSelector";
 import { SizePackSelector } from "@/components/water/SizePackSelector";
 import { SeriesBadge } from "@/components/water/SeriesBadge";

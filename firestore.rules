@@ -134,5 +134,23 @@ service cloud.firestore {
       // Only admins can read, update, or delete applications
       allow read, update, delete: if isAdmin();
     }
+
+    // Notifications
+    match /notifications/{notificationId} {
+      // Users can read their own notifications, admins can read all
+      allow read: if isAuthenticated()
+                  && (resource.data.userId == request.auth.uid || isAdmin());
+
+      // Only system (Cloud Functions) and admins can create notifications
+      allow create: if isAdmin();
+
+      // Users can update their own notifications (mark as read), admins can update all
+      allow update: if isAuthenticated()
+                    && (resource.data.userId == request.auth.uid || isAdmin());
+
+      // Users can delete their own notifications, admins can delete all
+      allow delete: if isAuthenticated()
+                    && (resource.data.userId == request.auth.uid || isAdmin());
+    }
   }
 }

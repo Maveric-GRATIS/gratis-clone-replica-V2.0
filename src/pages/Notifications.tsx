@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { notificationService } from "@/lib/services/notificationService";
 import { Notification, NotificationType } from "@/types/notification";
 import { Button } from "@/components/ui/button";

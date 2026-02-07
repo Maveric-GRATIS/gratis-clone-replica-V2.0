@@ -7,7 +7,7 @@ import { Loader2, CreditCard, Receipt, Crown, AlertCircle } from "lucide-react";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/firebase";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
 interface Subscription {

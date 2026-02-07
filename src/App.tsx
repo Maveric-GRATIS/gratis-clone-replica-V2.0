@@ -178,12 +178,19 @@ import AuditLogViewer from "./pages/AuditLogViewer";
 import Part11Test from "./pages/Part11Test";
 import Part12Test from "./pages/Part12Test";
 import Part13Test from "./pages/Part13Test";
+import Part14Test from "./pages/Part14Test";
 import EmailLogsPage from "./pages/admin/EmailLogsPage";
 import EmailTemplatesPage from "./pages/admin/EmailTemplatesPage";
 import ErrorTrackingDashboard from "./pages/admin/ErrorTrackingDashboard";
 import MediaManagerPage from "./pages/admin/MediaManagerPage";
 import SystemMonitor from "./pages/SystemMonitor";
 import HealthCheck from "./pages/HealthCheck";
+import SEOManager from "./pages/admin/SEOManager";
+import FeatureFlagsManager from "./pages/admin/FeatureFlagsManager";
+import DataExportManager from "./pages/admin/DataExportManager";
+import MFASettings from "./pages/admin/MFASettings";
+import ModerationQueue from "./pages/admin/ModerationQueue";
+import UserMFASettings from "./pages/UserMFASettings";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -221,6 +228,7 @@ const AppContent = () => {
             <Route path="/part11-test" element={<Part11Test />} />
             <Route path="/part12-test" element={<Part12Test />} />
             <Route path="/part13-test" element={<Part13Test />} />
+            <Route path="/part14-test" element={<Part14Test />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/rig" element={<RigStore />} />
             <Route path="/rig/prime-picks" element={<PrimePicks />} />
@@ -831,6 +839,58 @@ const AppContent = () => {
               }
             />
 
+            {/* PART 14 ROUTES - Enterprise Features (Sections 59-63) */}
+            <Route
+              path="/admin/seo-manager"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <SEOManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/feature-flags"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <FeatureFlagsManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/data-export"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <DataExportManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/mfa-settings"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <MFASettings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/moderation-queue"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <ModerationQueue />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* User Settings Routes */}
+            <Route
+              path="/settings/security"
+              element={
+                <ProtectedRoute requireAuth>
+                  <UserMFASettings />
+                </ProtectedRoute>
+              }
+            />
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
@@ -860,7 +920,12 @@ const App = () => {
               <TooltipProvider>
                 <Toaster />
                 <Sonner />
-                <BrowserRouter>
+                <BrowserRouter
+                  future={{
+                    v7_startTransition: true,
+                    v7_relativeSplatPath: true,
+                  }}
+                >
                   <AppContent />
                 </BrowserRouter>
               </TooltipProvider>

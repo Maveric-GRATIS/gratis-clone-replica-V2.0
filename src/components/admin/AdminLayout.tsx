@@ -1,7 +1,8 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useRole } from "@/hooks/useRole";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
+import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -59,12 +60,18 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
   const location = useLocation();
   const { isAdmin, isMarketing } = useRole();
   const { user, profile, signOut } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [expandedSections, setExpandedSections] = useState<string[]>([
     "Dashboard",
   ]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
+
+  // Only render theme toggle after mounting to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Navigation structure
   const navigation: NavSection[] = [
@@ -171,6 +178,11 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         { name: "System Monitor", href: "/admin/monitoring" },
         { name: "Error Tracking", href: "/admin/errors" },
         { name: "Media Manager", href: "/admin/media" },
+        { name: "SEO Manager", href: "/admin/seo-manager" },
+        { name: "Feature Flags", href: "/admin/feature-flags" },
+        { name: "Data Export", href: "/admin/data-export" },
+        { name: "MFA Settings", href: "/admin/mfa-settings" },
+        { name: "Moderation Queue", href: "/admin/moderation-queue" },
       ],
     },
     {
@@ -205,8 +217,12 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
     children?.some((child) => location.pathname.startsWith(child.href)) ||
     false;
 
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
-    <div className={`min-h-screen ${darkMode ? "dark" : ""} bg-background`}>
+    <div className="min-h-screen bg-background">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div
@@ -371,10 +387,14 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
           <div className="flex items-center gap-3">
             {/* Dark Mode Toggle */}
             <button
-              onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-lg hover:bg-accent"
+              onClick={toggleTheme}
+              disabled={!mounted}
+              className="p-2 rounded-lg hover:bg-accent disabled:opacity-50 transition-all"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
-              {darkMode ? (
+              {!mounted ? (
+                <Sun className="w-5 h-5 text-muted-foreground" />
+              ) : theme === "dark" ? (
                 <Sun className="w-5 h-5 text-muted-foreground" />
               ) : (
                 <Moon className="w-5 h-5 text-muted-foreground" />

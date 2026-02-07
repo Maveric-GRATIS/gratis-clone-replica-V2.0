@@ -7,6 +7,7 @@ export type ExperimentStatus = 'draft' | 'running' | 'paused' | 'completed' | 'a
 
 export interface Experiment {
   id: string;
+  key: string; // Unique key for lookups
   name: string;
   description: string;
   hypothesis: string;
@@ -26,6 +27,7 @@ export interface Experiment {
 
 export interface ExperimentVariant {
   id: string;
+  key?: string; // Optional key for variant lookups
   name: string;
   description?: string;
   weight: number; // percentage

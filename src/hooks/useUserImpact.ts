@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { db } from '@/firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 
 interface UserImpactData {
   total_spent: number;

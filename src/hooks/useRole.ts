@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { db } from '@/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/hooks/useAuth';
 
 type UserRole = 'customer' | 'admin' | 'marketing';
 

@@ -7,7 +7,7 @@ import {
   saveCartToFirestore,
   loadCartFromFirestore,
 } from "@/lib/cart-storage";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 
 type CartAction =
   | { type: "ADD_ITEM"; payload: Omit<CartItem, "quantity"> }
@@ -23,7 +23,7 @@ const calculateTotals = (items: CartItem[]) => {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
   return { totalItems, totalPrice };
 };
@@ -35,7 +35,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         (item) =>
           item.id === action.payload.id &&
           JSON.stringify(item.variant) ===
-            JSON.stringify(action.payload.variant)
+            JSON.stringify(action.payload.variant),
       );
 
       let newItems: CartItem[];
@@ -43,7 +43,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         newItems = state.items.map((item, index) =>
           index === existingItemIndex
             ? { ...item, quantity: item.quantity + 1 }
-            : item
+            : item,
         );
       } else {
         newItems = [...state.items, { ...action.payload, quantity: 1 }];
@@ -64,7 +64,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         .map((item) =>
           item.id === action.payload.id
             ? { ...item, quantity: Math.max(0, action.payload.quantity) }
-            : item
+            : item,
         )
         .filter((item) => item.quantity > 0);
 

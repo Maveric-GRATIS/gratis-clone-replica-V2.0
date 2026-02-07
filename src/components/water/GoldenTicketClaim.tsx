@@ -1,23 +1,37 @@
-
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Ticket, Loader2, CheckCircle, XCircle, PartyPopper } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { toast } from 'sonner';
-import { functions } from '@/firebase';
-import { httpsCallable } from 'firebase/functions';
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Ticket,
+  Loader2,
+  CheckCircle,
+  XCircle,
+  PartyPopper,
+} from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import { functions } from "@/firebase";
+import { httpsCallable } from "firebase/functions";
 
 interface GoldenTicketClaimProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps) => {
+export const GoldenTicketClaim = ({
+  open,
+  onOpenChange,
+}: GoldenTicketClaimProps) => {
   const { user } = useAuth();
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{
     success: boolean;
@@ -27,14 +41,14 @@ export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!user) {
-      toast.error('Please sign in to claim your prize');
+      toast.error("Please sign in to claim your prize");
       return;
     }
 
     if (!code.trim()) {
-      toast.error('Please enter a code');
+      toast.error("Please enter a code");
       return;
     }
 
@@ -42,12 +56,19 @@ export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps
     setResult(null);
 
     try {
-      const claimPrizeCallable = httpsCallable(functions, 'claimPrize');
-      const response = await claimPrizeCallable({ code: code.trim().toUpperCase() });
-      const data = response.data as { 
-        success: boolean; 
-        prize?: { title: string; description: string; value: string; type: string; }; 
-        error?: string; 
+      const claimPrizeCallable = httpsCallable(functions, "claimPrize");
+      const response = await claimPrizeCallable({
+        code: code.trim().toUpperCase(),
+      });
+      const data = response.data as {
+        success: boolean;
+        prize?: {
+          title: string;
+          description: string;
+          value: string;
+          type: string;
+        };
+        error?: string;
       };
 
       if (data.success && data.prize) {
@@ -55,20 +76,26 @@ export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps
           success: true,
           prize: data.prize,
         });
-        toast.success('Congratulations! You won a prize!');
+        toast.success("Congratulations! You won a prize!");
       } else {
-        setResult({ success: false, error: data.error || 'Invalid or already claimed code' });
+        setResult({
+          success: false,
+          error: data.error || "Invalid or already claimed code",
+        });
       }
     } catch (error: any) {
-      console.error('Error claiming prize:', error);
-      setResult({ success: false, error: error.message || 'An error occurred while claiming the prize.' });
+      console.error("Error claiming prize:", error);
+      setResult({
+        success: false,
+        error: error.message || "An error occurred while claiming the prize.",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   const handleClose = () => {
-    setCode('');
+    setCode("");
     setResult(null);
     onOpenChange(false);
   };
@@ -106,8 +133,8 @@ export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps
               </p>
             )}
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-yellow-950 hover:from-yellow-400 hover:to-yellow-500"
               disabled={loading || !user}
             >
@@ -132,10 +159,16 @@ export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-yellow-400">{result.prize.title}</h3>
-              <p className="text-muted-foreground mt-2">{result.prize.description}</p>
+              <h3 className="text-xl font-bold text-yellow-400">
+                {result.prize.title}
+              </h3>
+              <p className="text-muted-foreground mt-2">
+                {result.prize.description}
+              </p>
               {result.prize.value && (
-                <p className="mt-2 text-sm font-medium">Value: {result.prize.value}</p>
+                <p className="mt-2 text-sm font-medium">
+                  Value: {result.prize.value}
+                </p>
               )}
             </div>
             <Button onClick={handleClose} className="w-full">
@@ -154,7 +187,11 @@ export const GoldenTicketClaim = ({ open, onOpenChange }: GoldenTicketClaimProps
               <h3 className="text-lg font-bold">Code Not Valid</h3>
               <p className="text-muted-foreground mt-2">{result.error}</p>
             </div>
-            <Button onClick={() => setResult(null)} variant="outline" className="w-full">
+            <Button
+              onClick={() => setResult(null)}
+              variant="outline"
+              className="w-full"
+            >
               Try Again
             </Button>
           </div>

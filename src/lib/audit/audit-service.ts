@@ -33,7 +33,7 @@ export async function logAuditEvent(params: {
   duration?: number;
 }): Promise<string> {
   const id = `aud_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
-  const severity = SEVERITY_MAP[params.action] || 'medium';
+  const severity = SEVERITY_MAP[params.action] || 'info';
 
   const entry: AuditEntry = {
     id,

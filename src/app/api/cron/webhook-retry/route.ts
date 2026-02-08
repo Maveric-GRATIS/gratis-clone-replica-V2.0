@@ -1,7 +1,7 @@
 // src/app/api/cron/webhook-retry/route.ts
 // GRATIS.NGO — Webhook Retry Cron Job
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from '@/lib/next-compat';
 import { processRetryQueue } from '@/lib/webhooks/delivery-service';
 
 /**

@@ -1,7 +1,7 @@
 // src/app/api/tenant/resolve/route.ts
 // GRATIS.NGO — Tenant Resolution API
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from '@/lib/next-compat';
 import { resolveTenant, getTenant } from '@/lib/tenant/tenant-service';
 
 /**

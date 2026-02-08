@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { NotificationCenter } from "@/components/NotificationCenter";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,6 +44,7 @@ import {
   LogOut,
   Moon,
   Sun,
+  Flask,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -183,13 +185,23 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         { name: "Data Export", href: "/admin/data-export" },
         { name: "MFA Settings", href: "/admin/mfa-settings" },
         { name: "Moderation Queue", href: "/admin/moderation-queue" },
-        { name: "API Keys", href: "/developer/api-keys" },
+        { name: "API Keys", href: "/admin/developer" },
         { name: "Scheduler", href: "/admin/scheduler" },
-        { name: "Platform Settings", href: "/admin/platform-settings" },
+        { name: "Platform Config", href: "/admin/config" },
         { name: "Tenant Manager", href: "/admin/tenants" },
         { name: "Webhook Manager", href: "/admin/webhooks" },
         { name: "GraphQL Explorer", href: "/admin/graphql" },
+        { name: "Rate Limits", href: "/admin/rate-limits" },
+        { name: "File Manager", href: "/admin/files" },
+        { name: "Data Import", href: "/admin/import" },
+        { name: "Bulk Operations", href: "/admin/bulk" },
+        { name: "Dashboards", href: "/admin/dashboards" },
       ],
+    },
+    {
+      name: "Development",
+      icon: Flask,
+      children: [{ name: "Part 18 Test", href: "/part18-test" }],
     },
     {
       name: "Settings",
@@ -408,21 +420,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
             </button>
 
             {/* Notifications */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="relative p-2 rounded-lg hover:bg-accent">
-                  <Bell className="w-5 h-5 text-muted-foreground" />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80">
-                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <div className="p-4 text-center text-sm text-muted-foreground">
-                  No new notifications
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <NotificationCenter />
 
             {/* View Site */}
             <Button variant="secondary" size="sm" asChild>

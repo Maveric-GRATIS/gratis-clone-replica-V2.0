@@ -24,22 +24,22 @@ export function hasPermission(permission: Permission, context?: RBACContext): bo
 
   // Check if user has any role that includes this permission
   for (const userRole of ctx.roles) {
-    const roleName = userRole.role;
+    const roleName = userRole.roleId;
     const permissions = getAllPermissions(roleName);
 
     if (permissions.includes(permission)) {
       // Check scope restrictions
-      if (permission.startsWith('partners:') && userRole.scopeType === 'partner') {
+      if (permission.startsWith('partners:') && userRole.scope?.partnerId) {
         // For partner-scoped roles, only allow if within scope
-        if (ctx.partnerId && userRole.scopeId === ctx.partnerId) {
+        if (ctx.partnerId && userRole.scope.partnerId === ctx.partnerId) {
           return true;
         }
-      } else if (permission.startsWith('projects:') && userRole.scopeType === 'project') {
+      } else if (permission.startsWith('projects:') && userRole.scope?.projectId) {
         // For project-scoped roles
-        if (ctx.projectId && userRole.scopeId === ctx.projectId) {
+        if (ctx.projectId && userRole.scope.projectId === ctx.projectId) {
           return true;
         }
-      } else if (userRole.scopeType === 'global' || !userRole.scopeType) {
+      } else if (!userRole.scope || (!userRole.scope.partnerId && !userRole.scope.projectId)) {
         // Global permissions
         return true;
       }
@@ -69,7 +69,7 @@ export function hasAllPermissions(permissions: Permission[], context?: RBACConte
 export function hasRole(roleName: RoleName, context?: RBACContext): boolean {
   const ctx = context || currentUserContext;
   if (!ctx) return false;
-  return ctx.roles.some((r) => r.role === roleName);
+  return ctx.roles.some((r) => r.roleId === roleName);
 }
 
 /**
@@ -90,10 +90,10 @@ export function getPrimaryRole(context?: RBACContext): RoleName | null {
   let primaryRole: RoleName | null = null;
 
   for (const userRole of ctx.roles) {
-    const def = ROLE_DEFINITIONS[userRole.role];
+    const def = ROLE_DEFINITIONS[userRole.roleId];
     if (def && def.priority > highestPriority) {
       highestPriority = def.priority;
-      primaryRole = userRole.role;
+      primaryRole = userRole.roleId;
     }
   }
 
@@ -110,7 +110,7 @@ export function getUserPermissions(context?: RBACContext): Permission[] {
   const allPermissions = new Set<Permission>();
 
   for (const userRole of ctx.roles) {
-    const permissions = getAllPermissions(userRole.role);
+    const permissions = getAllPermissions(userRole.roleId);
     permissions.forEach((p) => allPermissions.add(p));
   }
 
@@ -147,7 +147,7 @@ export function canPerformAction(options: AccessCheckOptions, context?: RBACCont
   // Check partner scope
   if (resourcePartnerId) {
     const hasPartnerAccess = ctx.roles.some(
-      (r) => r.scopeType === 'partner' && r.scopeId === resourcePartnerId
+      (r) => r.scope?.partnerId === resourcePartnerId
     );
     // Superadmin/admin can access all partners
     if (!hasPartnerAccess && !hasAnyRole(['superadmin', 'admin'], ctx)) {
@@ -158,7 +158,7 @@ export function canPerformAction(options: AccessCheckOptions, context?: RBACCont
   // Check project scope
   if (resourceProjectId) {
     const hasProjectAccess = ctx.roles.some(
-      (r) => r.scopeType === 'project' && r.scopeId === resourceProjectId
+      (r) => r.scope?.projectId === resourceProjectId
     );
     if (!hasProjectAccess && !hasAnyRole(['superadmin', 'admin', 'editor'], ctx)) {
       return false;
@@ -218,11 +218,12 @@ export async function assignRole(
 
   const userRole: UserRole = {
     userId,
-    role,
-    scopeType: scopeType || 'global',
-    scopeId,
+    roleId: role,
     assignedAt: new Date(),
     assignedBy: currentUserContext?.userId || 'system',
+    scope: scopeType === 'partner' ? { partnerId: scopeId } :
+           scopeType === 'project' ? { projectId: scopeId } :
+           undefined,
   };
 
   // In production: save to Firestore
@@ -252,8 +253,7 @@ export async function getUserRoles(userId: string): Promise<UserRole[]> {
   return [
     {
       userId,
-      role: 'admin',
-      scopeType: 'global',
+      roleId: 'admin',
       assignedAt: new Date(),
       assignedBy: 'system',
     },
@@ -269,10 +269,12 @@ export async function buildContextForUser(
   projectId?: string
 ): Promise<RBACContext> {
   const roles = await getUserRoles(userId);
+  const effectivePermissions = getUserPermissions({ userId, roles, effectivePermissions: [], partnerId, projectId });
 
   return {
     userId,
     roles,
+    effectivePermissions,
     partnerId,
     projectId,
   };

@@ -186,6 +186,7 @@ import Part13Test from "./pages/Part13Test";
 import Part14Test from "./pages/Part14Test";
 import Part16Test from "./pages/Part16Test";
 import Part17Test from "./pages/Part17Test";
+import Part18Test from "./pages/Part18Test";
 import EmailLogsPage from "./pages/admin/EmailLogsPage";
 import EmailTemplatesPage from "./pages/admin/EmailTemplatesPage";
 import ErrorTrackingDashboard from "./pages/admin/ErrorTrackingDashboard";
@@ -202,6 +203,12 @@ import DeveloperKeys from "./pages/admin/DeveloperKeys";
 import ScheduledJobs from "./pages/admin/ScheduledJobs";
 import PlatformConfig from "./pages/admin/PlatformConfig";
 import Maintenance from "./pages/Maintenance";
+import RateLimitsDashboard from "./pages/admin/RateLimitsDashboard";
+import FileManagerPage from "./pages/admin/FileManagerPage";
+import DataImportPage from "./pages/admin/DataImportPage";
+import BulkOperationsPage from "./pages/admin/BulkOperationsPage";
+import DashboardsPage from "./pages/admin/DashboardsPage";
+import DashboardViewPage from "./pages/admin/DashboardViewPage";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -247,6 +254,7 @@ const AppContent = () => {
             <Route path="/part14-test" element={<Part14Test />} />
             <Route path="/part16-test" element={<Part16Test />} />
             <Route path="/part17-test" element={<Part17Test />} />
+            <Route path="/part18-test" element={<Part18Test />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/rig" element={<RigStore />} />
             <Route path="/rig/prime-picks" element={<PrimePicks />} />
@@ -650,6 +658,54 @@ const AppContent = () => {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/admin/rate-limits"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <RateLimitsDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/files"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <FileManagerPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/import"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <DataImportPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/bulk"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <BulkOperationsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboards"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <DashboardsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboards/:id"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <DashboardViewPage />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Legacy Admin Routes (keep for backwards compatibility) */}
             <Route
@@ -927,14 +983,7 @@ const AppContent = () => {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/admin/scheduler"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <SchedulerDashboard />
-                </ProtectedRoute>
-              }
-            />
+            {/* Scheduler route moved to Part 17 - see /admin/scheduler above */}
             <Route
               path="/admin/platform-settings"
               element={

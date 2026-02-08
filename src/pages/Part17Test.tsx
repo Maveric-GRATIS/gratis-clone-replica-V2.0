@@ -1,5 +1,6 @@
 // Part17Test.tsx - Part 17 Enterprise Features Showcase
 
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Key,
   Radio,
@@ -21,9 +25,68 @@ import {
   ExternalLink,
   Activity,
   Code,
+  Play,
+  AlertTriangle,
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Part17Test() {
+  const [apiResponse, setApiResponse] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  // Test API endpoint
+  const testEndpoint = async (
+    endpoint: string,
+    method: string = "GET",
+    body?: any,
+  ) => {
+    setLoading(true);
+    try {
+      const options: RequestInit = {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      if (body) {
+        options.body = JSON.stringify(body);
+      }
+
+      const response = await fetch(endpoint, options);
+      const data = await response.json();
+
+      setApiResponse({
+        endpoint,
+        method,
+        status: response.status,
+        ok: response.ok,
+        data,
+        timestamp: new Date().toISOString(),
+      });
+
+      toast({
+        title: response.ok ? "✓ Success" : "✗ Error",
+        description: `${method} ${endpoint} - Status: ${response.status}`,
+        variant: response.ok ? "default" : "destructive",
+      });
+    } catch (error: any) {
+      setApiResponse({
+        endpoint,
+        method,
+        error: error.message,
+        timestamp: new Date().toISOString(),
+      });
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   const sections = [
     {
       id: 64,
@@ -351,6 +414,298 @@ export default function Part17Test() {
               <div className="text-sm text-muted-foreground">Lines of Code</div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Live API Tester */}
+      <Card className="mt-8 border-2 border-blue-500/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Code className="w-6 h-6 text-blue-500" />
+            Live API Endpoint Tester
+          </CardTitle>
+          <CardDescription>
+            Test Part 17 API endpoints directly from this page
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="get" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="get">GET Requests</TabsTrigger>
+              <TabsTrigger value="post">POST Requests</TabsTrigger>
+              <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
+              <TabsTrigger value="validate">Validate Key</TabsTrigger>
+            </TabsList>
+
+            {/* GET Tests */}
+            <TabsContent value="get" className="space-y-4 mt-4">
+              <div className="space-y-3">
+                <div>
+                  <Label className="text-xs text-muted-foreground mb-2 block">
+                    API Keys Endpoints
+                  </Label>
+                  <Button
+                    onClick={() => testEndpoint("/api/developer/keys")}
+                    disabled={loading}
+                    variant="outline"
+                    className="w-full justify-start"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    GET /api/developer/keys
+                  </Button>
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground mb-2 block">
+                    Scheduler Endpoints
+                  </Label>
+                  <div className="space-y-2">
+                    <Button
+                      onClick={() => testEndpoint("/api/admin/scheduler")}
+                      disabled={loading}
+                      variant="outline"
+                      className="w-full justify-start"
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      GET /api/admin/scheduler
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        testEndpoint("/api/admin/scheduler/runs?jobId=test-job")
+                      }
+                      disabled={loading}
+                      variant="outline"
+                      className="w-full justify-start"
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      GET /api/admin/scheduler/runs?jobId=test-job
+                    </Button>
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-xs text-muted-foreground mb-2 block">
+                    Platform Config Endpoints
+                  </Label>
+                  <div className="space-y-2">
+                    <Button
+                      onClick={() => testEndpoint("/api/admin/config")}
+                      disabled={loading}
+                      variant="outline"
+                      className="w-full justify-start"
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      GET /api/admin/config
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        testEndpoint("/api/admin/config/maintenance")
+                      }
+                      disabled={loading}
+                      variant="outline"
+                      className="w-full justify-start"
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      GET /api/admin/config/maintenance
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* POST Tests */}
+            <TabsContent value="post" className="space-y-4 mt-4">
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Label>Create API Key (requires auth)</Label>
+                  <Button
+                    onClick={() =>
+                      testEndpoint("/api/developer/keys", "POST", {
+                        name: "Test Key from Part17Test",
+                        environment: "sandbox",
+                        scopes: ["read"],
+                        rateLimit: 1000,
+                      })
+                    }
+                    disabled={loading}
+                    className="w-full justify-start"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    POST /api/developer/keys
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Creates a sandbox API key with read permissions
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Execute Scheduled Job</Label>
+                  <Button
+                    onClick={() =>
+                      testEndpoint(
+                        "/api/admin/scheduler/execute?jobId=test-job",
+                        "POST",
+                      )
+                    }
+                    disabled={loading}
+                    className="w-full justify-start"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    POST /api/admin/scheduler/execute
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Manually triggers a scheduled job execution
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Update Platform Config Section</Label>
+                  <Button
+                    onClick={() =>
+                      testEndpoint("/api/admin/config", "PATCH", {
+                        section: "general",
+                        data: { platformName: "GRATIS Test" },
+                        reason: "Testing from Part17Test page",
+                      })
+                    }
+                    disabled={loading}
+                    className="w-full justify-start"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    PATCH /api/admin/config
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Updates a specific config section
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Maintenance Tests */}
+            <TabsContent value="maintenance" className="space-y-4 mt-4">
+              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-4">
+                <div className="flex gap-2">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+                      Warning: Maintenance Mode Tests
+                    </p>
+                    <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">
+                      These tests will affect the platform's maintenance state.
+                      Use with caution.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Label>Enable Maintenance Mode</Label>
+                  <Button
+                    onClick={() =>
+                      testEndpoint("/api/admin/config/maintenance", "POST", {
+                        enabled: true,
+                        reason: "Testing from Part17Test page",
+                      })
+                    }
+                    disabled={loading}
+                    variant="destructive"
+                    className="w-full justify-start"
+                  >
+                    <AlertTriangle className="w-4 h-4 mr-2" />
+                    Enable Maintenance Mode
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Puts the platform into maintenance mode
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Disable Maintenance Mode</Label>
+                  <Button
+                    onClick={() =>
+                      testEndpoint("/api/admin/config/maintenance", "POST", {
+                        enabled: false,
+                        reason: "Testing complete from Part17Test",
+                      })
+                    }
+                    disabled={loading}
+                    className="w-full justify-start"
+                  >
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    Disable Maintenance Mode
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Exits maintenance mode and restores normal operations
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Check Maintenance Status</Label>
+                  <Button
+                    onClick={() =>
+                      testEndpoint("/api/admin/config/maintenance")
+                    }
+                    disabled={loading}
+                    variant="outline"
+                    className="w-full justify-start"
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    GET /api/admin/config/maintenance
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Check if maintenance mode is currently active
+                  </p>
+                </div>
+                <Button variant="outline" size="sm" asChild className="w-full">
+                  <Link to="/maintenance">
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View Maintenance Page
+                  </Link>
+                </Button>
+              </div>
+            </TabsContent>
+
+            {/* Validate Tests */}
+            <TabsContent value="validate" className="space-y-4 mt-4">
+              <div className="space-y-3">
+                <div className="space-y-2">
+                  <Label htmlFor="testKey">API Key to Validate</Label>
+                  <Input
+                    id="testKey"
+                    placeholder="gratis_live_xxxxxxxxxxxxx or gratis_sandbox_xxxxxxxxxxxxx"
+                    defaultValue="test-api-key-123"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Enter a valid API key to test validation
+                  </p>
+                </div>
+                <Button
+                  onClick={() => {
+                    const input = document.getElementById(
+                      "testKey",
+                    ) as HTMLInputElement;
+                    testEndpoint("/api/developer/keys/validate", "POST", {
+                      key: input?.value || "test-api-key-123",
+                    });
+                  }}
+                  disabled={loading}
+                  className="w-full"
+                >
+                  <Play className="w-4 h-4 mr-2" />
+                  Validate API Key
+                </Button>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          {/* Response Display */}
+          {apiResponse && (
+            <div className="mt-6 space-y-2">
+              <div className="flex items-center justify-between">
+                <Label>API Response:</Label>
+                <Badge variant={apiResponse.ok ? "default" : "destructive"}>
+                  {apiResponse.status || "Error"}
+                </Badge>
+              </div>
+              <pre className="bg-muted p-4 rounded-lg overflow-auto text-xs max-h-96 border">
+                {JSON.stringify(apiResponse, null, 2)}
+              </pre>
+            </div>
+          )}
         </CardContent>
       </Card>
 

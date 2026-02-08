@@ -1,7 +1,7 @@
 // src/app/api/admin/roles/route.ts
 // GRATIS.NGO — Admin Role Management API
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from '@/lib/next-compat';
 import type { RoleName, UserRole } from '@/types/rbac';
 import { ROLE_DEFINITIONS } from '@/lib/rbac/role-definitions';
 import {

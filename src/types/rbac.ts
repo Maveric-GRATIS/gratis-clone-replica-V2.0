@@ -26,12 +26,13 @@ export type Resource =
   | 'tribes'
   | 'social'
   | 'messaging'
-  | 'support';
+  | 'support'
+  | 'admin';
 
 /**
  * Actions that can be performed on resources
  */
-export type Action = 'create' | 'read' | 'update' | 'delete' | 'export' | 'approve' | 'manage';
+export type Action = 'create' | 'read' | 'update' | 'delete' | 'export' | 'approve' | 'manage' | 'role_assign' | 'dashboard' | 'webhooks' | 'audit';
 
 /**
  * Permission string format: "resource:action"
@@ -103,3 +104,19 @@ export interface PermissionCheckResult {
   matchedPermissions: Permission[];
   reason?: string;
 }
+
+/**
+ * RBAC Context for permission evaluation
+ */
+export interface RBACContext {
+  userId: string;
+  roles: UserRole[];
+  effectivePermissions: Permission[];
+  partnerId?: string;
+  projectId?: string;
+}
+
+/**
+ * Role name type alias (for backward compatibility)
+ */
+export type RoleName = SystemRole | string;

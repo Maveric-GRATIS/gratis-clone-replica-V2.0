@@ -1,7 +1,7 @@
 // src/app/api/webhooks/subscriptions/route.ts
 // GRATIS.NGO — Webhook Subscriptions API
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from '@/lib/next-compat';
 import {
   createSubscription,
   getUserSubscriptions,

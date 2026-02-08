@@ -1,7 +1,7 @@
 // src/app/api/graphql/route.ts
 // GRATIS.NGO — GraphQL API Endpoint
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from '@/lib/next-compat';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { graphql, GraphQLError } from 'graphql';
 import typeDefs from '@/lib/graphql/schema';

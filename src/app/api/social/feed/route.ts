@@ -9,7 +9,7 @@
  * - YOUTUBE_API_KEY
  */
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "@/lib/next-compat";
 
 interface SocialPost {
   id: string;

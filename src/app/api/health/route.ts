@@ -2,7 +2,7 @@
 // HEALTH CHECK API — PUBLIC
 // ============================================================================
 
-import { NextResponse } from 'next/server';
+import { NextResponse } from '@/lib/next-compat';
 
 const APP_VERSION = process.env.npm_package_version || '1.0.0';
 const APP_ENV = process.env.NODE_ENV || 'development';

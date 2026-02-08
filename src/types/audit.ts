@@ -7,6 +7,7 @@
  */
 export type AuditCategory =
   | 'auth'
+  | 'authentication'
   | 'donation'
   | 'subscription'
   | 'refund'
@@ -21,7 +22,9 @@ export type AuditCategory =
   | 'system'
   | 'security'
   | 'payment'
-  | 'webhook';
+  | 'webhook'
+  | 'data'
+  | 'admin';
 
 /**
  * Severity levels for audit entries
@@ -70,9 +73,9 @@ export interface AuditQueryParams {
 }
 
 /**
- * Audit log statistics
+ * Audit log statistics (basic)
  */
-export interface AuditStats {
+export interface BasicAuditStats {
   totalEntries: number;
   byCategory: Record<AuditCategory, number>;
   bySeverity: Record<AuditSeverity, number>;
@@ -124,7 +127,16 @@ export type AuditAction =
   | 'approve'
   | 'reject'
   | 'publish'
-  | 'archive';
+  | 'archive'
+  | 'payment_process'
+  | 'payment_refund'
+  | 'donation_receive'
+  | 'subscription_change'
+  | 'deploy'
+  | 'backup'
+  | 'restore'
+  | 'config_change'
+  | 'system_event';
 
 /**
  * Audit actor (who performed the action)
@@ -132,6 +144,7 @@ export type AuditAction =
 export interface AuditActor {
   id: string;
   email: string;
+  name?: string;
   role?: string;
   ip?: string;
   userAgent?: string;
@@ -201,7 +214,8 @@ export interface AuditQueryResult {
   entries: AuditEntry[];
   total: number;
   page: number;
-  totalPages: number;
+  limit: number;
+  hasMore: boolean;
 }
 
 /**

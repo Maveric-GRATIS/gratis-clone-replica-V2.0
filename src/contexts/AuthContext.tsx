@@ -46,6 +46,15 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined,
 );
 
+// Hook for accessing auth context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {

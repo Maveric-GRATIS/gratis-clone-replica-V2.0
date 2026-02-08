@@ -1,14 +1,15 @@
 // src/app/api/admin/audit/route.ts
 // GRATIS.NGO — Audit Log API
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from '@/lib/next-compat';
 import {
   queryAuditLogs,
   getAuditStats,
   logAuditEvent,
 } from '@/lib/audit/audit-service';
-import type { AuditQuery } from '@/types/audit';
+import type { AuditQuery, AuditAction, AuditCategory, AuditSeverity } from '@/types/audit';
 import { requirePermissions } from '@/middleware/rbac';
+import type { AuditAction as Action, AuditCategory as Category, AuditSeverity as Severity } from '@/types/audit';
 
 /**
  * GET /api/admin/audit
@@ -35,29 +36,29 @@ export async function GET(request: NextRequest) {
     // Build query from search params
     const query: AuditQuery = {
       limit: parseInt(searchParams.get('limit') || '50', 10),
-      offset: parseInt(searchParams.get('offset') || '0', 10),
+      page: parseInt(searchParams.get('page') || '1', 10),
     };
 
     if (searchParams.get('startDate')) {
-      query.startDate = new Date(searchParams.get('startDate')!);
+      query.startDate = searchParams.get('startDate')!;
     }
     if (searchParams.get('endDate')) {
-      query.endDate = new Date(searchParams.get('endDate')!);
+      query.endDate = searchParams.get('endDate')!;
     }
     if (searchParams.get('actions')) {
-      query.actions = searchParams.get('actions')!.split(',') as any[];
+      query.actions = searchParams.get('actions')!.split(',') as AuditAction[];
     }
     if (searchParams.get('categories')) {
-      query.categories = searchParams.get('categories')!.split(',') as any[];
+      query.categories = searchParams.get('categories')!.split(',') as AuditCategory[];
     }
-    if (searchParams.get('userId')) {
-      query.userId = searchParams.get('userId')!;
+    if (searchParams.get('actorId')) {
+      query.actorId = searchParams.get('actorId')!;
     }
-    if (searchParams.get('targetId')) {
-      query.targetId = searchParams.get('targetId')!;
+    if (searchParams.get('targetType')) {
+      query.targetType = searchParams.get('targetType')!;
     }
-    if (searchParams.get('severity')) {
-      query.severity = searchParams.get('severity')! as any;
+    if (searchParams.get('severities')) {
+      query.severities = searchParams.get('severities')!.split(',') as AuditSeverity[];
     }
     if (searchParams.get('search')) {
       query.search = searchParams.get('search')!;
@@ -65,7 +66,8 @@ export async function GET(request: NextRequest) {
 
     // Check if requesting stats
     if (searchParams.get('stats') === 'true') {
-      const stats = await getAuditStats(query);
+      const days = parseInt(searchParams.get('days') || '30', 10);
+      const stats = await getAuditStats(days);
       return NextResponse.json({ stats });
     }
 
@@ -73,9 +75,8 @@ export async function GET(request: NextRequest) {
     const logs = await queryAuditLogs(query);
 
     return NextResponse.json({
-      logs,
+      ...logs,
       query,
-      count: logs.length,
     });
   } catch (error) {
     console.error('[Audit API] GET error:', error);
@@ -107,7 +108,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { action, category, actor, target, changes, metadata } = body;
+    const { action, category, actor, target, changes, metadata, description } = body;
 
     if (!action || !category) {
       return NextResponse.json(
@@ -120,10 +121,11 @@ export async function POST(request: NextRequest) {
     const auditId = await logAuditEvent({
       action,
       category,
-      actor: actor || { userId, userEmail: 'admin@gratis.ngo', ipAddress: '127.0.0.1' },
+      actor: actor || { id: userId, email: 'admin@gratis.ngo', role: 'admin' },
       target,
       changes,
       metadata,
+      description: description || `${action} on ${category}`,
     });
 
     return NextResponse.json({

@@ -18,23 +18,23 @@ jobs:
   lint:
     name: Lint & Type Check
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run ESLint
         run: npm run lint
-      
+
       - name: TypeScript check
         run: npx tsc --noEmit
 
@@ -43,23 +43,23 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-latest
     needs: lint
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run tests
         run: npm test -- --coverage
-      
+
       - name: Upload coverage reports
         uses: codecov/codecov-action@v3
         with:
@@ -71,20 +71,20 @@ jobs:
     name: Build Application
     runs-on: ubuntu-latest
     needs: [lint, test]
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build project
         run: npm run build
         env:
@@ -94,7 +94,7 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
-      
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -111,17 +111,17 @@ jobs:
     environment:
       name: staging
       url: https://staging.gratis.ngo
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
           name: dist
           path: dist/
-      
+
       - name: Deploy to Firebase Hosting (Staging)
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -129,7 +129,7 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STAGING }}
           projectId: ${{ secrets.FIREBASE_PROJECT_ID_STAGING }}
           channelId: live
-      
+
       - name: Deploy Firebase Functions (Staging)
         run: |
           npm install -g firebase-tools
@@ -146,17 +146,17 @@ jobs:
     environment:
       name: production
       url: https://gratis.ngo
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
           name: dist
           path: dist/
-      
+
       - name: Deploy to Firebase Hosting (Production)
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -164,14 +164,14 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PROD }}
           projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
           channelId: live
-      
+
       - name: Deploy Firebase Functions (Production)
         run: |
           npm install -g firebase-tools
           cd firebase-functions
           npm ci
           firebase deploy --only functions --project production --token ${{ secrets.FIREBASE_TOKEN }}
-      
+
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
@@ -184,7 +184,7 @@ jobs:
             Commit: ${{ github.sha }}
           draft: false
           prerelease: false
-      
+
       - name: Notify Slack
         uses: 8398a7/action-slack@v3
         with:
@@ -197,11 +197,11 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Run Snyk Security Scan
         uses: snyk/actions/node@master
         continue-on-error: true
@@ -210,7 +210,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --severity-threshold=high
-      
+
       - name: Run npm audit
         run: npm audit --audit-level=moderate
         continue-on-error: true
@@ -221,7 +221,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-staging
     if: github.ref == 'refs/heads/develop'
-    
+
     steps:
       - name: Lighthouse CI
         uses: treosh/lighthouse-ci-action@v10

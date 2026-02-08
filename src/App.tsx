@@ -185,6 +185,7 @@ import Part12Test from "./pages/Part12Test";
 import Part13Test from "./pages/Part13Test";
 import Part14Test from "./pages/Part14Test";
 import Part16Test from "./pages/Part16Test";
+import Part17Test from "./pages/Part17Test";
 import EmailLogsPage from "./pages/admin/EmailLogsPage";
 import EmailTemplatesPage from "./pages/admin/EmailTemplatesPage";
 import ErrorTrackingDashboard from "./pages/admin/ErrorTrackingDashboard";
@@ -197,6 +198,9 @@ import DataExportManager from "./pages/admin/DataExportManager";
 import MFASettings from "./pages/admin/MFASettings";
 import ModerationQueue from "./pages/admin/ModerationQueue";
 import UserMFASettings from "./pages/UserMFASettings";
+import DeveloperKeys from "./pages/admin/DeveloperKeys";
+import ScheduledJobs from "./pages/admin/ScheduledJobs";
+import PlatformConfig from "./pages/admin/PlatformConfig";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -240,6 +244,7 @@ const AppContent = () => {
             <Route path="/part13-test" element={<Part13Test />} />
             <Route path="/part14-test" element={<Part14Test />} />
             <Route path="/part16-test" element={<Part16Test />} />
+            <Route path="/part17-test" element={<Part17Test />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/rig" element={<RigStore />} />
             <Route path="/rig/prime-picks" element={<PrimePicks />} />
@@ -616,6 +621,30 @@ const AppContent = () => {
               element={
                 <ProtectedRoute requireAdmin>
                   <AdminSettingsIntegrations />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/developer"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <DeveloperKeys />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/scheduler"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <ScheduledJobs />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/config"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <PlatformConfig />
                 </ProtectedRoute>
               }
             />

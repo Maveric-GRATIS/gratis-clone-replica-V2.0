@@ -1,9 +1,12 @@
 // src/lib/rbac/role-definitions.ts
 // GRATIS.NGO — Role Definitions & Permission Matrix
 
-import type { RoleDefinition, RoleName, Permission } from '@/types/rbac';
+import type { RoleDefinition, SystemRole, Permission } from '@/types/rbac';
 
-export const ROLE_DEFINITIONS: Record<RoleName, RoleDefinition> = {
+export type RoleName = SystemRole | string;
+
+// Temporarily cast to any to allow custom permissions
+export const ROLE_DEFINITIONS: Record<RoleName, any> = {
   superadmin: {
     name: 'superadmin',
     label: 'Super Administrator',

@@ -155,9 +155,14 @@ export default function Footer() {
             © {currentYear} G.R.A.T.I.S. Empower Change with Every Pack.
           </span>
           {process.env.NODE_ENV === "development" && (
-            <Link to="/route-test" className="text-primary hover:underline">
-              🧪 Route Test
-            </Link>
+            <div className="flex gap-4">
+              <Link to="/route-test" className="text-primary hover:underline">
+                🧪 Route Test
+              </Link>
+              <Link to="/part15-test" className="text-primary hover:underline">
+                🔧 Part 15 Test
+              </Link>
+            </div>
           )}
         </div>
       </div>

@@ -183,6 +183,12 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
         { name: "Data Export", href: "/admin/data-export" },
         { name: "MFA Settings", href: "/admin/mfa-settings" },
         { name: "Moderation Queue", href: "/admin/moderation-queue" },
+        { name: "API Keys", href: "/developer/api-keys" },
+        { name: "Scheduler", href: "/admin/scheduler" },
+        { name: "Platform Settings", href: "/admin/platform-settings" },
+        { name: "Tenant Manager", href: "/admin/tenants" },
+        { name: "Webhook Manager", href: "/admin/webhooks" },
+        { name: "GraphQL Explorer", href: "/admin/graphql" },
       ],
     },
     {

@@ -145,6 +145,13 @@ import MessagingCenter from "./pages/MessagingCenter";
 import OfflinePage from "./pages/Offline";
 import Part7Test from "./pages/Part7Test";
 import Part8Test from "./pages/Part8Test";
+import Part15Test from "./pages/Part15Test";
+// Part 16 - Enterprise Backend (Sections 69-73)
+import AuditLogViewer from "./pages/admin/AuditLogViewer";
+import RoleManagement from "./pages/admin/RoleManagement";
+import TenantManager from "./pages/admin/TenantManager";
+import WebhookManager from "./pages/admin/WebhookManager";
+import GraphQLExplorer from "./pages/admin/GraphQLExplorer";
 // Part 8: Gamification, Support, Leaderboards
 import GamificationProfile from "./pages/GamificationProfile";
 import SupportTickets from "./pages/SupportTickets";
@@ -173,8 +180,6 @@ import AdvancedAnalyticsDashboard from "./pages/AdvancedAnalyticsDashboard";
 import GDPRComplianceDashboard from "./pages/GDPRComplianceDashboard";
 import SubscriptionManagement from "./pages/SubscriptionManagement";
 import RefundManagement from "./pages/RefundManagement";
-import RoleManager from "./pages/RoleManager";
-import AuditLogViewer from "./pages/AuditLogViewer";
 import Part11Test from "./pages/Part11Test";
 import Part12Test from "./pages/Part12Test";
 import Part13Test from "./pages/Part13Test";
@@ -720,6 +725,7 @@ const AppContent = () => {
             />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/part8-test" element={<Part8Test />} />
+            <Route path="/part15-test" element={<Part15Test />} />
             <Route
               path="/admin/support"
               element={
@@ -819,22 +825,6 @@ const AppContent = () => {
               }
             />
             <Route
-              path="/admin/roles"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <RoleManager />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/audit-logs"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AuditLogViewer />
-                </ProtectedRoute>
-              }
-            />
-            <Route
               path="/admin/monitoring"
               element={
                 <ProtectedRoute requireAdmin>
@@ -917,6 +907,48 @@ const AppContent = () => {
               element={
                 <ProtectedRoute requireAdmin>
                   <PlatformSettings />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* PART 16 ROUTES - Enterprise Backend (Sections 69-73) */}
+            <Route
+              path="/admin/audit-logs"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AuditLogViewer />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/roles"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <RoleManagement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/tenants"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <TenantManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/webhooks"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <WebhookManager />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/graphql"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <GraphQLExplorer />
                 </ProtectedRoute>
               }
             />

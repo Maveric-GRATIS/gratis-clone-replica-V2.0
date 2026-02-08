@@ -201,6 +201,7 @@ import UserMFASettings from "./pages/UserMFASettings";
 import DeveloperKeys from "./pages/admin/DeveloperKeys";
 import ScheduledJobs from "./pages/admin/ScheduledJobs";
 import PlatformConfig from "./pages/admin/PlatformConfig";
+import Maintenance from "./pages/Maintenance";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
@@ -231,6 +232,7 @@ const AppContent = () => {
         <PageTransition>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/maintenance" element={<Maintenance />} />
             <Route path="/api/health" element={<HealthCheck />} />
             {/* Part Test Pages */}
             <Route path="/part1-test" element={<Part1Test />} />

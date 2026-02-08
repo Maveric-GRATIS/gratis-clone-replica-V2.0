@@ -197,6 +197,10 @@ import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
 import { PageTransition } from "@/components/PageTransition";
 import { useLocation } from "react-router-dom";
+// Part 15: Developer APIs, Real-time, Scheduler, Testing, Platform Config
+import DeveloperAPIKeys from "./pages/DeveloperAPIKeys";
+import SchedulerDashboard from "./pages/SchedulerDashboard";
+import PlatformSettings from "./pages/PlatformSettings";
 
 const queryClient = new QueryClient();
 
@@ -887,6 +891,32 @@ const AppContent = () => {
               element={
                 <ProtectedRoute requireAuth>
                   <UserMFASettings />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* PART 15 ROUTES - Enterprise APIs & Platform Management (Sections 64-68) */}
+            <Route
+              path="/developer/api-keys"
+              element={
+                <ProtectedRoute requireAuth>
+                  <DeveloperAPIKeys />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/scheduler"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <SchedulerDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/platform-settings"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <PlatformSettings />
                 </ProtectedRoute>
               }
             />

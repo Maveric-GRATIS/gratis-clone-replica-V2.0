@@ -1,5 +1,6 @@
 // e2e/fixtures/auth.ts
 // Authentication fixtures for Playwright tests
+/* eslint-disable react-hooks/rules-of-hooks */
 
 import { test as base } from '@playwright/test';
 

@@ -16,12 +16,12 @@ export default function Nexus() {
 
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    nexusContent.forEach(video => video.tags.forEach(tag => tags.add(tag)));
+    nexusContent.forEach((video) => video.tags.forEach((tag) => tags.add(tag)));
     return Array.from(tags).sort();
   }, []);
 
   const featuredArticle = useMemo(() => {
-    return nexusContent.find(v => v.featured) || nexusContent[0];
+    return nexusContent.find((v) => v.featured) || nexusContent[0];
   }, []);
 
   const trendingContent = useMemo(() => {
@@ -32,16 +32,22 @@ export default function Nexus() {
 
   const latestContent = useMemo(() => {
     return [...nexusContent]
-      .sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime())
+      .sort(
+        (a, b) =>
+          new Date(b.publishedDate).getTime() -
+          new Date(a.publishedDate).getTime(),
+      )
       .slice(0, 5);
   }, []);
 
   const filteredVideos = useMemo(() => {
-    let filtered = nexusContent.filter(video => {
-      const matchesSearch = video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          video.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTags = selectedTags.length === 0 || 
-                         selectedTags.some(tag => video.tags.includes(tag));
+    const filtered = nexusContent.filter((video) => {
+      const matchesSearch =
+        video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        video.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => video.tags.includes(tag));
       return matchesSearch && matchesTags;
     });
 
@@ -53,7 +59,7 @@ export default function Nexus() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(b.duration) - getDuration(a.duration);
@@ -63,22 +69,26 @@ export default function Nexus() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(a.duration) - getDuration(b.duration);
         });
         break;
       default:
-        filtered.sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+        filtered.sort(
+          (a, b) =>
+            new Date(b.publishedDate).getTime() -
+            new Date(a.publishedDate).getTime(),
+        );
     }
 
     return filtered;
   }, [searchQuery, selectedTags, sortBy]);
 
   const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
 
@@ -89,10 +99,14 @@ export default function Nexus() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="NEXUS: Discover Our World | GRATIS Impact TV" 
+      <SEO
+        title="NEXUS: Discover Our World | GRATIS Impact TV"
         description="Stories, culture, and impact from every corner of the globe. Explore long-form content about water sustainability, festivals, and community."
-        canonical={typeof window !== 'undefined' ? window.location.href : '/impact-tv/nexus'}
+        canonical={
+          typeof window !== "undefined"
+            ? window.location.href
+            : "/impact-tv/nexus"
+        }
       />
 
       {/* Hero Section */}
@@ -103,14 +117,18 @@ export default function Nexus() {
             NEXUS
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Discover our world. Stories, culture, and impact from every corner of the globe.
+            Discover our world. Stories, culture, and impact from every corner
+            of the globe.
           </p>
         </div>
       </section>
 
       {/* Featured Article */}
       <section className="container max-w-7xl mx-auto px-4">
-        <FeaturedContent video={featuredArticle} onClick={() => setSelectedVideo(featuredArticle)} />
+        <FeaturedContent
+          video={featuredArticle}
+          onClick={() => setSelectedVideo(featuredArticle)}
+        />
       </section>
 
       {/* Main Content Grid with Sidebar */}
@@ -119,7 +137,7 @@ export default function Nexus() {
           {/* Main Content Area */}
           <div className="lg:col-span-2">
             <h2 className="text-3xl font-bold mb-8">All Stories</h2>
-            
+
             <VideoFilters
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
@@ -131,7 +149,7 @@ export default function Nexus() {
               onClearFilters={handleClearFilters}
             />
 
-            <VideoGrid 
+            <VideoGrid
               videos={filteredVideos}
               onVideoClick={setSelectedVideo}
               columns={2}
@@ -151,7 +169,7 @@ export default function Nexus() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {trendingContent.map((video, index) => (
-                  <div 
+                  <div
                     key={video.id}
                     className="flex gap-3 cursor-pointer group"
                     onClick={() => setSelectedVideo(video)}
@@ -164,7 +182,8 @@ export default function Nexus() {
                         {video.title}
                       </h4>
                       <p className="text-xs text-muted-foreground mt-1">
-                        {video.viewCount && `${(video.viewCount / 1000).toFixed(1)}K views`}
+                        {video.viewCount &&
+                          `${(video.viewCount / 1000).toFixed(1)}K views`}
                       </p>
                     </div>
                   </div>
@@ -182,14 +201,14 @@ export default function Nexus() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {latestContent.map((video) => (
-                  <div 
+                  <div
                     key={video.id}
                     className="cursor-pointer group"
                     onClick={() => setSelectedVideo(video)}
                   >
                     <div className="aspect-video bg-secondary rounded-lg overflow-hidden mb-2">
-                      <img 
-                        src={video.thumbnail} 
+                      <img
+                        src={video.thumbnail}
                         alt={video.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -198,10 +217,13 @@ export default function Nexus() {
                       {video.title}
                     </h4>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {new Date(video.publishedDate).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric' 
-                      })}
+                      {new Date(video.publishedDate).toLocaleDateString(
+                        "en-US",
+                        {
+                          month: "short",
+                          day: "numeric",
+                        },
+                      )}
                     </p>
                   </div>
                 ))}
@@ -220,8 +242,8 @@ export default function Nexus() {
                     onClick={() => handleTagToggle(tag)}
                     className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
                       selectedTags.includes(tag)
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-secondary hover:bg-secondary/80'
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-secondary hover:bg-secondary/80"
                     }`}
                   >
                     {tag}
@@ -233,7 +255,7 @@ export default function Nexus() {
         </div>
       </section>
 
-      <VideoPlayer 
+      <VideoPlayer
         video={selectedVideo}
         open={!!selectedVideo}
         onClose={() => setSelectedVideo(null)}

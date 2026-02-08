@@ -14,17 +14,17 @@ export default function Icon() {
 
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    iconContent.forEach(video => video.tags.forEach(tag => tags.add(tag)));
+    iconContent.forEach((video) => video.tags.forEach((tag) => tags.add(tag)));
     return Array.from(tags).sort();
   }, []);
 
   const featuredVideo = useMemo(() => {
-    return iconContent.find(v => v.featured) || iconContent[0];
+    return iconContent.find((v) => v.featured) || iconContent[0];
   }, []);
 
   const seriesGroups = useMemo(() => {
     const groups = new Map<string, VideoContent[]>();
-    iconContent.forEach(video => {
+    iconContent.forEach((video) => {
       if (video.series) {
         if (!groups.has(video.series)) {
           groups.set(video.series, []);
@@ -32,7 +32,7 @@ export default function Icon() {
         groups.get(video.series)!.push(video);
       }
     });
-    
+
     // Sort episodes within each series
     groups.forEach((episodes) => {
       episodes.sort((a, b) => {
@@ -40,16 +40,18 @@ export default function Icon() {
         return (a.episode || 0) - (b.episode || 0);
       });
     });
-    
+
     return groups;
   }, []);
 
   const filteredVideos = useMemo(() => {
-    let filtered = iconContent.filter(video => {
-      const matchesSearch = video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          video.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTags = selectedTags.length === 0 || 
-                         selectedTags.some(tag => video.tags.includes(tag));
+    const filtered = iconContent.filter((video) => {
+      const matchesSearch =
+        video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        video.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => video.tags.includes(tag));
       return matchesSearch && matchesTags;
     });
 
@@ -61,7 +63,7 @@ export default function Icon() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(b.duration) - getDuration(a.duration);
@@ -71,22 +73,26 @@ export default function Icon() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(a.duration) - getDuration(b.duration);
         });
         break;
       default:
-        filtered.sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+        filtered.sort(
+          (a, b) =>
+            new Date(b.publishedDate).getTime() -
+            new Date(a.publishedDate).getTime(),
+        );
     }
 
     return filtered;
   }, [searchQuery, selectedTags, sortBy]);
 
   const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
 
@@ -97,10 +103,14 @@ export default function Icon() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="ICON: Series & Shows | GRATIS Impact TV" 
+      <SEO
+        title="ICON: Series & Shows | GRATIS Impact TV"
         description="Binge-worthy series from the front lines of culture. Watch our episodic content exploring cities, festivals, and communities worldwide."
-        canonical={typeof window !== 'undefined' ? window.location.href : '/impact-tv/icon'}
+        canonical={
+          typeof window !== "undefined"
+            ? window.location.href
+            : "/impact-tv/icon"
+        }
       />
 
       {/* Hero Section */}
@@ -111,24 +121,28 @@ export default function Icon() {
             ICON
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Series & shows. Binge-worthy content from the front lines of culture.
+            Series & shows. Binge-worthy content from the front lines of
+            culture.
           </p>
         </div>
       </section>
 
       {/* Featured Video */}
       <section className="container max-w-7xl mx-auto px-4">
-        <FeaturedContent video={featuredVideo} onClick={() => setSelectedVideo(featuredVideo)} />
+        <FeaturedContent
+          video={featuredVideo}
+          onClick={() => setSelectedVideo(featuredVideo)}
+        />
       </section>
 
       {/* Series Collections */}
       <section className="container max-w-7xl mx-auto px-4 pb-12">
         <h2 className="text-3xl font-bold mb-8">Our Series</h2>
-        
+
         {Array.from(seriesGroups.entries()).map(([seriesName, episodes]) => (
           <div key={seriesName} className="mb-12">
             <h3 className="text-2xl font-semibold mb-6">{seriesName}</h3>
-            <VideoGrid 
+            <VideoGrid
               videos={episodes}
               onVideoClick={setSelectedVideo}
               columns={4}
@@ -140,7 +154,7 @@ export default function Icon() {
       {/* All Episodes */}
       <section className="container max-w-7xl mx-auto px-4 py-12 border-t border-border">
         <h2 className="text-3xl font-bold mb-8">All Episodes</h2>
-        
+
         <VideoFilters
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -152,7 +166,7 @@ export default function Icon() {
           onClearFilters={handleClearFilters}
         />
 
-        <VideoGrid 
+        <VideoGrid
           videos={filteredVideos}
           onVideoClick={setSelectedVideo}
           columns={3}
@@ -160,7 +174,7 @@ export default function Icon() {
         />
       </section>
 
-      <VideoPlayer 
+      <VideoPlayer
         video={selectedVideo}
         open={!!selectedVideo}
         onClose={() => setSelectedVideo(null)}

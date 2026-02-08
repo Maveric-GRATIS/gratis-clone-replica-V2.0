@@ -13,7 +13,7 @@ import { processRetryQueue } from '@/lib/webhooks/delivery-service';
  * {
  *   "crons": [{
  *     "path": "/api/cron/webhook-retry",
- *     "schedule": "*/5 * * * *"  // Every 5 minutes
+ *     "schedule": "every 5 minutes"
  *   }]
  * }
  */

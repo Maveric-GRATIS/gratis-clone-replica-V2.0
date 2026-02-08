@@ -13,16 +13,18 @@ export default function Tales() {
 
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    talesContent.forEach(video => video.tags.forEach(tag => tags.add(tag)));
+    talesContent.forEach((video) => video.tags.forEach((tag) => tags.add(tag)));
     return Array.from(tags).sort();
   }, []);
 
   const filteredVideos = useMemo(() => {
-    let filtered = talesContent.filter(video => {
-      const matchesSearch = video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          video.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTags = selectedTags.length === 0 || 
-                         selectedTags.some(tag => video.tags.includes(tag));
+    const filtered = talesContent.filter((video) => {
+      const matchesSearch =
+        video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        video.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => video.tags.includes(tag));
       return matchesSearch && matchesTags;
     });
 
@@ -35,7 +37,7 @@ export default function Tales() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(b.duration) - getDuration(a.duration);
@@ -45,22 +47,26 @@ export default function Tales() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(a.duration) - getDuration(b.duration);
         });
         break;
       default: // newest
-        filtered.sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+        filtered.sort(
+          (a, b) =>
+            new Date(b.publishedDate).getTime() -
+            new Date(a.publishedDate).getTime(),
+        );
     }
 
     return filtered;
   }, [searchQuery, selectedTags, sortBy]);
 
   const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
 
@@ -71,10 +77,14 @@ export default function Tales() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="TALES: Quick Clips & Moments | GRATIS Impact TV" 
+      <SEO
+        title="TALES: Quick Clips & Moments | GRATIS Impact TV"
         description="Bite-sized stories from our global movement. Watch quick clips from festivals, street culture, and community moments."
-        canonical={typeof window !== 'undefined' ? window.location.href : '/impact-tv/tales'}
+        canonical={
+          typeof window !== "undefined"
+            ? window.location.href
+            : "/impact-tv/tales"
+        }
       />
 
       {/* Hero Section */}
@@ -85,7 +95,8 @@ export default function Tales() {
             TALES
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Quick moments. Big impact. Bite-sized stories from our global movement.
+            Quick moments. Big impact. Bite-sized stories from our global
+            movement.
           </p>
         </div>
       </section>
@@ -103,7 +114,7 @@ export default function Tales() {
           onClearFilters={handleClearFilters}
         />
 
-        <VideoGrid 
+        <VideoGrid
           videos={filteredVideos}
           onVideoClick={setSelectedVideo}
           columns={4}
@@ -112,7 +123,7 @@ export default function Tales() {
         />
       </section>
 
-      <VideoPlayer 
+      <VideoPlayer
         video={selectedVideo}
         open={!!selectedVideo}
         onClose={() => setSelectedVideo(null)}

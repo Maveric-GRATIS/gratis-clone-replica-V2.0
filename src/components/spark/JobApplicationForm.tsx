@@ -85,7 +85,7 @@ export const JobApplicationForm = () => {
       }
 
       let resumeUrl = "";
-      let resumeFileName = resumeFile.name;
+      const resumeFileName = resumeFile.name;
 
       // Try to upload resume to Firebase Storage
       try {

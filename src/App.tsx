@@ -184,6 +184,7 @@ import Part11Test from "./pages/Part11Test";
 import Part12Test from "./pages/Part12Test";
 import Part13Test from "./pages/Part13Test";
 import Part14Test from "./pages/Part14Test";
+import Part16Test from "./pages/Part16Test";
 import EmailLogsPage from "./pages/admin/EmailLogsPage";
 import EmailTemplatesPage from "./pages/admin/EmailTemplatesPage";
 import ErrorTrackingDashboard from "./pages/admin/ErrorTrackingDashboard";
@@ -238,6 +239,7 @@ const AppContent = () => {
             <Route path="/part12-test" element={<Part12Test />} />
             <Route path="/part13-test" element={<Part13Test />} />
             <Route path="/part14-test" element={<Part14Test />} />
+            <Route path="/part16-test" element={<Part16Test />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/rig" element={<RigStore />} />
             <Route path="/rig/prime-picks" element={<PrimePicks />} />

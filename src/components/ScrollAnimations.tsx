@@ -28,7 +28,8 @@ export function ScrollAnimationSection({
     offset: ["start end", "end start"],
   });
 
-  const y = parallax ? useTransform(scrollYProgress, [0, 1], [100, -100]) : 0;
+  const yTransform = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const y = parallax ? yTransform : 0;
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (

@@ -14,20 +14,24 @@ export default function Unveil() {
 
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    unveilContent.forEach(video => video.tags.forEach(tag => tags.add(tag)));
+    unveilContent.forEach((video) =>
+      video.tags.forEach((tag) => tags.add(tag)),
+    );
     return Array.from(tags).sort();
   }, []);
 
   const featuredFilm = useMemo(() => {
-    return unveilContent.find(v => v.featured) || unveilContent[0];
+    return unveilContent.find((v) => v.featured) || unveilContent[0];
   }, []);
 
   const filteredVideos = useMemo(() => {
-    let filtered = unveilContent.filter(video => {
-      const matchesSearch = video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          video.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesTags = selectedTags.length === 0 || 
-                         selectedTags.some(tag => video.tags.includes(tag));
+    const filtered = unveilContent.filter((video) => {
+      const matchesSearch =
+        video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        video.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => video.tags.includes(tag));
       return matchesSearch && matchesTags;
     });
 
@@ -39,7 +43,7 @@ export default function Unveil() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(b.duration) - getDuration(a.duration);
@@ -49,22 +53,26 @@ export default function Unveil() {
         filtered.sort((a, b) => {
           const getDuration = (d?: string) => {
             if (!d) return 0;
-            const parts = d.split(':');
+            const parts = d.split(":");
             return parseInt(parts[0]) * 60 + parseInt(parts[1]);
           };
           return getDuration(a.duration) - getDuration(b.duration);
         });
         break;
       default:
-        filtered.sort((a, b) => new Date(b.publishedDate).getTime() - new Date(a.publishedDate).getTime());
+        filtered.sort(
+          (a, b) =>
+            new Date(b.publishedDate).getTime() -
+            new Date(a.publishedDate).getTime(),
+        );
     }
 
     return filtered;
   }, [searchQuery, selectedTags, sortBy]);
 
   const handleTagToggle = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
   };
 
@@ -75,10 +83,14 @@ export default function Unveil() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="UNVEIL: Films & Documentaries | GRATIS Impact TV" 
+      <SEO
+        title="UNVEIL: Films & Documentaries | GRATIS Impact TV"
         description="Feature-length films that capture our mission. Watch cinematic stories about water, culture, and community impact."
-        canonical={typeof window !== 'undefined' ? window.location.href : '/impact-tv/unveil'}
+        canonical={
+          typeof window !== "undefined"
+            ? window.location.href
+            : "/impact-tv/unveil"
+        }
       />
 
       {/* Hero Section */}
@@ -96,13 +108,16 @@ export default function Unveil() {
 
       {/* Featured Film */}
       <section className="container max-w-7xl mx-auto px-4">
-        <FeaturedContent video={featuredFilm} onClick={() => setSelectedVideo(featuredFilm)} />
+        <FeaturedContent
+          video={featuredFilm}
+          onClick={() => setSelectedVideo(featuredFilm)}
+        />
       </section>
 
       {/* All Films */}
       <section className="container max-w-7xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-8">All Films</h2>
-        
+
         <VideoFilters
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -114,14 +129,14 @@ export default function Unveil() {
           onClearFilters={handleClearFilters}
         />
 
-        <VideoGrid 
+        <VideoGrid
           videos={filteredVideos}
           onVideoClick={setSelectedVideo}
           columns={3}
         />
       </section>
 
-      <VideoPlayer 
+      <VideoPlayer
         video={selectedVideo}
         open={!!selectedVideo}
         onClose={() => setSelectedVideo(null)}

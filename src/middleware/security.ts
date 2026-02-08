@@ -167,7 +167,7 @@ export function validateRequest(request: Request): boolean {
  * Security middleware for API routes
  * Usage: export const GET = securityMiddleware(async (request) => { ... })
  */
-export function securityMiddleware(handler: Function) {
+export function securityMiddleware(handler: (request: Request) => Promise<Response>) {
   return async (request: Request) => {
     const origin = request.headers.get('origin');
 

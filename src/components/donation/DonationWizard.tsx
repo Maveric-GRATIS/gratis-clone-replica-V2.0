@@ -551,7 +551,7 @@ function Step2Allocation({
                   step={5}
                   className="py-4"
                   style={{
-                    // @ts-ignore
+                    // @ts-expect-error - CSS custom property
                     "--slider-thumb": category.color,
                   }}
                 />

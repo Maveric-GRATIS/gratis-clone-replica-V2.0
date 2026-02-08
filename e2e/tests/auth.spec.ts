@@ -60,4 +60,5 @@ test.describe('GRATIS.NGO Platform - Smoke Tests', () => {
 
     // Verify page loaded
     expect(page.url()).toContain('/events');
+  });
 });

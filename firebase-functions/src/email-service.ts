@@ -30,7 +30,7 @@ interface SendEmailOptions {
   to: string | string[];
   subject: string;
   type: EmailType;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   replyTo?: string;
   attachments?: {
     filename: string;
@@ -70,7 +70,7 @@ export async function sendEmail(
 }
 
 // Generate email HTML based on type
-function generateEmailHTML(type: EmailType, data: Record<string, any>): string {
+function generateEmailHTML(type: EmailType, data: Record<string, unknown>): string {
   // For now, return basic HTML templates
   // In production, use React Email components
 
@@ -170,7 +170,7 @@ function generateEmailHTML(type: EmailType, data: Record<string, any>): string {
                 <p>Your order <strong>#${data.orderId}</strong> has been confirmed and will be shipped soon.</p>
                 <h3>Order Items:</h3>
                 <ul>
-                  ${data.items.map((item: any) => `<li>${item.name} x ${item.quantity}</li>`).join('')}
+                  ${(data.items as Array<{ name: string; quantity: number }>).map((item) => `<li>${item.name} x ${item.quantity}</li>`).join('')}
                 </ul>
                 ${data.trackingUrl ? `<a href="${data.trackingUrl}" class="button">Track Your Order</a>` : ''}
               </div>

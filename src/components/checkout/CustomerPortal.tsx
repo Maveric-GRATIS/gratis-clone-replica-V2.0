@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,11 +28,7 @@ export default function CustomerPortal() {
   const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [userData, setUserData] = useState<any>(null);
 
-  useEffect(() => {
-    loadUserData();
-  }, [user]);
-
-  const loadUserData = async () => {
+  const loadUserData = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -69,7 +65,11 @@ export default function CustomerPortal() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    loadUserData();
+  }, [loadUserData]);
 
   const openCustomerPortal = async () => {
     setPortalLoading(true);

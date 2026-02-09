@@ -79,7 +79,7 @@ export async function deleteUser(uid: string) {
   }
 }
 
-export async function setCustomClaims(uid: string, claims: Record<string, any>) {
+export async function setCustomClaims(uid: string, claims: Record<string, unknown>) {
   try {
     await auth.setCustomUserClaims(uid, claims);
   } catch (error) {
@@ -97,7 +97,7 @@ export async function verifyIdToken(idToken: string) {
   }
 }
 
-export async function createCustomToken(uid: string, claims?: Record<string, any>) {
+export async function createCustomToken(uid: string, claims?: Record<string, unknown>) {
   try {
     return await auth.createCustomToken(uid, claims);
   } catch (error) {
@@ -123,7 +123,7 @@ export async function getDocument<T>(collection: string, docId: string): Promise
 
 export async function getCollection<T>(
   collection: string,
-  filters?: { field: string; operator: FirebaseFirestore.WhereFilterOp; value: any }[],
+  filters?: { field: string; operator: FirebaseFirestore.WhereFilterOp; value: unknown }[],
   orderByField?: string,
   limitCount?: number
 ): Promise<T[]> {
@@ -152,7 +152,7 @@ export async function getCollection<T>(
   }
 }
 
-export async function createDocument<T extends Record<string, any>>(
+export async function createDocument<T extends Record<string, unknown>>(
   collection: string,
   data: T,
   docId?: string
@@ -178,7 +178,7 @@ export async function createDocument<T extends Record<string, any>>(
   }
 }
 
-export async function updateDocument<T extends Record<string, any>>(
+export async function updateDocument<T extends Record<string, unknown>>(
   collection: string,
   docId: string,
   data: Partial<T>
@@ -211,7 +211,7 @@ export async function batchWrite(
     type: 'set' | 'update' | 'delete';
     collection: string;
     docId: string;
-    data?: any;
+    data?: Record<string, unknown>;
   }[]
 ): Promise<void> {
   try {

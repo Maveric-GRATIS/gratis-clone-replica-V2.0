@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { Card } from "@/components/ui/card";
@@ -47,11 +47,7 @@ export default function EventTicketCheckout() {
   const [selectedType, setSelectedType] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
 
-  useEffect(() => {
-    loadEvent();
-  }, [eventId]);
-
-  const loadEvent = async () => {
+  const loadEvent = useCallback(async () => {
     if (!eventId) return;
 
     try {
@@ -90,7 +86,11 @@ export default function EventTicketCheckout() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [eventId, toast, t, navigate]);
+
+  useEffect(() => {
+    loadEvent();
+  }, [loadEvent]);
 
   const handleCheckout = async () => {
     if (!user) {

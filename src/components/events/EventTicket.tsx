@@ -4,7 +4,7 @@
  * Display event ticket with QR code
  */
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -40,11 +40,7 @@ export function EventTicket({
   const [isLoading, setIsLoading] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  useEffect(() => {
-    generateQRCode();
-  }, [ticket, event]);
-
-  const generateQRCode = async () => {
+  const generateQRCode = useCallback(async () => {
     try {
       setIsLoading(true);
 
@@ -64,7 +60,11 @@ export function EventTicket({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [ticket, event]);
+
+  useEffect(() => {
+    generateQRCode();
+  }, [generateQRCode]);
 
   const handleDownloadTicket = () => {
     // Create a printable ticket

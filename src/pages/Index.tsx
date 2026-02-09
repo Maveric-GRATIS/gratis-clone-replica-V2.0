@@ -2,9 +2,8 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
-import ProductFeatures, {
-  useWaterFeatures,
-} from "@/components/ProductFeatures";
+import ProductFeatures from "@/components/ProductFeatures";
+import { useWaterFeatures } from "@/hooks/useWaterFeatures";
 import MerchCarousel from "@/components/MerchCarousel";
 import AdvertisingPartnerCTA from "@/components/AdvertisingPartnerCTA";
 import { ProductCarousel } from "@/components/ProductCarousel";

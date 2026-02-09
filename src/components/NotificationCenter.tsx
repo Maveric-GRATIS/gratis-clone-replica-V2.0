@@ -328,7 +328,7 @@ function NotificationItem({
 }
 
 // Hook for managing notifications
-export function useNotifications() {
+function useNotifications() {
   const { user } = useAuth();
   const [unreadCount, setUnreadCount] = useState(0);
 

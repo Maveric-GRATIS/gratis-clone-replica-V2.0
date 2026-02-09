@@ -3,14 +3,14 @@ import { cn } from '@/lib/utils';
 
 /**
  * Progressive Image Loading Component with Blur-Up Effect
- * 
+ *
  * Features:
  * - Lazy loading with Intersection Observer
  * - Progressive image loading (low-quality placeholder → full resolution)
  * - Blur-up effect for smooth transitions
  * - Automatic aspect ratio handling
  * - Error fallback support
- * 
+ *
  * Usage:
  * ```tsx
  * <LazyImage
@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils';
  *   aspectRatio="16/9"
  * />
  * ```
- * 
+ *
  * Note: For best results, generate low-quality thumbnails (10-50kb) of your images.
  * You can use tools like:
  * - Sharp (Node.js): .resize(20, 20).blur().jpeg({ quality: 20 })
@@ -38,15 +38,15 @@ interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   aspectRatio?: string; // e.g., "16/9" or "1/1"
 }
 
-export const LazyImage = ({ 
-  src, 
-  alt, 
+export const LazyImage = ({
+  src,
+  alt,
   fallback = '/placeholder.svg',
   placeholder,
   lowQualitySrc,
   aspectRatio,
   className,
-  ...props 
+  ...props
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -88,15 +88,15 @@ export const LazyImage = ({
       };
       fullImgRef.current = img;
     }
-  }, [isInView, src]);
+  }, [isInView, src, hasError]);
 
   const handlePlaceholderLoad = () => {
     setPlaceholderLoaded(true);
   };
 
   return (
-    <div 
-      ref={imgRef} 
+    <div
+      ref={imgRef}
       className={cn("relative overflow-hidden bg-muted/20", className)}
       style={aspectRatio ? { aspectRatio } : undefined}
     >
@@ -104,7 +104,7 @@ export const LazyImage = ({
       {!isInView && (
         <div className="absolute inset-0 bg-gradient-to-br from-muted/40 via-muted/20 to-muted/40 animate-pulse" />
       )}
-      
+
       {isInView && (
         <>
           {/* Low-quality blurred placeholder - loads first */}
@@ -124,14 +124,14 @@ export const LazyImage = ({
               aria-hidden="true"
             />
           )}
-          
+
           {/* Loading spinner/placeholder */}
           {!isLoaded && !hasError && !lowQualitySrc && (
             <div className="absolute inset-0 bg-gradient-to-br from-muted/40 via-muted/20 to-muted/40 animate-pulse flex items-center justify-center">
               {placeholder || <div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />}
             </div>
           )}
-          
+
           {/* Full resolution image - fades in when loaded */}
           <img
             src={hasError ? fallback : src}

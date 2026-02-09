@@ -100,19 +100,3 @@ export default function ProductFeatures({
     </section>
   );
 }
-  },
-  {
-    icon: <Hash className="w-8 h-8" />,
-    title: "Numbered Editions",
-    description:
-      "Every bottle authenticated with a unique edition number. Truly collectible, genuinely limited.",
-    stat: "#1",
-  },
-  {
-    icon: <Heart className="w-8 h-8" />,
-    title: "100% to NGOs",
-    description:
-      "Premium pricing means premium impact. Every euro funds clean water projects worldwide.",
-    stat: "100%",
-  },
-];

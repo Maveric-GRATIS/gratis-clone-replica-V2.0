@@ -249,7 +249,7 @@ class NotificationService {
    * Show toast notification
    */
   private showToast(notification: Notification): void {
-    const toastOptions: any = {
+    const toastOptions: Record<string, unknown> = {
       description: notification.message,
       duration: notification.priority === 'urgent' ? 10000 : 5000,
     };

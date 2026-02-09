@@ -17,7 +17,7 @@ const USERS_COL = 'users';
 
 // ── Provider Factory ─────────────────────────────────────────────────────────
 
-function createProvider(provider: SocialProvider): any {
+function createProvider(provider: SocialProvider): GoogleAuthProvider | FacebookAuthProvider | GithubAuthProvider | OAuthProvider {
   switch (provider) {
     case 'google': {
       const p = new GoogleAuthProvider();

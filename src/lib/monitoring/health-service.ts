@@ -28,13 +28,13 @@ async function checkFirestore(): Promise<ServiceHealth> {
       lastChecked: new Date().toISOString(),
       message: 'Connected',
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       name: 'Firestore',
       status: 'down',
       responseTime: Date.now() - start,
       lastChecked: new Date().toISOString(),
-      message: error.message,
+      message: error instanceof Error ? error.message : 'Connection failed',
     };
   }
 }
@@ -52,13 +52,13 @@ async function checkStripe(): Promise<ServiceHealth> {
       lastChecked: new Date().toISOString(),
       message: 'Connected',
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       name: 'Stripe',
       status: 'down',
       responseTime: Date.now() - start,
       lastChecked: new Date().toISOString(),
-      message: error.message,
+      message: error instanceof Error ? error.message : 'Connection failed',
     };
   }
 }
@@ -75,13 +75,13 @@ async function checkEmailService(): Promise<ServiceHealth> {
       lastChecked: new Date().toISOString(),
       message: 'Connected',
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       name: 'Email Service',
       status: 'down',
       responseTime: Date.now() - start,
       lastChecked: new Date().toISOString(),
-      message: error.message,
+      message: error instanceof Error ? error.message : 'Connection failed',
     };
   }
 }
@@ -98,13 +98,13 @@ async function checkMuxVideo(): Promise<ServiceHealth> {
       lastChecked: new Date().toISOString(),
       message: 'Connected',
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       name: 'Mux Video',
       status: 'down',
       responseTime: Date.now() - start,
       lastChecked: new Date().toISOString(),
-      message: error.message,
+      message: error instanceof Error ? error.message : 'Connection failed',
     };
   }
 }

@@ -190,7 +190,7 @@ export function getRateLimitInfo(
  * Express-style middleware for rate limiting
  */
 export function rateLimitMiddleware(tier: keyof typeof RATE_LIMITS = 'public') {
-  return (req: any, res: any, next: any) => {
+  return (req: Request, res: Response, next: () => void) => {
     // Use IP address or user ID as identifier
     const identifier = req.user?.uid || req.ip || req.connection.remoteAddress || 'unknown';
 

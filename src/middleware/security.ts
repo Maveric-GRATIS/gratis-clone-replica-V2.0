@@ -119,7 +119,7 @@ function getCORSHeaders(origin: string | null): Record<string, string> {
 /**
  * Sanitizes user input to prevent XSS
  */
-export function sanitizeInput(input: any): any {
+export function sanitizeInput(input: unknown): unknown {
   if (typeof input === 'string') {
     return input
       .replace(/[<>]/g, '') // Remove < and >
@@ -133,7 +133,7 @@ export function sanitizeInput(input: any): any {
   }
 
   if (input && typeof input === 'object') {
-    const sanitized: any = {};
+    const sanitized: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(input)) {
       sanitized[key] = sanitizeInput(value);
     }

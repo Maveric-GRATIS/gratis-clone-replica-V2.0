@@ -76,12 +76,12 @@ export const confirmPayment = async (
   elements: StripeElements,
   confirmParams: {
     return_url: string;
-    payment_method_data?: any;
+    payment_method_data?: Record<string, unknown>;
   }
-): Promise<{ error?: any }> => {
+): Promise<{ error?: Error }> => {
   const stripe = await getStripe();
   if (!stripe) {
-    return { error: { message: 'Stripe not loaded' } };
+    return { error: new Error('Stripe not loaded') };
   }
 
   return stripe.confirmPayment({

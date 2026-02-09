@@ -89,9 +89,9 @@ export function extractIdentifier(request: Request, userId?: string): string {
  */
 export function withRateLimit(
   scope: RateLimitScope,
-  handler: (request: Request, context?: any) => Promise<Response>
+  handler: (request: Request, context?: unknown) => Promise<Response>
 ) {
-  return async (request: Request, context?: any): Promise<Response> => {
+  return async (request: Request, context?: unknown): Promise<Response> => {
     // Extract user from request (simplified - implement proper auth check)
     const userId = request.headers.get('x-user-id') || undefined;
     const identifier = extractIdentifier(request, userId);

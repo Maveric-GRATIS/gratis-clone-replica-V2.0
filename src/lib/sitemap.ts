@@ -17,7 +17,7 @@ class SitemapGenerator {
 
   private initializeRoutes() {
     const now = new Date().toISOString();
-    
+
     // Static routes with priorities
     const staticRoutes = [
       { path: '/', priority: 1.0, changefreq: 'daily' as const },
@@ -45,7 +45,7 @@ class SitemapGenerator {
     }));
   }
 
-  addDynamicRoutes(products: any[] = [], categories: string[] = []) {
+  addDynamicRoutes(products: Array<{ id: string; slug: string }> = [], categories: string[] = []) {
     const now = new Date().toISOString();
 
     // Add product pages
@@ -99,11 +99,11 @@ Sitemap: ${this.baseUrl}/sitemap.xml
 
   downloadSitemap() {
     if (typeof window === 'undefined') return;
-    
+
     const xml = this.generateXML();
     const blob = new Blob([xml], { type: 'application/xml' });
     const url = URL.createObjectURL(blob);
-    
+
     const a = document.createElement('a');
     a.href = url;
     a.download = 'sitemap.xml';

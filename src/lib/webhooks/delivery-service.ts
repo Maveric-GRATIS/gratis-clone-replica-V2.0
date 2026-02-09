@@ -277,7 +277,7 @@ export async function processRetryQueue(): Promise<{
 /**
  * Trigger webhook for event
  */
-export async function triggerWebhooks(event: WebhookEvent, payload: any): Promise<number> {
+export async function triggerWebhooks(event: WebhookEvent, payload: Record<string, unknown>): Promise<number> {
   console.log(`[Webhook Delivery] Triggering webhooks for event: ${event}`);
 
   const subscriptions = Array.from(mockSubscriptions.values()).filter(

@@ -17,7 +17,7 @@ export class NextRequest extends Request {
  * This is a compatibility shim to allow compilation in Vite project
  */
 export class NextResponse extends Response {
-  static json(data: any, init?: ResponseInit): Response {
+  static json(data: unknown, init?: ResponseInit): Response {
     return new Response(JSON.stringify(data), {
       ...init,
       headers: {

@@ -97,7 +97,7 @@ export class WebhookService {
    */
   static async triggerWebhook(
     event: WebhookEvent,
-    data: any,
+    data: Record<string, unknown>,
     metadata?: Record<string, any>
   ): Promise<void> {
     const webhooks = await this.getWebhooksForEvent(event);
@@ -191,18 +191,18 @@ export class WebhookService {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Update delivery with error
       const delivery = (await getDoc(deliveryRef)).data() as WebhookDelivery;
       const attempts = delivery.attempts + 1;
       const maxRetries = webhook.retryPolicy?.maxRetries || 3;
 
       if (attempts >= maxRetries) {
-        // Max retries reached, mark as failed
+        // Max retries reached
         await updateDoc(deliveryRef, {
-          status: "failed",
+          status: 'failed',
           attempts,
-          error: error.message,
+          error: error instanceof Error ? error.message : 'Unknown error',
           failedAt: Timestamp.now()
         });
       } else {

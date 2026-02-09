@@ -127,6 +127,12 @@ export default function UserProfile() {
           <LayoutDashboard className="mr-2 h-4 w-4" />
           <span>Dashboard</span>
         </DropdownMenuItem>
+        {isAdminUser && (
+          <DropdownMenuItem onClick={() => navigate("/admin")}>
+            <Shield className="mr-2 h-4 w-4" />
+            <span>Admin Panel</span>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem onClick={() => navigate("/messages")}>
           <MessageCircle className="mr-2 h-4 w-4" />
           <span>Messages</span>

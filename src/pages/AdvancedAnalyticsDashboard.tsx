@@ -30,7 +30,7 @@ export default function AdvancedAnalyticsDashboard() {
     {
       id: "total-revenue",
       label: "Total Revenue",
-      value: "€245,830",
+      value: "€245.830",
       change: 12.5,
       trend: "up" as const,
       icon: DollarSign,
@@ -39,7 +39,7 @@ export default function AdvancedAnalyticsDashboard() {
     {
       id: "total-donors",
       label: "Total Donors",
-      value: "1,845",
+      value: "1.845",
       change: 8.2,
       trend: "up" as const,
       icon: Users,

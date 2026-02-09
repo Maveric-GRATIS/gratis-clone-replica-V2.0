@@ -646,7 +646,7 @@ export default function Index() {
                     </div>
                     <div>
                       <div className="text-2xl font-bold text-electric-blue mb-1">
-                        4.9/5
+                        4,9/5
                       </div>
                       <div className="text-sm text-muted-foreground">
                         {t("home.trustRating")}

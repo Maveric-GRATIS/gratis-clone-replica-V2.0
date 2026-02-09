@@ -243,7 +243,7 @@ export default function Transparency() {
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="text-center p-6 bg-accent/10 rounded-lg">
-                <div className="text-3xl font-bold mb-2">€247,891</div>
+                <div className="text-3xl font-bold mb-2">€247.891</div>
                 <div className="text-sm text-muted-foreground">
                   Total donated (2025)
                 </div>
@@ -252,7 +252,7 @@ export default function Transparency() {
                 </div>
               </div>
               <div className="text-center p-6 bg-accent/10 rounded-lg">
-                <div className="text-3xl font-bold mb-2">€512,403</div>
+                <div className="text-3xl font-bold mb-2">€512.403</div>
                 <div className="text-sm text-muted-foreground">
                   Total revenue (2025)
                 </div>
@@ -270,7 +270,7 @@ export default function Transparency() {
                 </div>
               </div>
               <div className="text-center p-6 bg-accent/10 rounded-lg">
-                <div className="text-3xl font-bold mb-2">3,241</div>
+                <div className="text-3xl font-bold mb-2">3.241</div>
                 <div className="text-sm text-muted-foreground">
                   Individual donors
                 </div>

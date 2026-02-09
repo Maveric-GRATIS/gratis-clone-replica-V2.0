@@ -81,7 +81,7 @@ const mockMemberData = {
     {
       id: "3",
       type: "impact_milestone",
-      description: "Reached 1,000 liters milestone",
+      description: "Reached 1.000 liters milestone",
       date: "2026-01-10",
     },
   ],

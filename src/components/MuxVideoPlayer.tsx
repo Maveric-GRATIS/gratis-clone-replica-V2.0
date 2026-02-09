@@ -147,7 +147,7 @@ export function MuxVideoPlayer({
             <span>15K+ views</span>
           </div>
           <div className="hidden sm:block w-1 h-1 rounded-full bg-border" />
-          <span>Average rating: 4.9/5</span>
+          <span>Average rating: 4,9/5</span>
           <div className="hidden sm:block w-1 h-1 rounded-full bg-border" />
           <span>Duration: 2:30</span>
         </motion.div>

@@ -60,7 +60,7 @@ export default function AdminDashboard() {
   const stats = [
     {
       title: "Total Members",
-      value: "12,543",
+      value: "12.543",
       change: 12.5,
       trend: "up",
       description: "Active TRIBE members",
@@ -70,7 +70,7 @@ export default function AdminDashboard() {
     },
     {
       title: "Total Donations",
-      value: "€45,231",
+      value: "€45.231",
       change: 8.2,
       trend: "up",
       description: "This month",
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
     },
     {
       title: "Monthly Revenue",
-      value: "€67,890",
+      value: "€67.890",
       change: 3.1,
       trend: "up",
       description: "Products + Memberships",

@@ -335,11 +335,11 @@ export const FOCUS_AREAS: { value: FocusArea; label: string }[] = [
 ];
 
 export const ANNUAL_BUDGET_RANGES = [
-  { value: '<100k', label: 'Under €100,000' },
-  { value: '100k-500k', label: '€100,000 - €500,000' },
-  { value: '500k-1M', label: '€500,000 - €1,000,000' },
-  { value: '1M-5M', label: '€1,000,000 - €5,000,000' },
-  { value: '5M+', label: 'Over €5,000,000' },
+  { value: '<100k', label: 'Under €100.000' },
+  { value: '100k-500k', label: '€100.000 - €500.000' },
+  { value: '500k-1M', label: '€500.000 - €1.000.000' },
+  { value: '1M-5M', label: '€1.000.000 - €5.000.000' },
+  { value: '5M+', label: 'Over €5.000.000' },
 ];
 
 export const TIER_BENEFITS: Record<PartnerTier, { projects: string; features: string[] }> = {

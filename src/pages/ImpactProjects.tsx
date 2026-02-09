@@ -129,17 +129,17 @@ const mockProjects: ImpactProject[] = [
     title: "Clean Water Wells in Kenya",
     slug: "clean-water-wells-kenya",
     description:
-      "Building sustainable water wells in rural Kenyan communities to provide clean drinking water access to over 5,000 people.",
+      "Building sustainable water wells in rural Kenyan communities to provide clean drinking water access to over 5.000 people.",
     shortDescription:
-      "Providing clean water access to 5,000+ people in rural Kenya",
+      "Providing clean water access to 5.000+ people in rural Kenya",
     category: "clean_water",
     tags: ["water", "africa", "infrastructure"],
     location: { country: "Kenya", region: "Turkana County" },
     coverImage:
       "https://images.unsplash.com/photo-1578489758854-f134a358f08b?w=800&h=600&fit=crop",
     gallery: [],
-    fundingGoal: 5000000, // €50,000
-    fundingRaised: 3750000, // €37,500
+    fundingGoal: 5000000, // €50.000
+    fundingRaised: 3750000, // €37.500
     currency: "EUR",
     donorCount: 342,
     impactMetrics: [
@@ -161,15 +161,15 @@ const mockProjects: ImpactProject[] = [
     slug: "school-supplies-syria",
     description:
       "Providing educational materials and school supplies to Syrian refugee children in Lebanon camps.",
-    shortDescription: "Education support for 1,000+ refugee children",
+    shortDescription: "Education support for 1.000+ refugee children",
     category: "education",
     tags: ["education", "refugees", "children"],
     location: { country: "Lebanon", region: "Bekaa Valley" },
     coverImage:
       "https://images.unsplash.com/photo-1497375988099-1f3e4e26279e?w=800&h=600&fit=crop",
     gallery: [],
-    fundingGoal: 2500000, // €25,000
-    fundingRaised: 2100000, // €21,000
+    fundingGoal: 2500000, // €25.000
+    fundingRaised: 2100000, // €21.000
     currency: "EUR",
     donorCount: 198,
     impactMetrics: [
@@ -200,16 +200,16 @@ const mockProjects: ImpactProject[] = [
     title: "Reforestation Project in Amazon Rainforest",
     slug: "amazon-reforestation",
     description:
-      "Planting 100,000 native trees in deforested areas of the Amazon to restore biodiversity and combat climate change.",
-    shortDescription: "Planting 100,000 trees in the Amazon",
+      "Planting 100.000 native trees in deforested areas of the Amazon to restore biodiversity and combat climate change.",
+    shortDescription: "Planting 100.000 trees in the Amazon",
     category: "reforestation",
     tags: ["environment", "trees", "climate"],
     location: { country: "Brazil", region: "Pará State" },
     coverImage:
       "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop",
     gallery: [],
-    fundingGoal: 7500000, // €75,000
-    fundingRaised: 4200000, // €42,000
+    fundingGoal: 7500000, // €75.000
+    fundingRaised: 4200000, // €42.000
     currency: "EUR",
     donorCount: 521,
     impactMetrics: [
@@ -238,8 +238,8 @@ const mockProjects: ImpactProject[] = [
     coverImage:
       "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&h=600&fit=crop",
     gallery: [],
-    fundingGoal: 3000000, // €30,000
-    fundingRaised: 2700000, // €27,000
+    fundingGoal: 3000000, // €30.000
+    fundingRaised: 2700000, // €27.000
     currency: "EUR",
     donorCount: 156,
     impactMetrics: [
@@ -266,15 +266,15 @@ const mockProjects: ImpactProject[] = [
     slug: "mobile-health-india",
     description:
       "Deploying mobile health clinics to provide medical care to remote villages in rural India.",
-    shortDescription: "Healthcare access for 10,000+ rural residents",
+    shortDescription: "Healthcare access for 10.000+ rural residents",
     category: "healthcare",
     tags: ["health", "medical", "rural"],
     location: { country: "India", region: "Bihar" },
     coverImage:
       "https://images.unsplash.com/photo-1584515933487-779824d29309?w=800&h=600&fit=crop",
     gallery: [],
-    fundingGoal: 10000000, // €100,000
-    fundingRaised: 6500000, // €65,000
+    fundingGoal: 10000000, // €100.000
+    fundingRaised: 6500000, // €65.000
     currency: "EUR",
     donorCount: 423,
     impactMetrics: [
@@ -306,15 +306,15 @@ const mockProjects: ImpactProject[] = [
     slug: "sanitation-bangladesh",
     description:
       "Building proper sanitation facilities and toilets in rural Bangladeshi communities.",
-    shortDescription: "Sanitation access for 3,000+ people",
+    shortDescription: "Sanitation access for 3.000+ people",
     category: "sanitation",
     tags: ["sanitation", "infrastructure", "health"],
     location: { country: "Bangladesh", region: "Sylhet Division" },
     coverImage:
       "https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?w=800&h=600&fit=crop",
     gallery: [],
-    fundingGoal: 4000000, // €40,000
-    fundingRaised: 4000000, // €40,000
+    fundingGoal: 4000000, // €40.000
+    fundingRaised: 4000000, // €40.000
     currency: "EUR",
     donorCount: 287,
     impactMetrics: [

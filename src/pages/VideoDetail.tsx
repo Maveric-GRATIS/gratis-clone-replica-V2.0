@@ -39,7 +39,7 @@ const getVideoBySlug = (slug: string): Video | null => {
       id: "1",
       title: "Clean Water Project: Kenya 2025",
       slug: "clean-water-project-kenya-2025",
-      description: `See how your support brought clean water to 5,000 people in rural Kenya. Follow the journey from drilling the well to the first drops of clean water.
+      description: `See how your support brought clean water to 5.000 people in rural Kenya. Follow the journey from drilling the well to the first drops of clean water.
 
 This documentary takes you through the entire process - from site selection and community engagement, to drilling operations and water quality testing. Meet the families whose lives have been transformed by access to clean water.
 

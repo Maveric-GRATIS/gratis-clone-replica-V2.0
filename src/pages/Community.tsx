@@ -40,7 +40,7 @@ export default function Community() {
           <Card>
             <CardContent className="p-6 text-center">
               <Users className="h-8 w-8 mx-auto mb-2 text-blue-500" />
-              <p className="text-3xl font-bold">12,459</p>
+              <p className="text-3xl font-bold">12.459</p>
               <p className="text-sm text-muted-foreground">Active Members</p>
             </CardContent>
           </Card>
@@ -54,7 +54,7 @@ export default function Community() {
           <Card>
             <CardContent className="p-6 text-center">
               <Trophy className="h-8 w-8 mx-auto mb-2 text-yellow-500" />
-              <p className="text-3xl font-bold">1,842</p>
+              <p className="text-3xl font-bold">1.842</p>
               <p className="text-sm text-muted-foreground">
                 Achievements Unlocked
               </p>

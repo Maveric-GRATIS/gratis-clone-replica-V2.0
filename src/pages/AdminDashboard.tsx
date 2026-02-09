@@ -61,7 +61,7 @@ export default function AdminDashboard() {
   const stats = [
     {
       title: "Total Revenue",
-      value: "€12,345",
+      value: "€12.345",
       change: "+20.1%",
       icon: DollarSign,
       color: "text-green-500",

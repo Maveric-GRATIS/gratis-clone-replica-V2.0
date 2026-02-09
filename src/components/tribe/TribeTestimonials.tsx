@@ -98,7 +98,7 @@ export function TribeTestimonials() {
             </div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-black text-primary mb-2">4.9/5</div>
+            <div className="text-4xl font-black text-primary mb-2">4,9/5</div>
             <div className="text-sm text-muted-foreground">
               {t("tribePage.testimonials.stat2")}
             </div>

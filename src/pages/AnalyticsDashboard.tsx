@@ -37,7 +37,7 @@ export default function AnalyticsDashboard() {
   const stats = [
     {
       label: "Total Donations",
-      value: "€124,589",
+      value: "€124.589",
       change: "+12.3%",
       trend: "up",
       icon: DollarSign,
@@ -45,7 +45,7 @@ export default function AnalyticsDashboard() {
     },
     {
       label: "Active Users",
-      value: "8,432",
+      value: "8.432",
       change: "+8.1%",
       trend: "up",
       icon: Users,
@@ -53,7 +53,7 @@ export default function AnalyticsDashboard() {
     },
     {
       label: "Page Views",
-      value: "145,283",
+      value: "145.283",
       change: "+23.4%",
       trend: "up",
       icon: Eye,

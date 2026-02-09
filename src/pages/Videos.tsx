@@ -30,7 +30,7 @@ const MOCK_VIDEOS: Video[] = [
     title: "Clean Water Project: Kenya 2025",
     slug: "clean-water-project-kenya-2025",
     description:
-      "See how your support brought clean water to 5,000 people in rural Kenya. Follow the journey from drilling the well to the first drops of clean water.",
+      "See how your support brought clean water to 5.000 people in rural Kenya. Follow the journey from drilling the well to the first drops of clean water.",
     muxAssetId: "mock_asset_1",
     muxPlaybackId: "mock_playback_1",
     category: "impact_stories",

@@ -44,7 +44,7 @@ import {
   LogOut,
   Moon,
   Sun,
-  Flask,
+  TestTube,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -200,7 +200,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
     },
     {
       name: "Development",
-      icon: Flask,
+      icon: TestTube,
       children: [{ name: "Part 18 Test", href: "/part18-test" }],
     },
     {

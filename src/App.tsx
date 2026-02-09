@@ -187,6 +187,11 @@ import Part14Test from "./pages/Part14Test";
 import Part16Test from "./pages/Part16Test";
 import Part17Test from "./pages/Part17Test";
 import Part18Test from "./pages/Part18Test";
+import Part19Test from "./pages/Part19Test";
+import ActivityDemo from "./pages/ActivityDemo";
+import ActivityDemoPage from "./pages/ActivityDemoPage";
+import PublicStatusPage from "./pages/PublicStatusPage";
+import SocialAuthCallback from "./pages/SocialAuthCallback";
 import EmailLogsPage from "./pages/admin/EmailLogsPage";
 import EmailTemplatesPage from "./pages/admin/EmailTemplatesPage";
 import ErrorTrackingDashboard from "./pages/admin/ErrorTrackingDashboard";
@@ -255,7 +260,12 @@ const AppContent = () => {
             <Route path="/part16-test" element={<Part16Test />} />
             <Route path="/part17-test" element={<Part17Test />} />
             <Route path="/part18-test" element={<Part18Test />} />
+            <Route path="/part19-test" element={<Part19Test />} />
+            <Route path="/activity-demo" element={<ActivityDemo />} />
+            <Route path="/activity-feed" element={<ActivityDemoPage />} />
+            <Route path="/status" element={<PublicStatusPage />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/auth/callback" element={<SocialAuthCallback />} />
             <Route path="/rig" element={<RigStore />} />
             <Route path="/rig/prime-picks" element={<PrimePicks />} />
             <Route path="/rig/apex-arrivals" element={<ApexArrivals />} />

@@ -23,7 +23,7 @@ export async function GET(request: Request) {
     const deep = searchParams.get('deep') === 'true';
 
     // Basic health check
-    const health: any = {
+    const health: Record<string, unknown> = {
       status: 'healthy',
       version: APP_VERSION,
       environment: APP_ENV,

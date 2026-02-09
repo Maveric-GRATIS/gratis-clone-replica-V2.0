@@ -98,9 +98,9 @@ export async function POST(req: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Upload error:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Upload failed' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Upload failed' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

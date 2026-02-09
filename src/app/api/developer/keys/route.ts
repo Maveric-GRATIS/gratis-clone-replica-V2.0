@@ -153,9 +153,9 @@ export async function PATCH(request: Request) {
       status: 400,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Failed to update API key:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Failed to update API key' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to update API key' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });

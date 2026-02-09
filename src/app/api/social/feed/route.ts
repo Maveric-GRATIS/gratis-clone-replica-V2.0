@@ -107,10 +107,10 @@ async function fetchTwitterPosts(limit: number): Promise<SocialPost[]> {
     const data = await response.json();
     const { data: tweets, includes } = data;
 
-    return (tweets || []).map((tweet: any) => {
-      const author = includes?.users?.find((u: any) => u.id === tweet.author_id);
+    return (tweets || []).map((tweet: Record<string, unknown>) => {
+      const author = includes?.users?.find((u: Record<string, unknown>) => u.id === tweet.author_id);
       const media = tweet.attachments?.media_keys?.map((key: string) => {
-        const mediaItem = includes?.media?.find((m: any) => m.media_key === key);
+        const mediaItem = includes?.media?.find((m: Record<string, unknown>) => m.media_key === key);
         return mediaItem ? {
           type: mediaItem.type === "photo" ? "image" : "video",
           url: mediaItem.url || mediaItem.preview_image_url,
@@ -162,7 +162,7 @@ async function fetchInstagramPosts(limit: number): Promise<SocialPost[]> {
 
     const data = await response.json();
 
-    return (data.data || []).map((post: any) => ({
+    return (data.data || []).map((post: Record<string, unknown>) => ({
       id: post.id,
       platform: "instagram",
       content: post.caption || "",

@@ -151,7 +151,7 @@ export async function POST(req: Request) {
     }
 
     return Response.json({ error: 'Unknown action' }, { status: 400 });
-  } catch (error: any) {
-    return Response.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return Response.json({ error: error instanceof Error ? error.message : 'Import failed' }, { status: 500 });
   }
 }

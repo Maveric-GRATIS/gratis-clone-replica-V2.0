@@ -10,8 +10,8 @@ export async function getLeaderboard(req: Request, res: Response, next: NextFunc
     const { type = "xp", timeframe = "all-time", limit = 100 } = req.query;
 
     const leaderboard = await GamificationService.getLeaderboard(
-      type as any,
-      timeframe as any,
+      type as string,
+      timeframe as string,
       parseInt(limit as string)
     );
 

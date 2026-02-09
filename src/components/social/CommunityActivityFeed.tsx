@@ -103,7 +103,7 @@ const mockActivities: ActivityItem[] = [
     type: "achievement_unlocked",
     title: "Achievement Unlocked!",
     description:
-      'Earned the "Water Champion" badge for helping provide 10,000 liters of clean water.',
+      'Earned the "Water Champion" badge for helping provide 10.000 liters of clean water.',
     metadata: {
       achievementName: "Water Champion",
       achievementIcon: "🏆",

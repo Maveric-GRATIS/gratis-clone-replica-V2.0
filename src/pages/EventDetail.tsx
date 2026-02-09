@@ -50,7 +50,7 @@ const getEventBySlug = (slug: string) => {
 **What to Expect:**
 - Live music performances from local and international artists
 - Interactive workshops on water conservation and sustainability
-- Free water bottle distribution (5,000 bottles!)
+- Free water bottle distribution (5.000 bottles!)
 - Meet NGO partners and learn about their projects
 - Kids zone with educational games
 - Food trucks with sustainable options

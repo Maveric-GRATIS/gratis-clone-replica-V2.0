@@ -70,7 +70,7 @@ export default function Spark() {
       icon: Palette,
     },
     {
-      value: "1,000+",
+      value: "1.000+",
       label: t("sparkPage.impactStats.studentsSupported"),
       icon: GraduationCap,
     },

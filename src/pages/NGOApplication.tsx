@@ -604,7 +604,7 @@ export default function NGOApplication() {
                       onChange={(e) =>
                         handleInputChange("beneficiaries", e.target.value)
                       }
-                      placeholder="e.g., 5,000 people"
+                      placeholder="e.g., 5.000 people"
                       required
                     />
                   </div>
@@ -617,7 +617,7 @@ export default function NGOApplication() {
                       onChange={(e) =>
                         handleInputChange("annualBudget", e.target.value)
                       }
-                      placeholder="e.g., €150,000"
+                      placeholder="e.g., €150.000"
                     />
                   </div>
                 </div>

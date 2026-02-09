@@ -79,7 +79,7 @@ export const faqs: FAQ[] = [
     category: "tribe",
     question: "Is there a limit to Founder memberships?",
     answer:
-      "Yes, Founder memberships are limited to 1,000 spots worldwide to preserve exclusivity and ensure meaningful voting power. Once sold out, this tier will never be available again. Current availability is shown on our TRIBE page.",
+      "Yes, Founder memberships are limited to 1.000 spots worldwide to preserve exclusivity and ensure meaningful voting power. Once sold out, this tier will never be available again. Current availability is shown on our TRIBE page.",
   },
   {
     id: "tribe-6",

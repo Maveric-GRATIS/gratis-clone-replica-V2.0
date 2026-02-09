@@ -58,7 +58,7 @@ const mockProject: ImpactProject = {
   id: "1",
   title: "Clean Water Wells in Kenya",
   slug: "clean-water-wells-kenya",
-  description: `Building sustainable water wells in rural Kenyan communities to provide clean drinking water access to over 5,000 people.
+  description: `Building sustainable water wells in rural Kenyan communities to provide clean drinking water access to over 5.000 people.
 
 ## The Challenge
 
@@ -77,13 +77,13 @@ We're constructing 10 deep-bore water wells equipped with solar-powered pumps. E
 ## Long-term Impact
 
 These wells will provide:
-- Clean water access for 5,000+ people
+- Clean water access for 5.000+ people
 - Reduced waterborne disease rates
 - More time for education and work
 - Sustainable community-managed infrastructure
 - Improved quality of life for entire communities`,
   shortDescription:
-    "Providing clean water access to 5,000+ people in rural Kenya",
+    "Providing clean water access to 5.000+ people in rural Kenya",
   category: "clean_water",
   tags: ["water", "africa", "infrastructure", "sustainability"],
   location: {
@@ -100,8 +100,8 @@ These wells will provide:
     "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop",
   ],
   videoUrl: "https://www.youtube.com/watch?v=example",
-  fundingGoal: 5000000, // €50,000
-  fundingRaised: 3750000, // €37,500
+  fundingGoal: 5000000, // €50.000
+  fundingRaised: 3750000, // €37.500
   currency: "EUR",
   donorCount: 342,
   startDate: new Date("2025-06-01"),
@@ -143,7 +143,7 @@ These wells will provide:
       projectId: "1",
       title: "Wells 4-7 Completed Successfully!",
       content:
-        "We're thrilled to announce that wells 4 through 7 have been completed ahead of schedule. These wells are now serving over 2,000 additional community members with clean water. The solar pumps are working efficiently, and local maintenance teams have been trained.",
+        "We're thrilled to announce that wells 4 through 7 have been completed ahead of schedule. These wells are now serving over 2.000 additional community members with clean water. The solar pumps are working efficiently, and local maintenance teams have been trained.",
       images: [
         "https://images.unsplash.com/photo-1594398901394-4e34939a4fd0?w=800&h=400&fit=crop",
         "https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=800&h=400&fit=crop",

@@ -74,7 +74,7 @@ export default function Corporate() {
     },
     {
       name: t("corporatePage.pricing.growth.name"),
-      minOrder: "2,000",
+      minOrder: "2.000",
       price: t("corporatePage.pricing.growth.price"),
       features: [
         t("corporatePage.pricing.growth.feature1"),
@@ -87,7 +87,7 @@ export default function Corporate() {
     },
     {
       name: t("corporatePage.pricing.enterprise.name"),
-      minOrder: "5,000+",
+      minOrder: "5.000+",
       price: t("corporatePage.pricing.enterprise.price"),
       features: [
         t("corporatePage.pricing.enterprise.feature1"),

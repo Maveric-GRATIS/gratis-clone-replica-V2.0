@@ -81,7 +81,7 @@ export const fuFeatures: Feature[] = [
     title: "Youth Empowerment",
     description:
       "Runs art workshops for at-risk youth. Each bottle purchase funds creative mentorship.",
-    stat: "1,000+",
+    stat: "1.000+",
   },
   {
     icon: <Recycle className="w-8 h-8" />,

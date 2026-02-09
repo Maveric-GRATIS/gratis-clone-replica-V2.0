@@ -151,7 +151,7 @@ const mockPosts: SocialPost[] = [
     id: "3",
     platform: "facebook",
     content:
-      "📚 Education changes everything. Thanks to our community, we've supported 1,000+ students this quarter. Your choice to drink GRATIS water makes this possible. 🙏",
+      "📚 Education changes everything. Thanks to our community, we've supported 1.000+ students this quarter. Your choice to drink GRATIS water makes this possible. 🙏",
     author: {
       name: "GRATIS Foundation",
       username: "gratis.foundation",

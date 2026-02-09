@@ -155,7 +155,7 @@ export default function AdvertisingPartnerCTA() {
                   <div className="space-y-6">
                     <div className="text-center p-6 bg-white/10 rounded-xl transform hover:scale-105 transition-transform">
                       <div className="text-5xl font-black mb-2 text-white">
-                        10,000+
+                        10.000+
                       </div>
                       <div className="text-sm text-white/80">
                         {t("advertising.stats.packs")}

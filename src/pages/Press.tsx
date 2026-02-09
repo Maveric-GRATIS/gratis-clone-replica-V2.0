@@ -52,7 +52,7 @@ export default function Press() {
     {
       date: "2025-12-20",
       title:
-        "GRATIS Pre-Launch: 10,000 Bottles Committed for February 2026 Amsterdam Distribution",
+        "GRATIS Pre-Launch: 10.000 Bottles Committed for February 2026 Amsterdam Distribution",
       excerpt:
         "Pre-registration opens for TRIBE membership program, with founding members receiving lifetime benefits.",
       category: "Announcement",

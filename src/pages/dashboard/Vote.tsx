@@ -76,7 +76,7 @@ export default function Vote() {
   const isVotingActive = true;
   const votingPeriod = "Q1 2026";
   const voteCloses = new Date(2026, 3, 1); // April 1, 2026
-  const totalPool = 50000; // €50,000
+  const totalPool = 50000; // €50.000
 
   // Check if user has already voted this period
   const { data: existingVote, isLoading } = useQuery({

@@ -92,7 +92,7 @@ export function TribeTestimonials() {
         {/* Stats Row */}
         <div className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-12">
           <div className="text-center">
-            <div className="text-4xl font-black text-primary mb-2">5,000+</div>
+            <div className="text-4xl font-black text-primary mb-2">5.000+</div>
             <div className="text-sm text-muted-foreground">
               {t("tribePage.testimonials.stat1")}
             </div>

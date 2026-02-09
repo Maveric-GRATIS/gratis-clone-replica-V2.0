@@ -95,7 +95,7 @@ export default function Index() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <Badge className="mx-auto text-sm md:text-base px-6 py-2 bg-hot-lime text-jet-black font-bold">
-              100% OF NET PROFITS DONATED
+              {t("home.badge")}
             </Badge>
           </motion.div>
 
@@ -112,7 +112,7 @@ export default function Index() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              Charity Never
+              {t("home.mainTitle1")}
             </motion.span>
             <br />
             <motion.span
@@ -121,7 +121,8 @@ export default function Index() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              Looked This <span className="text-hot-lime">Bold</span>
+              {t("home.mainTitle2")}{" "}
+              <span className="text-hot-lime">{t("home.mainTitle2Bold")}</span>
             </motion.span>
           </motion.h1>
 
@@ -132,8 +133,7 @@ export default function Index() {
             transition={{ duration: 0.6, delay: 1 }}
             className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
           >
-            Free premium water bottles. Funded by ads. Every bottle drives
-            impact.
+            {t("home.mainSubtitle")}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -149,7 +149,7 @@ export default function Index() {
               className="text-lg px-8 py-6 bg-hot-lime text-jet-black hover:bg-hot-lime/90 font-bold group"
             >
               <Link to="/hydration">
-                GET FREE WATER
+                {t("home.ctaGetFreeWater")}
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
@@ -159,7 +159,7 @@ export default function Index() {
               variant="outline"
               className="text-lg px-8 py-6 bg-white/10 backdrop-blur border-white/20 text-white hover:bg-white/20"
             >
-              <Link to="/tribe">JOIN THE TRIBE</Link>
+              <Link to="/tribe">{t("home.ctaJoinTribe")}</Link>
             </Button>
           </motion.div>
 
@@ -185,8 +185,8 @@ export default function Index() {
                 ))}
               </div>
               <p className="text-sm text-gray-400">
-                <span className="text-hot-lime font-bold">2,847+</span> members
-                making impact
+                <span className="text-hot-lime font-bold">2.847+</span>{" "}
+                {t("home.trustMembers")}
               </p>
             </div>
           </motion.div>
@@ -232,7 +232,8 @@ export default function Index() {
                   className="bg-electric-blue text-white hover:bg-electric-blue/90"
                 >
                   <Link to="/hydration">
-                    Shop Water Bottles <ArrowRight className="ml-2 h-4 w-4" />
+                    {t("home.shopWaterBottles")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>
@@ -251,7 +252,7 @@ export default function Index() {
             <FadeInWhenVisible>
               <div className="text-center mb-16 space-y-4">
                 <Badge className="mb-4 bg-electric-blue/10 text-electric-blue border-electric-blue/20">
-                  HOW IT WORKS
+                  {t("home.howItWorksBadge")}
                 </Badge>
                 <motion.h2
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -260,12 +261,13 @@ export default function Index() {
                   transition={{ duration: 0.6 }}
                   className="text-4xl md:text-6xl font-bold"
                 >
-                  4 Simple Steps to{" "}
-                  <span className="text-hot-lime">Impact</span>
+                  {t("home.howItWorksTitle")}{" "}
+                  <span className="text-hot-lime">
+                    {t("home.howItWorksTitleBold")}
+                  </span>
                 </motion.h2>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Making charitable giving accessible, transparent, and
-                  impactful
+                  {t("home.howItWorksSubtitle")}
                 </p>
               </div>
             </FadeInWhenVisible>
@@ -281,8 +283,8 @@ export default function Index() {
                 <Link to="/hydration">
                   <HowItWorksCard
                     icon={Droplet}
-                    title="Get FREE Water"
-                    description="Premium spring water at no cost. Every bottle funds clean water projects globally."
+                    title={t("home.step1Title")}
+                    description={t("home.step1Description")}
                     step={1}
                     index={0}
                     color="lime"
@@ -300,8 +302,8 @@ export default function Index() {
                 <Link to="/theurgy">
                   <HowItWorksCard
                     icon={Palette}
-                    title="Support Arts"
-                    description="Your choice directly supports local artists and creative programs in communities."
+                    title={t("home.step2Title")}
+                    description={t("home.step2Description")}
                     step={2}
                     index={1}
                     color="magenta"
@@ -319,8 +321,8 @@ export default function Index() {
                 <Link to="/fu">
                   <HowItWorksCard
                     icon={GraduationCap}
-                    title="Fund Education"
-                    description="Empower the next generation with access to quality education and learning resources."
+                    title={t("home.step3Title")}
+                    description={t("home.step3Description")}
                     step={3}
                     index={2}
                     color="blue"
@@ -338,8 +340,8 @@ export default function Index() {
                 <Link to="/dashboard">
                   <HowItWorksCard
                     icon={Sparkles}
-                    title="Track Impact"
-                    description="See exactly where your impact goes with real-time dashboards and verified reports."
+                    title={t("home.step4Title")}
+                    description={t("home.step4Description")}
                     step={4}
                     index={3}
                     color="orange"
@@ -401,14 +403,14 @@ export default function Index() {
         {/* ===== MUX VIDEO EXPLAINER (INTEGRATED) ===== */}
         <div>
           <MuxVideoPlayer
-            title="See How GRATIS Works"
-            description="Watch how we're revolutionizing charitable giving with transparency, innovation, and real impact. Every view supports our mission."
-            badge="2 MINUTE EXPLAINER"
+            title={t("home.videoTitle")}
+            description={t("home.videoDescription")}
+            badge={t("home.videoBadge")}
           />
           <div className="container text-center -mt-8 pb-12">
             <Button asChild variant="outline" className="border-2">
               <Link to="/impact-tv">
-                Watch More Videos <Play className="ml-2 h-4 w-4" />
+                {t("home.watchMoreVideos")} <Play className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           </div>
@@ -429,15 +431,16 @@ export default function Index() {
             <FadeInWhenVisible>
               <div className="text-center mb-16 space-y-4">
                 <Badge className="mb-4 bg-hot-magenta/10 text-hot-magenta border-hot-magenta/20">
-                  OUR IMPACT PILLARS
+                  {t("home.impactPillarsBadge")}
                 </Badge>
                 <h2 className="text-4xl md:text-6xl font-bold">
-                  Three Ways We{" "}
-                  <span className="text-hot-lime">Change Lives</span>
+                  {t("home.threeWaysTitle")}{" "}
+                  <span className="text-hot-lime">
+                    {t("home.threeWaysTitleBold")}
+                  </span>
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Every GRATIS product supports clean water, arts & culture, and
-                  education worldwide
+                  {t("home.threeWaysSubtitle")}
                 </p>
               </div>
             </FadeInWhenVisible>
@@ -454,25 +457,23 @@ export default function Index() {
                   <Droplet className="w-8 h-8 text-hot-lime" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-lime transition-colors">
-                  Clean Water Access
+                  {t("home.pillar1Title")}
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Providing sustainable water solutions to communities in need.
-                  Every bottle funds wells, filtration systems, and water
-                  education.
+                  {t("home.pillar1Description")}
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-hot-lime" />
-                    <span>47 wells funded</span>
+                    <span>{t("home.pillar1Stat1")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-hot-lime" />
-                    <span>12,000+ people served</span>
+                    <span>{t("home.pillar1Stat2")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-hot-lime" />
-                    <span>100% project completion</span>
+                    <span>{t("home.pillar1Stat3")}</span>
                   </div>
                 </div>
                 <Button
@@ -481,7 +482,8 @@ export default function Index() {
                   className="w-full mt-4 text-hot-lime hover:text-hot-lime hover:bg-hot-lime/10"
                 >
                   <Link to="/water">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    {t("home.learnMore")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </motion.div>
@@ -497,24 +499,23 @@ export default function Index() {
                   <Palette className="w-8 h-8 text-hot-magenta" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-magenta transition-colors">
-                  Arts & Culture
+                  {t("home.pillar2Title")}
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Empowering local artists and preserving cultural heritage.
-                  Supporting creative programs that bring communities together.
+                  {t("home.pillar2Description")}
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>230+ artists supported</span>
+                    <span>{t("home.pillar2Stat1")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>15 community centers</span>
+                    <span>{t("home.pillar2Stat2")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>50+ exhibitions funded</span>
+                    <span>{t("home.pillar2Stat3")}</span>
                   </div>
                 </div>
                 <Button
@@ -523,7 +524,8 @@ export default function Index() {
                   className="w-full mt-4 text-hot-magenta hover:text-hot-magenta hover:bg-hot-magenta/10"
                 >
                   <Link to="/theurgy">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    {t("home.learnMore")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </motion.div>
@@ -539,24 +541,23 @@ export default function Index() {
                   <GraduationCap className="w-8 h-8 text-electric-blue" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-electric-blue transition-colors">
-                  Education Access
+                  {t("home.pillar3Title")}
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Breaking barriers to education worldwide. Funding
-                  scholarships, resources, and programs for underserved youth.
+                  {t("home.pillar3Description")}
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-electric-blue" />
-                    <span>1,200+ students supported</span>
+                    <span>{t("home.pillar3Stat1")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-electric-blue" />
-                    <span>8 schools built</span>
+                    <span>{t("home.pillar3Stat2")}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Check className="w-4 h-4 text-electric-blue" />
-                    <span>€125K in scholarships</span>
+                    <span>{t("home.pillar3Stat3")}</span>
                   </div>
                 </div>
                 <Button
@@ -565,7 +566,8 @@ export default function Index() {
                   className="w-full mt-4 text-electric-blue hover:text-electric-blue hover:bg-electric-blue/10"
                 >
                   <Link to="/fu">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    {t("home.learnMore")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </motion.div>
@@ -579,14 +581,13 @@ export default function Index() {
             <FadeInWhenVisible>
               <div className="text-center mb-12">
                 <Badge className="mb-4 bg-hot-lime/10 text-hot-lime border-hot-lime/20">
-                  TRUSTED BY THOUSANDS
+                  {t("home.trustedBadge")}
                 </Badge>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                  Join the Movement
+                  {t("home.joinMovementTitle")}
                 </h2>
                 <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Thousands of impact-driven individuals and organizations trust
-                  GRATIS
+                  {t("home.joinMovementSubtitle")}
                 </p>
               </div>
 
@@ -637,10 +638,10 @@ export default function Index() {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                     <div>
                       <div className="text-2xl font-bold text-hot-lime mb-1">
-                        2,847
+                        2.847
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        Active Members
+                        {t("home.activeMembers")}
                       </div>
                     </div>
                     <div>
@@ -648,7 +649,7 @@ export default function Index() {
                         4.9/5
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        Trust Rating
+                        {t("home.trustRating")}
                       </div>
                     </div>
                     <div>
@@ -656,7 +657,7 @@ export default function Index() {
                         100%
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        Transparency
+                        {t("home.transparency")}
                       </div>
                     </div>
                     <div>
@@ -664,7 +665,7 @@ export default function Index() {
                         €84K+
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        Donated
+                        {t("home.donated")}
                       </div>
                     </div>
                   </div>
@@ -673,7 +674,7 @@ export default function Index() {
                   <div className="mt-8 pt-8 border-t border-border">
                     <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
                       <Check className="w-4 h-4 text-hot-lime" />
-                      <span>Verified NGO Partner</span>
+                      <span>{t("home.verifiedNGO")}</span>
                     </div>
                     <TrustIndicators />
                   </div>
@@ -686,7 +687,8 @@ export default function Index() {
                       className="bg-hot-lime text-jet-black hover:bg-hot-lime/90"
                     >
                       <Link to="/tribe">
-                        Join Now <ArrowRight className="ml-2 h-4 w-4" />
+                        {t("home.joinNow")}{" "}
+                        <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
                   </div>
@@ -748,7 +750,7 @@ export default function Index() {
             <FadeInWhenVisible>
               <div className="max-w-4xl mx-auto text-center space-y-8">
                 <Badge className="mx-auto bg-hot-lime text-jet-black px-6 py-2 text-sm font-bold">
-                  JOIN 2,847+ CHANGE MAKERS
+                  {t("home.finalCtaBadge")}
                 </Badge>
 
                 <motion.h2
@@ -758,9 +760,9 @@ export default function Index() {
                   transition={{ duration: 0.6 }}
                   className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
                 >
-                  Ready To Make{" "}
+                  {t("home.finalCtaTitle1")}{" "}
                   <span className="bg-gradient-to-r from-hot-lime via-electric-blue to-hot-magenta bg-clip-text text-transparent">
-                    Real Impact
+                    {t("home.finalCtaTitle2")}
                   </span>
                   ?
                 </motion.h2>
@@ -772,8 +774,7 @@ export default function Index() {
                   transition={{ duration: 0.6, delay: 0.2 }}
                   className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto"
                 >
-                  Join thousands of TRIBE members creating positive change with
-                  every choice. 100% transparent. 100% impactful.
+                  {t("home.finalCtaSubtitle")}
                 </motion.p>
 
                 <motion.div
@@ -789,7 +790,7 @@ export default function Index() {
                     className="text-lg px-10 py-7 bg-hot-lime text-jet-black hover:bg-hot-lime/90 font-bold group"
                   >
                     <Link to="/tribe">
-                      Join The TRIBE
+                      {t("home.joinTheTribe")}
                       <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </Button>
@@ -799,7 +800,7 @@ export default function Index() {
                     variant="outline"
                     className="text-lg px-10 py-7 border-2"
                   >
-                    <Link to="/events">Explore Events</Link>
+                    <Link to="/events">{t("home.exploreEvents")}</Link>
                   </Button>
                 </motion.div>
 
@@ -813,19 +814,19 @@ export default function Index() {
                 >
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-hot-lime" />
-                    <span>No hidden costs</span>
+                    <span>{t("home.noHiddenFees")}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-hot-lime" />
-                    <span>Cancel anytime</span>
+                    <span>{t("home.cancelAnytime")}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-hot-lime" />
-                    <span>100% transparent</span>
+                    <span>{t("home.fullTransparency")}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-hot-lime" />
-                    <span>Verified impact</span>
+                    <span>{t("home.verifiedImpact")}</span>
                   </div>
                 </motion.div>
               </div>

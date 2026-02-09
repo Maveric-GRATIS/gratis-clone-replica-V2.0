@@ -42,6 +42,75 @@
     "whyChooseSubtitle": "Pure hydration meets street culture",
     "seoTitle": "GRATIS — Pure Power, Pure Purpose",
     "seoDescription": "Pure hydration in 100% recyclable tetrapacks.",
+    "badge": "100% OF NET PROFITS DONATED",
+    "mainTitle1": "Charity Never",
+    "mainTitle2": "Looked This",
+    "mainTitle2Bold": "Bold",
+    "mainSubtitle": "Free premium water bottles. Funded by ads. Every bottle drives impact.",
+    "ctaGetFreeWater": "GET FREE WATER",
+    "ctaJoinTribe": "JOIN THE TRIBE",
+    "trustMembers": "members making impact",
+    "howItWorksTitle": "4 Simple Steps to",
+    "howItWorksTitleBold": "Impact",
+    "howItWorksSubtitle": "Making charitable giving accessible, transparent, and impactful",
+    "howItWorksBadge": "HOW IT WORKS",
+    "step1Title": "Get FREE Water",
+    "step1Description": "Premium spring water at no cost. Every bottle funds clean water projects globally.",
+    "step2Title": "Support Arts",
+    "step2Description": "Your choice directly supports local artists and creative programs in communities.",
+    "step3Title": "Fund Education",
+    "step3Description": "Empower the next generation with access to quality education and learning resources.",
+    "step4Title": "Track Impact",
+    "step4Description": "See exactly where your impact goes with real-time dashboards and verified reports.",
+    "shopWaterBottles": "Shop Water Bottles",
+    "videoTitle": "See How GRATIS Works",
+    "videoDescription": "Watch how we're revolutionizing charitable giving with transparency, innovation, and real impact. Every view supports our mission.",
+    "videoBadge": "2 MINUTE EXPLAINER",
+    "watchMoreVideos": "Watch More Videos",
+    "impactPillarsBadge": "OUR IMPACT PILLARS",
+    "threeWaysTitle": "Three Ways We",
+    "threeWaysTitleBold": "Change Lives",
+    "threeWaysSubtitle": "Every GRATIS product supports clean water, arts & culture, and education worldwide",
+    "pillar1Title": "Clean Water Access",
+    "pillar1Description": "Providing sustainable water solutions to communities in need. Every bottle funds wells, filtration systems, and water education.",
+    "pillar1Stat1": "47 wells funded",
+    "pillar1Stat2": "12.000+ people served",
+    "pillar1Stat3": "100% project completion",
+    "pillar2Title": "Arts & Culture",
+    "pillar2Description": "Empowering local artists and preserving cultural heritage. Supporting creative programs that bring communities together.",
+    "pillar2Stat1": "230+ artists supported",
+    "pillar2Stat2": "15 community centers",
+    "pillar2Stat3": "50+ exhibitions funded",
+    "pillar3Title": "Education Access",
+    "pillar3Description": "Breaking barriers to education worldwide. Funding scholarships, resources, and programs for underserved youth.",
+    "pillar3Stat1": "1.200+ students supported",
+    "pillar3Stat2": "8 schools built",
+    "pillar3Stat3": "€125K in scholarships",
+    "learnMore": "Learn More",
+    "trustedBadge": "TRUSTED BY THOUSANDS",
+    "joinMovementTitle": "Join the Movement",
+    "joinMovementSubtitle": "Thousands of impact-driven individuals and organizations trust GRATIS",
+    "activeMembers": "Active Members",
+    "trustRating": "Trust Rating",
+    "transparency": "Transparency",
+    "donated": "Donated",
+    "verifiedNGO": "Verified NGO Partner",
+    "becomeMember": "Become a Member",
+    "joinNow": "Join Now",
+    "averageRating": "Average Rating",
+    "countriesReached": "Countries Reached",
+    "totalImpact": "Total Impact",
+    "finalCtaBadge": "JOIN 2.847+ CHANGE MAKERS",
+    "finalCtaTitle1": "Ready To Make",
+    "finalCtaTitle2": "Real Impact",
+    "finalCtaSubtitle": "Join thousands of TRIBE members creating positive change with every choice. 100% transparent. 100% impactful.",
+    "joinTheTribe": "Join The TRIBE",
+    "exploreEvents": "Explore Events",
+    "noHiddenFees": "No hidden costs",
+    "cancelAnytime": "Cancel anytime",
+    "fullTransparency": "100% transparent",
+    "verifiedImpact": "Verified impact",
+    "startWithFreeWater": "Start With Free Water",
     "features": {
       "pureMountain": {
         "title": "Pure Mountain Source",
@@ -63,7 +132,7 @@
         "title": "Ready to Experience the Difference?",
         "subtitle": "Join thousands who've already made the switch to a better, more sustainable future.",
         "guarantee": "30-Day Money Back Guarantee",
-        "freeShipping": "Free Shipping on Orders $50+",
+        "freeShipping": "Free Shipping on Orders €50+",
         "impactTracking": "Impact Tracking Dashboard"
       }
     }
@@ -787,7 +856,7 @@
       "spotsLeft": "spots left",
       "claimed": "claimed",
       "filled": "filled",
-      "warning": "Once all 1,000 Founder spots are claimed, this tier closes forever.",
+      "warning": "Once all 1.000 Founder spots are claimed, this tier closes forever.",
       "benefit1": "One-time payment",
       "benefit2": "bottles/month",
       "benefit3": "Lifetime access"
@@ -811,7 +880,7 @@
       "q7": "Can I gift a membership?",
       "a7": "Yes! Contact support@gratis.ngo and we'll set up a gift membership for you. Perfect for conscious gift-givers.",
       "q8": "What if the Founder tier sells out?",
-      "a8": "Once all 1,000 Founder spots are claimed, the tier closes forever. Those who secured it will remain lifetime Founders with all future perks included.",
+      "a8": "Once all 1.000 Founder spots are claimed, the tier closes forever. Those who secured it will remain lifetime Founders with all future perks included.",
       "stillHaveQuestions": "Still Have Questions?",
       "contactPrompt": "Our team is here to help you find the perfect tier.",
       "contactUs": "Contact Us",
@@ -917,7 +986,7 @@
       "title": "Timeline of Milestones",
       "subtitle": "Key moments in our journey to create lasting impact",
       "milestone1": {
-        "title": "Reached €50,000 in Total Donations",
+        "title": "Reached €50.000 in Total Donations",
         "description": "A major milestone thanks to our growing community of supporters and TRIBE members."
       },
       "milestone2": {
@@ -925,7 +994,7 @@
         "description": "Expanding our reach across Water Access, Arts & Culture, and Education initiatives."
       },
       "milestone3": {
-        "title": "Distributed €25,000 to Education Projects",
+        "title": "Distributed €25.000 to Education Projects",
         "description": "Funding scholarships, school supplies, and learning programs for underserved communities."
       },
       "milestone4": {
@@ -1041,7 +1110,7 @@
       "event2": {
         "date": "March 2025",
         "title": "First W.A.T.E.R Launch",
-        "description": "GRATIS W.A.T.E.R hits the market. First 1,000 bottles sold within 48 hours. Community begins to form."
+        "description": "GRATIS W.A.T.E.R hits the market. First 1.000 bottles sold within 48 hours. Community begins to form."
       },
       "event3": {
         "date": "June 2025",
@@ -1152,7 +1221,7 @@
       },
       "customBranding": {
         "title": "Custom Branding Options",
-        "point1": "Add your company logo to bottle sleeves (min. 2,000 bottles)",
+        "point1": "Add your company logo to bottle sleeves (min. 2.000 bottles)",
         "point2": "Co-branded packaging for corporate gifts",
         "point3": "Custom messaging for events or campaigns"
       }
@@ -1167,7 +1236,7 @@
       "starter": {
         "name": "Starter",
         "price": "€1.80/bottle",
-        "feature1": "500-1,999 bottles",
+        "feature1": "500-1.999 bottles",
         "feature2": "Standard delivery",
         "feature3": "Quarterly impact reports",
         "feature4": "Email support"
@@ -1175,7 +1244,7 @@
       "growth": {
         "name": "Growth",
         "price": "€1.50/bottle",
-        "feature1": "2,000-4,999 bottles",
+        "feature1": "2.000-4.999 bottles",
         "feature2": "Priority delivery",
         "feature3": "Custom branding available",
         "feature4": "Monthly impact reports",
@@ -1184,7 +1253,7 @@
       "enterprise": {
         "name": "Enterprise",
         "price": "Custom pricing",
-        "feature1": "5,000+ bottles",
+        "feature1": "5.000+ bottles",
         "feature2": "White-glove service",
         "feature3": "Full custom branding",
         "feature4": "Real-time impact dashboard",
@@ -1201,22 +1270,22 @@
       "case1": {
         "company": "TechStart Amsterdam",
         "industry": "Technology",
-        "orderSize": "2,500 bottles/quarter",
-        "result": "€12,500 funded to education NGOs",
+        "orderSize": "2.500 bottles/quarter",
+        "result": "€12.500 funded to education NGOs",
         "quote": "Our employees love the premium quality and knowing their hydration funds real change."
       },
       "case2": {
         "company": "GreenBuilders NL",
         "industry": "Construction",
-        "orderSize": "5,000 bottles for annual event",
-        "result": "€25,000 to water access projects",
+        "orderSize": "5.000 bottles for annual event",
+        "result": "€25.000 to water access projects",
         "quote": "Perfect alignment with our sustainability values. Clients were impressed with the custom branding."
       },
       "case3": {
         "company": "FinanceHub Rotterdam",
         "industry": "Finance",
-        "orderSize": "1,000 bottles/month",
-        "result": "€60,000/year to verified NGOs",
+        "orderSize": "1.000 bottles/month",
+        "result": "€60.000/year to verified NGOs",
         "quote": "Easy ordering, reliable delivery, and measurable impact. Exactly what we needed for our CSR program."
       }
     },
@@ -1230,7 +1299,7 @@
       "companySize": "Company Size",
       "companySizePlaceholder": "e.g., 50 employees",
       "interest": "Estimated Order Volume",
-      "interestPlaceholder": "e.g., 1,000 bottles/month",
+      "interestPlaceholder": "e.g., 1.000 bottles/month",
       "message": "Tell Us About Your Needs",
       "messagePlaceholder": "What are you looking for? Events, office supply, client gifts, etc.",
       "submit": "Submit Inquiry",

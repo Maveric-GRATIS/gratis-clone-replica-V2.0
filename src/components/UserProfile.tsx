@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { useRole } from "@/hooks/useRole";
+import { useTranslation } from "react-i18next";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,12 +27,19 @@ import {
   Headphones,
   Bell,
   RefreshCw,
+  Globe,
 } from "lucide-react";
+
+const languages = [
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "nl", name: "Nederlands", flag: "🇳🇱" },
+];
 
 export default function UserProfile() {
   const { user, signOut, loading: authLoading } = useAuth();
   const { profile } = useProfile();
   const { isAdmin } = useRole();
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -74,6 +82,13 @@ export default function UserProfile() {
       setLoading(false);
     }
   };
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
+
+  const currentLanguage =
+    languages.find((lang) => lang.code === i18n.language) || languages[0];
 
   const displayName =
     profile?.display_name ||
@@ -176,6 +191,23 @@ export default function UserProfile() {
           <Settings className="mr-2 h-4 w-4" />
           <span>Settings</span>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel className="font-normal text-xs text-muted-foreground">
+          Language / Taal
+        </DropdownMenuLabel>
+        {languages.map((language) => (
+          <DropdownMenuItem
+            key={language.code}
+            onClick={() => changeLanguage(language.code)}
+            className={`cursor-pointer ${
+              currentLanguage.code === language.code ? "bg-accent" : ""
+            }`}
+          >
+            <Globe className="mr-2 h-4 w-4" />
+            <span className="mr-2">{language.flag}</span>
+            {language.name}
+          </DropdownMenuItem>
+        ))}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleSignOut} disabled={loading}>
           <LogOut className="mr-2 h-4 w-4" />

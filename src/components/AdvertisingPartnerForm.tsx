@@ -1,9 +1,8 @@
-
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -11,35 +10,35 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Calendar } from '@/components/ui/calendar';
+} from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { CalendarIcon, Loader2 } from 'lucide-react';
-import { format } from 'date-fns';
-import { cn } from '@/lib/utils';
-import { db } from '@/firebase';
-import { addDoc, collection } from 'firebase/firestore';
-import { toast } from '@/hooks/use-toast';
+} from "@/components/ui/popover";
+import { CalendarIcon, Loader2 } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { db } from "@/firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { toast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
-  company_name: z.string().min(2, 'Company name is required'),
-  contact_person: z.string().min(2, 'Contact person is required'),
-  email: z.string().email('Invalid email address'),
+  company_name: z.string().min(2, "Company name is required"),
+  contact_person: z.string().min(2, "Contact person is required"),
+  email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
-  website: z.string().url('Invalid URL').optional().or(z.literal('')),
+  website: z.string().url("Invalid URL").optional().or(z.literal("")),
   industry: z.string().optional(),
   estimated_volume: z.string().optional(),
   campaign_goals: z.string().optional(),
@@ -53,44 +52,47 @@ interface AdvertisingPartnerFormProps {
   onSuccess?: () => void;
 }
 
-export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartnerFormProps) {
+export default function AdvertisingPartnerForm({
+  onSuccess,
+}: AdvertisingPartnerFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      company_name: '',
-      contact_person: '',
-      email: '',
-      phone: '',
-      website: '',
-      industry: '',
-      estimated_volume: '',
-      campaign_goals: '',
-      additional_notes: '',
+      company_name: "",
+      contact_person: "",
+      email: "",
+      phone: "",
+      website: "",
+      industry: "",
+      estimated_volume: "",
+      campaign_goals: "",
+      additional_notes: "",
     },
   });
 
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, 'advertising_inquiries'), {
+      await addDoc(collection(db, "advertising_inquiries"), {
         ...values,
         createdAt: new Date(),
       });
 
       toast({
-        title: 'Application Submitted!',
-        description: "Thank you for your interest. We'll contact you within 48 hours.",
+        title: "Application Submitted!",
+        description:
+          "Thank you for your interest. We'll contact you within 48 hours.",
       });
 
       form.reset();
       onSuccess?.();
     } catch (error: any) {
       toast({
-        title: 'Submission Failed',
-        description: error.message || 'Please try again later.',
-        variant: 'destructive',
+        title: "Submission Failed",
+        description: error.message || "Please try again later.",
+        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);
@@ -152,7 +154,11 @@ export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartner
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="+1 (555) 000-0000" {...field} />
+                  <Input
+                    type="tel"
+                    placeholder="+1 (555) 000-0000"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -181,7 +187,10 @@ export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartner
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Industry/Category</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select industry" />
@@ -208,17 +217,22 @@ export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartner
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Estimated Monthly Volume</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select volume" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1k-5k">1,000 - 5,000 units</SelectItem>
-                    <SelectItem value="5k-10k">5,000 - 10,000 units</SelectItem>
-                    <SelectItem value="10k-25k">10,000 - 25,000 units</SelectItem>
-                    <SelectItem value="25k+">25,000+ units</SelectItem>
+                    <SelectItem value="1k-5k">1.000 - 5.000 units</SelectItem>
+                    <SelectItem value="5k-10k">5.000 - 10.000 units</SelectItem>
+                    <SelectItem value="10k-25k">
+                      10.000 - 25.000 units
+                    </SelectItem>
+                    <SelectItem value="25k+">25.000+ units</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -239,11 +253,15 @@ export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartner
                     <Button
                       variant="outline"
                       className={cn(
-                        'w-full pl-3 text-left font-normal',
-                        !field.value && 'text-muted-foreground'
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground",
                       )}
                     >
-                      {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -302,7 +320,12 @@ export default function AdvertisingPartnerForm({ onSuccess }: AdvertisingPartner
           )}
         />
 
-        <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          className="w-full"
+          size="lg"
+          disabled={isSubmitting}
+        >
           {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Submit Application
         </Button>

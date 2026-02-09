@@ -44,7 +44,7 @@ const getVideoBySlug = (slug: string): Video | null => {
 This documentary takes you through the entire process - from site selection and community engagement, to drilling operations and water quality testing. Meet the families whose lives have been transformed by access to clean water.
 
 **Impact Highlights:**
-- 5,000 people now have access to clean water
+- 5.000 people now have access to clean water
 - 3 new wells drilled in remote villages
 - 95% reduction in waterborne diseases
 - Children can now attend school instead of walking hours for water

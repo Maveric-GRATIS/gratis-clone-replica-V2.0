@@ -663,7 +663,7 @@ export default function Donate() {
             <Card>
               <CardHeader>
                 <CardTitle>Wire Transfer Information</CardTitle>
-                <CardDescription>For large donations (€1,000+)</CardDescription>
+                <CardDescription>For large donations (€1.000+)</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="bg-muted/50 p-6 rounded-lg space-y-3 font-mono text-sm">
@@ -695,7 +695,7 @@ export default function Donate() {
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  For wire transfers over €1,000, please call +31 (0)20
+                  For wire transfers over €1.000, please call +31 (0)20
                   123-4567. Include your name and "Donation" in the reference
                   field. Tax receipt will be sent within 5 business days.
                 </p>

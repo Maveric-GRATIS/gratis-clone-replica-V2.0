@@ -1,4 +1,11 @@
-import { CheckCircle, Recycle, Heart, Leaf, Flame, Palette } from "lucide-react";
+import {
+  CheckCircle,
+  Recycle,
+  Heart,
+  Leaf,
+  Flame,
+  Palette,
+} from "lucide-react";
 import { Feature } from "@/components/ProductFeatures";
 
 export const waterFeatures: Feature[] = [

@@ -54,7 +54,7 @@ const MOCK_APPLICATION: PartnerApplication = {
   mission:
     "Providing access to clean water and sanitation in underserved communities across Africa and Europe",
   description:
-    "Clean Water Foundation works with local communities to build sustainable water infrastructure, implement sanitation programs, and provide education on water hygiene. Since 2015, we have served over 50,000 beneficiaries across multiple countries, partnering with local governments and international organizations to create lasting impact.",
+    "Clean Water Foundation works with local communities to build sustainable water infrastructure, implement sanitation programs, and provide education on water hygiene. Since 2015, we have served over 50.000 beneficiaries across multiple countries, partnering with local governments and international organizations to create lasting impact.",
   focusAreas: ["clean_water", "sanitation", "education"],
   beneficiariesServed: 50000,
   annualBudget: "500k-1m",

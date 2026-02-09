@@ -332,7 +332,8 @@ export const ProductCarousel = () => {
                   className="w-full mt-4 font-bold uppercase text-sm h-12"
                   variant="default"
                 >
-                  ${product.price.toFixed(2)} • {t("products.addToCart")}
+                  €{product.price.toFixed(2).replace(".", ",")} •{" "}
+                  {t("products.addToCart")}
                 </Button>
               </div>
             ))}

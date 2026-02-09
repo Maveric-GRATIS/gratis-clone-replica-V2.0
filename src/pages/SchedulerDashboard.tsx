@@ -108,7 +108,7 @@ const mockJobRuns: JobRun[] = [
     completedAt: new Date(Date.now() - 3598000).toISOString(),
     status: "completed",
     duration: 2000,
-    output: "Sent 1,234 emails successfully",
+    output: "Sent 1.234 emails successfully",
   },
   {
     id: "run_2",

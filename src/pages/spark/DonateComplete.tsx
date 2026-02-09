@@ -58,7 +58,7 @@ const donationSchema = z.object({
   amount: z
     .number()
     .min(5, "Minimum donation is €5")
-    .max(100000, "Maximum donation is €100,000"),
+    .max(100000, "Maximum donation is €100.000"),
   frequency: z.enum(["one_time", "monthly", "quarterly", "annually"]),
   allocation: z
     .object({

@@ -81,7 +81,7 @@ const MOCK_PROJECTS: Project[] = [
     id: "1",
     title: "Clean Water Wells in Rural Kenya",
     shortDescription:
-      "Installing 10 water wells to provide clean drinking water to 5,000 people",
+      "Installing 10 water wells to provide clean drinking water to 5.000 people",
     fundingGoal: 50000,
     currentFunding: 38500,
     status: "active",

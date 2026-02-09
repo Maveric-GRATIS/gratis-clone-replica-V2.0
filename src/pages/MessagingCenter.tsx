@@ -106,7 +106,7 @@ const MOCK_MESSAGES: Record<string, Message[]> = {
       senderType: "partner",
       content: {
         type: "text",
-        text: "The project will provide clean drinking water to over 5,000 people in the Kisumu region.",
+        text: "The project will provide clean drinking water to over 5.000 people in the Kisumu region.",
       },
       readBy: ["user1", "partner1"],
       createdAt: new Date(Date.now() - 2900000),

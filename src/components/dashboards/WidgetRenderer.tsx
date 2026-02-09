@@ -48,7 +48,7 @@ export default function WidgetRenderer({ widget, data }: WidgetRendererProps) {
             </div>
             <div className="text-center">
               <p className="text-2xl font-bold text-yellow-400">
-                ${data?.avgDonationAmount || 0}
+                €{data?.avgDonationAmount || 0}
               </p>
               <p className="text-xs text-gray-400">Avg Donation</p>
             </div>
@@ -72,7 +72,7 @@ export default function WidgetRenderer({ widget, data }: WidgetRendererProps) {
                   />
                 </div>
                 <span className="text-xs text-white w-16 text-right">
-                  ${value.toLocaleString()}
+                  €{value.toLocaleString()}
                 </span>
               </div>
             )) || <p className="text-gray-400 text-center">No data</p>}
@@ -114,7 +114,7 @@ export default function WidgetRenderer({ widget, data }: WidgetRendererProps) {
                   <p className="text-sm text-white">{activity.user}</p>
                   <p className="text-xs text-gray-400">
                     {activity.type === "donation"
-                      ? `Donated $${activity.amount}`
+                      ? `Donated €${activity.amount}`
                       : activity.event}
                   </p>
                 </div>
@@ -141,7 +141,7 @@ export default function WidgetRenderer({ widget, data }: WidgetRendererProps) {
                   </p>
                 </div>
                 <p className="text-sm text-emerald-400 font-bold">
-                  ${donor.totalDonations.toLocaleString()}
+                  €{donor.totalDonations.toLocaleString()}
                 </p>
               </div>
             )) || <p className="text-gray-400 text-center">No donors</p>}
@@ -165,8 +165,8 @@ export default function WidgetRenderer({ widget, data }: WidgetRendererProps) {
               />
             </div>
             <div className="flex items-center justify-between text-xs text-gray-400">
-              <span>${data?.current?.toLocaleString() || 0}</span>
-              <span>${data?.goal?.toLocaleString() || 0}</span>
+              <span>€{data?.current?.toLocaleString() || 0}</span>
+              <span>€{data?.goal?.toLocaleString() || 0}</span>
             </div>
           </div>
         );

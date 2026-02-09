@@ -128,7 +128,7 @@ export function QuarterlyVoting() {
       id: "vote-2024-q1-2",
       title: "School Water Filter Systems",
       description:
-        "Provide clean water filtration systems to 50 schools serving 15,000 students",
+        "Provide clean water filtration systems to 50 schools serving 15.000 students",
       category: "health",
       budget: 35000,
       timeline: "4 months",
@@ -139,7 +139,7 @@ export function QuarterlyVoting() {
         goals: [
           "Install water filters in 50 schools",
           "Train teachers on maintenance and hygiene",
-          "Provide 15,000 students with clean drinking water",
+          "Provide 15.000 students with clean drinking water",
           "Reduce waterborne diseases by 70%",
         ],
         impact:
@@ -180,7 +180,7 @@ export function QuarterlyVoting() {
       id: "vote-2024-q1-4",
       title: "Digital Literacy Training Program",
       description:
-        "Provide computer training and internet access to 1,000 youth in underserved areas",
+        "Provide computer training and internet access to 1.000 youth in underserved areas",
       category: "education",
       budget: 42000,
       timeline: "8 months",
@@ -190,7 +190,7 @@ export function QuarterlyVoting() {
       details: {
         goals: [
           "Set up 10 computer labs",
-          "Train 1,000 youth in digital skills",
+          "Train 1.000 youth in digital skills",
           "Provide certifications for job readiness",
           "Establish ongoing mentorship programs",
         ],

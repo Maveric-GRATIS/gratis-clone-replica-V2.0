@@ -45,7 +45,10 @@ export const FUSponsorCTA = () => {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <Badge variant="outline" className="mb-4 border-primary text-primary">
+            <Badge
+              variant="outline"
+              className="mb-4 border-primary text-primary"
+            >
               <Rocket className="w-3 h-3 mr-1" />
               BECOME A SPONSOR
             </Badge>
@@ -53,8 +56,8 @@ export const FUSponsorCTA = () => {
               CREATE YOUR OWN <span className="text-primary">F.U.</span>
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Want to create a one-of-a-kind F.U. for your brand, team, or event? 
-              Let's collaborate on something truly unforgettable.
+              Want to create a one-of-a-kind F.U. for your brand, team, or
+              event? Let's collaborate on something truly unforgettable.
             </p>
           </div>
 
@@ -78,24 +81,36 @@ export const FUSponsorCTA = () => {
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-6 text-center">
               <h4 className="text-lg font-bold text-white mb-2">Starter</h4>
-              <div className="text-3xl font-black text-primary mb-2">100 Units</div>
-              <p className="text-sm text-gray-400 mb-4">Perfect for exclusive events</p>
-              <div className="text-lg font-bold text-white">From €1,499</div>
+              <div className="text-3xl font-black text-primary mb-2">
+                100 Units
+              </div>
+              <p className="text-sm text-gray-400 mb-4">
+                Perfect for exclusive events
+              </p>
+              <div className="text-lg font-bold text-white">From €1.499</div>
             </div>
             <div className="bg-gradient-to-br from-primary/20 to-purple-500/20 border-2 border-primary rounded-xl p-6 text-center relative">
               <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground">
                 POPULAR
               </Badge>
               <h4 className="text-lg font-bold text-white mb-2">Standard</h4>
-              <div className="text-3xl font-black text-primary mb-2">300 Units</div>
-              <p className="text-sm text-gray-400 mb-4">Ideal for brand activations</p>
-              <div className="text-lg font-bold text-white">From €3,999</div>
+              <div className="text-3xl font-black text-primary mb-2">
+                300 Units
+              </div>
+              <p className="text-sm text-gray-400 mb-4">
+                Ideal for brand activations
+              </p>
+              <div className="text-lg font-bold text-white">From €3.999</div>
             </div>
             <div className="bg-gray-900/50 border border-gray-700 rounded-xl p-6 text-center">
               <h4 className="text-lg font-bold text-white mb-2">Premium</h4>
-              <div className="text-3xl font-black text-primary mb-2">500 Units</div>
-              <p className="text-sm text-gray-400 mb-4">Maximum collector impact</p>
-              <div className="text-lg font-bold text-white">From €5,999</div>
+              <div className="text-3xl font-black text-primary mb-2">
+                500 Units
+              </div>
+              <p className="text-sm text-gray-400 mb-4">
+                Maximum collector impact
+              </p>
+              <div className="text-lg font-bold text-white">From €5.999</div>
             </div>
           </div>
 
@@ -110,16 +125,19 @@ export const FUSponsorCTA = () => {
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl">Create Your F.U. Collaboration</DialogTitle>
+                  <DialogTitle className="text-2xl">
+                    Create Your F.U. Collaboration
+                  </DialogTitle>
                   <DialogDescription>
-                    Tell us about your vision. We'll work together to create a one-of-a-kind F.U. 
-                    with your custom flavor, unique design, and chosen impact cause.
+                    Tell us about your vision. We'll work together to create a
+                    one-of-a-kind F.U. with your custom flavor, unique design,
+                    and chosen impact cause.
                   </DialogDescription>
                 </DialogHeader>
                 <FUSponsorForm onSuccess={() => setIsFormOpen(false)} />
               </DialogContent>
             </Dialog>
-            
+
             <Button variant="outline" size="lg" className="group" asChild>
               <Link to="/partners">
                 <Mail className="w-4 h-4 mr-2" />
@@ -130,8 +148,8 @@ export const FUSponsorCTA = () => {
 
           {/* Trust Note */}
           <p className="text-center text-sm text-gray-500 mt-8">
-            All F.U. sponsorships include full creative collaboration, 
-            impact reporting, and promotional support.
+            All F.U. sponsorships include full creative collaboration, impact
+            reporting, and promotional support.
           </p>
         </div>
       </div>

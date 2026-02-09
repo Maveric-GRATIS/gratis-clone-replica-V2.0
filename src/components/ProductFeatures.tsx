@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-interface Feature {
+export interface Feature {
   icon: React.ReactNode;
   title: string;
   description: string;

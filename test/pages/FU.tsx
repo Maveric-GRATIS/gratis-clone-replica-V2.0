@@ -1,14 +1,15 @@
 import SEO from "@/components/SEO";
 import ProductHero from "@/components/ProductHero";
 import ProductGrid from "@/components/ProductGrid";
-import ProductFeatures, { fuFeatures } from "@/components/ProductFeatures";
+import ProductFeatures from "@/components/ProductFeatures";
+import { fuFeatures } from "@/data/productFeatures";
 import { useProducts } from "@/hooks/useProducts";
 import { Badge } from "@/components/ui/badge";
 import bgImage from "@/assets/streetwear-bg-3.jpg";
 
 export default function FU() {
   const { products } = useProducts({ category: 'beverage', tier: 'ultra-limited' });
-  
+
   // Convert database products to ProductHero format
   const fuProducts = products.map(p => ({
     id: p.id,
@@ -23,10 +24,10 @@ export default function FU() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="F.U. Collection — Ultra Limited. Fearlessly Unconventional." 
-        description="Extreme flavors. Numbered editions. Brand collaborations. 100% profits fund clean water globally. €6.99-€9.99 per bottle." 
-        canonical={typeof window !== 'undefined' ? window.location.href : '/fu'} 
+      <SEO
+        title="F.U. Collection — Ultra Limited. Fearlessly Unconventional."
+        description="Extreme flavors. Numbered editions. Brand collaborations. 100% profits fund clean water globally. €6.99-€9.99 per bottle."
+        canonical={typeof window !== 'undefined' ? window.location.href : '/fu'}
       />
 
       <ProductHero

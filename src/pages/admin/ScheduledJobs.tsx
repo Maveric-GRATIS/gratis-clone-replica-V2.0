@@ -306,11 +306,6 @@ export default function ScheduledJobs() {
                           Next: {new Date(job.nextRunAt).toLocaleString()}
                         </span>
                       )}
-                      {false && (
-                        <span className="bg-muted px-2 py-1 rounded">
-                          Duration: N/A
-                        </span>
-                      )}
                     </div>
                   </div>
                 ))}

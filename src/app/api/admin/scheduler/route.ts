@@ -59,9 +59,9 @@ export async function POST(request: Request) {
       status: 201,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Failed to create job:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Failed to create job' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to create job' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -107,9 +107,9 @@ export async function PATCH(request: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Failed to update job:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Failed to update job' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to update job' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -145,9 +145,9 @@ export async function DELETE(request: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Failed to delete job:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Failed to delete job' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to delete job' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });

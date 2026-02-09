@@ -15,7 +15,8 @@ import { FUCollectorShowcase } from "@/components/fu/FUCollectorShowcase";
 import { FUSponsorCTA } from "@/components/fu/FUSponsorCTA";
 import { FUGoldenTicketBanner } from "@/components/fu/FUGoldenTicketBanner";
 import FUWinnersHallOfFame from "@/components/fu/FUWinnersHallOfFame";
-import ProductFeatures, { fuFeatures } from "@/components/ProductFeatures";
+import ProductFeatures from "@/components/ProductFeatures";
+import { fuFeatures } from "@/data/productFeatures";
 
 // F.U. Flavors Data
 const fuFlavors = [

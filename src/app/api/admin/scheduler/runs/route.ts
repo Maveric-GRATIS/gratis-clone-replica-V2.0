@@ -37,9 +37,9 @@ export async function GET(request: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Failed to fetch job runs:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Failed to fetch job runs' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to fetch job runs' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });

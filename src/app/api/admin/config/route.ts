@@ -67,9 +67,9 @@ export async function PUT(request: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Failed to update config:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Failed to update configuration' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to update configuration' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -111,9 +111,9 @@ export async function PATCH(request: Request) {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Failed to update config section:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Failed to update configuration section' }), {
+    return new Response(JSON.stringify({ error: error instanceof Error ? error.message : 'Failed to update configuration section' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });

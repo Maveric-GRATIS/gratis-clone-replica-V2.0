@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
-import ProductFeatures, { waterFeatures } from "@/components/ProductFeatures";
+import ProductFeatures from "@/components/ProductFeatures";
+import { waterFeatures } from "@/data/productFeatures";
 import MerchCarousel from "@/components/MerchCarousel";
 import AdvertisingPartnerCTA from "@/components/AdvertisingPartnerCTA";
 import { WaterCarousel } from "@/components/WaterCarousel";
@@ -31,12 +32,12 @@ export default function Index() {
     // Preload first image immediately
     const firstImg = new Image();
     firstImg.src = backgroundImages[0];
-    
+
     // Lazy load remaining images after first paint
     const loadRemainingImages = () => {
       backgroundImages.forEach((src, index) => {
         if (index === 0) return; // Skip first image, already loaded
-        
+
         const img = new Image();
         img.src = src;
         img.onload = () => {
@@ -64,10 +65,10 @@ export default function Index() {
 
     const updateParallax = () => {
       const currentScrollY = window.scrollY;
-      
+
       // Only update every 10px for smoother performance
       if (Math.abs(currentScrollY - lastScrollY) < 10) return;
-      
+
       lastScrollY = currentScrollY;
       setScrollY(currentScrollY);
     };
@@ -92,9 +93,9 @@ export default function Index() {
       />
 
       <section className="relative overflow-hidden min-h-screen max-w-full contain-layout">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-1000"
-          style={{ 
+          style={{
             backgroundImage: `url(${backgroundImages[currentBgIndex]})`,
             transform: `translate3d(0, ${scrollY * 0.3}px, 0)`,
             filter: loadedImages.has(currentBgIndex) ? 'blur(0px)' : 'blur(20px)',
@@ -105,10 +106,10 @@ export default function Index() {
         >
           <div className="absolute inset-0 bg-black/70" />
         </div>
-        
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
-        
+
         <div className="relative container min-h-screen flex items-center">
           <div className="grid md:grid-cols-2 items-center gap-10">
             <div className="space-y-6 animate-fade-in">
@@ -155,21 +156,21 @@ export default function Index() {
             </Button>
           </div>
         </section>
-        
+
         {/* Product Features */}
         <section className="bg-muted/30 py-20">
           <div className="container mx-auto px-4">
-            <ProductFeatures 
+            <ProductFeatures
               features={waterFeatures}
               title="Why Choose GRATIS?"
               subtitle="Pure hydration meets street culture"
             />
           </div>
         </section>
-        
+
         {/* Advertising Partner CTA */}
         <AdvertisingPartnerCTA />
-        
+
         {/* Merch Collection - Compact Carousel */}
         <MerchCarousel />
       </main>

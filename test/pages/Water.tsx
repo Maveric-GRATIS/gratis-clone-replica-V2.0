@@ -1,7 +1,8 @@
 import SEO from "@/components/SEO";
 import ProductHero from "@/components/ProductHero";
 import ProductGrid from "@/components/ProductGrid";
-import ProductFeatures, { waterFeatures } from "@/components/ProductFeatures";
+import ProductFeatures from "@/components/ProductFeatures";
+import { waterFeatures } from "@/data/productFeatures";
 import DistributionMap from "@/components/DistributionMap";
 import { useProducts } from "@/hooks/useProducts";
 import { useDistributionLocations } from "@/hooks/useDistributionLocations";
@@ -11,7 +12,7 @@ import bgImage from "@/assets/streetwear-bg-1.jpg";
 export default function Water() {
   const { products } = useProducts('beverage');
   const { locations, loading: locationsLoading } = useDistributionLocations();
-  
+
   // Convert database products to ProductHero format
   const waterProducts = products.map(p => ({
     id: p.id,
@@ -26,10 +27,10 @@ export default function Water() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="GRATIS Water — Pure Power, Pure Purpose" 
-        description="Mountain-sourced water in sustainable tetrapacks. 100% natural, 0% artificial, infinitely recyclable." 
-        canonical={typeof window !== 'undefined' ? window.location.href : '/water'} 
+      <SEO
+        title="GRATIS Water — Pure Power, Pure Purpose"
+        description="Mountain-sourced water in sustainable tetrapacks. 100% natural, 0% artificial, infinitely recyclable."
+        canonical={typeof window !== 'undefined' ? window.location.href : '/water'}
       />
 
       <ProductHero
@@ -64,11 +65,11 @@ export default function Water() {
               Every bottle is advertiser-funded and 100% free to you.
             </p>
           </div>
-          
+
           {!locationsLoading && locations.length > 0 && (
             <DistributionMap locations={locations} height="500px" />
           )}
-          
+
           <div className="grid md:grid-cols-3 gap-8 mt-12 text-center">
             <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8">
               <div className="text-4xl font-black text-primary mb-2">15+</div>

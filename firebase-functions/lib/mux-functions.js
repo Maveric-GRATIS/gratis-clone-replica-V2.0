@@ -44,12 +44,23 @@ exports.generateMuxSignedUrl = exports.addMuxSubtitles = exports.deleteMuxLiveSt
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const mux_node_1 = __importDefault(require("@mux/mux-node"));
-// Initialize Mux client
-const muxClient = new mux_node_1.default({
-    tokenId: functions.config().mux.token_id,
-    tokenSecret: functions.config().mux.token_secret,
-});
-const Video = muxClient.Video;
+// Initialize Mux client (lazy initialization)
+let muxClient = null;
+let Video = null;
+function getMuxClient() {
+    if (!muxClient) {
+        const config = functions.config();
+        if (!config.mux || !config.mux.token_id) {
+            throw new functions.https.HttpsError("failed-precondition", "Mux is not configured. Set mux.token_id and mux.token_secret");
+        }
+        muxClient = new mux_node_1.default({
+            tokenId: config.mux.token_id,
+            tokenSecret: config.mux.token_secret,
+        });
+        Video = muxClient.Video;
+    }
+    return { muxClient, Video };
+}
 /**
  * Verify admin role
  */
@@ -73,6 +84,7 @@ exports.createMuxAsset = functions.https.onCall(async (data, context) => {
     }
     try {
         const { url, metadata, playback_policy } = data;
+        const { Video } = getMuxClient();
         // Create Mux asset
         const asset = await Video.Assets.create({
             input: url,
@@ -104,6 +116,7 @@ exports.createMuxDirectUpload = functions.https.onCall(async (data, context) => 
     }
     try {
         const { metadata, playback_policy, new_asset_settings } = data;
+        const { Video } = getMuxClient();
         const upload = await Video.Uploads.create({
             new_asset_settings: new_asset_settings || {
                 playback_policy: [playback_policy || "public"],
@@ -136,6 +149,7 @@ exports.getMuxAsset = functions.https.onCall(async (data, context) => {
     }
     try {
         const { asset_id } = data;
+        const { Video } = getMuxClient();
         const asset = await Video.Assets.get(asset_id);
         return {
             id: asset.id,
@@ -166,6 +180,7 @@ exports.updateMuxAsset = functions.https.onCall(async (data, context) => {
     }
     try {
         const { asset_id, updates } = data;
+        const { Video } = getMuxClient();
         const asset = await Video.Assets.update(asset_id, updates);
         return {
             id: asset.id,
@@ -189,6 +204,7 @@ exports.deleteMuxAsset = functions.https.onCall(async (data, context) => {
     }
     try {
         const { asset_id } = data;
+        const { Video } = getMuxClient();
         await Video.Assets.del(asset_id);
         return { success: true };
     }
@@ -209,6 +225,7 @@ exports.createMuxLiveStream = functions.https.onCall(async (data, context) => {
     }
     try {
         const { playback_policy, new_asset_settings, reconnect_window, reduced_latency, } = data;
+        const { Video } = getMuxClient();
         const stream = await Video.LiveStreams.create({
             playback_policy: [playback_policy || "public"],
             new_asset_settings,
@@ -239,6 +256,7 @@ exports.getMuxLiveStream = functions.https.onCall(async (data, context) => {
     }
     try {
         const { stream_id } = data;
+        const { Video } = getMuxClient();
         const stream = await Video.LiveStreams.get(stream_id);
         return {
             id: stream.id,
@@ -266,6 +284,7 @@ exports.deleteMuxLiveStream = functions.https.onCall(async (data, context) => {
     }
     try {
         const { stream_id } = data;
+        const { Video } = getMuxClient();
         await Video.LiveStreams.del(stream_id);
         return { success: true };
     }
@@ -286,6 +305,7 @@ exports.addMuxSubtitles = functions.https.onCall(async (data, context) => {
     }
     try {
         const { asset_id, language_code, name, url, closed_captions } = data;
+        const { Video } = getMuxClient();
         const track = await Video.Assets.createTrack(asset_id, {
             type: "text",
             text_type: "subtitles",

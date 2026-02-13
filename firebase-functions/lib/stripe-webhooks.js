@@ -40,21 +40,33 @@ var __importStar = (this && this.__importStar) || (function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.stripeWebhook = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const stripe_1 = __importDefault(require("stripe"));
-// Initialize Stripe
-const stripe = new stripe_1.default(((_a = functions.config().stripe) === null || _a === void 0 ? void 0 : _a.secret_key) || process.env.STRIPE_SECRET_KEY || "", {
-    apiVersion: "2026-01-28.clover",
-});
+// Lazy initialize Stripe
+let stripe = null;
+function getStripeClient() {
+    var _a;
+    if (!stripe) {
+        const config = functions.config();
+        const apiKey = ((_a = config.stripe) === null || _a === void 0 ? void 0 : _a.secret_key) || process.env.STRIPE_SECRET_KEY;
+        if (!apiKey) {
+            throw new Error("Stripe is not configured");
+        }
+        stripe = new stripe_1.default(apiKey, {
+            apiVersion: "2026-01-28.clover",
+        });
+    }
+    return stripe;
+}
 /**
  * Main webhook handler
  */
 exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
     var _a;
+    const stripe = getStripeClient();
     const sig = req.headers["stripe-signature"];
     if (!sig) {
         functions.logger.error("Missing stripe-signature header");
@@ -148,6 +160,7 @@ async function handleCheckoutCompleted(session) {
  */
 async function handleMembershipPurchase(userId, session) {
     var _a, _b, _c;
+    const stripe = getStripeClient();
     const db = admin.firestore();
     // Get subscription to determine tier
     let tier = "insider";
@@ -304,6 +317,7 @@ async function handleSubscriptionUpdate(subscription) {
         return;
     }
     const userId = userQuery.docs[0].id;
+    const stripe = getStripeClient();
     // Determine tier from product metadata
     let tier = "insider";
     if (subscription.items.data[0]) {
@@ -361,6 +375,7 @@ async function handleInvoicePaid(invoice) {
             .get();
         if (!userQuery.empty) {
             const userId = userQuery.docs[0].id;
+            const stripe = getStripeClient();
             // Check if it's a donation subscription
             const subscription = await stripe.subscriptions.retrieve(subscriptionId);
             if (((_a = subscription.metadata) === null || _a === void 0 ? void 0 : _a.type) === "donation") {
@@ -427,7 +442,8 @@ async function handlePaymentFailed(paymentIntent) {
  * Notify waitlist when tickets become available (unused - for future use)
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function notifyWaitlist(eventId, availableTickets) {
+// @ts-ignore - Function reserved for future use
+async function _notifyWaitlist(eventId, availableTickets) {
     const db = admin.firestore();
     const waitlistQuery = await db
         .collection("waitlist")

@@ -8,15 +8,30 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import Stripe from "stripe";
 
-// Initialize Stripe
-const stripe = new Stripe(functions.config().stripe?.secret_key || process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2026-01-28.clover",
-});
+// Lazy initialize Stripe
+let stripe: Stripe | null = null;
+
+function getStripeClient(): Stripe {
+  if (!stripe) {
+    const config = functions.config();
+    const apiKey = config.stripe?.secret_key || process.env.STRIPE_SECRET_KEY;
+
+    if (!apiKey) {
+      throw new Error("Stripe is not configured");
+    }
+
+    stripe = new Stripe(apiKey, {
+      apiVersion: "2026-01-28.clover",
+    });
+  }
+  return stripe;
+}
 
 /**
  * Main webhook handler
  */
 export const stripeWebhook = functions.https.onRequest(async (req, res) => {
+  const stripe = getStripeClient();
   const sig = req.headers["stripe-signature"];
 
   if (!sig) {
@@ -134,6 +149,7 @@ async function handleMembershipPurchase(
   userId: string,
   session: Stripe.Checkout.Session
 ) {
+  const stripe = getStripeClient();
   const db = admin.firestore();
 
   // Get subscription to determine tier
@@ -327,6 +343,8 @@ async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
 
   const userId = userQuery.docs[0].id;
 
+  const stripe = getStripeClient();
+
   // Determine tier from product metadata
   let tier = "insider";
   if (subscription.items.data[0]) {
@@ -398,6 +416,7 @@ async function handleInvoicePaid(invoice: Stripe.Invoice) {
 
     if (!userQuery.empty) {
       const userId = userQuery.docs[0].id;
+      const stripe = getStripeClient();
 
       // Check if it's a donation subscription
       const subscription = await stripe.subscriptions.retrieve(subscriptionId as string);
@@ -477,7 +496,8 @@ async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent) {
  * Notify waitlist when tickets become available (unused - for future use)
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function notifyWaitlist(eventId: string, availableTickets: number) {
+// @ts-ignore - Function reserved for future use
+async function _notifyWaitlist(eventId: string, availableTickets: number) {
   const db = admin.firestore();
 
   const waitlistQuery = await db

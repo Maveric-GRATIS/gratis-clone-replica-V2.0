@@ -7,10 +7,27 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import Stripe from "stripe";
 
-// Initialize Stripe
-const stripe = new Stripe(functions.config().stripe?.secret_key || process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2026-01-28.clover",
-});
+// Lazy initialize Stripe
+let stripe: Stripe | null = null;
+
+function getStripeClient(): Stripe {
+  if (!stripe) {
+    const config = functions.config();
+    const apiKey = config.stripe?.secret_key || process.env.STRIPE_SECRET_KEY;
+
+    if (!apiKey) {
+      throw new functions.https.HttpsError(
+        "failed-precondition",
+        "Stripe is not configured. Set stripe.secret_key or STRIPE_SECRET_KEY env variable"
+      );
+    }
+
+    stripe = new Stripe(apiKey, {
+      apiVersion: "2026-01-28.clover",
+    });
+  }
+  return stripe;
+}
 
 /**
  * Verify admin role
@@ -28,6 +45,7 @@ async function getOrCreateStripeCustomer(
   email: string,
   name?: string
 ): Promise<string> {
+  const stripe = getStripeClient();
   const userDoc = await admin.firestore().collection("users").doc(userId).get();
   const userData = userDoc.data();
 
@@ -66,6 +84,7 @@ export const createMembershipCheckout = functions.https.onCall(
     }
 
     try {
+      const stripe = getStripeClient();
       const { priceId, successUrl, cancelUrl } = data;
 
       if (!priceId) {
@@ -128,6 +147,7 @@ export const createMembershipCheckout = functions.https.onCall(
 export const createDonationCheckout = functions.https.onCall(
   async (data, context) => {
     try {
+      const stripe = getStripeClient();
       const {
         amount,
         currency = "eur",
@@ -253,6 +273,7 @@ export const createEventTicketCheckout = functions.https.onCall(
     }
 
     try {
+      const stripe = getStripeClient();
       const {
         eventId,
         ticketTypeId,
@@ -369,6 +390,7 @@ export const createCustomerPortal = functions.https.onCall(
     }
 
     try {
+      const stripe = getStripeClient();
       const { returnUrl } = data;
 
       const userDoc = await admin
@@ -417,6 +439,7 @@ export const getSubscriptionStatus = functions.https.onCall(
     }
 
     try {
+      const stripe = getStripeClient();
       const userDoc = await admin
         .firestore()
         .collection("users")
@@ -482,6 +505,7 @@ export const cancelSubscription = functions.https.onCall(
     }
 
     try {
+      const stripe = getStripeClient();
       const { subscriptionId, immediately = false } = data;
 
       if (!subscriptionId) {
@@ -541,6 +565,7 @@ export const createStripeProduct = functions.https.onCall(
     }
 
     try {
+      const stripe = getStripeClient();
       const { name, description, prices, metadata } = data;
 
       // Create product

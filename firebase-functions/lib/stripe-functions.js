@@ -39,16 +39,27 @@ var __importStar = (this && this.__importStar) || (function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createStripeProduct = exports.cancelSubscription = exports.getSubscriptionStatus = exports.createCustomerPortal = exports.createEventTicketCheckout = exports.createDonationCheckout = exports.createMembershipCheckout = void 0;
 const functions = __importStar(require("firebase-functions"));
 const admin = __importStar(require("firebase-admin"));
 const stripe_1 = __importDefault(require("stripe"));
-// Initialize Stripe
-const stripe = new stripe_1.default(((_a = functions.config().stripe) === null || _a === void 0 ? void 0 : _a.secret_key) || process.env.STRIPE_SECRET_KEY || "", {
-    apiVersion: "2026-01-28.clover",
-});
+// Lazy initialize Stripe
+let stripe = null;
+function getStripeClient() {
+    var _a;
+    if (!stripe) {
+        const config = functions.config();
+        const apiKey = ((_a = config.stripe) === null || _a === void 0 ? void 0 : _a.secret_key) || process.env.STRIPE_SECRET_KEY;
+        if (!apiKey) {
+            throw new functions.https.HttpsError("failed-precondition", "Stripe is not configured. Set stripe.secret_key or STRIPE_SECRET_KEY env variable");
+        }
+        stripe = new stripe_1.default(apiKey, {
+            apiVersion: "2026-01-28.clover",
+        });
+    }
+    return stripe;
+}
 /**
  * Verify admin role
  */
@@ -61,6 +72,7 @@ async function isAdmin(uid) {
  * Get or create Stripe customer for user
  */
 async function getOrCreateStripeCustomer(userId, email, name) {
+    const stripe = getStripeClient();
     const userDoc = await admin.firestore().collection("users").doc(userId).get();
     const userData = userDoc.data();
     // Return existing customer ID if available
@@ -90,6 +102,7 @@ exports.createMembershipCheckout = functions.https.onCall(async (data, context) 
         throw new functions.https.HttpsError("unauthenticated", "User must be authenticated");
     }
     try {
+        const stripe = getStripeClient();
         const { priceId, successUrl, cancelUrl } = data;
         if (!priceId) {
             throw new functions.https.HttpsError("invalid-argument", "Price ID is required");
@@ -137,6 +150,7 @@ exports.createMembershipCheckout = functions.https.onCall(async (data, context) 
 exports.createDonationCheckout = functions.https.onCall(async (data, context) => {
     var _a, _b, _c, _d;
     try {
+        const stripe = getStripeClient();
         const { amount, currency = "eur", allocation, email, name, successUrl, cancelUrl, monthly = false, } = data;
         if (!amount || amount < 100) {
             throw new functions.https.HttpsError("invalid-argument", "Amount must be at least €1.00");
@@ -225,6 +239,7 @@ exports.createEventTicketCheckout = functions.https.onCall(async (data, context)
         throw new functions.https.HttpsError("unauthenticated", "User must be authenticated");
     }
     try {
+        const stripe = getStripeClient();
         const { eventId, ticketTypeId, quantity = 1, attendeeInfo, successUrl, cancelUrl, } = data;
         if (!eventId || !ticketTypeId) {
             throw new functions.https.HttpsError("invalid-argument", "Event ID and ticket type ID are required");
@@ -299,6 +314,7 @@ exports.createCustomerPortal = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError("unauthenticated", "User must be authenticated");
     }
     try {
+        const stripe = getStripeClient();
         const { returnUrl } = data;
         const userDoc = await admin
             .firestore()
@@ -330,6 +346,7 @@ exports.getSubscriptionStatus = functions.https.onCall(async (data, context) => 
         throw new functions.https.HttpsError("unauthenticated", "User must be authenticated");
     }
     try {
+        const stripe = getStripeClient();
         const userDoc = await admin
             .firestore()
             .collection("users")
@@ -386,6 +403,7 @@ exports.cancelSubscription = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError("unauthenticated", "User must be authenticated");
     }
     try {
+        const stripe = getStripeClient();
         const { subscriptionId, immediately = false } = data;
         if (!subscriptionId) {
             throw new functions.https.HttpsError("invalid-argument", "Subscription ID is required");
@@ -426,6 +444,7 @@ exports.createStripeProduct = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError("permission-denied", "Admin access required");
     }
     try {
+        const stripe = getStripeClient();
         const { name, description, prices, metadata } = data;
         // Create product
         const product = await stripe.products.create({

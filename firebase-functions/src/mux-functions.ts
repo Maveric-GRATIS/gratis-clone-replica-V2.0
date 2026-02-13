@@ -7,13 +7,27 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import Mux from "@mux/mux-node";
 
-// Initialize Mux client
-const muxClient = new Mux({
-  tokenId: functions.config().mux.token_id,
-  tokenSecret: functions.config().mux.token_secret,
-});
+// Initialize Mux client (lazy initialization)
+let muxClient: any = null;
+let Video: any = null;
 
-const Video = (muxClient as any).Video;
+function getMuxClient() {
+  if (!muxClient) {
+    const config = functions.config();
+    if (!config.mux || !config.mux.token_id) {
+      throw new functions.https.HttpsError(
+        "failed-precondition",
+        "Mux is not configured. Set mux.token_id and mux.token_secret"
+      );
+    }
+    muxClient = new Mux({
+      tokenId: config.mux.token_id,
+      tokenSecret: config.mux.token_secret,
+    });
+    Video = (muxClient as any).Video;
+  }
+  return { muxClient, Video };
+}
 
 /**
  * Verify admin role
@@ -46,6 +60,7 @@ export const createMuxAsset = functions.https.onCall(
 
     try {
       const { url, metadata, playback_policy } = data;
+      const { Video } = getMuxClient();
 
       // Create Mux asset
       const asset = await Video.Assets.create({
@@ -89,6 +104,7 @@ export const createMuxDirectUpload = functions.https.onCall(
 
     try {
       const { metadata, playback_policy, new_asset_settings } = data;
+      const { Video } = getMuxClient();
 
       const upload = await Video.Uploads.create({
         new_asset_settings: new_asset_settings || {
@@ -135,6 +151,7 @@ export const getMuxAsset = functions.https.onCall(async (data, context) => {
 
   try {
     const { asset_id } = data;
+    const { Video } = getMuxClient();
     const asset = await Video.Assets.get(asset_id);
 
     return {
@@ -174,6 +191,7 @@ export const updateMuxAsset = functions.https.onCall(async (data, context) => {
 
   try {
     const { asset_id, updates } = data;
+    const { Video } = getMuxClient();
     const asset = await Video.Assets.update(asset_id, updates);
 
     return {
@@ -206,6 +224,7 @@ export const deleteMuxAsset = functions.https.onCall(async (data, context) => {
 
   try {
     const { asset_id } = data;
+    const { Video } = getMuxClient();
     await Video.Assets.del(asset_id);
 
     return { success: true };
@@ -241,6 +260,7 @@ export const createMuxLiveStream = functions.https.onCall(
         reconnect_window,
         reduced_latency,
       } = data;
+      const { Video } = getMuxClient();
 
       const stream = await Video.LiveStreams.create({
         playback_policy: [playback_policy || "public"],
@@ -286,6 +306,7 @@ export const getMuxLiveStream = functions.https.onCall(
 
     try {
       const { stream_id } = data;
+      const { Video } = getMuxClient();
       const stream = await Video.LiveStreams.get(stream_id);
 
       return {
@@ -327,6 +348,7 @@ export const deleteMuxLiveStream = functions.https.onCall(
 
     try {
       const { stream_id } = data;
+      const { Video } = getMuxClient();
       await Video.LiveStreams.del(stream_id);
 
       return { success: true };
@@ -361,6 +383,7 @@ export const addMuxSubtitles = functions.https.onCall(
 
     try {
       const { asset_id, language_code, name, url, closed_captions } = data;
+      const { Video } = getMuxClient();
 
       const track = await Video.Assets.createTrack(asset_id, {
         type: "text",

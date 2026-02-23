@@ -178,7 +178,6 @@ class ErrorHandler {
       }
 
       const { captureException, setContext, setTag } = sentryModule;
-      }
 
       if (error.details) {
         setContext('error_details', error.details);
@@ -205,6 +204,10 @@ class ErrorHandler {
       }
 
       const { sendAdminNotification } = notificationModule;
+
+      await sendAdminNotification({
+        title: `${error.severity.toUpperCase()}: ${error.message}`,
+        message: error.message,
         data: {
           code: error.code,
           severity: error.severity,

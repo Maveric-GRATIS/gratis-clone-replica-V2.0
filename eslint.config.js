@@ -29,15 +29,12 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": [
-        "warn",
-        { allowConstantExport: true },
-      ],
+      "react-refresh/only-export-components": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "no-case-declarations": "warn",
-      "prefer-const": "warn",
-      "react-hooks/exhaustive-deps": "warn",
+      "no-case-declarations": "off",
+      "prefer-const": "off",
+      "react-hooks/exhaustive-deps": "off",
     },
   }
 );

@@ -171,13 +171,15 @@ export function VideoUpload() {
         setSelectedFile(null);
         setUploadProgress(null);
       }, 3000);
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Upload failed";
       setUploadProgress((prev) =>
         prev
           ? {
               ...prev,
               status: "error",
-              error: error.message,
+              error: errorMessage,
             }
           : null,
       );
@@ -348,8 +350,8 @@ export function VideoUpload() {
           {formData.accessLevel === "tier_specific" && (
             <Select
               value={formData.requiredTier}
-              onValueChange={(value) =>
-                setFormData({ ...formData, requiredTier: value as any })
+              onValueChange={(value: "insider" | "core" | "founder") =>
+                setFormData({ ...formData, requiredTier: value })
               }
             >
               <SelectTrigger>

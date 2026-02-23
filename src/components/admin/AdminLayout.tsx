@@ -53,7 +53,7 @@ interface AdminLayoutProps {
 
 interface NavSection {
   name: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   href?: string;
   children?: { name: string; href: string }[];
 }

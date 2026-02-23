@@ -4,12 +4,14 @@ import { db } from '@/firebase';
 import { collection, query, where, getDocs, orderBy, QueryConstraint } from 'firebase/firestore';
 
 // Define a TypeScript interface for the Product
-interface Product {
+export interface Product {
   id: string;
   name: string;
   price: number;
   original_price?: number;
   image_url?: string;
+  images?: string[];
+  description?: string;
   category: string;
   in_stock: boolean;
   featured: boolean;

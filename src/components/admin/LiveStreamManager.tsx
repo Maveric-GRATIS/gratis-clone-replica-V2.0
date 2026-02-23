@@ -244,9 +244,13 @@ export function LiveStreamManager({ onSuccess }: LiveStreamManagerProps) {
                 <Label htmlFor="stream-access">Access Level</Label>
                 <Select
                   value={formData.accessLevel}
-                  onValueChange={(value: any) =>
-                    setFormData({ ...formData, accessLevel: value })
-                  }
+                  onValueChange={(
+                    value:
+                      | "public"
+                      | "members_only"
+                      | "subscriber_only"
+                      | "tier_specific",
+                  ) => setFormData({ ...formData, accessLevel: value })}
                 >
                   <SelectTrigger>
                     <SelectValue />

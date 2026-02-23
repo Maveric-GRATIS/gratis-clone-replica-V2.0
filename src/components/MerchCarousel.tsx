@@ -13,12 +13,13 @@ import {
 import { ArrowRight } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { toast } from "@/hooks/use-toast";
+import { Product } from "@/hooks/useProducts";
 
 export default function MerchCarousel() {
   const { products, loading } = useProducts("merch");
   const { addItem } = useCart();
 
-  const addToCart = (product: any) => {
+  const addToCart = (product: Product) => {
     addItem({
       id: product.id,
       name: product.name,

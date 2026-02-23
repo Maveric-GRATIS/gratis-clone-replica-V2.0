@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Search, TrendingUp, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useProducts } from "@/hooks/useProducts";
+import { useProducts, Product } from "@/hooks/useProducts";
 import { Badge } from "@/components/ui/badge";
 
 interface SearchModalProps {
@@ -47,9 +47,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
         .filter(
           (p) =>
             p.name.toLowerCase().includes(query.toLowerCase()) ||
-            (p as any).description
-              ?.toLowerCase()
-              .includes(query.toLowerCase()) ||
+            p.description?.toLowerCase().includes(query.toLowerCase()) ||
             p.category?.toLowerCase().includes(query.toLowerCase()),
         )
         .slice(0, 6)
@@ -191,8 +189,8 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
                     <div className="w-16 h-16 rounded-md overflow-hidden bg-muted flex-shrink-0">
                       <img
                         src={
-                          (product as any).images?.[0] ||
-                          (product as any).image_url ||
+                          product.images?.[0] ||
+                          product.image_url ||
                           "https://via.placeholder.com/100"
                         }
                         alt={product.name}

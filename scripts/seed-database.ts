@@ -1,20 +1,66 @@
 /**
- * Database Seeding Script
- * Populate database with sample/test data
- * 
- * Usage: npx tsx scripts/seed-database.ts
+ * Enhanced Database Seeding Script
+ * Comprehensive seeding for dev/staging environments
+ *
+ * Usage:
+ *   npx tsx scripts/seed-database.ts
+ *   npx tsx scripts/seed-database.ts --clean  (clear before seeding)
+ *
+ * Part 13 - Section 56: Database Seeding & Migration
  */
 
 import * as admin from "firebase-admin";
+import * as path from "path";
 
 // Initialize Firebase Admin
-const serviceAccount = require("./service-account.json");
+const serviceAccountPath = path.join(__dirname, "service-account.json");
+let serviceAccount;
+
+try {
+  serviceAccount = require(serviceAccountPath);
+} catch {
+  console.error("⚠️  service-account.json not found. Please download from Firebase Console.");
+  process.exit(1);
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
 const db = admin.firestore();
+
+// Parse CLI arguments
+const CLEAN = process.argv.includes('--clean');
+
+// Colors for console output
+const COLORS = {
+  reset: '\x1b[0m',
+  red: '\x1b[31m',
+  green: '\x1b[32m',
+  yellow: '\x1b[33m',
+  blue: '\x1b[36m',
+};
+
+// Helper: Log with emoji
+const log = (emoji: string, message: string) => {
+  console.log(`${emoji}  ${message}`);
+};
+
+// Helper: Random date between two dates
+const randomDate = (start: Date, end: Date): string => {
+  const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return date.toISOString();
+};
+
+// Helper: Random amount
+const randomAmount = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+// Helper: Random choice from array
+const randomChoice = <T>(arr: T[]): T => {
+  return arr[Math.floor(Math.random() * arr.length)];
+};
 
 // Sample data
 const sampleProjects = [

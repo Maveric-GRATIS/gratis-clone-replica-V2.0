@@ -43,7 +43,13 @@ export const ImpactDonutChart = ({
 
   const total = waterAmount + artsAmount + educationAmount;
 
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: boolean;
+    payload?: Array<{ name: string; value: number; color: string }>;
+  }) => {
     if (active && payload && payload.length) {
       const percentage = ((payload[0].value / total) * 100).toFixed(1);
       return (
@@ -59,33 +65,37 @@ export const ImpactDonutChart = ({
     return null;
   };
 
-  const renderLegend = (props: any) => {
+  const renderLegend = (props: {
+    payload: Array<{ value: string; color: string }>;
+  }) => {
     const { payload } = props;
     return (
       <div className="flex flex-col gap-3 mt-6">
-        {payload.map((entry: any, index: number) => {
-          const percentage = ((entry.value / total) * 100).toFixed(1);
-          return (
-            <div
-              key={`legend-${index}`}
-              className="flex items-center justify-between gap-4"
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: entry.color }}
-                />
-                <span className="text-sm font-medium">{entry.value}</span>
+        {payload.map(
+          (entry: { value: string; color: string }, index: number) => {
+            const percentage = ((entry.value / total) * 100).toFixed(1);
+            return (
+              <div
+                key={`legend-${index}`}
+                className="flex items-center justify-between gap-4"
+              >
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-4 h-4 rounded-full"
+                    style={{ backgroundColor: entry.color }}
+                  />
+                  <span className="text-sm font-medium">{entry.value}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg font-bold">
+                    €{data[index].value.toLocaleString()}
+                  </span>
+                  <Badge variant="secondary">{percentage}%</Badge>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-bold">
-                  €{data[index].value.toLocaleString()}
-                </span>
-                <Badge variant="secondary">{percentage}%</Badge>
-              </div>
-            </div>
-          );
-        })}
+            );
+          },
+        )}
       </div>
     );
   };

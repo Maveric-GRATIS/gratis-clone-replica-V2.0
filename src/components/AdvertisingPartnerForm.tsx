@@ -88,10 +88,12 @@ export default function AdvertisingPartnerForm({
 
       form.reset();
       onSuccess?.();
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Please try again later.";
       toast({
         title: "Submission Failed",
-        description: error.message || "Please try again later.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {

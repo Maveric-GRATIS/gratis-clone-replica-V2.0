@@ -209,7 +209,15 @@ async function fetchFacebookPosts(limit: number): Promise<SocialPost[]> {
 
     const data = await response.json();
 
-    return (data.data || []).map((post: any) => ({
+    return (data.data || []).map((post: {
+      id: string;
+      message?: string;
+      created_time: string;
+      attachments?: { data: Array<{ type: string; media?: { image?: { src: string } } }> };
+      reactions?: { summary: { total_count: number } };
+      comments?: { summary: { total_count: number } };
+      shares?: { count: number };
+    }) => ({
       id: post.id,
       platform: "facebook",
       content: post.message || "",
@@ -267,7 +275,7 @@ async function fetchYouTubePosts(limit: number): Promise<SocialPost[]> {
     const videosData = await videosResponse.json();
 
     // Get video statistics
-    const videoIds = (videosData.items || []).map((item: any) => item.contentDetails.videoId).join(",");
+    const videoIds = (videosData.items || []).map((item: { contentDetails: { videoId: string } }) => item.contentDetails.videoId).join(",");
     const statsResponse = await fetch(
       `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${apiKey}`,
       {
@@ -277,7 +285,15 @@ async function fetchYouTubePosts(limit: number): Promise<SocialPost[]> {
 
     const statsData = await statsResponse.json();
 
-    return (videosData.items || []).map((item: any, index: number) => {
+    return (videosData.items || []).map((item: {
+      contentDetails: { videoId: string };
+      snippet: {
+        title: string;
+        description: string;
+        publishedAt: string;
+        thumbnails: { default: { url: string }; high: { url: string } };
+      };
+    }, index: number) => {
       const stats = statsData.items?.[index]?.statistics;
 
       return {

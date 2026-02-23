@@ -84,7 +84,7 @@ export default function ActivityTimeline({
     } finally {
       setLoading(false);
     }
-  }, [userId, visibility, filter]);
+  }, [filter]);
 
   useEffect(() => {
     loadFeed();

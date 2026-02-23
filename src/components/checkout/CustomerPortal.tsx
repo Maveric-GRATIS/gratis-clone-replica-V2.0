@@ -18,6 +18,22 @@ interface Subscription {
   cancelAtPeriodEnd: boolean;
 }
 
+interface UserData {
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
+  membershipTier?: string;
+  [key: string]: unknown;
+}
+
+interface SubscriptionResponse {
+  subscription?: {
+    id: string;
+    status: string;
+    current_period_end: number;
+    cancel_at_period_end: boolean;
+  };
+}
+
 export default function CustomerPortal() {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -26,7 +42,7 @@ export default function CustomerPortal() {
   const [loading, setLoading] = useState<boolean>(true);
   const [portalLoading, setPortalLoading] = useState<boolean>(false);
   const [subscription, setSubscription] = useState<Subscription | null>(null);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   const loadUserData = useCallback(async () => {
     if (!user) return;
@@ -45,7 +61,7 @@ export default function CustomerPortal() {
             "getSubscriptionStatus",
           );
           const result = await getSubscription();
-          const subData = result.data as any;
+          const subData = result.data as SubscriptionResponse;
 
           if (subData.subscription) {
             setSubscription({
@@ -84,12 +100,15 @@ export default function CustomerPortal() {
 
       const { url } = result.data as { url: string };
       window.location.href = url;
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : t("error.tryAgain", "Please try again later");
       console.error("Portal error:", error);
       toast({
         title: t("error.portalFailed", "Portal Access Failed"),
-        description:
-          error.message || t("error.tryAgain", "Please try again later"),
+        description: errorMessage,
         variant: "destructive",
       });
       setPortalLoading(false);
@@ -123,12 +142,15 @@ export default function CustomerPortal() {
       });
 
       loadUserData();
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : t("error.tryAgain", "Please try again later");
       console.error("Cancel error:", error);
       toast({
         title: t("error.cancelFailed", "Cancellation Failed"),
-        description:
-          error.message || t("error.tryAgain", "Please try again later"),
+        description: errorMessage,
         variant: "destructive",
       });
     }

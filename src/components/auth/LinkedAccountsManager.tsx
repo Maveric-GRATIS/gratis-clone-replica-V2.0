@@ -2,32 +2,51 @@
 // GRATIS.NGO — Linked Accounts Manager (Settings Page)
 // ============================================================================
 
-import React, { useState, useEffect } from 'react';
-import { Link2, Unlink, Loader2, Shield, Check, AlertCircle } from 'lucide-react';
-import { SocialProvider, SOCIAL_PROVIDERS, LinkedAccount } from '@/types/social-auth';
-import { getLinkedAccounts, linkProvider, unlinkProvider } from '@/lib/auth/social-auth-service';
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Link2,
+  Unlink,
+  Loader2,
+  Shield,
+  Check,
+  AlertCircle,
+} from "lucide-react";
+import {
+  SocialProvider,
+  SOCIAL_PROVIDERS,
+  LinkedAccount,
+} from "@/types/social-auth";
+import {
+  getLinkedAccounts,
+  linkProvider,
+  unlinkProvider,
+} from "@/lib/auth/social-auth-service";
 
 interface LinkedAccountsManagerProps {
   userId: string;
 }
 
-export default function LinkedAccountsManager({ userId }: LinkedAccountsManagerProps) {
+export default function LinkedAccountsManager({
+  userId,
+}: LinkedAccountsManagerProps) {
   const [linkedAccounts, setLinkedAccounts] = useState<LinkedAccount[]>([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState<SocialProvider | null>(null);
+  const [actionLoading, setActionLoading] = useState<SocialProvider | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadAccounts();
-  }, [userId]);
-
-  async function loadAccounts() {
+  const loadAccounts = useCallback(async () => {
     setLoading(true);
     const accounts = await getLinkedAccounts(userId);
     setLinkedAccounts(accounts);
     setLoading(false);
-  }
+  }, [userId]);
+
+  useEffect(() => {
+    loadAccounts();
+  }, [loadAccounts]);
 
   async function handleLink(provider: SocialProvider) {
     setActionLoading(provider);
@@ -37,8 +56,10 @@ export default function LinkedAccountsManager({ userId }: LinkedAccountsManagerP
       await linkProvider(provider);
       setSuccess(`${provider} account linked successfully!`);
       await loadAccounts();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to link account";
+      setError(errorMessage);
     } finally {
       setActionLoading(null);
     }
@@ -53,14 +74,19 @@ export default function LinkedAccountsManager({ userId }: LinkedAccountsManagerP
       await unlinkProvider(provider);
       setSuccess(`${provider} account unlinked.`);
       await loadAccounts();
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to unlink account";
+      setError(errorMessage);
     } finally {
       setActionLoading(null);
     }
   }
 
-  if (loading) return <div className="text-gray-400 text-sm">Loading linked accounts...</div>;
+  if (loading)
+    return (
+      <div className="text-gray-400 text-sm">Loading linked accounts...</div>
+    );
 
   return (
     <div className="space-y-4">
@@ -85,19 +111,35 @@ export default function LinkedAccountsManager({ userId }: LinkedAccountsManagerP
 
       <div className="space-y-2">
         {SOCIAL_PROVIDERS.map((config) => {
-          const linked = linkedAccounts.find((a) => a.provider === config.provider);
+          const linked = linkedAccounts.find(
+            (a) => a.provider === config.provider,
+          );
           return (
-            <div key={config.provider} className="flex items-center justify-between p-4 bg-gray-800/60 border border-gray-700 rounded-lg">
+            <div
+              key={config.provider}
+              className="flex items-center justify-between p-4 bg-gray-800/60 border border-gray-700 rounded-lg"
+            >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: config.color + '20' }}>
-                  <span className="text-sm font-bold" style={{ color: config.color }}>
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center"
+                  style={{ backgroundColor: config.color + "20" }}
+                >
+                  <span
+                    className="text-sm font-bold"
+                    style={{ color: config.color }}
+                  >
                     {config.displayName[0]}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm text-white font-medium">{config.displayName}</p>
+                  <p className="text-sm text-white font-medium">
+                    {config.displayName}
+                  </p>
                   {linked ? (
-                    <p className="text-xs text-gray-400">{linked.email} • Connected {new Date(linked.linkedAt).toLocaleDateString()}</p>
+                    <p className="text-xs text-gray-400">
+                      {linked.email} • Connected{" "}
+                      {new Date(linked.linkedAt).toLocaleDateString()}
+                    </p>
                   ) : (
                     <p className="text-xs text-gray-500">Not connected</p>
                   )}
@@ -110,7 +152,11 @@ export default function LinkedAccountsManager({ userId }: LinkedAccountsManagerP
                   disabled={actionLoading === config.provider}
                   className="flex items-center gap-1 px-3 py-1.5 text-xs text-red-400 border border-red-400/30 rounded-lg hover:bg-red-500/10 transition disabled:opacity-50"
                 >
-                  {actionLoading === config.provider ? <Loader2 className="w-3 h-3 animate-spin" /> : <Unlink className="w-3 h-3" />}
+                  {actionLoading === config.provider ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Unlink className="w-3 h-3" />
+                  )}
                   Unlink
                 </button>
               ) : config.enabled ? (
@@ -119,7 +165,11 @@ export default function LinkedAccountsManager({ userId }: LinkedAccountsManagerP
                   disabled={actionLoading === config.provider}
                   className="flex items-center gap-1 px-3 py-1.5 text-xs text-emerald-400 border border-emerald-400/30 rounded-lg hover:bg-emerald-500/10 transition disabled:opacity-50"
                 >
-                  {actionLoading === config.provider ? <Loader2 className="w-3 h-3 animate-spin" /> : <Link2 className="w-3 h-3" />}
+                  {actionLoading === config.provider ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Link2 className="w-3 h-3" />
+                  )}
                   Connect
                 </button>
               ) : (

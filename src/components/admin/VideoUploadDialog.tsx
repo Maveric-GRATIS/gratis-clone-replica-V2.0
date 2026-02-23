@@ -368,9 +368,9 @@ export function VideoUploadDialog({ onSuccess }: VideoUploadDialogProps) {
                 <Label htmlFor="access">Access Level</Label>
                 <Select
                   value={formData.accessLevel}
-                  onValueChange={(value: any) =>
-                    setFormData({ ...formData, accessLevel: value })
-                  }
+                  onValueChange={(
+                    value: "public" | "members_only" | "tier_specific",
+                  ) => setFormData({ ...formData, accessLevel: value })}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -388,7 +388,7 @@ export function VideoUploadDialog({ onSuccess }: VideoUploadDialogProps) {
                   <Label htmlFor="tier">Required Tier</Label>
                   <Select
                     value={formData.requiredTier}
-                    onValueChange={(value: any) =>
+                    onValueChange={(value: "insider" | "core" | "founder") =>
                       setFormData({ ...formData, requiredTier: value })
                     }
                   >

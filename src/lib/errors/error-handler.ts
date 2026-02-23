@@ -170,7 +170,7 @@ class ErrorHandler {
 
     try {
       // Try to import Sentry dynamically if available
-      const sentryModule = await import('@/lib/integrations/sentry').catch(() => null);
+      const sentryModule = await import('@/lib/errors/sentry').catch(() => null);
 
       if (!sentryModule) {
         console.warn('Sentry module not available');
@@ -195,8 +195,17 @@ class ErrorHandler {
    */
   private async notifyAdmins(error: AppError, context?: Record<string, any>): Promise<void> {
     try {
-      // Try to import notification service dynamically
-      const notificationModule = await import('@/lib/notifications').catch(() => null);
+      // Note: Admin notification service not yet implemented
+      // TODO: Implement sendAdminNotification in notification service
+      console.warn('Admin notification requested but service not available:', {
+        error: error.message,
+        code: error.code,
+        severity: error.severity,
+      });
+
+      /*
+      // Future implementation:
+      const notificationModule = await import('@/lib/services/notificationService').catch(() => null);
 
       if (!notificationModule || !notificationModule.sendAdminNotification) {
         console.warn('Notification service not available');
@@ -216,6 +225,7 @@ class ErrorHandler {
           timestamp: error.timestamp.toISOString(),
         },
       });
+      */
     } catch (notifyError) {
       console.error('Failed to notify admins:', notifyError);
     }

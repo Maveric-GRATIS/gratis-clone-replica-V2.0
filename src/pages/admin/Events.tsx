@@ -1,24 +1,38 @@
-
-import { useState } from 'react';
-import { AdminLayout } from '@/components/admin/AdminLayout';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { db } from '@/firebase';
-import { 
-  collection, 
-  getDocs, 
-  orderBy, 
-  doc, 
-  updateDoc, 
-  deleteDoc 
-} from 'firebase/firestore';
-import { toast } from 'sonner';
-import { format } from 'date-fns';
+import { useState } from "react";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Plus, Edit, Trash, Eye, EyeOff } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { db } from "@/firebase";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  doc,
+  updateDoc,
+  deleteDoc,
+  query as firestoreQuery,
+} from "firebase/firestore";
+import { toast } from "sonner";
+import { format } from "date-fns";
+import { EventDialog } from "@/components/admin/EventDialog";
 
 interface Event {
   id: string;
@@ -30,49 +44,70 @@ interface Event {
 
 export default function AdminEvents() {
   const queryClient = useQueryClient();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   const { data: events, isLoading } = useQuery<Event[], Error>({
-    queryKey: ['admin-events'],
+    queryKey: ["admin-events"],
     queryFn: async () => {
-      const eventsCollection = collection(db, 'events');
-      const q = query(eventsCollection, orderBy('event_date', 'desc'));
+      const eventsCollection = collection(db, "events");
+      const q = firestoreQuery(eventsCollection, orderBy("event_date", "desc"));
       const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event));
-    }
+      return snapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() }) as Event,
+      );
+    },
   });
 
   const togglePublished = useMutation({
-    mutationFn: async ({ id, published }: { id: string; published: boolean }) => {
-      const eventRef = doc(db, 'events', id);
+    mutationFn: async ({
+      id,
+      published,
+    }: {
+      id: string;
+      published: boolean;
+    }) => {
+      const eventRef = doc(db, "events", id);
       await updateDoc(eventRef, { published: !published });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-events'] });
-      toast.success('Event status updated');
+      queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+      toast.success("Event status updated");
     },
     onError: () => {
-      toast.error('Failed to update event status');
-    }
+      toast.error("Failed to update event status");
+    },
   });
 
   const deleteEvent = useMutation({
     mutationFn: async (id: string) => {
-      const eventRef = doc(db, 'events', id);
+      const eventRef = doc(db, "events", id);
       await deleteDoc(eventRef);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-events'] });
-      toast.success('Event deleted');
+      queryClient.invalidateQueries({ queryKey: ["admin-events"] });
+      toast.success("Event deleted");
     },
     onError: () => {
-      toast.error('Failed to delete event');
-    }
+      toast.error("Failed to delete event");
+    },
   });
 
-  const filteredEvents = events?.filter(event =>
-    event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    event.location?.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleCreate = () => {
+    setSelectedEvent(null);
+    setDialogOpen(true);
+  };
+
+  const handleEdit = (event: Event) => {
+    setSelectedEvent(event);
+    setDialogOpen(true);
+  };
+
+  const filteredEvents = events?.filter(
+    (event) =>
+      event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      event.location?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -81,9 +116,11 @@ export default function AdminEvents() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-foreground">Events</h1>
-            <p className="text-muted-foreground">Manage community events and gatherings</p>
+            <p className="text-muted-foreground">
+              Manage community events and gatherings
+            </p>
           </div>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={handleCreate}>
             <Plus className="h-4 w-4" />
             Add Event
           </Button>
@@ -106,9 +143,13 @@ export default function AdminEvents() {
             </div>
 
             {isLoading ? (
-              <p className="text-center text-muted-foreground py-8">Loading events...</p>
+              <p className="text-center text-muted-foreground py-8">
+                Loading events...
+              </p>
             ) : filteredEvents?.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">No events found</p>
+              <p className="text-center text-muted-foreground py-8">
+                No events found
+              </p>
             ) : (
               <Table>
                 <TableHeader>
@@ -124,16 +165,24 @@ export default function AdminEvents() {
                   {filteredEvents?.map((event) => {
                     const eventDate = new Date(event.event_date.seconds * 1000);
                     const isPast = eventDate < new Date();
-                    
+
                     return (
                       <TableRow key={event.id}>
-                        <TableCell className="font-medium">{event.title}</TableCell>
-                        <TableCell>{format(eventDate, 'MMM dd, yyyy')}</TableCell>
-                        <TableCell>{event.location || 'TBD'}</TableCell>
+                        <TableCell className="font-medium">
+                          {event.title}
+                        </TableCell>
+                        <TableCell>
+                          {format(eventDate, "MMM dd, yyyy")}
+                        </TableCell>
+                        <TableCell>{event.location || "TBD"}</TableCell>
                         <TableCell>
                           <div className="flex gap-2">
-                            <Badge variant={event.published ? 'default' : 'secondary'}>
-                              {event.published ? 'Published' : 'Draft'}
+                            <Badge
+                              variant={
+                                event.published ? "default" : "secondary"
+                              }
+                            >
+                              {event.published ? "Published" : "Draft"}
                             </Badge>
                             {isPast && <Badge variant="outline">Past</Badge>}
                           </div>
@@ -143,11 +192,24 @@ export default function AdminEvents() {
                             <Button
                               variant="ghost"
                               size="icon"
-                              onClick={() => togglePublished.mutate({ id: event.id, published: event.published })}
+                              onClick={() =>
+                                togglePublished.mutate({
+                                  id: event.id,
+                                  published: event.published,
+                                })
+                              }
                             >
-                              {event.published ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              {event.published ? (
+                                <EyeOff className="h-4 w-4" />
+                              ) : (
+                                <Eye className="h-4 w-4" />
+                              )}
                             </Button>
-                            <Button variant="ghost" size="icon">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleEdit(event)}
+                            >
                               <Edit className="h-4 w-4" />
                             </Button>
                             <Button
@@ -168,6 +230,12 @@ export default function AdminEvents() {
           </CardContent>
         </Card>
       </div>
+
+      <EventDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        event={selectedEvent}
+      />
     </AdminLayout>
   );
 }

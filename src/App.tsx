@@ -13,7 +13,7 @@ import { ScrollProgressBar } from "@/components/ScrollProgressBar";
 import { CookieConsent } from "@/components/CookieConsent";
 import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
+import NotFoundPage from "./pages/NotFoundPage";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Gratis from "@/pages/Gratis";
@@ -1046,7 +1046,7 @@ const AppContent = () => {
             />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </PageTransition>
       </div>

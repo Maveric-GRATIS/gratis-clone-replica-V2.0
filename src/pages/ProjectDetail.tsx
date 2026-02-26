@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +9,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SEO } from "@/components/SEO";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useProjects } from "@/hooks/useProjects";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 import {
   Droplet,
   Utensils,
@@ -53,158 +57,6 @@ const IMPACT_CATEGORIES: Record<
   healthcare: { label: "Healthcare", icon: Heart, color: "text-red-600" },
 };
 
-// Mock project data (would come from API/database)
-const mockProject: ImpactProject = {
-  id: "1",
-  title: "Clean Water Wells in Kenya",
-  slug: "clean-water-wells-kenya",
-  description: `Building sustainable water wells in rural Kenyan communities to provide clean drinking water access to over 5.000 people.
-
-## The Challenge
-
-In Turkana County, Kenya, many communities lack access to clean drinking water. People must walk several kilometers daily to collect water from contaminated sources, leading to waterborne diseases and lost time for education and economic activities.
-
-## Our Solution
-
-We're constructing 10 deep-bore water wells equipped with solar-powered pumps. Each well serves approximately 500 people and includes:
-
-- Deep-bore drilling to reach clean aquifers
-- Solar-powered pumping systems for sustainability
-- Storage tanks for consistent supply
-- Community training for maintenance
-- Water quality monitoring systems
-
-## Long-term Impact
-
-These wells will provide:
-- Clean water access for 5.000+ people
-- Reduced waterborne disease rates
-- More time for education and work
-- Sustainable community-managed infrastructure
-- Improved quality of life for entire communities`,
-  shortDescription:
-    "Providing clean water access to 5.000+ people in rural Kenya",
-  category: "clean_water",
-  tags: ["water", "africa", "infrastructure", "sustainability"],
-  location: {
-    country: "Kenya",
-    region: "Turkana County",
-    coordinates: { lat: 3.1167, lng: 35.6 },
-  },
-  coverImage:
-    "https://images.unsplash.com/photo-1578489758854-f134a358f08b?w=1200&h=600&fit=crop",
-  gallery: [
-    "https://images.unsplash.com/photo-1578489758854-f134a358f08b?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1594398901394-4e34939a4fd0?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=800&h=600&fit=crop",
-    "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=600&fit=crop",
-  ],
-  videoUrl: "https://www.youtube.com/watch?v=example",
-  fundingGoal: 5000000, // €50.000
-  fundingRaised: 3750000, // €37.500
-  currency: "EUR",
-  donorCount: 342,
-  startDate: new Date("2025-06-01"),
-  estimatedCompletion: new Date("2026-12-31"),
-  impactMetrics: [
-    { metric: "People Served", value: 5000, unit: "people", icon: "users" },
-    { metric: "Wells Built", value: 10, unit: "wells", icon: "droplet" },
-    { metric: "Liters/Day", value: 50000, unit: "liters", icon: "droplet" },
-    {
-      metric: "Villages Reached",
-      value: 12,
-      unit: "villages",
-      icon: "map-pin",
-    },
-  ],
-  beneficiaries: {
-    count: 5000,
-    description: "Community members in Turkana County",
-  },
-  partner: {
-    id: "water-org",
-    name: "Water.org",
-    logo: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=100&h=100&fit=crop",
-    website: "https://water.org",
-  },
-  status: "in_progress",
-  isFeatured: true,
-  milestones: [
-    { name: "Site Assessment & Planning", date: "June 2025", completed: true },
-    { name: "Drilling Well 1-3", date: "September 2025", completed: true },
-    { name: "Drilling Well 4-7", date: "March 2026", completed: true },
-    { name: "Drilling Well 8-10", date: "September 2026", completed: false },
-    { name: "Community Training", date: "November 2026", completed: false },
-    { name: "Project Completion", date: "December 2026", completed: false },
-  ],
-  updates: [
-    {
-      id: "u1",
-      projectId: "1",
-      title: "Wells 4-7 Completed Successfully!",
-      content:
-        "We're thrilled to announce that wells 4 through 7 have been completed ahead of schedule. These wells are now serving over 2.000 additional community members with clean water. The solar pumps are working efficiently, and local maintenance teams have been trained.",
-      images: [
-        "https://images.unsplash.com/photo-1594398901394-4e34939a4fd0?w=800&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1509099863731-ef4bff19e808?w=800&h=400&fit=crop",
-      ],
-      createdAt: new Date("2026-01-15"),
-    },
-    {
-      id: "u2",
-      projectId: "1",
-      title: "Community Celebration for First Wells",
-      content:
-        "The communities celebrated as the first three wells began providing clean water. Attendance at local schools has increased by 30% as children no longer need to spend hours fetching water. Health workers report a significant decrease in waterborne illness cases.",
-      images: [
-        "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&h=400&fit=crop",
-      ],
-      createdAt: new Date("2025-10-01"),
-    },
-    {
-      id: "u3",
-      projectId: "1",
-      title: "Project Kickoff and Site Assessment",
-      content:
-        "Our team has completed the initial site assessment in Turkana County. We've identified optimal drilling locations for all 10 wells, working closely with community leaders to ensure maximum impact and accessibility.",
-      images: [],
-      createdAt: new Date("2025-06-15"),
-    },
-  ],
-  topDonors: [
-    {
-      name: "Sarah Johnson",
-      amount: 50000,
-      avatar: "https://i.pravatar.cc/150?u=sarah",
-      date: new Date("2025-11-20"),
-    },
-    {
-      name: "Marcus Chen",
-      amount: 30000,
-      avatar: "https://i.pravatar.cc/150?u=marcus",
-      date: new Date("2025-12-05"),
-    },
-    {
-      name: "Emma Rodriguez",
-      amount: 25000,
-      avatar: "https://i.pravatar.cc/150?u=emma",
-      date: new Date("2025-08-10"),
-    },
-    {
-      name: "David Thompson",
-      amount: 20000,
-      date: new Date("2025-09-15"),
-    },
-    {
-      name: "Lisa Anderson",
-      amount: 15000,
-      date: new Date("2026-01-05"),
-    },
-  ],
-  createdAt: new Date("2025-06-01"),
-  updatedAt: new Date("2026-01-15"),
-};
-
 const formatCurrency = (cents: number, currency: string) => {
   const amount = cents / 100;
   return new Intl.NumberFormat("en-US", {
@@ -231,9 +83,55 @@ export default function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [project, setProject] = useState<ImpactProject | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // In a real app, fetch project by slug
-  const project = mockProject;
+  // Fetch project by ID or slug
+  const { data: allProjects } = useProjects();
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      if (!slug) {
+        setLoading(false);
+        return;
+      }
+
+      // First try to find in loaded projects
+      const foundProject = allProjects?.find(
+        (p) => p.id === slug || p.slug === slug,
+      );
+
+      if (foundProject) {
+        setProject(foundProject);
+        setLoading(false);
+      } else {
+        // If not found in loaded projects, try to fetch directly by ID
+        try {
+          const projectDoc = await getDoc(doc(db, "projects", slug));
+          if (projectDoc.exists()) {
+            setProject({
+              id: projectDoc.id,
+              ...projectDoc.data(),
+            } as ImpactProject);
+          }
+        } catch (error) {
+          console.error("Error fetching project:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProject();
+  }, [slug, allProjects]);
+
+  if (loading) {
+    return (
+      <div className="container py-12 flex justify-center items-center min-h-screen">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!project) {
     return (

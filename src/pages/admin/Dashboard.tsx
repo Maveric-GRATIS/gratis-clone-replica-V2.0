@@ -50,17 +50,90 @@ import {
 } from "recharts";
 import { useProducts } from "@/hooks/useProducts";
 import { format, subDays } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
+import { db } from "@/firebase";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  where,
+  limit,
+} from "firebase/firestore";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export default function AdminDashboard() {
   const { products } = useProducts();
   const [dateRange, setDateRange] = useState("30d");
   const [loading, setLoading] = useState(false);
 
-  // Mock stats data
+  // Fetch real statistics from Firebase
+  const { data: usersData } = useQuery({
+    queryKey: ["dashboard-users"],
+    queryFn: async () => {
+      const usersSnap = await getDocs(collection(db, "users"));
+      return usersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    },
+  });
+
+  const { data: donationsData } = useQuery({
+    queryKey: ["dashboard-donations"],
+    queryFn: async () => {
+      const donationsSnap = await getDocs(collection(db, "donations"));
+      return donationsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    },
+  });
+
+  const { data: ordersData } = useQuery({
+    queryKey: ["dashboard-orders"],
+    queryFn: async () => {
+      const ordersSnap = await getDocs(collection(db, "orders"));
+      return ordersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    },
+  });
+
+  const { data: eventsData } = useQuery({
+    queryKey: ["dashboard-events"],
+    queryFn: async () => {
+      const eventsSnap = await getDocs(collection(db, "events"));
+      return eventsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    },
+  });
+
+  const { data: subscriptionsData } = useQuery({
+    queryKey: ["dashboard-subscriptions"],
+    queryFn: async () => {
+      const subsSnap = await getDocs(collection(db, "subscriptions"));
+      return subsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    },
+  });
+
+  // Calculate real statistics
+  const totalMembers = usersData?.length || 0;
+  const totalDonations =
+    donationsData?.reduce(
+      (sum: number, d: any) =>
+        sum + (d.status === "completed" ? d.amount || 0 : 0),
+      0,
+    ) || 0;
+
+  const totalRevenue =
+    (ordersData?.reduce(
+      (sum: number, o: any) =>
+        sum + (o.status !== "cancelled" ? o.total || 0 : 0),
+      0,
+    ) || 0) + totalDonations;
+
+  const activeEvents =
+    eventsData?.filter((e: any) => e.status === "published")?.length || 0;
+  const pendingOrders =
+    ordersData?.filter((o: any) => o.status === "pending")?.length || 0;
+
+  // Real stats data
   const stats = [
     {
       title: "Total Members",
-      value: "12.543",
+      value: totalMembers.toLocaleString(),
       change: 12.5,
       trend: "up",
       description: "Active TRIBE members",
@@ -70,43 +143,81 @@ export default function AdminDashboard() {
     },
     {
       title: "Total Donations",
-      value: "€45.231",
+      value: `€${(totalDonations / 100).toLocaleString()}`,
       change: 8.2,
       trend: "up",
-      description: "This month",
+      description: "All time",
       icon: Heart,
       color: "text-pink-500",
       bgColor: "bg-pink-500/10",
     },
     {
       title: "Monthly Revenue",
-      value: "€67.890",
+      value: `€${(totalRevenue / 100).toLocaleString()}`,
       change: 3.1,
       trend: "up",
-      description: "Products + Memberships",
+      description: "Products + Donations",
       icon: TrendingUp,
       color: "text-green-500",
       bgColor: "bg-green-500/10",
     },
     {
       title: "Active Events",
-      value: "8",
-      change: -2,
-      trend: "down",
-      description: "23 pending orders",
+      value: activeEvents.toString(),
+      change: pendingOrders > 10 ? 5 : -2,
+      trend: pendingOrders > 10 ? "up" : "down",
+      description: `${pendingOrders} pending orders`,
       icon: Calendar,
       color: "text-orange-500",
       bgColor: "bg-orange-500/10",
     },
   ];
 
-  // Mock revenue chart data
-  const revenueData = Array.from({ length: 30 }, (_, i) => ({
-    date: format(subDays(new Date(), 29 - i), "MMM dd"),
-    donations: Math.floor(Math.random() * 2000) + 1000,
-    memberships: Math.floor(Math.random() * 1500) + 800,
-    products: Math.floor(Math.random() * 1000) + 500,
-  }));
+  // Generate revenue chart data from real orders and donations
+  const revenueData = Array.from({ length: 30 }, (_, i) => {
+    const date = subDays(new Date(), 29 - i);
+    const dateStr = date.toISOString().split("T")[0];
+
+    const dayDonations =
+      donationsData
+        ?.filter((d: any) => {
+          const dDate =
+            d.createdAt?.toDate?.() || new Date(d.createdAt?.seconds * 1000);
+          return (
+            dDate.toISOString().split("T")[0] === dateStr &&
+            d.status === "completed"
+          );
+        })
+        .reduce((sum: number, d: any) => sum + (d.amount || 0), 0) || 0;
+
+    const dayOrders =
+      ordersData
+        ?.filter((o: any) => {
+          const oDate =
+            o.createdAt?.toDate?.() || new Date(o.createdAt?.seconds * 1000);
+          return (
+            oDate.toISOString().split("T")[0] === dateStr &&
+            o.status !== "cancelled"
+          );
+        })
+        .reduce((sum: number, o: any) => sum + (o.total || 0), 0) || 0;
+
+    const daySubscriptions =
+      subscriptionsData?.filter((s: any) => {
+        const sDate =
+          s.createdAt?.toDate?.() || new Date(s.createdAt?.seconds * 1000);
+        return (
+          sDate.toISOString().split("T")[0] === dateStr && s.status === "active"
+        );
+      }).length * 999 || 0; // Estimate 9.99 per subscription
+
+    return {
+      date: format(date, "MMM dd"),
+      donations: Math.floor(dayDonations / 100),
+      memberships: Math.floor(daySubscriptions / 100),
+      products: Math.floor(dayOrders / 100),
+    };
+  });
 
   // Fund allocation pie chart data
   const allocationData = [
@@ -155,21 +266,45 @@ export default function AdminDashboard() {
     },
   ];
 
-  // Pending items
+  // Pending items with real counts
   const pendingItems = [
     {
       title: "Partner Applications",
-      count: 3,
+      count:
+        usersData?.filter(
+          (u: any) => u.role === "partner" && u.status === "pending",
+        )?.length || 0,
       href: "/admin/partners/applications",
     },
     {
       title: "Pending Orders",
-      count: 12,
+      count: pendingOrders,
       href: "/admin/orders?status=pending",
     },
-    { title: "Support Tickets", count: 7, href: "/admin/support" },
-    { title: "Content Reviews", count: 2, href: "/admin/content?status=draft" },
+    {
+      title: "Support Tickets",
+      count: 0, // Would need tickets collection
+      href: "/admin/support",
+    },
+    {
+      title: "Content Reviews",
+      count: eventsData?.filter((e: any) => e.status === "draft")?.length || 0,
+      href: "/admin/content?status=draft",
+    },
   ];
+
+  // Check if data is still loading
+  const isLoading = !usersData || !donationsData || !ordersData || !eventsData;
+
+  if (isLoading) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center min-h-screen">
+          <LoadingSpinner />
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>

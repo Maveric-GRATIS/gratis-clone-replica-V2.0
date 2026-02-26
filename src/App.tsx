@@ -118,6 +118,8 @@ import SocialDemo from "./pages/SocialDemo";
 import RouteTest from "./pages/RouteTest";
 import Community from "./pages/Community";
 import ImpactProjects from "./pages/ImpactProjects";
+import Blog from "./pages/Blog";
+import Campaigns from "./pages/Campaigns";
 import ProjectDetail from "./pages/ProjectDetail";
 import Referrals from "./pages/Referrals";
 import Notifications from "./pages/Notifications";
@@ -306,6 +308,8 @@ const AppContent = () => {
             <Route path="/impact/projects/:slug" element={<ProjectDetail />} />
             <Route path="/ngo-application" element={<NGOApplication />} />
             <Route path="/community" element={<Community />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/social-demo" element={<SocialDemo />} />
             <Route path="/route-test" element={<RouteTest />} />
             <Route path="/tribe" element={<Tribe />} />

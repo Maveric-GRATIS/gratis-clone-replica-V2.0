@@ -22,152 +22,58 @@ import {
   formatViewCount,
   getVideoThumbnail,
 } from "@/lib/mux/helpers";
-
-// Mock video data - in productie van Firestore
-const MOCK_VIDEOS: Video[] = [
-  {
-    id: "1",
-    title: "Clean Water Project: Kenya 2025",
-    slug: "clean-water-project-kenya-2025",
-    description:
-      "See how your support brought clean water to 5.000 people in rural Kenya. Follow the journey from drilling the well to the first drops of clean water.",
-    muxAssetId: "mock_asset_1",
-    muxPlaybackId: "mock_playback_1",
-    category: "impact_stories",
-    tags: ["water", "kenya", "impact"],
-    duration: 420, // 7 minutes
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800",
-    accessLevel: "public",
-    status: "ready",
-    viewCount: 12500,
-    likeCount: 890,
-    publishedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    createdAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    updatedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    authorId: "admin",
-    authorName: "GRATIS Team",
-    featured: true,
-    featuredOrder: 1,
-  },
-  {
-    id: "2",
-    title: "Behind the Bottle: Design Process",
-    slug: "behind-the-bottle-design-process",
-    description:
-      "Take an exclusive look at how we design our iconic GRATIS bottles. From concept sketches to final product.",
-    muxAssetId: "mock_asset_2",
-    muxPlaybackId: "mock_playback_2",
-    category: "behind_scenes",
-    tags: ["design", "product", "bottle"],
-    duration: 300, // 5 minutes
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1560264280-88b68371db39?w=800",
-    accessLevel: "members_only",
-    status: "ready",
-    viewCount: 8200,
-    likeCount: 620,
-    publishedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    createdAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    updatedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    authorId: "admin",
-    authorName: "Emma van Dijk",
-    featured: true,
-    featuredOrder: 2,
-  },
-  {
-    id: "3",
-    title: "Arts Education: Transforming Lives",
-    slug: "arts-education-transforming-lives",
-    description:
-      "Meet the students whose lives were changed by our arts education programs. Hear their stories and see their incredible artwork.",
-    muxAssetId: "mock_asset_3",
-    muxPlaybackId: "mock_playback_3",
-    category: "impact_stories",
-    tags: ["arts", "education", "students"],
-    duration: 540, // 9 minutes
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800",
-    accessLevel: "public",
-    status: "ready",
-    viewCount: 15800,
-    likeCount: 1230,
-    publishedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    createdAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    updatedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    authorId: "admin",
-    authorName: "GRATIS Team",
-    featured: true,
-    featuredOrder: 3,
-  },
-  {
-    id: "4",
-    title: "Founder Series: Our Mission",
-    slug: "founder-series-our-mission",
-    description:
-      "Emma van Dijk shares the inspiration behind GRATIS and our vision for the future. An intimate conversation about purpose and impact.",
-    muxAssetId: "mock_asset_4",
-    muxPlaybackId: "mock_playback_4",
-    category: "behind_scenes",
-    tags: ["founder", "mission", "vision"],
-    duration: 720, // 12 minutes
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800",
-    accessLevel: "tier_specific",
-    requiredTier: "core",
-    status: "ready",
-    viewCount: 3200,
-    likeCount: 420,
-    publishedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    createdAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    updatedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    authorId: "admin",
-    authorName: "Emma van Dijk",
-  },
-  {
-    id: "5",
-    title: "How to Vote on NGO Partners",
-    slug: "how-to-vote-on-ngo-partners",
-    description:
-      "Step-by-step tutorial on how TRIBE members can vote on which NGO partners we support each quarter.",
-    muxAssetId: "mock_asset_5",
-    muxPlaybackId: "mock_playback_5",
-    category: "educational",
-    tags: ["tutorial", "voting", "ngo"],
-    duration: 180, // 3 minutes
-    thumbnailUrl:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800",
-    accessLevel: "members_only",
-    status: "ready",
-    viewCount: 5600,
-    likeCount: 380,
-    publishedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    createdAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    updatedAt: { seconds: Date.now() / 1000, nanoseconds: 0 } as any,
-    authorId: "admin",
-    authorName: "GRATIS Team",
-  },
-];
+import {
+  useVideos,
+  useFeaturedVideos,
+  useVideosByCategory,
+} from "@/hooks/useVideos";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export default function Videos() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
+  // Fetch videos from Firebase
+  const { data: allVideos, isLoading: allLoading } = useVideos();
+  const { data: featuredVideosData, isLoading: featuredLoading } =
+    useFeaturedVideos(10);
+
+  // Filter videos based on category and search
+  const categoryData = useVideosByCategory(
+    selectedCategory !== "all" ? selectedCategory : undefined,
+  );
+
+  const displayVideos =
+    selectedCategory === "all" ? allVideos || [] : categoryData.data || [];
+
+  const isLoading =
+    selectedCategory === "all" ? allLoading : categoryData.isLoading;
+
   const filteredVideos = useMemo(() => {
-    return MOCK_VIDEOS.filter((video) => {
-      const matchesSearch =
-        video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        video.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory =
-        selectedCategory === "all" || video.category === selectedCategory;
+    if (!searchQuery.trim()) return displayVideos;
 
-      return matchesSearch && matchesCategory;
+    const search = searchQuery.toLowerCase();
+    return displayVideos.filter(
+      (video) =>
+        video.title.toLowerCase().includes(search) ||
+        video.description?.toLowerCase().includes(search) ||
+        video.tags?.some((tag) => tag.toLowerCase().includes(search)),
+    );
+  }, [displayVideos, searchQuery]);
+
+  const featuredVideos = (featuredVideosData || [])
+    .filter((v) => {
+      if (selectedCategory === "all") return true;
+      return v.category === selectedCategory;
+    })
+    .filter((v) => {
+      if (!searchQuery.trim()) return true;
+      const search = searchQuery.toLowerCase();
+      return (
+        v.title.toLowerCase().includes(search) ||
+        v.description?.toLowerCase().includes(search)
+      );
     });
-  }, [searchQuery, selectedCategory]);
-
-  const featuredVideos = filteredVideos
-    .filter((v) => v.featured)
-    .sort((a, b) => (a.featuredOrder || 0) - (b.featuredOrder || 0));
 
   const categoryVideos = filteredVideos.filter((v) => !v.featured);
 
@@ -211,46 +117,59 @@ export default function Videos() {
           </Tabs>
         </div>
 
-        {/* Featured Videos */}
-        {featuredVideos.length > 0 && (
-          <section>
-            <h2 className="text-2xl font-bold mb-4">Featured</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredVideos.map((video) => (
-                <VideoCard key={video.id} video={video} featured />
-              ))}
-            </div>
-          </section>
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex justify-center items-center py-20">
+            <LoadingSpinner />
+          </div>
         )}
 
-        {/* All Videos */}
-        <section>
-          <h2 className="text-2xl font-bold mb-4">
-            {selectedCategory === "all"
-              ? "All Videos"
-              : VIDEO_CATEGORIES[
-                  selectedCategory as keyof typeof VIDEO_CATEGORIES
-                ]}
-          </h2>
+        {!isLoading && (
+          <>
+            {/* Featured Videos */}
+            {featuredVideos.length > 0 && (
+              <section>
+                <h2 className="text-2xl font-bold mb-4">Featured</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {featuredVideos.map((video) => (
+                    <VideoCard key={video.id} video={video} featured />
+                  ))}
+                </div>
+              </section>
+            )}
 
-          {categoryVideos.length === 0 ? (
-            <Card>
-              <CardContent className="flex flex-col items-center justify-center py-12">
-                <Play className="h-12 w-12 text-muted-foreground mb-4" />
-                <p className="text-lg text-muted-foreground">No videos found</p>
-                <p className="text-sm text-muted-foreground">
-                  Try adjusting your search or filters
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {categoryVideos.map((video) => (
-                <VideoCard key={video.id} video={video} />
-              ))}
-            </div>
-          )}
-        </section>
+            {/* All Videos */}
+            <section>
+              <h2 className="text-2xl font-bold mb-4">
+                {selectedCategory === "all"
+                  ? "All Videos"
+                  : VIDEO_CATEGORIES[
+                      selectedCategory as keyof typeof VIDEO_CATEGORIES
+                    ]}
+              </h2>
+
+              {categoryVideos.length === 0 ? (
+                <Card>
+                  <CardContent className="flex flex-col items-center justify-center py-12">
+                    <Play className="h-12 w-12 text-muted-foreground mb-4" />
+                    <p className="text-lg text-muted-foreground">
+                      No videos found
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Try adjusting your search or filters
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {categoryVideos.map((video) => (
+                    <VideoCard key={video.id} video={video} />
+                  ))}
+                </div>
+              )}
+            </section>
+          </>
+        )}
       </div>
     </>
   );

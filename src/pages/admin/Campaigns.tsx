@@ -9,16 +9,18 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/firebase';
-import { 
-  collection, 
-  getDocs, 
-  orderBy, 
-  doc, 
-  updateDoc, 
-  deleteDoc 
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  doc,
+  updateDoc,
+  deleteDoc
 } from 'firebase/firestore';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import { CampaignDialog } from '@/components/admin/CampaignDialog';
 
 interface Campaign {
   id: string;
@@ -32,6 +34,8 @@ interface Campaign {
 export default function AdminCampaigns() {
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
 
   const { data: campaigns, isLoading } = useQuery<Campaign[], Error>({
     queryKey: ['admin-campaigns'],
@@ -83,7 +87,10 @@ export default function AdminCampaigns() {
             <h1 className="text-3xl font-bold text-foreground">Marketing Campaigns</h1>
             <p className="text-muted-foreground">Manage promotional campaigns and partnerships</p>
           </div>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={() => {
+            setSelectedCampaign(null);
+            setDialogOpen(true);
+          }}>
             <Plus className="h-4 w-4" />
             New Campaign
           </Button>
@@ -125,14 +132,14 @@ export default function AdminCampaigns() {
                     const now = new Date();
                     const startDate = campaign.start_date ? new Date(campaign.start_date.seconds * 1000) : null;
                     const endDate = campaign.end_date ? new Date(campaign.end_date.seconds * 1000) : null;
-                    
+
                     let statusBadge = 'Scheduled';
                     if (campaign.active && startDate && startDate <= now && (!endDate || endDate >= now)) {
                       statusBadge = 'Active';
                     } else if (endDate && endDate < now) {
                       statusBadge = 'Ended';
                     }
-                    
+
                     return (
                       <TableRow key={campaign.id}>
                         <TableCell className="font-medium">{campaign.title}</TableCell>
@@ -156,7 +163,14 @@ export default function AdminCampaigns() {
                             >
                               {campaign.active ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                             </Button>
-                            <Button variant="ghost" size="icon">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => {
+                                setSelectedCampaign(campaign);
+                                setDialogOpen(true);
+                              }}
+                            >
                               <Edit className="h-4 w-4" />
                             </Button>
                             <Button
@@ -177,6 +191,12 @@ export default function AdminCampaigns() {
           </CardContent>
         </Card>
       </div>
+
+      <CampaignDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        campaign={selectedCampaign}
+      />
     </AdminLayout>
   );
 }

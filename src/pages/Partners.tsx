@@ -17,6 +17,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import AdvertisingPartnerForm from "@/components/AdvertisingPartnerForm";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { useActivePartners, useFeaturedPartners } from "@/hooks/usePartners";
 
 import {
   CheckCircle2,
@@ -27,11 +29,16 @@ import {
   Users,
   Download,
   ArrowRight,
+  ExternalLink,
 } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
 const Partners = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const { data: activePartners, isLoading: partnersLoading } =
+    useActivePartners();
+  const { data: featuredPartners, isLoading: featuredLoading } =
+    useFeaturedPartners(6);
 
   const benefits = [
     {
@@ -339,7 +346,7 @@ const Partners = () => {
           </div>
         </section>
 
-        {/* Featured Partners Placeholder */}
+        {/* Featured Partners Section */}
         <section className="py-20 bg-muted/30">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center mb-16">
@@ -351,24 +358,97 @@ const Partners = () => {
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto">
-              <Card className="border-2 border-dashed">
-                <CardContent className="py-20 text-center">
-                  <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold mb-2">
-                    Be Our First Partner
-                  </h3>
-                  <p className="text-muted-foreground mb-6">
-                    Your brand logo could be featured here, inspiring others to
-                    join the movement.
-                  </p>
-                  <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-                    <DialogTrigger asChild>
-                      <Button size="lg">Apply Now</Button>
-                    </DialogTrigger>
-                  </Dialog>
-                </CardContent>
-              </Card>
+            <div className="max-w-6xl mx-auto">
+              {partnersLoading ? (
+                <div className="flex justify-center items-center py-20">
+                  <LoadingSpinner />
+                </div>
+              ) : activePartners && activePartners.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
+                    {featuredPartners?.map((partner) => (
+                      <Card
+                        key={partner.id}
+                        className="border-2 hover:border-primary/50 transition-all hover:scale-105"
+                      >
+                        <CardContent className="p-6">
+                          <div className="aspect-square relative mb-4 bg-white rounded-lg overflow-hidden">
+                            {partner.logo ? (
+                              <img
+                                src={partner.logo}
+                                alt={partner.organizationName || partner.name}
+                                className="w-full h-full object-contain p-4"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-4xl font-black text-muted-foreground">
+                                {(partner.organizationName || partner.name)
+                                  .charAt(0)
+                                  .toUpperCase()}
+                              </div>
+                            )}
+                          </div>
+                          <h3 className="font-bold text-center mb-2 line-clamp-2">
+                            {partner.organizationName || partner.name}
+                          </h3>
+                          <div className="flex justify-center gap-2 flex-wrap">
+                            <Badge variant="outline" className="text-xs">
+                              {partner.tier}
+                            </Badge>
+                            {partner.featured && (
+                              <Badge className="text-xs bg-yellow-500">
+                                Featured
+                              </Badge>
+                            )}
+                          </div>
+                          {partner.website && (
+                            <a
+                              href={partner.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-1 text-sm text-primary hover:underline mt-3"
+                            >
+                              Visit Website
+                              <ExternalLink className="h-3 w-3" />
+                            </a>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+
+                  <div className="text-center">
+                    <p className="text-muted-foreground mb-4">
+                      {activePartners.length} partners supporting our mission
+                    </p>
+                    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+                      <DialogTrigger asChild>
+                        <Button size="lg" className="gap-2">
+                          Become a Partner
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </DialogTrigger>
+                    </Dialog>
+                  </div>
+                </>
+              ) : (
+                <Card className="border-2 border-dashed">
+                  <CardContent className="py-20 text-center">
+                    <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-2xl font-bold mb-2">
+                      Be Our First Partner
+                    </h3>
+                    <p className="text-muted-foreground mb-6">
+                      Your brand logo could be featured here, inspiring others
+                      to join the movement.
+                    </p>
+                    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+                      <DialogTrigger asChild>
+                        <Button size="lg">Apply Now</Button>
+                      </DialogTrigger>
+                    </Dialog>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
         </section>

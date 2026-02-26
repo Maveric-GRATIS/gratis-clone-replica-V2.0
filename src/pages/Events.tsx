@@ -20,418 +20,314 @@ import {
   Users,
   Video,
   Search,
-  Filter,
   Clock,
-  Globe,
   ArrowRight,
-  Heart,
+  Loader2,
 } from "lucide-react";
 import { format } from "date-fns";
-
-// Mock data - in productie komt dit van Firestore
-const MOCK_EVENTS = [
-  {
-    id: "1",
-    title: "Amsterdam Water Festival 2026",
-    slug: "amsterdam-water-festival-2026",
-    description:
-      "Join us for a day of celebrating clean water access with live music, workshops, and free water distribution.",
-    shortDescription: "Celebrate clean water with music and workshops",
-    type: "fundraiser" as const,
-    format: "in_person" as const,
-    status: "published" as const,
-    coverImage:
-      "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800",
-    startDate: new Date("2026-06-15T10:00:00"),
-    endDate: new Date("2026-06-15T18:00:00"),
-    timezone: "Europe/Amsterdam",
-    location: {
-      name: "Vondelpark",
-      address: "Vondelpark 1",
-      city: "Amsterdam",
-      state: "",
-      postalCode: "1071 AA",
-      country: "Netherlands",
-    },
-    registration: {
-      enabled: true,
-      maxAttendees: 500,
-      currentAttendees: 234,
-      waitlistEnabled: true,
-      waitlistCount: 12,
-    },
-    accessLevel: "public" as const,
-    ticketTiers: [
-      { id: "t1", name: "Free Entry", price: 0, available: 266 },
-      { id: "t2", name: "Supporter", price: 25, available: 50 },
-    ],
-  },
-  {
-    id: "2",
-    title: "Virtual Impact Webinar: Arts Education",
-    slug: "virtual-impact-webinar-arts",
-    description:
-      "Learn how GRATIS supports arts education programs worldwide. Hear from NGO partners and see real impact stories.",
-    shortDescription: "Online webinar about arts education impact",
-    type: "webinar" as const,
-    format: "virtual" as const,
-    status: "published" as const,
-    coverImage:
-      "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800",
-    startDate: new Date("2026-02-20T19:00:00"),
-    endDate: new Date("2026-02-20T20:30:00"),
-    timezone: "Europe/Amsterdam",
-    virtualDetails: {
-      platform: "zoom" as const,
-      url: "https://zoom.us/j/example",
-    },
-    registration: {
-      enabled: true,
-      maxAttendees: 1000,
-      currentAttendees: 456,
-      waitlistEnabled: false,
-      waitlistCount: 0,
-    },
-    accessLevel: "public" as const,
-    ticketTiers: [{ id: "t1", name: "Free Ticket", price: 0, available: 544 }],
-  },
-  {
-    id: "3",
-    title: "Bottle Design Workshop",
-    slug: "bottle-design-workshop",
-    description:
-      "Hands-on workshop where you design your own GRATIS bottle. Learn about sustainable packaging and branding.",
-    shortDescription: "Design your own GRATIS bottle",
-    type: "workshop" as const,
-    format: "in_person" as const,
-    status: "published" as const,
-    coverImage:
-      "https://images.unsplash.com/photo-1560264280-88b68371db39?w=800",
-    startDate: new Date("2026-03-10T14:00:00"),
-    endDate: new Date("2026-03-10T17:00:00"),
-    timezone: "Europe/Amsterdam",
-    location: {
-      name: "GRATIS HQ",
-      address: "Prinsengracht 250",
-      city: "Amsterdam",
-      state: "",
-      postalCode: "1016 HH",
-      country: "Netherlands",
-    },
-    registration: {
-      enabled: true,
-      maxAttendees: 30,
-      currentAttendees: 18,
-      waitlistEnabled: true,
-      waitlistCount: 5,
-    },
-    accessLevel: "members_only" as const,
-    ticketTiers: [
-      { id: "t1", name: "Member Ticket", price: 15, available: 12 },
-    ],
-  },
-  {
-    id: "4",
-    title: "TRIBE Meetup: Rotterdam",
-    slug: "tribe-meetup-rotterdam",
-    description:
-      "Connect with fellow TRIBE members in Rotterdam. Network, share stories, and plan local impact initiatives.",
-    shortDescription: "Connect with TRIBE members in Rotterdam",
-    type: "meetup" as const,
-    format: "in_person" as const,
-    status: "published" as const,
-    coverImage:
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?w=800",
-    startDate: new Date("2026-02-28T18:00:00"),
-    endDate: new Date("2026-02-28T21:00:00"),
-    timezone: "Europe/Amsterdam",
-    location: {
-      name: "De Witte Aap",
-      address: "Witte de Withstraat 78",
-      city: "Rotterdam",
-      state: "",
-      postalCode: "3012 BT",
-      country: "Netherlands",
-    },
-    registration: {
-      enabled: true,
-      maxAttendees: 50,
-      currentAttendees: 32,
-      waitlistEnabled: false,
-      waitlistCount: 0,
-    },
-    accessLevel: "members_only" as const,
-    ticketTiers: [{ id: "t1", name: "Member Entry", price: 0, available: 18 }],
-  },
-];
+import { useEvents, useUpcomingEvents, usePastEvents } from "@/hooks/useEvents";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 export default function Events() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFormat, setSelectedFormat] = useState<
-    "all" | "in_person" | "virtual" | "hybrid"
-  >("all");
-  const [selectedType, setSelectedType] = useState<"all" | string>("all");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("upcoming");
 
+  const { data: allEvents, isLoading: allLoading } = useEvents();
+  const { data: upcomingEvents, isLoading: upcomingLoading } =
+    useUpcomingEvents(20);
+  const { data: pastEvents, isLoading: pastLoading } = usePastEvents(20);
+
+  // Determine which data to show based on active tab
+  const { events, isLoading } = useMemo(() => {
+    if (activeTab === "all") {
+      return { events: allEvents || [], isLoading: allLoading };
+    } else if (activeTab === "upcoming") {
+      return { events: upcomingEvents || [], isLoading: upcomingLoading };
+    } else {
+      return { events: pastEvents || [], isLoading: pastLoading };
+    }
+  }, [
+    activeTab,
+    allEvents,
+    upcomingEvents,
+    pastEvents,
+    allLoading,
+    upcomingLoading,
+    pastLoading,
+  ]);
+
+  // Filter events based on search
   const filteredEvents = useMemo(() => {
-    return MOCK_EVENTS.filter((event) => {
-      const matchesSearch =
-        event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        event.description.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesFormat =
-        selectedFormat === "all" || event.format === selectedFormat;
-      const matchesType = selectedType === "all" || event.type === selectedType;
+    if (!searchTerm.trim()) return events;
 
-      return matchesSearch && matchesFormat && matchesType;
-    });
-  }, [searchQuery, selectedFormat, selectedType]);
+    const search = searchTerm.toLowerCase();
+    return events.filter(
+      (event) =>
+        event.title.toLowerCase().includes(search) ||
+        event.description?.toLowerCase().includes(search) ||
+        event.location?.toLowerCase().includes(search) ||
+        event.type?.toLowerCase().includes(search),
+    );
+  }, [events, searchTerm]);
 
-  const upcomingEvents = filteredEvents.filter(
-    (e) => new Date(e.startDate) > new Date(),
-  );
-  const pastEvents = filteredEvents.filter(
-    (e) => new Date(e.startDate) <= new Date(),
-  );
+  const stats = {
+    total: allEvents?.length || 0,
+    upcoming: upcomingEvents?.length || 0,
+    past: pastEvents?.length || 0,
+  };
 
   return (
     <>
       <SEO
-        title="Events"
-        description="Join GRATIS events, workshops, and meetups. Connect with the community and make an impact."
+        title="Events & Community"
+        description="Join GRATIS events, workshops, and webinars. Connect with our community and make an impact together."
+        keywords="GRATIS events, community events, workshops, webinars, meetups"
       />
 
       <PageHero
-        title="Events"
-        subtitle="Join us for workshops, meetups, and impact initiatives"
+        title="Events & Community"
+        description="Connect, learn, and make impact together at GRATIS events"
+        imageUrl="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200"
+        breadcrumbs={[
+          { label: "Home", to: "/" },
+          { label: "Events", to: "/events" },
+        ]}
       />
 
-      <div className="container py-12 space-y-8">
-        {/* Search and Filters */}
-        <div className="space-y-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search events..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9"
-              />
-            </div>
-            <Button variant="outline" className="gap-2">
-              <Filter className="h-4 w-4" />
-              Filters
-            </Button>
-          </div>
+      <div className="container mx-auto px-4 py-12">
+        {/* Stats Section */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Total Events
+              </CardTitle>
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{stats.total}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Upcoming
+              </CardTitle>
+              <Clock className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-blue-600">
+                {stats.upcoming}
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Past Events
+              </CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold">{stats.past}</div>
+            </CardContent>
+          </Card>
+        </div>
 
-          {/* Format Tabs */}
-          <Tabs
-            value={selectedFormat}
-            onValueChange={(v) => setSelectedFormat(v as any)}
-          >
-            <TabsList>
-              <TabsTrigger value="all">All Events</TabsTrigger>
-              <TabsTrigger value="in_person">In Person</TabsTrigger>
-              <TabsTrigger value="virtual">Virtual</TabsTrigger>
-              <TabsTrigger value="hybrid">Hybrid</TabsTrigger>
-            </TabsList>
-          </Tabs>
-
-          {/* Type Filter */}
-          <div className="flex gap-2 flex-wrap">
-            {[
-              "all",
-              "workshop",
-              "meetup",
-              "webinar",
-              "fundraiser",
-              "conference",
-            ].map((type) => (
-              <Badge
-                key={type}
-                variant={selectedType === type ? "default" : "outline"}
-                className="cursor-pointer"
-                onClick={() => setSelectedType(type)}
-              >
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </Badge>
-            ))}
+        {/* Search Bar */}
+        <div className="mb-8">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+            <Input
+              type="text"
+              placeholder="Search events by name, location, or type..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 text-lg py-6"
+            />
           </div>
         </div>
 
-        {/* Events Grid */}
-        <Tabs defaultValue="upcoming" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="upcoming">
-              Upcoming ({upcomingEvents.length})
-            </TabsTrigger>
-            <TabsTrigger value="past">Past ({pastEvents.length})</TabsTrigger>
+        {/* Tabs */}
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-8"
+        >
+          <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto">
+            <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+            <TabsTrigger value="all">All Events</TabsTrigger>
+            <TabsTrigger value="past">Past</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="upcoming" className="space-y-6">
-            {upcomingEvents.length === 0 ? (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <Calendar className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-lg text-muted-foreground">
-                    No upcoming events found
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Check back soon for new events!
-                  </p>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {upcomingEvents.map((event) => (
-                  <EventCard key={event.id} event={event} />
-                ))}
-              </div>
-            )}
-          </TabsContent>
+          {/* Loading State */}
+          {isLoading && (
+            <div className="flex justify-center items-center py-20">
+              <LoadingSpinner />
+            </div>
+          )}
 
-          <TabsContent value="past" className="space-y-6">
-            {pastEvents.length === 0 ? (
-              <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <Calendar className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-lg text-muted-foreground">
-                    No past events
-                  </p>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {pastEvents.map((event) => (
-                  <EventCard key={event.id} event={event} isPast />
-                ))}
-              </div>
-            )}
-          </TabsContent>
+          {/* Empty State */}
+          {!isLoading && filteredEvents.length === 0 && (
+            <Card className="text-center py-20">
+              <CardContent>
+                <Calendar className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-2xl font-bold mb-2">No Events Found</h3>
+                <p className="text-muted-foreground">
+                  {searchTerm
+                    ? "Try adjusting your search terms"
+                    : activeTab === "upcoming"
+                      ? "Check back soon for upcoming events!"
+                      : "No events available in this category"}
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Events Grid */}
+          {!isLoading && filteredEvents.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredEvents.map((event) => {
+                const eventDate = event.date?.toDate
+                  ? event.date.toDate()
+                  : new Date();
+                const isPast = eventDate < new Date();
+                const capacity = event.capacity || 0;
+                const registered = event.registered || 0;
+                const spotsLeft = capacity - registered;
+                const percentFull =
+                  capacity > 0 ? (registered / capacity) * 100 : 0;
+
+                return (
+                  <Card
+                    key={event.id}
+                    className="flex flex-col hover:shadow-lg transition-shadow"
+                  >
+                    <div className="relative h-48 overflow-hidden rounded-t-lg">
+                      <img
+                        src={
+                          event.imageUrl ||
+                          "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800"
+                        }
+                        alt={event.title}
+                        className="w-full h-full object-cover"
+                      />
+                      {event.featured && (
+                        <Badge className="absolute top-2 right-2 bg-yellow-500">
+                          Featured
+                        </Badge>
+                      )}
+                      {isPast && (
+                        <Badge
+                          className="absolute top-2 left-2"
+                          variant="secondary"
+                        >
+                          Past Event
+                        </Badge>
+                      )}
+                    </div>
+
+                    <CardHeader>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="outline">{event.type || "Event"}</Badge>
+                        {event.status === "published" && (
+                          <Badge variant="default">Published</Badge>
+                        )}
+                      </div>
+                      <CardTitle className="line-clamp-2">
+                        {event.title}
+                      </CardTitle>
+                      <CardDescription className="line-clamp-2">
+                        {event.description}
+                      </CardDescription>
+                    </CardHeader>
+
+                    <CardContent className="flex-1">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Calendar className="h-4 w-4" />
+                          <span>
+                            {format(eventDate, "MMM dd, yyyy • HH:mm")}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <MapPin className="h-4 w-4" />
+                          <span className="line-clamp-1">
+                            {event.location ||
+                              event.locationDetails ||
+                              "Online"}
+                          </span>
+                        </div>
+
+                        {capacity > 0 && (
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-muted-foreground">
+                                <Users className="h-4 w-4 inline mr-1" />
+                                {registered} / {capacity} registered
+                              </span>
+                              <span className="font-medium">
+                                {spotsLeft > 0
+                                  ? `${spotsLeft} spots left`
+                                  : "Full"}
+                              </span>
+                            </div>
+                            <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full rounded-full ${
+                                  percentFull >= 90
+                                    ? "bg-red-500"
+                                    : percentFull >= 70
+                                      ? "bg-yellow-500"
+                                      : "bg-green-500"
+                                }`}
+                                style={{
+                                  width: `${Math.min(percentFull, 100)}%`,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+
+                    <CardFooter className="pt-0">
+                      <Link to={`/events/${event.id}`} className="w-full">
+                        <Button
+                          className="w-full gap-2"
+                          disabled={isPast && spotsLeft <= 0}
+                        >
+                          {isPast
+                            ? "View Details"
+                            : spotsLeft > 0
+                              ? "Register Now"
+                              : "Join Waitlist"}
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </CardFooter>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </Tabs>
+
+        {/* CTA Section */}
+        <Card className="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+          <CardContent className="p-12 text-center">
+            <h2 className="text-3xl font-bold mb-4">Want to Host an Event?</h2>
+            <p className="text-lg mb-6 opacity-90">
+              Partner with GRATIS to organize impactful events for your
+              community
+            </p>
+            <Button size="lg" variant="secondary">
+              Become a Partner
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </>
-  );
-}
-
-function EventCard({
-  event,
-  isPast = false,
-}: {
-  event: (typeof MOCK_EVENTS)[0];
-  isPast?: boolean;
-}) {
-  const spotsLeft =
-    event.registration.maxAttendees - event.registration.currentAttendees;
-  const isSoldOut = spotsLeft <= 0;
-  const isAlmostFull = spotsLeft > 0 && spotsLeft <= 10;
-
-  return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-      <div className="relative aspect-video">
-        <img
-          src={event.coverImage}
-          alt={event.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute top-4 left-4 flex gap-2">
-          <Badge variant="secondary" className="bg-white/90 backdrop-blur">
-            {event.type}
-          </Badge>
-          {event.format === "virtual" && (
-            <Badge
-              variant="secondary"
-              className="bg-white/90 backdrop-blur gap-1"
-            >
-              <Video className="h-3 w-3" />
-              Virtual
-            </Badge>
-          )}
-          {event.accessLevel === "members_only" && (
-            <Badge variant="secondary" className="bg-hot-lime text-jet-black">
-              Members Only
-            </Badge>
-          )}
-        </div>
-      </div>
-
-      <CardHeader>
-        <CardTitle className="line-clamp-2">{event.title}</CardTitle>
-        <CardDescription className="line-clamp-2">
-          {event.shortDescription}
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="space-y-3">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Calendar className="h-4 w-4" />
-          <span>{format(new Date(event.startDate), "MMM d, yyyy")}</span>
-        </div>
-
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Clock className="h-4 w-4" />
-          <span>
-            {format(new Date(event.startDate), "HH:mm")} -{" "}
-            {format(new Date(event.endDate), "HH:mm")}
-          </span>
-        </div>
-
-        {event.format === "in_person" && event.location ? (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="h-4 w-4" />
-            <span className="line-clamp-1">
-              {event.location.city}, {event.location.country}
-            </span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Globe className="h-4 w-4" />
-            <span>Online Event</span>
-          </div>
-        )}
-
-        <div className="flex items-center gap-2 text-sm">
-          <Users className="h-4 w-4" />
-          <span
-            className={
-              isAlmostFull
-                ? "text-warning"
-                : isSoldOut
-                  ? "text-destructive"
-                  : ""
-            }
-          >
-            {isSoldOut ? "Sold Out" : `${spotsLeft} spots left`}
-          </span>
-        </div>
-
-        {event.ticketTiers[0].price === 0 ? (
-          <Badge variant="outline" className="text-success border-success">
-            FREE
-          </Badge>
-        ) : (
-          <div className="text-lg font-bold">€{event.ticketTiers[0].price}</div>
-        )}
-      </CardContent>
-
-      <CardFooter>
-        <Button
-          asChild
-          className="w-full"
-          variant={isPast ? "outline" : "default"}
-          disabled={isSoldOut && !event.registration.waitlistEnabled}
-        >
-          <Link to={`/events/${event.slug}`}>
-            {isPast
-              ? "View Details"
-              : isSoldOut
-                ? event.registration.waitlistEnabled
-                  ? "Join Waitlist"
-                  : "Sold Out"
-                : "Register Now"}
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
   );
 }

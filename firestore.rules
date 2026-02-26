@@ -114,6 +114,24 @@ service cloud.firestore {
       allow write: if isMarketing();
     }
 
+    // Blog posts
+    match /blog_posts/{postId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Campaigns
+    match /campaigns/{campaignId} {
+      allow read: if true;
+      allow write: if isMarketing();
+    }
+
+    // Videos
+    match /videos/{videoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // Wishlist
     match /wishlist/{userId}/{items=**} {
       allow read, write: if isOwner(userId);

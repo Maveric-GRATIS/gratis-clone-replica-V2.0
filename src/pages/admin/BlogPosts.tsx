@@ -9,17 +9,19 @@ import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash, Eye, EyeOff } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/firebase';
-import { 
-  collection, 
-  getDocs, 
-  orderBy, 
-  doc, 
-  updateDoc, 
-  deleteDoc, 
-  serverTimestamp 
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  doc,
+  updateDoc,
+  deleteDoc,
+  serverTimestamp
 } from 'firebase/firestore';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import { BlogPostDialog } from '@/components/admin/BlogPostDialog';
 
 interface BlogPost {
   id: string;
@@ -27,6 +29,9 @@ interface BlogPost {
   category: string;
   views_count: number;
   published: boolean;
+  featured: boolean;
+  excerpt?: string;
+  content?: string;
   published_at: { seconds: number; nanoseconds: number } | null;
   created_at: { seconds: number; nanoseconds: number };
 }
@@ -34,6 +39,8 @@ interface BlogPost {
 export default function AdminBlogPosts() {
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   const { data: posts, isLoading } = useQuery<BlogPost[], Error>({
     queryKey: ['admin-blog-posts'],
@@ -89,7 +96,10 @@ export default function AdminBlogPosts() {
             <h1 className="text-3xl font-bold text-foreground">Blog Posts</h1>
             <p className="text-muted-foreground">Manage impact stories and articles</p>
           </div>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={() => {
+            setSelectedPost(null);
+            setDialogOpen(true);
+          }}>
             <Plus className="h-4 w-4" />
             New Post
           </Button>
@@ -152,7 +162,14 @@ export default function AdminBlogPosts() {
                           >
                             {post.published ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                           </Button>
-                          <Button variant="ghost" size="icon">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              setSelectedPost(post);
+                              setDialogOpen(true);
+                            }}
+                          >
                             <Edit className="h-4 w-4" />
                           </Button>
                           <Button
@@ -172,6 +189,12 @@ export default function AdminBlogPosts() {
           </CardContent>
         </Card>
       </div>
+
+      <BlogPostDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        post={selectedPost}
+      />
     </AdminLayout>
   );
 }

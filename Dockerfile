@@ -1,59 +1,68 @@
 # ============================================================================
-# GRATIS.NGO — Production Multi-Stage Dockerfile
+# GRATIS.NGO — Vite React Production Dockerfile
 # ============================================================================
 
-# Stage 1: Dependencies
-FROM node:20-alpine AS deps
-
-RUN apk add --no-cache libc6-compat
-
-WORKDIR /app
-
-COPY package.json package-lock.json* ./
-RUN npm ci --omit=dev && npm cache clean --force
-
-# Stage 2: Builder
+# Stage 1: Build
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY --from=deps /app/node_modules ./node_modules
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code
 COPY . .
 
-ENV NEXT_TELEMETRY_DISABLED=1
-
+# Build the Vite app
 RUN npm run build
 
-# Stage 3: Runner
-FROM node:20-alpine AS runner
+# Stage 2: Production - Serve with nginx
+FROM nginx:alpine
 
-WORKDIR /app
+# Install wget for healthcheck
+RUN apk add --no-cache wget
 
-RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
+# Create nginx config that listens on PORT env variable
+RUN echo 'server { \n\
+    listen ${PORT} default_server; \n\
+    root /usr/share/nginx/html; \n\
+    index index.html; \n\
+    \n\
+    gzip on; \n\
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript; \n\
+    \n\
+    add_header X-Frame-Options "DENY" always; \n\
+    add_header X-Content-Type-Options "nosniff" always; \n\
+    \n\
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp|woff|woff2)$ { \n\
+    expires 1y; \n\
+    add_header Cache-Control "public, immutable"; \n\
+    } \n\
+    \n\
+    location / { \n\
+    try_files $uri $uri/ /index.html; \n\
+    } \n\
+    \n\
+    location /health { \n\
+    return 200 "OK"; \n\
+    add_header Content-Type text/plain; \n\
+    } \n\
+    }' > /etc/nginx/templates/default.conf.template
 
-RUN apk add --no-cache curl tini
+# Copy built files
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/package.json ./
+# Set PORT environment variable
+ENV PORT=8080
 
-RUN mkdir -p .next/cache && chown -R nextjs:nodejs .next
+EXPOSE 8080
 
-ENV NODE_ENV=production \
-    PORT=3000 \
-    HOSTNAME="0.0.0.0" \
-    NEXT_TELEMETRY_DISABLED=1
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost:${PORT}/health || exit 1
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:3000/api/health || exit 1
-
-USER nextjs
-
-EXPOSE 3000
-
-ENTRYPOINT ["tini", "--"]
-CMD ["node", "server.js"]
+# Start nginx with environment variable substitution
+CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"

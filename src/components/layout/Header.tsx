@@ -538,12 +538,8 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-out ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-out bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 border-b border-border ${
         isVisible ? "translate-y-0" : "-translate-y-full"
-      } ${
-        isHeaderHovered || openMenu || !isAtTop
-          ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/95 border-b border-border"
-          : "bg-transparent"
       }`}
       onMouseEnter={() => {
         setIsHeaderHovered(true);

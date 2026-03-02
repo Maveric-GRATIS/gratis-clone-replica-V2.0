@@ -2,8 +2,6 @@
 # https://firebase.google.com/docs/app-hosting/configure
 
 runConfig:
-  # Use the nginx server from Dockerfile
-  # Don't override the CMD - let Dockerfile handle it
   cpu: 1
   memoryMiB: 512
   maxInstances: 20

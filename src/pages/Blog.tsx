@@ -18,8 +18,8 @@ interface BlogPost {
   imageUrl?: string;
   published: boolean;
   featured: boolean;
-  createdAt: any;
-  updatedAt: any;
+  created_at: any;
+  updated_at: any;
 }
 
 export default function Blog() {
@@ -47,7 +47,7 @@ export default function Blog() {
       const postsQuery = query(
         collection(db, "blog_posts"),
         where("published", "==", true),
-        orderBy("createdAt", "desc")
+        orderBy("created_at", "desc")
       );
 
       const snapshot = await getDocs(postsQuery);
@@ -56,9 +56,11 @@ export default function Blog() {
         ...doc.data(),
       })) as BlogPost[];
 
+      console.log("Loaded blog posts:", postsData.length, postsData);
       setPosts(postsData);
     } catch (error) {
       console.error("Error loading blog posts:", error);
+      console.error("Error details:", error);
     } finally {
       setLoading(false);
     }
@@ -115,8 +117,8 @@ export default function Blog() {
                     </span>
                     <span className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
-                      {post.createdAt &&
-                        format(post.createdAt.toDate(), "MMM d, yyyy")}
+                      {post.created_at &&
+                        format(post.created_at.toDate(), "MMM d, yyyy")}
                     </span>
                   </div>
                   <Link
@@ -185,8 +187,8 @@ export default function Blog() {
                     </span>
                     <span className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
-                      {post.createdAt &&
-                        format(post.createdAt.toDate(), "MMM d, yyyy")}
+                      {post.created_at &&
+                        format(post.created_at.toDate(), "MMM d, yyyy")}
                     </span>
                   </div>
                   {post.tags && post.tags.length > 0 && (

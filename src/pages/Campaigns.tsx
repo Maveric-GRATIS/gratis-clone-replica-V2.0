@@ -23,15 +23,15 @@ interface Campaign {
   description: string;
   type: string;
   imageUrl?: string;
-  goalAmount?: number;
-  currentAmount?: number;
-  startDate: any;
-  endDate: any;
-  ctaText?: string;
-  ctaUrl?: string;
+  goal_amount?: number;
+  current_amount?: number;
+  start_date: any;
+  end_date: any;
+  cta_text?: string;
+  cta_url?: string;
   active: boolean;
   featured: boolean;
-  createdAt: any;
+  created_at: any;
 }
 
 const campaignTypeIcons: Record<string, any> = {
@@ -76,7 +76,7 @@ export default function Campaigns() {
       const campaignsQuery = query(
         collection(db, "campaigns"),
         where("active", "==", true),
-        orderBy("createdAt", "desc")
+        orderBy("created_at", "desc")
       );
 
       const snapshot = await getDocs(campaignsQuery);
@@ -85,9 +85,11 @@ export default function Campaigns() {
         ...doc.data(),
       })) as Campaign[];
 
+      console.log("Loaded campaigns:", campaignsData.length, campaignsData);
       setCampaigns(campaignsData);
     } catch (error) {
       console.error("Error loading campaigns:", error);
+      console.error("Error details:", error);
     } finally {
       setLoading(false);
     }
@@ -115,8 +117,8 @@ export default function Campaigns() {
   const CampaignCard = ({ campaign }: { campaign: Campaign }) => {
     const Icon = campaignTypeIcons[campaign.type] || Target;
     const progress = calculateProgress(
-      campaign.currentAmount,
-      campaign.goalAmount
+      campaign.current_amount,
+      campaign.goal_amount
     );
 
     return (
@@ -158,15 +160,15 @@ export default function Campaigns() {
 
           {/* Fundraising Progress */}
           {campaign.type === "fundraising" &&
-            campaign.goalAmount &&
-            campaign.goalAmount > 0 && (
+            campaign.goal_amount &&
+            campaign.goal_amount > 0 && (
               <div className="mb-4">
                 <div className="flex justify-between text-sm mb-2">
                   <span className="font-semibold">
-                    {formatCurrency(campaign.currentAmount || 0)}
+                    {formatCurrency(campaign.current_amount || 0)}
                   </span>
                   <span className="text-muted-foreground">
-                    of {formatCurrency(campaign.goalAmount)}
+                    of {formatCurrency(campaign.goal_amount)}
                   </span>
                 </div>
                 <Progress value={progress} className="h-2" />
@@ -180,22 +182,22 @@ export default function Campaigns() {
           <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
             <span className="flex items-center gap-1">
               <Calendar className="h-4 w-4" />
-              {campaign.startDate &&
-                format(campaign.startDate.toDate(), "MMM d")}
+              {campaign.start_date &&
+                format(campaign.start_date.toDate(), "MMM d")}
               {" - "}
-              {campaign.endDate && format(campaign.endDate.toDate(), "MMM d, yyyy")}
+              {campaign.end_date && format(campaign.end_date.toDate(), "MMM d, yyyy")}
             </span>
           </div>
 
           {/* CTA Button */}
-          {campaign.ctaText && campaign.ctaUrl && (
+          {campaign.cta_text && campaign.cta_url && (
             <Button className="w-full" asChild>
               <a
-                href={campaign.ctaUrl}
+                href={campaign.cta_url}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {campaign.ctaText}
+                {campaign.cta_text}
                 <ExternalLink className="h-4 w-4 ml-2" />
               </a>
             </Button>

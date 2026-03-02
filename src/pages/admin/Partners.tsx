@@ -72,6 +72,8 @@ interface Partner {
 }
 
 export default function AdminPartners() {
+  console.log("🚀 AdminPartners component rendering...");
+
   const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -97,7 +99,7 @@ export default function AdminPartners() {
           const data = snapshot.docs.map(
             (doc) => ({ id: doc.id, ...doc.data() }) as Partner,
           );
-          console.log("✅ Partners fetched successfully:", data.length);
+          console.log("✅ Partners fetched successfully:", data.length, data);
           return data;
         } catch (orderError: any) {
           // If orderBy fails (no index), fetch without ordering
@@ -109,7 +111,7 @@ export default function AdminPartners() {
           const data = snapshot.docs.map(
             (doc) => ({ id: doc.id, ...doc.data() }) as Partner,
           );
-          console.log("✅ Partners fetched (unordered):", data.length);
+          console.log("✅ Partners fetched (unordered):", data.length, data);
           return data;
         }
       } catch (error) {
@@ -117,6 +119,8 @@ export default function AdminPartners() {
         throw error;
       }
     },
+    retry: false, // Don't retry on error to see the issue faster
+    staleTime: 0, // Always fetch fresh data for debugging
   });
 
   const updatePartnerStatus = useMutation({
@@ -177,23 +181,29 @@ export default function AdminPartners() {
   };
 
   const filteredPartners = partners?.filter((partner) => {
-    const matchesSearch =
-      partner.organizationName
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      partner.email?.toLowerCase().includes(searchTerm.toLowerCase());
+    try {
+      const matchesSearch =
+        partner.organizationName
+          ?.toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        partner.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        false;
 
-    const matchesStatus =
-      statusFilter === "all" || partner.status === statusFilter;
+      const matchesStatus =
+        statusFilter === "all" || partner.status === statusFilter;
 
-    return matchesSearch && matchesStatus;
+      return matchesSearch && matchesStatus;
+    } catch (err) {
+      console.error("Error filtering partner:", partner, err);
+      return false;
+    }
   });
 
   const stats = {
     total: partners?.length || 0,
-    approved: partners?.filter((p) => p.status === "approved").length || 0,
-    pending: partners?.filter((p) => p.status === "pending").length || 0,
-    rejected: partners?.filter((p) => p.status === "rejected").length || 0,
+    approved: partners?.filter((p) => p?.status === "approved").length || 0,
+    pending: partners?.filter((p) => p?.status === "pending").length || 0,
+    rejected: partners?.filter((p) => p?.status === "rejected").length || 0,
   };
 
   const getStatusIcon = (status: Partner["status"]) => {
@@ -225,16 +235,47 @@ export default function AdminPartners() {
   };
 
   // Debug logging
-  console.log("🎯 Partners Page State:", { 
-    isLoading, 
-    hasError: !!error, 
+  console.log("🎯 Partners Page State:", {
+    isLoading,
+    hasError: !!error,
     errorMessage: error?.message,
     partnersCount: partners?.length,
-    filteredCount: filteredPartners?.length 
+    filteredCount: filteredPartners?.length,
   });
-
+  // Emergency fallback - if something breaks, at least show this
+  if (!isLoading && !error && !partners) {
+    console.error("⚠️ CRITICAL: No loading, no error, but no partners data!");
+    return (
+      <AdminLayout>
+        <div className="p-8 bg-yellow-50 border-2 border-yellow-400 rounded-lg">
+          <h2 className="text-2xl font-bold text-yellow-900 mb-2">
+            ⚠️ System Issue
+          </h2>
+          <p className="text-yellow-800">
+            Partners data is undefined. Check console for details.
+          </p>
+          <Button onClick={() => window.location.reload()} className="mt-4">
+            Reload Page
+          </Button>
+        </div>
+      </AdminLayout>
+    );
+  }
   return (
     <AdminLayout>
+      {/* Debug indicator - visible signal that page is rendering */}
+      <div className="mb-2 p-2 bg-green-50 border border-green-200 rounded text-xs text-green-700">
+        ✅ Partners page loaded • {new Date().toLocaleTimeString()}
+      </div>
+
+      {isLoading && (
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-blue-700 font-semibold">Loading partners...</p>
+          <div className="mt-2 h-2 bg-blue-100 rounded-full overflow-hidden">
+            <div className="h-full bg-blue-500 animate-pulse w-2/3"></div>
+          </div>
+        </div>
+      )}
       {error && (
         <div className="mb-6 p-4 bg-destructive/10 border border-destructive rounded-lg">
           <p className="text-destructive font-semibold">

@@ -98,6 +98,7 @@ import AdminDonations from "./pages/admin/Donations";
 import AdminDonationCampaigns from "./pages/admin/DonationCampaigns";
 import AdminTribeMembers from "./pages/admin/TribeMembers";
 import AdminPartners from "./pages/admin/Partners";
+import PartnersTest from "./pages/admin/PartnersTest";
 import AdminPartnerApplications from "./pages/admin/PartnerApplications";
 import AdminVoting from "./pages/admin/Voting";
 import AdminVotingResults from "./pages/admin/VotingResults";

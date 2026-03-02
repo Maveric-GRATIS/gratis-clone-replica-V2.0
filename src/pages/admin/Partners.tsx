@@ -62,13 +62,13 @@ import {
 
 interface Partner {
   id: string;
-  organizationName: string;
-  email: string;
+  organizationName?: string;
+  email?: string;
   country?: string;
   status: "pending" | "approved" | "rejected" | "suspended";
   tier?: "bronze" | "silver" | "gold" | "platinum";
   projectsCount?: number;
-  createdAt: { seconds: number; nanoseconds: number };
+  createdAt?: { seconds: number; nanoseconds: number };
 }
 
 export default function AdminPartners() {
@@ -80,15 +80,42 @@ export default function AdminPartners() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [partnerToDelete, setPartnerToDelete] = useState<string | null>(null);
 
-  const { data: partners, isLoading } = useQuery<Partner[], Error>({
+  const {
+    data: partners,
+    isLoading,
+    error,
+  } = useQuery<Partner[], Error>({
     queryKey: ["admin-partners"],
     queryFn: async () => {
-      const partnersCollection = collection(db, "partners");
-      const q = query(partnersCollection, orderBy("createdAt", "desc"));
-      const snapshot = await getDocs(q);
-      return snapshot.docs.map(
-        (doc) => ({ id: doc.id, ...doc.data() }) as Partner,
-      );
+      console.log("🔍 Fetching partners...");
+      try {
+        const partnersCollection = collection(db, "partners");
+        // Try with orderBy first, fall back to unordered if it fails
+        try {
+          const q = query(partnersCollection, orderBy("createdAt", "desc"));
+          const snapshot = await getDocs(q);
+          const data = snapshot.docs.map(
+            (doc) => ({ id: doc.id, ...doc.data() }) as Partner,
+          );
+          console.log("✅ Partners fetched successfully:", data.length);
+          return data;
+        } catch (orderError: any) {
+          // If orderBy fails (no index), fetch without ordering
+          console.warn(
+            "⚠️ OrderBy failed, fetching without ordering:",
+            orderError.message,
+          );
+          const snapshot = await getDocs(partnersCollection);
+          const data = snapshot.docs.map(
+            (doc) => ({ id: doc.id, ...doc.data() }) as Partner,
+          );
+          console.log("✅ Partners fetched (unordered):", data.length);
+          return data;
+        }
+      } catch (error) {
+        console.error("❌ Error fetching partners:", error);
+        throw error;
+      }
     },
   });
 
@@ -152,9 +179,9 @@ export default function AdminPartners() {
   const filteredPartners = partners?.filter((partner) => {
     const matchesSearch =
       partner.organizationName
-        .toLowerCase()
+        ?.toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      partner.email.toLowerCase().includes(searchTerm.toLowerCase());
+      partner.email?.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesStatus =
       statusFilter === "all" || partner.status === statusFilter;
@@ -197,8 +224,28 @@ export default function AdminPartners() {
     }
   };
 
+  // Debug logging
+  console.log("🎯 Partners Page State:", { 
+    isLoading, 
+    hasError: !!error, 
+    errorMessage: error?.message,
+    partnersCount: partners?.length,
+    filteredCount: filteredPartners?.length 
+  });
+
   return (
     <AdminLayout>
+      {error && (
+        <div className="mb-6 p-4 bg-destructive/10 border border-destructive rounded-lg">
+          <p className="text-destructive font-semibold">
+            Error loading partners: {error.message}
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">
+            If this is a Firestore index error, the indexes are being built.
+            Please wait a few minutes and refresh.
+          </p>
+        </div>
+      )}
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -322,9 +369,9 @@ export default function AdminPartners() {
                     {filteredPartners?.map((partner) => (
                       <TableRow key={partner.id}>
                         <TableCell className="font-medium">
-                          {partner.organizationName}
+                          {partner.organizationName || "-"}
                         </TableCell>
-                        <TableCell>{partner.email}</TableCell>
+                        <TableCell>{partner.email || "-"}</TableCell>
                         <TableCell>{partner.country || "-"}</TableCell>
                         <TableCell>
                           {partner.tier && (
@@ -349,15 +396,17 @@ export default function AdminPartners() {
                                     : "destructive"
                               }
                             >
-                              {partner.status}
+                              {partner.status || "unknown"}
                             </Badge>
                           </div>
                         </TableCell>
                         <TableCell>
-                          {format(
-                            new Date(partner.createdAt.seconds * 1000),
-                            "MMM dd, yyyy",
-                          )}
+                          {partner.createdAt?.seconds
+                            ? format(
+                                new Date(partner.createdAt.seconds * 1000),
+                                "MMM dd, yyyy",
+                              )
+                            : "-"}
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex gap-2 justify-end">

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { db } from '@/firebase';
-import { collection, getDocs, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
 
 export interface Event {
   id: string;
@@ -117,5 +117,33 @@ export function usePastEvents(limitCount = 10) {
       })) as Event[];
     },
     staleTime: 1000 * 60 * 5,
+  });
+}
+
+/**
+ * Fetch a single event by ID
+ */
+export function useEvent(id: string | undefined) {
+  return useQuery({
+    queryKey: ['event', id],
+    queryFn: async () => {
+      if (!id) throw new Error('Event ID is required');
+
+      const eventDoc = await getDoc(doc(db, 'events', id));
+
+      if (!eventDoc.exists()) return null;
+
+      const data = eventDoc.data();
+
+      // Only return if published
+      if (!data?.published) return null;
+
+      return {
+        id: eventDoc.id,
+        ...data
+      } as Event;
+    },
+    staleTime: 1000 * 60 * 5,
+    enabled: !!id,
   });
 }

@@ -40,6 +40,8 @@ import {
   Calendar,
 } from "lucide-react";
 import { toast } from "sonner";
+import { db } from "@/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 type ApplicationStep = 1 | 2 | 3 | 4;
 
@@ -172,11 +174,19 @@ export default function NGOApplication() {
     setIsSubmitting(true);
 
     try {
-      // TODO: Upload files to Firebase Storage
-      // TODO: Submit application to Firestore
-      // TODO: Send email notification to admin
-
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Save application to Firestore
+      await addDoc(collection(db, "ngoApplications"), {
+        ...formData,
+        status: "pending",
+        submittedAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
+        // Note: File upload can be added later if needed
+        files: {
+          registration: uploadedFiles.registration?.name || null,
+          financials: uploadedFiles.financials?.name || null,
+          references: uploadedFiles.references?.name || null,
+        },
+      });
 
       toast.success(
         "Application submitted successfully! We'll review it within 5-7 business days.",

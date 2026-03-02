@@ -32,6 +32,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
+import { db } from "@/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import {
   ORGANIZATION_TYPES,
   FOCUS_AREAS,
@@ -199,13 +201,19 @@ export function PartnerApplicationForm() {
 
     setIsSubmitting(true);
     try {
-      // In real app, this would POST to Firebase
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Save application to Firestore
+      await addDoc(collection(db, "partnerApplications"), {
+        ...formData,
+        status: "pending",
+        submittedAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
+      });
 
       toast.success("Application submitted successfully!");
       // Redirect to confirmation page
       window.location.href = "/partners/apply/confirmation";
     } catch (error) {
+      console.error("Error submitting application:", error);
       toast.error("Failed to submit application. Please try again.");
     } finally {
       setIsSubmitting(false);

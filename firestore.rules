@@ -153,6 +153,33 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // Partners collection
+    match /partners/{partnerId} {
+      // Anyone can read approved partners
+      allow read: if resource.data.status == 'approved' || isAdmin();
+
+      // Only admins can create, update, or delete partners
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Partner Applications
+    match /partnerApplications/{applicationId} {
+      // Anyone can submit a partner application
+      allow create: if true;
+
+      // Only admins can read, update, or delete
+      allow read, update, delete: if isAdmin();
+    }
+
+    // NGO Applications
+    match /ngoApplications/{applicationId} {
+      // Anyone can submit an NGO application
+      allow create: if true;
+
+      // Only admins can read, update, or delete
+      allow read, update, delete: if isAdmin();
+    }
+
     // Notifications
     match /notifications/{notificationId} {
       // Users can read their own notifications, admins can read all

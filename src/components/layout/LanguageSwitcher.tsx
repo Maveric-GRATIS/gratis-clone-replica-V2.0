@@ -16,8 +16,8 @@ import { Button } from "@/components/ui/button";
 import { Globe, Check } from "lucide-react";
 
 const languages = [
-  { code: "en", name: "English", flag: "🇬🇧" },
   { code: "nl", name: "Nederlands", flag: "🇳🇱" },
+  { code: "en", name: "English", flag: "🇬🇧" },
 ] as const;
 
 export function LanguageSwitcher() {

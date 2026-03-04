@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const languages = [
-  { code: "en", name: "English", flag: "🇬🇧" },
   { code: "nl", name: "Nederlands", flag: "🇳🇱" },
+  { code: "en", name: "English", flag: "🇬🇧" },
 ];
 
 export default function LanguageSwitcher() {

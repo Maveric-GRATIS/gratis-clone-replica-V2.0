@@ -12,8 +12,8 @@ i18n
       nl: { translation: nl },
       en: { translation: en },
     },
-    lng: 'en', // English as default language
-    fallbackLng: 'en',
+    lng: 'nl', // Dutch as default language
+    fallbackLng: 'nl',
     interpolation: {
       escapeValue: false,
     },

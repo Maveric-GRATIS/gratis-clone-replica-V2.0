@@ -17,36 +17,36 @@ import { ShoppingCart, Sparkles, Shield, Truck, Award } from "lucide-react";
 const theurgyFlavors = [
   {
     id: "citrus-carnival",
-    nameKey: "products.theurgy.flavors.citrusCarnival.name",
-    subtitleKey: "products.theurgy.flavors.citrusCarnival.subtitle",
-    descriptionKey: "products.theurgy.flavors.citrusCarnival.description",
+    nameKey: "products.carousel.theurgy.flavors.citrusCarnival.name",
+    subtitleKey: "products.carousel.theurgy.flavors.citrusCarnival.subtitle",
+    descriptionKey: "products.carousel.theurgy.flavors.citrusCarnival.description",
     image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
     color: "#FFA500",
     country: "Brazil",
   },
   {
     id: "hibiscus-bloom",
-    nameKey: "products.theurgy.flavors.hibiscusBloom.name",
-    subtitleKey: "products.theurgy.flavors.hibiscusBloom.subtitle",
-    descriptionKey: "products.theurgy.flavors.hibiscusBloom.description",
+    nameKey: "products.carousel.theurgy.flavors.hibiscusBloom.name",
+    subtitleKey: "products.carousel.theurgy.flavors.hibiscusBloom.subtitle",
+    descriptionKey: "products.carousel.theurgy.flavors.hibiscusBloom.description",
     image: "/lovable-uploads/gratis-neon-tank.jpg",
     color: "#E91E63",
     country: "India",
   },
   {
     id: "dragon-fire",
-    nameKey: "products.theurgy.flavors.dragonFire.name",
-    subtitleKey: "products.theurgy.flavors.dragonFire.subtitle",
-    descriptionKey: "products.theurgy.flavors.dragonFire.description",
+    nameKey: "products.carousel.theurgy.flavors.dragonFire.name",
+    subtitleKey: "products.carousel.theurgy.flavors.dragonFire.subtitle",
+    descriptionKey: "products.carousel.theurgy.flavors.dragonFire.description",
     image: "/lovable-uploads/gratis-geo-bodysuit.jpg",
     color: "#FF5722",
     country: "China",
   },
   {
     id: "variety-pack",
-    nameKey: "products.theurgy.flavors.varietyPack.name",
-    subtitleKey: "products.theurgy.flavors.varietyPack.subtitle",
-    descriptionKey: "products.theurgy.flavors.varietyPack.description",
+    nameKey: "products.carousel.theurgy.flavors.varietyPack.name",
+    subtitleKey: "products.carousel.theurgy.flavors.varietyPack.subtitle",
+    descriptionKey: "products.carousel.theurgy.flavors.varietyPack.description",
     image: "/lovable-uploads/gratis-canal-collection.jpg",
     color: "#9C27B0",
     country: "Global",
@@ -60,21 +60,21 @@ const theurgyPacks = [
     label: "6-Pack",
     price: 24.99,
     savings: 0,
-    descriptionKey: "products.theurgy.packs.starter",
+    descriptionKey: "products.carousel.theurgy.packs.starter",
   },
   {
     value: "12",
     label: "12-Pack",
     price: 44.99,
     savings: 10,
-    descriptionKey: "products.theurgy.packs.teamSize",
+    descriptionKey: "products.carousel.theurgy.packs.teamSize",
   },
   {
     value: "24",
     label: "24-Pack",
     price: 79.99,
     savings: 20,
-    descriptionKey: "products.theurgy.packs.eventReady",
+    descriptionKey: "products.carousel.theurgy.packs.eventReady",
   },
 ];
 
@@ -134,8 +134,8 @@ export default function Theurgy() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title={t("products.theurgy.seoTitle")}
-        description={t("products.theurgy.seoDescription")}
+        title={t("products.carousel.theurgy.seoTitle")}
+        description={t("products.carousel.theurgy.seoDescription")}
         canonical={
           typeof window !== "undefined" ? window.location.href : "/theurgy"
         }
@@ -154,13 +154,13 @@ export default function Theurgy() {
         <div className="container relative z-10">
           <div className="text-center">
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary text-sm font-bold rounded-full mb-4 animate-pulse">
-              {t("products.theurgy.badge")}
+              {t("products.carousel.theurgy.badge")}
             </span>
             <h1 className="text-5xl md:text-7xl font-black text-white mb-4">
-              {t("products.theurgy.title")}
+              {t("products.carousel.theurgy.title")}
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              {t("products.theurgy.hero")}
+              {t("products.carousel.theurgy.hero")}
             </p>
           </div>
         </div>
@@ -185,10 +185,10 @@ export default function Theurgy() {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/30">
-                    {t("products.theurgy.seriesBadge")}
+                    {t("products.carousel.theurgy.seriesBadge")}
                   </span>
                   <span className="px-3 py-1 bg-accent/10 text-accent-foreground text-xs font-bold rounded-full">
-                    {currentFlavor.country} {t("products.theurgy.edition")}
+                    {currentFlavor.country} {t("products.carousel.theurgy.edition")}
                   </span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black text-foreground">
@@ -226,20 +226,20 @@ export default function Theurgy() {
                 <div className="flex items-end justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      {t("products.theurgy.totalPrice")}
+                      {t("products.carousel.theurgy.totalPrice")}
                     </p>
                     <p className="text-4xl font-black text-foreground">
                       €{currentPack.price.toFixed(2)}
                     </p>
                     {currentPack.savings > 0 && (
                       <p className="text-sm text-green-500 font-medium">
-                        {t("products.theurgy.youSave")} {currentPack.savings}%
+                        {t("products.carousel.theurgy.youSave")} {currentPack.savings}%
                       </p>
                     )}
                   </div>
                   <div className="text-right">
                     <p className="text-sm text-muted-foreground">
-                      {t("products.theurgy.perCan")}
+                      {t("products.carousel.theurgy.perCan")}
                     </p>
                     <p className="text-lg font-bold text-foreground">
                       €{(currentPack.price / parseInt(selectedPack)).toFixed(2)}
@@ -253,12 +253,12 @@ export default function Theurgy() {
                   className="w-full text-lg h-14 font-bold"
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
-                  {t("products.theurgy.addToCart", { pack: currentPack.label })}
+                  {t("products.carousel.theurgy.addToCart", { pack: currentPack.label })}
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
                   <Sparkles className="w-3 h-3 inline mr-1" />
-                  {t("products.theurgy.goldenTicket")}
+                  {t("products.carousel.theurgy.goldenTicket")}
                 </p>
               </div>
 
@@ -267,19 +267,19 @@ export default function Theurgy() {
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Shield className="w-6 h-6 text-primary mx-auto mb-1" />
                   <p className="text-xs text-muted-foreground">
-                    {t("products.theurgy.b2bVerified")}
+                    {t("products.carousel.theurgy.b2bVerified")}
                   </p>
                 </div>
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Truck className="w-6 h-6 text-primary mx-auto mb-1" />
                   <p className="text-xs text-muted-foreground">
-                    {t("products.theurgy.directDelivery")}
+                    {t("products.carousel.theurgy.directDelivery")}
                   </p>
                 </div>
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Award className="w-6 h-6 text-primary mx-auto mb-1" />
                   <p className="text-xs text-muted-foreground">
-                    {t("products.theurgy.customBranding")}
+                    {t("products.carousel.theurgy.customBranding")}
                   </p>
                 </div>
               </div>
@@ -295,7 +295,7 @@ export default function Theurgy() {
       <section className="bg-gradient-to-br from-gray-900 to-black py-20">
         <div className="container">
           <h2 className="text-4xl md:text-6xl font-black text-white text-center mb-16">
-            {t("products.theurgy.storiesTitle")}
+            {t("products.carousel.theurgy.storiesTitle")}
           </h2>
 
           <div className="grid lg:grid-cols-3 gap-12">

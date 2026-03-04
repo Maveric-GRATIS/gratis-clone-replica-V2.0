@@ -23,10 +23,10 @@ import { fuFeatures } from "@/data/productFeatures";
 const fuFlavors = [
   {
     id: "inferno",
-    nameKey: "products.fu.flavors.inferno.name",
-    subtitleKey: "products.fu.flavors.inferno.subtitle",
-    descriptionKey: "products.fu.flavors.inferno.description",
-    projectKey: "products.fu.flavors.inferno.project",
+    nameKey: "products.carousel.fu.flavors.inferno.name",
+    subtitleKey: "products.carousel.fu.flavors.inferno.subtitle",
+    descriptionKey: "products.carousel.fu.flavors.inferno.description",
+    projectKey: "products.carousel.fu.flavors.inferno.project",
     seriesNumber: 1,
     editionSize: 500,
     remainingUnits: 342,
@@ -37,10 +37,10 @@ const fuFlavors = [
   },
   {
     id: "ice-storm",
-    nameKey: "products.fu.flavors.iceStorm.name",
-    subtitleKey: "products.fu.flavors.iceStorm.subtitle",
-    descriptionKey: "products.fu.flavors.iceStorm.description",
-    projectKey: "products.fu.flavors.iceStorm.project",
+    nameKey: "products.carousel.fu.flavors.iceStorm.name",
+    subtitleKey: "products.carousel.fu.flavors.iceStorm.subtitle",
+    descriptionKey: "products.carousel.fu.flavors.iceStorm.description",
+    projectKey: "products.carousel.fu.flavors.iceStorm.project",
     seriesNumber: 2,
     editionSize: 500,
     remainingUnits: 500,
@@ -51,10 +51,10 @@ const fuFlavors = [
   },
   {
     id: "rebel-drop",
-    nameKey: "products.fu.flavors.rebelDrop.name",
-    subtitleKey: "products.fu.flavors.rebelDrop.subtitle",
-    descriptionKey: "products.fu.flavors.rebelDrop.description",
-    projectKey: "products.fu.flavors.rebelDrop.project",
+    nameKey: "products.carousel.fu.flavors.rebelDrop.name",
+    subtitleKey: "products.carousel.fu.flavors.rebelDrop.subtitle",
+    descriptionKey: "products.carousel.fu.flavors.rebelDrop.description",
+    projectKey: "products.carousel.fu.flavors.rebelDrop.project",
     seriesNumber: 3,
     editionSize: 300,
     remainingUnits: 127,
@@ -65,10 +65,10 @@ const fuFlavors = [
   },
   {
     id: "winners-choice",
-    nameKey: "products.fu.flavors.winnersChoice.name",
-    subtitleKey: "products.fu.flavors.winnersChoice.subtitle",
-    descriptionKey: "products.fu.flavors.winnersChoice.description",
-    projectKey: "products.fu.flavors.winnersChoice.project",
+    nameKey: "products.carousel.fu.flavors.winnersChoice.name",
+    subtitleKey: "products.carousel.fu.flavors.winnersChoice.subtitle",
+    descriptionKey: "products.carousel.fu.flavors.winnersChoice.description",
+    projectKey: "products.carousel.fu.flavors.winnersChoice.project",
     seriesNumber: 4,
     editionSize: 100,
     remainingUnits: 100,
@@ -114,7 +114,7 @@ export default function FU() {
 
   const handleAddToCart = () => {
     if (!selectedFlavor) {
-      toast.error(t("products.fu.selectSeries"));
+      toast.error(t("products.carousel.fu.selectSeries"));
       return;
     }
 
@@ -122,7 +122,7 @@ export default function FU() {
     if (!flavor) return;
 
     if (flavor.remainingUnits === 0) {
-      toast.error(t("products.fu.seriesOut"));
+      toast.error(t("products.carousel.fu.seriesOut"));
       return;
     }
 
@@ -141,7 +141,7 @@ export default function FU() {
     };
 
     addItem(cartItem);
-    toast.success(t("products.fu.addedToCart", { name: flavorName }), {
+    toast.success(t("products.carousel.fu.addedToCart", { name: flavorName }), {
       description: `Series #${String(flavor.seriesNumber).padStart(2, "0")} • €${flavor.price}`,
     });
   };
@@ -149,8 +149,8 @@ export default function FU() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title={t("products.fu.seoTitle")}
-        description={t("products.fu.seoDescription")}
+        title={t("products.carousel.fu.seoTitle")}
+        description={t("products.carousel.fu.seoDescription")}
         canonical="/fu"
       />
 
@@ -159,13 +159,13 @@ export default function FU() {
         <div className="container">
           <div className="text-center mb-8">
             <Badge variant="destructive" className="mb-4 font-black">
-              {t("products.fu.badge")}
+              {t("products.carousel.fu.badge")}
             </Badge>
             <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4">
-              {t("products.fu.title")}
+              {t("products.carousel.fu.title")}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              {t("products.fu.hero")}
+              {t("products.carousel.fu.hero")}
             </p>
           </div>
         </div>
@@ -209,21 +209,21 @@ export default function FU() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  {t("products.fu.numbered")}
+                  {t("products.carousel.fu.numbered")}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  {t("products.fu.uniqueArt")}
+                  {t("products.carousel.fu.uniqueArt")}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  {t("products.fu.profitsTo", {
+                  {t("products.carousel.fu.profitsTo", {
                     project: t(currentFlavor.projectKey),
                   })}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  {t("products.fu.goldenCap")}
+                  {t("products.carousel.fu.goldenCap")}
                 </li>
               </ul>
 
@@ -257,7 +257,7 @@ export default function FU() {
                     €{currentFlavor.price}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    {t("products.fu.perBottle")}
+                    {t("products.carousel.fu.perBottle")}
                   </div>
                 </div>
                 <Button
@@ -268,7 +268,7 @@ export default function FU() {
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   {currentFlavor.remainingUnits === 0
-                    ? t("products.fu.soldOut")
+                    ? t("products.carousel.fu.soldOut")
                     : "Add to Cart"}
                 </Button>
               </div>
@@ -278,19 +278,19 @@ export default function FU() {
                 <div className="flex flex-col items-center text-center">
                   <Shield className="w-6 h-6 text-primary mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    {t("products.fu.authenticated")}
+                    {t("products.carousel.fu.authenticated")}
                   </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Truck className="w-6 h-6 text-primary mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    {t("products.fu.insuredShipping")}
+                    {t("products.carousel.fu.insuredShipping")}
                   </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Award className="w-6 h-6 text-primary mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    {t("products.fu.collectorGrade")}
+                    {t("products.carousel.fu.collectorGrade")}
                   </span>
                 </div>
               </div>
@@ -320,8 +320,8 @@ export default function FU() {
       {/* Product Features */}
       <ProductFeatures
         features={fuFeatures}
-        title={t("products.fu.featuresTitle")}
-        subtitle={t("products.fu.featuresSubtitle")}
+        title={t("products.carousel.fu.featuresTitle")}
+        subtitle={t("products.carousel.fu.featuresSubtitle")}
       />
     </div>
   );

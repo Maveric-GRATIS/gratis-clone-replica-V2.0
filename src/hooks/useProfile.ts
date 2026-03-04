@@ -9,8 +9,22 @@ interface Profile {
   user_id: string;
   email: string;
   display_name?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   avatar_url?: string | null;
+  bio?: string | null;
   phone?: string | null;
+  address?: string | null;
+  company?: string | null;
+  website?: string | null;
+  preferences?: {
+    emailNotifications?: boolean;
+    pushNotifications?: boolean;
+    eventUpdates?: boolean;
+    newsletter?: boolean;
+    language?: string;
+    timezone?: string;
+  };
   created_at: Timestamp;
   updated_at: Timestamp;
 }

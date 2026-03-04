@@ -68,45 +68,71 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
 
   // Fetch real statistics from Firebase
-  const { data: usersData } = useQuery({
+  const { data: usersData = [], isLoading: usersLoading } = useQuery({
     queryKey: ["dashboard-users"],
     queryFn: async () => {
-      const usersSnap = await getDocs(collection(db, "users"));
-      return usersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      try {
+        const usersSnap = await getDocs(collection(db, "users"));
+        return usersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        return [];
+      }
     },
   });
 
-  const { data: donationsData } = useQuery({
+  const { data: donationsData = [], isLoading: donationsLoading } = useQuery({
     queryKey: ["dashboard-donations"],
     queryFn: async () => {
-      const donationsSnap = await getDocs(collection(db, "donations"));
-      return donationsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      try {
+        const donationsSnap = await getDocs(collection(db, "donations"));
+        return donationsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      } catch (error) {
+        console.error("Error fetching donations:", error);
+        return [];
+      }
     },
   });
 
-  const { data: ordersData } = useQuery({
+  const { data: ordersData = [], isLoading: ordersLoading } = useQuery({
     queryKey: ["dashboard-orders"],
     queryFn: async () => {
-      const ordersSnap = await getDocs(collection(db, "orders"));
-      return ordersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      try {
+        const ordersSnap = await getDocs(collection(db, "orders"));
+        return ordersSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        return [];
+      }
     },
   });
 
-  const { data: eventsData } = useQuery({
+  const { data: eventsData = [], isLoading: eventsLoading } = useQuery({
     queryKey: ["dashboard-events"],
     queryFn: async () => {
-      const eventsSnap = await getDocs(collection(db, "events"));
-      return eventsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      try {
+        const eventsSnap = await getDocs(collection(db, "events"));
+        return eventsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        return [];
+      }
     },
   });
 
-  const { data: subscriptionsData } = useQuery({
-    queryKey: ["dashboard-subscriptions"],
-    queryFn: async () => {
-      const subsSnap = await getDocs(collection(db, "subscriptions"));
-      return subsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    },
-  });
+  const { data: subscriptionsData = [], isLoading: subscriptionsLoading } =
+    useQuery({
+      queryKey: ["dashboard-subscriptions"],
+      queryFn: async () => {
+        try {
+          const subsSnap = await getDocs(collection(db, "subscriptions"));
+          return subsSnap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+          console.error("Error fetching subscriptions:", error);
+          return [];
+        }
+      },
+    });
 
   // Calculate real statistics
   const totalMembers = usersData?.length || 0;
@@ -294,7 +320,12 @@ export default function AdminDashboard() {
   ];
 
   // Check if data is still loading
-  const isLoading = !usersData || !donationsData || !ordersData || !eventsData;
+  const isLoading =
+    usersLoading ||
+    donationsLoading ||
+    ordersLoading ||
+    eventsLoading ||
+    subscriptionsLoading;
 
   if (isLoading) {
     return (

@@ -223,7 +223,10 @@ export default function Profile() {
 
   const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !user) return;
+    if (!file || !user) {
+      console.log("No file selected or user not authenticated");
+      return;
+    }
 
     // Validate file type
     if (!file.type.startsWith("image/")) {
@@ -238,18 +241,26 @@ export default function Profile() {
     }
 
     setUploadingPhoto(true);
+    console.log("Starting photo upload...");
+
     try {
       // Create a unique filename
       const fileName = `avatars/${user.uid}/${Date.now()}_${file.name}`;
+      console.log("Uploading to:", fileName);
       const storageRef = ref(storage, fileName);
 
       // Upload file
-      await uploadBytes(storageRef, file);
+      console.log("Uploading file to Storage...");
+      const uploadResult = await uploadBytes(storageRef, file);
+      console.log("Upload complete:", uploadResult);
 
       // Get download URL
+      console.log("Getting download URL...");
       const downloadURL = await getDownloadURL(storageRef);
+      console.log("Download URL:", downloadURL);
 
       // Update user profile in Firestore using profiles collection
+      console.log("Updating Firestore profile...");
       const profileRef = doc(db, "profiles", user.uid);
       await setDoc(
         profileRef,
@@ -259,15 +270,55 @@ export default function Profile() {
         },
         { merge: true },
       );
+      console.log("Firestore updated successfully");
 
       toast.success("Profile photo updated successfully!");
 
       // Refetch profile data instead of page reload
+      console.log("Refetching profile...");
       await refetch();
-    } catch (error) {
+      console.log("Refetch complete");
+
+      // Reset the file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error: any) {
       console.error("Error uploading photo:", error);
-      toast.error("Failed to upload photo. Please try again.");
+      console.error("Error code:", error.code);
+      console.error("Error message:", error.message);
+
+      let errorMessage = "Failed to upload photo. Please try again.";
+
+      if (
+        error.code === "storage/unauthorized" ||
+        error.code === "storage/unauthorized-app" ||
+        error.message?.includes("Firebase Storage") ||
+        error.message?.includes("not been set up")
+      ) {
+        errorMessage =
+          "⚠️ Firebase Storage is not enabled. Please enable it in Firebase Console at: https://console.firebase.google.com/project/gratis-ngo-7bb44/storage";
+        toast.error(errorMessage, { duration: 10000 });
+        console.error("⚠️ FIREBASE STORAGE NOT ENABLED");
+        console.error(
+          "📌 Enable it here: https://console.firebase.google.com/project/gratis-ngo-7bb44/storage",
+        );
+      } else if (error.code === "permission-denied") {
+        errorMessage =
+          "Permission denied. Please check Firestore security rules.";
+        toast.error(errorMessage);
+      } else if (
+        error.code?.includes("cors") ||
+        error.message?.includes("CORS")
+      ) {
+        errorMessage =
+          "CORS error. Firebase Storage may not be properly configured.";
+        toast.error(errorMessage);
+      } else {
+        toast.error(errorMessage);
+      }
     } finally {
+      console.log("Setting uploadingPhoto to false");
       setUploadingPhoto(false);
     }
   };

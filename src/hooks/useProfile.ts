@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { db } from '@/firebase';
-import { doc, getDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { useAuth } from '@/hooks/useAuth';
 
 interface Profile {
@@ -48,9 +48,18 @@ export const useProfile = () => {
       if (profileSnap.exists()) {
         setProfile({ id: profileSnap.id, ...profileSnap.data() } as Profile);
       } else {
-        // Handle case where profile doesn't exist yet, maybe create it?
-        // For now, just setting it to null as per original logic for not found.
-        setProfile(null);
+        // Create a default profile if it doesn't exist
+        const defaultProfile = {
+          user_id: user.uid,
+          email: user.email || '',
+          display_name: user.displayName || user.email?.split('@')[0] || '',
+          created_at: serverTimestamp(),
+          updated_at: serverTimestamp(),
+        };
+        await setDoc(profileRef, defaultProfile);
+        // Fetch again to get the created profile with timestamps
+        const newProfileSnap = await getDoc(profileRef);
+        setProfile({ id: newProfileSnap.id, ...newProfileSnap.data() } as Profile);
       }
     } catch (err: any) {
       setError(err.message);
@@ -76,7 +85,8 @@ export const useProfile = () => {
         updated_at: serverTimestamp(),
       };
 
-      await updateDoc(profileRef, updatePayload);
+      // Use setDoc with merge to create if doesn't exist
+      await setDoc(profileRef, updatePayload, { merge: true });
 
       // Refetch the profile to get the updated data
       await fetchProfile();

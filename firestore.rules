@@ -54,6 +54,18 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // Profiles collection (user profile data separate from auth)
+    match /profiles/{userId} {
+      // Users can read their own profile, admins can read all
+      allow read: if isOwner(userId) || isAdmin();
+
+      // Users can create and update their own profile
+      allow create, update: if isAuthenticated() && isOwner(userId);
+
+      // Only admins can delete profiles
+      allow delete: if isAdmin();
+    }
+
     // Products collection
     match /products/{productId} {
       // Everyone can read products

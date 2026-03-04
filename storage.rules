@@ -31,6 +31,14 @@ service firebase.storage {
                    && isValidImageUpload();
     }
 
+    // User avatars (profile photos)
+    match /avatars/{userId}/{fileName} {
+      allow read: if true;
+      allow write: if isAuthenticated()
+                   && request.auth.uid == userId
+                   && isValidImageUpload();
+    }
+
     // Event images
     match /events/{eventId}/{allPaths=**} {
       allow read: if true;

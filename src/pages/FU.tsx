@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ShoppingCart, Truck, Shield, Award } from "lucide-react";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
@@ -18,95 +19,92 @@ import FUWinnersHallOfFame from "@/components/fu/FUWinnersHallOfFame";
 import ProductFeatures from "@/components/ProductFeatures";
 import { fuFeatures } from "@/data/productFeatures";
 
-// F.U. Flavors Data
-const fuFlavors = [
-  {
-    id: "inferno",
-    name: "INFERNO",
-    subtitle: "Spicy Lime",
-    seriesNumber: 1,
-    editionSize: 500,
-    remainingUnits: 342,
-    price: 6.99,
-    image: "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
-    description:
-      "Ghost pepper meets lime. Not for the faint of heart. An explosive combination that sets your taste buds on fire while the citrus cools you down.",
-    collaborator: null,
-    isWinnerCreation: false,
-    impactProject: "Clean Water Initiative",
-  },
-  {
-    id: "ice-storm",
-    name: "ICE STORM",
-    subtitle: "Frozen Mint",
-    seriesNumber: 2,
-    editionSize: 500,
-    remainingUnits: 500,
-    price: 6.99,
-    image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
-    description:
-      "Cryogenic mint extraction. So cold it burns. A polar vortex in every sip that will leave you breathless.",
-    collaborator: null,
-    isWinnerCreation: false,
-    impactProject: "Youth Education",
-  },
-  {
-    id: "rebel-drop",
-    name: "REBEL DROP",
-    subtitle: "Mystery Blend",
-    seriesNumber: 3,
-    editionSize: 300,
-    remainingUnits: 127,
-    price: 9.99,
-    image: "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
-    description:
-      "Taste the mystery. Blind taste challenge accepted. Created with Rebel Collective for those who dare to drink differently.",
-    collaborator: "Rebel Collective",
-    isWinnerCreation: false,
-    impactProject: "Street Art Programs",
-  },
-  {
-    id: "winners-choice",
-    name: "WINNER'S CHOICE",
-    subtitle: "Community Creation",
-    seriesNumber: 4,
-    editionSize: 100,
-    remainingUnits: 100,
-    price: 14.99,
-    image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
-    description:
-      "Created by our Golden Ticket winner. Ultimate rarity. The most exclusive F.U. ever made - only 100 in existence.",
-    collaborator: null,
-    isWinnerCreation: true,
-    impactProject: "Winner Decides",
-  },
-];
-
-// Flavor images mapping
-const flavorImages: Record<string, string[]> = {
-  inferno: [
-    "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
-    "/lovable-uploads/gratis-lifestyle-drink.jpg",
-  ],
-  "ice-storm": [
-    "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
-    "/lovable-uploads/gratis-neon-tank.jpg",
-  ],
-  "rebel-drop": [
-    "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
-    "/lovable-uploads/gratis-geo-bodysuit.jpg",
-  ],
-  "winners-choice": [
-    "/lovable-uploads/gratis-lifestyle-drink.jpg",
-    "/lovable-uploads/gratis-canal-collection.jpg",
-  ],
-};
-
 export default function FU() {
+  const { t } = useTranslation();
   const [selectedFlavor, setSelectedFlavor] = useState<string | null>(
     "inferno",
   );
   const { addItem } = useCart();
+
+  // F.U. Flavors Data with translations
+  const fuFlavors = [
+    {
+      id: "inferno",
+      name: t("products.fu.flavors.inferno.name"),
+      subtitle: t("products.fu.flavors.inferno.subtitle"),
+      seriesNumber: 1,
+      editionSize: 500,
+      remainingUnits: 342,
+      price: 6.99,
+      image: "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
+      description: t("products.fu.flavors.inferno.description"),
+      collaborator: null,
+      isWinnerCreation: false,
+      impactProject: t("products.fu.flavors.inferno.project"),
+    },
+    {
+      id: "ice-storm",
+      name: t("products.fu.flavors.iceStorm.name"),
+      subtitle: t("products.fu.flavors.iceStorm.subtitle"),
+      seriesNumber: 2,
+      editionSize: 500,
+      remainingUnits: 500,
+      price: 6.99,
+      image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+      description: t("products.fu.flavors.iceStorm.description"),
+      collaborator: null,
+      isWinnerCreation: false,
+      impactProject: t("products.fu.flavors.iceStorm.project"),
+    },
+    {
+      id: "rebel-drop",
+      name: t("products.fu.flavors.rebelDrop.name"),
+      subtitle: t("products.fu.flavors.rebelDrop.subtitle"),
+      seriesNumber: 3,
+      editionSize: 300,
+      remainingUnits: 127,
+      price: 9.99,
+      image: "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
+      description: t("products.fu.flavors.rebelDrop.description"),
+      collaborator: "Rebel Collective",
+      isWinnerCreation: false,
+      impactProject: t("products.fu.flavors.rebelDrop.project"),
+    },
+    {
+      id: "winners-choice",
+      name: t("products.fu.flavors.winnersChoice.name"),
+      subtitle: t("products.fu.flavors.winnersChoice.subtitle"),
+      seriesNumber: 4,
+      editionSize: 100,
+      remainingUnits: 100,
+      price: 14.99,
+      image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
+      description: t("products.fu.flavors.winnersChoice.description"),
+      collaborator: null,
+      isWinnerCreation: true,
+      impactProject: t("products.fu.flavors.winnersChoice.project"),
+    },
+  ];
+
+  // Flavor images mapping
+  const flavorImages: Record<string, string[]> = {
+    inferno: [
+      "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
+      "/lovable-uploads/gratis-lifestyle-drink.jpg",
+    ],
+    "ice-storm": [
+      "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+      "/lovable-uploads/gratis-neon-tank.jpg",
+    ],
+    "rebel-drop": [
+      "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
+      "/lovable-uploads/gratis-geo-bodysuit.jpg",
+    ],
+    "winners-choice": [
+      "/lovable-uploads/gratis-lifestyle-drink.jpg",
+      "/lovable-uploads/gratis-canal-collection.jpg",
+    ],
+  };
 
   const currentFlavor =
     fuFlavors.find((f) => f.id === selectedFlavor) || fuFlavors[0];
@@ -116,7 +114,7 @@ export default function FU() {
 
   const handleAddToCart = () => {
     if (!selectedFlavor) {
-      toast.error("Please select a series first");
+      toast.error(t("products.fu.selectSeries"));
       return;
     }
 
@@ -124,7 +122,7 @@ export default function FU() {
     if (!flavor) return;
 
     if (flavor.remainingUnits === 0) {
-      toast.error("This series is sold out");
+      toast.error(t("products.fu.seriesOut"));
       return;
     }
 
@@ -142,7 +140,7 @@ export default function FU() {
     };
 
     addItem(cartItem);
-    toast.success(`${flavor.name} added to cart!`, {
+    toast.success(t("products.fu.addedToCart", { name: flavor.name }), {
       description: `Series #${String(flavor.seriesNumber).padStart(2, "0")} • €${flavor.price}`,
     });
   };
@@ -150,8 +148,8 @@ export default function FU() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="F.U. Collection — Ultra Limited. Fearlessly Unconventional."
-        description="Collector's edition sparkling water with extreme flavors. Numbered editions created with Golden Ticket winners and sponsors. 100% profits to chosen causes."
+        title={t("products.fu.seoTitle")}
+        description={t("products.fu.seoDescription")}
         canonical="/fu"
       />
 
@@ -160,14 +158,13 @@ export default function FU() {
         <div className="container">
           <div className="text-center mb-8">
             <Badge variant="destructive" className="mb-4 font-black">
-              ULTRA LIMITED COLLECTOR'S SERIES
+              {t("products.fu.badge")}
             </Badge>
             <h1 className="text-5xl md:text-7xl font-black text-foreground mb-4">
-              F.U.
+              {t("products.fu.title")}
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Fearlessly Unconventional. One-of-a-kind taste collaborations with
-              Golden Ticket winners and major sponsors.
+              {t("products.fu.hero")}
             </p>
           </div>
         </div>
@@ -211,19 +208,21 @@ export default function FU() {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  Numbered & authenticated collector's edition
+                  {t("products.fu.numbered")}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  Unique artwork by international artists
+                  {t("products.fu.uniqueArt")}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  100% profits to {currentFlavor.impactProject}
+                  {t("products.fu.profitsTo", {
+                    project: currentFlavor.impactProject,
+                  })}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
-                  Golden Cap hunt included in every series
+                  {t("products.fu.goldenCap")}
                 </li>
               </ul>
 
@@ -251,7 +250,7 @@ export default function FU() {
                     €{currentFlavor.price}
                   </div>
                   <div className="text-sm text-muted-foreground">
-                    per bottle
+                    {t("products.fu.perBottle")}
                   </div>
                 </div>
                 <Button
@@ -262,7 +261,7 @@ export default function FU() {
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   {currentFlavor.remainingUnits === 0
-                    ? "Sold Out"
+                    ? t("products.fu.soldOut")
                     : "Add to Cart"}
                 </Button>
               </div>
@@ -272,19 +271,19 @@ export default function FU() {
                 <div className="flex flex-col items-center text-center">
                   <Shield className="w-6 h-6 text-primary mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    Authenticated
+                    {t("products.fu.authenticated")}
                   </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Truck className="w-6 h-6 text-primary mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    Insured Shipping
+                    {t("products.fu.insuredShipping")}
                   </span>
                 </div>
                 <div className="flex flex-col items-center text-center">
                   <Award className="w-6 h-6 text-primary mb-1" />
                   <span className="text-xs text-muted-foreground">
-                    Collector Grade
+                    {t("products.fu.collectorGrade")}
                   </span>
                 </div>
               </div>
@@ -314,8 +313,8 @@ export default function FU() {
       {/* Product Features */}
       <ProductFeatures
         features={fuFeatures}
-        title="Why F.U. is Different"
-        subtitle="Not just limited. Ultra-limited. Not just flavors. Experiences. Every bottle is numbered, authenticated, and funds real impact."
+        title={t("products.fu.featuresTitle")}
+        subtitle={t("products.fu.featuresSubtitle")}
       />
     </div>
   );

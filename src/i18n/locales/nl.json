@@ -156,11 +156,99 @@
       },
       "theurgy": {
         "subtitle": "20OZ Tetrapack",
-        "description": "Sprankelende Energie. Magische Bubbels."
+        "description": "Sprankelende Energie. Magische Bubbels.",
+        "seoTitle": "GRATIS Theurgy — Limited Edition Flavored Sparkling",
+        "seoDescription": "Premium flavored sparkling water voor B2B partnerships. Citrus, Hibiscus, Dragonfruit - culturele vieringen in duurzame tetrapacks.",
+        "badge": "LIMITED EDITION • B2B EXCLUSIEF",
+        "title": "THEURGY",
+        "hero": "Premium flavored sparkling rituelen voor horeca, corporate wellness en partnership programma's.",
+        "seriesBadge": "100K SERIE",
+        "edition": "EDITIE",
+        "totalPrice": "Totaalprijs",
+        "perCan": "Per blik",
+        "youSave": "Je bespaart",
+        "addToCart": "Voeg {{pack}} toe aan Winkelwagen",
+        "goldenTicket": "Golden Ticket prijzen verborgen in elke productie run",
+        "b2bVerified": "B2B Geverifieerd",
+        "directDelivery": "Directe Levering",
+        "customBranding": "Custom Branding",
+        "storiesTitle": "VERHALEN IN ELKE SLOK",
+        "flavors": {
+          "citrusCarnival": {
+            "name": "Citrus Carnival",
+            "subtitle": "Brasil Editie",
+            "description": "Explosieve citrus blend geïnspireerd door het Rio Carnaval. Echte Braziliaanse limoen en zoete sinaasappel essences dansen samen als samba ritmes."
+          },
+          "hibiscusBloom": {
+            "name": "Hibiscus Bloom",
+            "subtitle": "India Editie",
+            "description": "Een eerbetoon aan Diwali's lichtenfestival. Delicate hibiscus bloemen en rozenwater creëren een bloemige symfonie."
+          },
+          "dragonFire": {
+            "name": "Dragon Fire",
+            "subtitle": "China Editie",
+            "description": "Viert Chinees Nieuwjaar met exotische dragonfruit en lychee. Geluk en voorspoed in elke slok."
+          },
+          "varietyPack": {
+            "name": "Variety Pack",
+            "subtitle": "Wereldtour",
+            "description": "Ervaar alle drie culturele vieringen in één pack. De complete GRATIS Theurgy ervaring."
+          }
+        },
+        "packs": {
+          "starter": "Starter",
+          "teamSize": "Team Formaat",
+          "eventReady": "Event Klaar"
+        }
       },
       "fu": {
         "subtitle": "1 GAL Tetrapack",
-        "description": "Gearomatiseerde Attitude. Grote Impact."
+        "description": "Gearomatiseerde Attitude. Grote Impact.",
+        "seoTitle": "F.U. Collectie — Ultra Limited. Fearlessly Unconventional.",
+        "seoDescription": "Collector's edition sparkling water met extreme smaken. Genummerde edities gemaakt met Golden Ticket winnaars en sponsors. 100% winst naar gekozen doelen.",
+        "badge": "ULTRA LIMITED COLLECTOR'S SERIE",
+        "title": "F.U.",
+        "hero": "Fearlessly Unconventional. Unieke smaak collaboraties met Golden Ticket winnaars en grote sponsors.",
+        "numbered": "Genummerd & geauthenticeerd collector's editie",
+        "uniqueArt": "Unieke artwork door internationale kunstenaars",
+        "profitsTo": "100% winst naar {{project}}",
+        "goldenCap": "Golden Cap hunt inbegrepen in elke serie",
+        "perBottle": "per fles",
+        "soldOut": "Uitverkocht",
+        "authenticated": "Geauthenticeerd",
+        "insuredShipping": "Verzekerde Verzending",
+        "collectorGrade": "Collector Grade",
+        "selectSeries": "Selecteer eerst een serie",
+        "seriesOut": "Deze serie is uitverkocht",
+        "addedToCart": "{{name}} toegevoegd aan winkelwagen!",
+        "featuresTitle": "Waarom F.U. Anders is",
+        "featuresSubtitle": "Niet alleen limited. Ultra-limited. Niet alleen smaken. Ervaringen. Elke fles is genummerd, geauthenticeerd en financiert echte impact.",
+        "flavors": {
+          "inferno": {
+            "name": "INFERNO",
+            "subtitle": "Spicy Lime",
+            "description": "Ghost pepper ontmoet limoen. Niet voor de zwakken. Een explosieve combinatie die je smaakpapillen in brand zet terwijl de citrus je afkoelt.",
+            "project": "Schoon Water Initiatief"
+          },
+          "iceStorm": {
+            "name": "ICE STORM",
+            "subtitle": "Frozen Mint",
+            "description": "Cryogene munt extractie. Zo koud dat het brandt. Een poolwervel in elke slok die je ademloos achterlaat.",
+            "project": "Jeugd Educatie"
+          },
+          "rebelDrop": {
+            "name": "REBEL DROP",
+            "subtitle": "Mystery Blend",
+            "description": "Proef het mysterie. Blinde smaaktest aanvaard. Gemaakt met Rebel Collective voor degenen die durven anders te drinken.",
+            "project": "Street Art Programma's"
+          },
+          "winnersChoice": {
+            "name": "WINNER'S CHOICE",
+            "subtitle": "Community Creatie",
+            "description": "Gemaakt door onze Golden Ticket winnaar. Ultieme zeldzaamheid. De meest exclusieve F.U. ooit gemaakt - slechts 100 in bestaan.",
+            "project": "Winnaar Beslist"
+          }
+        }
       },
       "squeezed": {
         "subtitle": "Bruisend Water met Smaak",

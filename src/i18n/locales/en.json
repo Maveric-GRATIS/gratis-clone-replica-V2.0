@@ -156,11 +156,99 @@
       },
       "theurgy": {
         "subtitle": "20OZ Tetrapack",
-        "description": "Sparkling Energy. Magic Bubbles."
+        "description": "Sparkling Energy. Magic Bubbles.",
+        "seoTitle": "GRATIS Theurgy — Limited Edition Flavored Sparkling",
+        "seoDescription": "Premium flavored sparkling water for B2B partnerships. Citrus, Hibiscus, Dragonfruit - cultural celebrations in sustainable tetrapacks.",
+        "badge": "LIMITED EDITION • B2B EXCLUSIVE",
+        "title": "THEURGY",
+        "hero": "Premium flavored sparkling rituals for hospitality, corporate wellness, and partnership programs.",
+        "seriesBadge": "100K SERIES",
+        "edition": "EDITION",
+        "totalPrice": "Total Price",
+        "perCan": "Per can",
+        "youSave": "You save",
+        "addToCart": "Add {{pack}} to Cart",
+        "goldenTicket": "Golden Ticket prizes hidden in every production run",
+        "b2bVerified": "B2B Verified",
+        "directDelivery": "Direct Delivery",
+        "customBranding": "Custom Branding",
+        "storiesTitle": "STORIES IN EVERY SIP",
+        "flavors": {
+          "citrusCarnival": {
+            "name": "Citrus Carnival",
+            "subtitle": "Brazil Edition",
+            "description": "Explosive citrus blend inspired by Rio's Carnival. Real Brazilian lime and sweet orange essences dance together like samba rhythms."
+          },
+          "hibiscusBloom": {
+            "name": "Hibiscus Bloom",
+            "subtitle": "India Edition",
+            "description": "A tribute to Diwali's festival of lights. Delicate hibiscus flowers and rose water create a floral symphony."
+          },
+          "dragonFire": {
+            "name": "Dragon Fire",
+            "subtitle": "China Edition",
+            "description": "Celebrates Lunar New Year with exotic dragonfruit and lychee. Luck and prosperity in every sip."
+          },
+          "varietyPack": {
+            "name": "Variety Pack",
+            "subtitle": "World Tour",
+            "description": "Experience all three cultural celebrations in one pack. The complete GRATIS Theurgy experience."
+          }
+        },
+        "packs": {
+          "starter": "Starter",
+          "teamSize": "Team Size",
+          "eventReady": "Event Ready"
+        }
       },
       "fu": {
         "subtitle": "1 GAL Tetrapack",
-        "description": "Flavored Attitude. Big Impact."
+        "description": "Flavored Attitude. Big Impact.",
+        "seoTitle": "F.U. Collection — Ultra Limited. Fearlessly Unconventional.",
+        "seoDescription": "Collector's edition sparkling water with extreme flavors. Numbered editions created with Golden Ticket winners and sponsors. 100% profits to chosen causes.",
+        "badge": "ULTRA LIMITED COLLECTOR'S SERIES",
+        "title": "F.U.",
+        "hero": "Fearlessly Unconventional. One-of-a-kind taste collaborations with Golden Ticket winners and major sponsors.",
+        "numbered": "Numbered & authenticated collector's edition",
+        "uniqueArt": "Unique artwork by international artists",
+        "profitsTo": "100% profits to {{project}}",
+        "goldenCap": "Golden Cap hunt included in every series",
+        "perBottle": "per bottle",
+        "soldOut": "Sold Out",
+        "authenticated": "Authenticated",
+        "insuredShipping": "Insured Shipping",
+        "collectorGrade": "Collector Grade",
+        "selectSeries": "Please select a series first",
+        "seriesOut": "This series is sold out",
+        "addedToCart": "{{name}} added to cart!",
+        "featuresTitle": "Why F.U. is Different",
+        "featuresSubtitle": "Not just limited. Ultra-limited. Not just flavors. Experiences. Every bottle is numbered, authenticated, and funds real impact.",
+        "flavors": {
+          "inferno": {
+            "name": "INFERNO",
+            "subtitle": "Spicy Lime",
+            "description": "Ghost pepper meets lime. Not for the faint of heart. An explosive combination that sets your taste buds on fire while the citrus cools you down.",
+            "project": "Clean Water Initiative"
+          },
+          "iceStorm": {
+            "name": "ICE STORM",
+            "subtitle": "Frozen Mint",
+            "description": "Cryogenic mint extraction. So cold it burns. A polar vortex in every sip that will leave you breathless.",
+            "project": "Youth Education"
+          },
+          "rebelDrop": {
+            "name": "REBEL DROP",
+            "subtitle": "Mystery Blend",
+            "description": "Taste the mystery. Blind taste challenge accepted. Created with Rebel Collective for those who dare to drink differently.",
+            "project": "Street Art Programs"
+          },
+          "winnersChoice": {
+            "name": "WINNER'S CHOICE",
+            "subtitle": "Community Creation",
+            "description": "Created by our Golden Ticket winner. Ultimate rarity. The most exclusive F.U. ever made - only 100 in existence.",
+            "project": "Winner Decides"
+          }
+        }
       },
       "squeezed": {
         "subtitle": "Soda Flavored Sparkling Water",

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import SEO from "@/components/SEO";
 import TheurgyFlavorGrid from "@/components/theurgy/TheurgyFlavorGrid";
 import TheurgyPackSelector from "@/components/theurgy/TheurgyPackSelector";
@@ -12,100 +13,97 @@ import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 import { ShoppingCart, Sparkles, Shield, Truck, Award } from "lucide-react";
 
-// Flavor data
-const theurgyFlavors = [
-  {
-    id: "citrus-carnival",
-    name: "Citrus Carnival",
-    subtitle: "Brazil Edition",
-    description:
-      "Explosive citrus blend inspired by Rio's Carnival. Real Brazilian lime and sweet orange essences dance together like samba rhythms.",
-    image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
-    color: "#FFA500",
-    country: "Brazil",
-  },
-  {
-    id: "hibiscus-bloom",
-    name: "Hibiscus Bloom",
-    subtitle: "India Edition",
-    description:
-      "A tribute to Diwali's festival of lights. Delicate hibiscus flowers and rose water create a floral symphony.",
-    image: "/lovable-uploads/gratis-neon-tank.jpg",
-    color: "#E91E63",
-    country: "India",
-  },
-  {
-    id: "dragon-fire",
-    name: "Dragon Fire",
-    subtitle: "China Edition",
-    description:
-      "Celebrates Lunar New Year with exotic dragonfruit and lychee. Luck and prosperity in every sip.",
-    image: "/lovable-uploads/gratis-geo-bodysuit.jpg",
-    color: "#FF5722",
-    country: "China",
-  },
-  {
-    id: "variety-pack",
-    name: "Variety Pack",
-    subtitle: "World Tour",
-    description:
-      "Experience all three cultural celebrations in one pack. The complete GRATIS Theurgy experience.",
-    image: "/lovable-uploads/gratis-canal-collection.jpg",
-    color: "#9C27B0",
-    country: "Global",
-  },
-];
-
-// Pack options (no singles - B2B minimum 6)
-const theurgyPacks = [
-  {
-    value: "6",
-    label: "6-Pack",
-    price: 24.99,
-    savings: 0,
-    description: "Starter",
-  },
-  {
-    value: "12",
-    label: "12-Pack",
-    price: 44.99,
-    savings: 10,
-    description: "Team Size",
-  },
-  {
-    value: "24",
-    label: "24-Pack",
-    price: 79.99,
-    savings: 20,
-    description: "Event Ready",
-  },
-];
-
-// Product images by flavor
-const flavorImages: Record<string, string[]> = {
-  "citrus-carnival": [
-    "/lovable-uploads/gratis-lifestyle-drink.jpg",
-    "/lovable-uploads/gratis-street-duo.jpg",
-  ],
-  "hibiscus-bloom": [
-    "/lovable-uploads/gratis-neon-tank.jpg",
-    "/lovable-uploads/gratis-squad-look.jpg",
-  ],
-  "dragon-fire": [
-    "/lovable-uploads/gratis-geo-bodysuit.jpg",
-    "/lovable-uploads/gratis-colorblock-squad.jpg",
-  ],
-  "variety-pack": [
-    "/lovable-uploads/gratis-canal-collection.jpg",
-    "/lovable-uploads/gratis-studio-crew.jpg",
-  ],
-};
-
 export default function Theurgy() {
+  const { t } = useTranslation();
   const [selectedFlavor, setSelectedFlavor] =
     useState<string>("citrus-carnival");
   const [selectedPack, setSelectedPack] = useState<string>("6");
   const { addItem } = useCart();
+
+  // Flavor data with translations
+  const theurgyFlavors = [
+    {
+      id: "citrus-carnival",
+      name: t("products.theurgy.flavors.citrusCarnival.name"),
+      subtitle: t("products.theurgy.flavors.citrusCarnival.subtitle"),
+      description: t("products.theurgy.flavors.citrusCarnival.description"),
+      image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
+      color: "#FFA500",
+      country: "Brazil",
+    },
+    {
+      id: "hibiscus-bloom",
+      name: t("products.theurgy.flavors.hibiscusBloom.name"),
+      subtitle: t("products.theurgy.flavors.hibiscusBloom.subtitle"),
+      description: t("products.theurgy.flavors.hibiscusBloom.description"),
+      image: "/lovable-uploads/gratis-neon-tank.jpg",
+      color: "#E91E63",
+      country: "India",
+    },
+    {
+      id: "dragon-fire",
+      name: t("products.theurgy.flavors.dragonFire.name"),
+      subtitle: t("products.theurgy.flavors.dragonFire.subtitle"),
+      description: t("products.theurgy.flavors.dragonFire.description"),
+      image: "/lovable-uploads/gratis-geo-bodysuit.jpg",
+      color: "#FF5722",
+      country: "China",
+    },
+    {
+      id: "variety-pack",
+      name: t("products.theurgy.flavors.varietyPack.name"),
+      subtitle: t("products.theurgy.flavors.varietyPack.subtitle"),
+      description: t("products.theurgy.flavors.varietyPack.description"),
+      image: "/lovable-uploads/gratis-canal-collection.jpg",
+      color: "#9C27B0",
+      country: "Global",
+    },
+  ];
+
+  // Pack options with translations
+  const theurgyPacks = [
+    {
+      value: "6",
+      label: "6-Pack",
+      price: 24.99,
+      savings: 0,
+      description: t("products.theurgy.packs.starter"),
+    },
+    {
+      value: "12",
+      label: "12-Pack",
+      price: 44.99,
+      savings: 10,
+      description: t("products.theurgy.packs.teamSize"),
+    },
+    {
+      value: "24",
+      label: "24-Pack",
+      price: 79.99,
+      savings: 20,
+      description: t("products.theurgy.packs.eventReady"),
+    },
+  ];
+
+  // Product images by flavor
+  const flavorImages: Record<string, string[]> = {
+    "citrus-carnival": [
+      "/lovable-uploads/gratis-lifestyle-drink.jpg",
+      "/lovable-uploads/gratis-street-duo.jpg",
+    ],
+    "hibiscus-bloom": [
+      "/lovable-uploads/gratis-neon-tank.jpg",
+      "/lovable-uploads/gratis-squad-look.jpg",
+    ],
+    "dragon-fire": [
+      "/lovable-uploads/gratis-geo-bodysuit.jpg",
+      "/lovable-uploads/gratis-colorblock-squad.jpg",
+    ],
+    "variety-pack": [
+      "/lovable-uploads/gratis-canal-collection.jpg",
+      "/lovable-uploads/gratis-studio-crew.jpg",
+    ],
+  };
 
   const currentFlavor =
     theurgyFlavors.find((f) => f.id === selectedFlavor) || theurgyFlavors[0];
@@ -137,8 +135,8 @@ export default function Theurgy() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="GRATIS Theurgy — Limited Edition Flavored Sparkling"
-        description="Premium flavored sparkling water for B2B partnerships. Citrus, Hibiscus, Dragonfruit - cultural celebrations in sustainable tetrapacks."
+        title={t("products.theurgy.seoTitle")}
+        description={t("products.theurgy.seoDescription")}
         canonical={
           typeof window !== "undefined" ? window.location.href : "/theurgy"
         }
@@ -157,14 +155,13 @@ export default function Theurgy() {
         <div className="container relative z-10">
           <div className="text-center">
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary text-sm font-bold rounded-full mb-4 animate-pulse">
-              LIMITED EDITION • B2B EXCLUSIVE
+              {t("products.theurgy.badge")}
             </span>
             <h1 className="text-5xl md:text-7xl font-black text-white mb-4">
-              THEURGY
+              {t("products.theurgy.title")}
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Premium flavored sparkling rituals for hospitality, corporate
-              wellness, and partnership programs.
+              {t("products.theurgy.hero")}
             </p>
           </div>
         </div>
@@ -189,10 +186,10 @@ export default function Theurgy() {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full border border-primary/30">
-                    100K SERIES
+                    {t("products.theurgy.seriesBadge")}
                   </span>
                   <span className="px-3 py-1 bg-accent/10 text-accent-foreground text-xs font-bold rounded-full">
-                    {currentFlavor.country} EDITION
+                    {currentFlavor.country} {t("products.theurgy.edition")}
                   </span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black text-foreground">
@@ -221,18 +218,22 @@ export default function Theurgy() {
               <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
                 <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm text-muted-foreground">Total Price</p>
+                    <p className="text-sm text-muted-foreground">
+                      {t("products.theurgy.totalPrice")}
+                    </p>
                     <p className="text-4xl font-black text-foreground">
                       €{currentPack.price.toFixed(2)}
                     </p>
                     {currentPack.savings > 0 && (
                       <p className="text-sm text-green-500 font-medium">
-                        You save {currentPack.savings}%
+                        {t("products.theurgy.youSave")} {currentPack.savings}%
                       </p>
                     )}
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-muted-foreground">Per can</p>
+                    <p className="text-sm text-muted-foreground">
+                      {t("products.theurgy.perCan")}
+                    </p>
                     <p className="text-lg font-bold text-foreground">
                       €{(currentPack.price / parseInt(selectedPack)).toFixed(2)}
                     </p>
@@ -245,12 +246,12 @@ export default function Theurgy() {
                   className="w-full text-lg h-14 font-bold"
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
-                  Add {currentPack.label} to Cart
+                  {t("products.theurgy.addToCart", { pack: currentPack.label })}
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
                   <Sparkles className="w-3 h-3 inline mr-1" />
-                  Golden Ticket prizes hidden in every production run
+                  {t("products.theurgy.goldenTicket")}
                 </p>
               </div>
 
@@ -258,18 +259,20 @@ export default function Theurgy() {
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Shield className="w-6 h-6 text-primary mx-auto mb-1" />
-                  <p className="text-xs text-muted-foreground">B2B Verified</p>
+                  <p className="text-xs text-muted-foreground">
+                    {t("products.theurgy.b2bVerified")}
+                  </p>
                 </div>
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Truck className="w-6 h-6 text-primary mx-auto mb-1" />
                   <p className="text-xs text-muted-foreground">
-                    Direct Delivery
+                    {t("products.theurgy.directDelivery")}
                   </p>
                 </div>
                 <div className="text-center p-3 bg-card rounded-xl border border-border">
                   <Award className="w-6 h-6 text-primary mx-auto mb-1" />
                   <p className="text-xs text-muted-foreground">
-                    Custom Branding
+                    {t("products.theurgy.customBranding")}
                   </p>
                 </div>
               </div>
@@ -285,7 +288,7 @@ export default function Theurgy() {
       <section className="bg-gradient-to-br from-gray-900 to-black py-20">
         <div className="container">
           <h2 className="text-4xl md:text-6xl font-black text-white text-center mb-16">
-            STORIES IN EVERY SIP
+            {t("products.theurgy.storiesTitle")}
           </h2>
 
           <div className="grid lg:grid-cols-3 gap-12">

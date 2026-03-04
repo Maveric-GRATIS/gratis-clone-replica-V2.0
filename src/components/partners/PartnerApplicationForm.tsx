@@ -32,8 +32,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
-import { db } from "@/firebase";
+import { db, functions } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { httpsCallable } from "firebase/functions";
 import {
   ORGANIZATION_TYPES,
   FOCUS_AREAS,
@@ -208,6 +209,13 @@ export function PartnerApplicationForm() {
         submittedAt: serverTimestamp(),
         createdAt: new Date().toISOString(),
       });
+
+      // Send email notification
+      const sendPartnerNotification = httpsCallable(
+        functions,
+        "sendPartnerApplicationNotification"
+      );
+      await sendPartnerNotification(formData);
 
       toast.success("Application submitted successfully!");
       // Redirect to confirmation page

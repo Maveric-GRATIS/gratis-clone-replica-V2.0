@@ -40,8 +40,9 @@ import {
   Calendar,
 } from "lucide-react";
 import { toast } from "sonner";
-import { db } from "@/firebase";
+import { db, functions } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { httpsCallable } from "firebase/functions";
 
 type ApplicationStep = 1 | 2 | 3 | 4;
 
@@ -187,6 +188,13 @@ export default function NGOApplication() {
           references: uploadedFiles.references?.name || null,
         },
       });
+
+      // Send email notification
+      const sendNGONotification = httpsCallable(
+        functions,
+        "sendNGOApplicationNotification"
+      );
+      await sendNGONotification(formData);
 
       toast.success(
         "Application submitted successfully! We'll review it within 5-7 business days.",

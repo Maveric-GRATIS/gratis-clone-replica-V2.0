@@ -6,9 +6,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { z } from "zod";
+import { db, functions } from "@/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { httpsCallable } from "firebase/functions";
 
 const inquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
+  email: z.string().email("Valid email is required"),
   type: z.enum(["brand", "ngo", "scholarship", "other"]),
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000),
 });
@@ -16,6 +20,7 @@ const inquirySchema = z.object({
 export default function InquiryForm() {
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     type: "",
     message: "",
   });
@@ -23,18 +28,33 @@ export default function InquiryForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const validated = inquirySchema.parse(formData);
       setIsSubmitting(true);
 
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      // Save to Firestore
+      await addDoc(collection(db, "inquiries"), {
+        ...validated,
+        status: "pending",
+        submittedAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
+      });
+
+      // Send email notification
+      const sendContactEmail = httpsCallable(functions, "sendContactEmail");
+      await sendContactEmail({
+        name: validated.name,
+        email: validated.email,
+        subject: `Inquiry: ${validated.type}`,
+        message: validated.message,
+      });
+
       toast.success("Inquiry submitted successfully! We'll get back to you soon.");
-      
-      setFormData({ name: "", type: "", message: "" });
+
+      setFormData({ name: "", email: "", type: "", message: "" });
     } catch (error) {
+      console.error("Error submitting inquiry:", error);
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
       } else {
@@ -60,9 +80,21 @@ export default function InquiryForm() {
       </div>
 
       <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          placeholder="your@email.com"
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label htmlFor="type">Inquiry Type</Label>
-        <Select 
-          value={formData.type} 
+        <Select
+          value={formData.type}
           onValueChange={(value) => setFormData({ ...formData, type: value })}
           required
         >
@@ -91,8 +123,8 @@ export default function InquiryForm() {
         />
       </div>
 
-      <Button 
-        type="submit" 
+      <Button
+        type="submit"
         className="w-full"
         disabled={isSubmitting}
       >

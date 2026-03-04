@@ -9,6 +9,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Loader2, UserPlus } from "lucide-react";
+import { db, functions } from "@/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { httpsCallable } from "firebase/functions";
 
 const volunteerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -59,10 +62,21 @@ export const VolunteerForm = () => {
     try {
       const validatedData = volunteerSchema.parse(formData);
 
-      console.log("Volunteer application submitted:", validatedData);
+      // Save to Firestore
+      toast.info("Submitting application...");
+      await addDoc(collection(db, "volunteerApplications"), {
+        ...validatedData,
+        status: "pending",
+        submittedAt: serverTimestamp(),
+        createdAt: new Date().toISOString(),
+      });
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Send email notification
+      const sendVolunteerNotification = httpsCallable(
+        functions,
+        "sendVolunteerApplicationNotification"
+      );
+      await sendVolunteerNotification(validatedData);
 
       toast.success("Application received! 🙌", {
         description: "We'll review your application and get back to you within 48 hours. Welcome to the crew!",
@@ -80,6 +94,7 @@ export const VolunteerForm = () => {
         motivation: "",
       });
     } catch (error) {
+      console.error("Error submitting volunteer application:", error);
       if (error instanceof z.ZodError) {
         toast.error(error.errors[0].message);
       } else {

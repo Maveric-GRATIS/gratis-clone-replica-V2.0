@@ -14,9 +14,10 @@ import {
 import { toast } from "sonner";
 import { z } from "zod";
 import { Loader2, Briefcase, Upload } from "lucide-react";
-import { db, storage } from "@/firebase";
+import { db, storage, functions } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { httpsCallable } from "firebase/functions";
 
 const jobApplicationSchema = z.object({
   position: z.string().min(1, "Please select a position"),
@@ -119,6 +120,16 @@ export const JobApplicationForm = () => {
         status: "pending",
         submittedAt: serverTimestamp(),
         createdAt: new Date().toISOString(),
+      });
+
+      // Send email notification
+      const sendJobNotification = httpsCallable(
+        functions,
+        "sendJobApplicationNotification"
+      );
+      await sendJobNotification({
+        ...validatedData,
+        resumeUrl,
       });
 
       toast.success("Application submitted! 🎉", {

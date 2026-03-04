@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -39,32 +46,35 @@ export default function Blog() {
   ];
 
   useEffect(() => {
-    loadPosts();
+    // Set up real-time listener for blog posts
+    const postsQuery = query(
+      collection(db, "blog_posts"),
+      where("published", "==", true),
+      orderBy("created_at", "desc"),
+    );
+
+    // Real-time listener - updates automatically when admin changes posts
+    const unsubscribe = onSnapshot(
+      postsQuery,
+      (snapshot) => {
+        const postsData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as BlogPost[];
+
+        console.log("Blog posts updated:", postsData.length);
+        setPosts(postsData);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error loading blog posts:", error);
+        setLoading(false);
+      },
+    );
+
+    // Cleanup listener on unmount
+    return () => unsubscribe();
   }, []);
-
-  const loadPosts = async () => {
-    try {
-      const postsQuery = query(
-        collection(db, "blog_posts"),
-        where("published", "==", true),
-        orderBy("created_at", "desc")
-      );
-
-      const snapshot = await getDocs(postsQuery);
-      const postsData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as BlogPost[];
-
-      console.log("Loaded blog posts:", postsData.length, postsData);
-      setPosts(postsData);
-    } catch (error) {
-      console.error("Error loading blog posts:", error);
-      console.error("Error details:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const filteredPosts =
     selectedCategory === "all"
@@ -78,9 +88,7 @@ export default function Blog() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-primary/10 to-primary/5 py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            GRATIS Blog
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">GRATIS Blog</h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
             Stories of impact, community updates, and the journey toward a
             better world.
@@ -141,7 +149,9 @@ export default function Blog() {
             <Badge
               key={category}
               variant={
-                selectedCategory === category.toLowerCase() ? "default" : "outline"
+                selectedCategory === category.toLowerCase()
+                  ? "default"
+                  : "outline"
               }
               className="cursor-pointer"
               onClick={() => setSelectedCategory(category.toLowerCase())}
@@ -194,7 +204,11 @@ export default function Blog() {
                   {post.tags && post.tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-4">
                       {post.tags.map((tag, idx) => (
-                        <Badge key={idx} variant="secondary" className="text-xs">
+                        <Badge
+                          key={idx}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {tag}
                         </Badge>
                       ))}

@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/firebase';
-import { collection, getDocs, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit, Timestamp, onSnapshot } from 'firebase/firestore';
+import { useEffect } from 'react';
 
 export interface Partner {
   id: string;
@@ -20,10 +21,12 @@ export interface Partner {
 }
 
 /**
- * Fetch all approved partners
+ * Fetch all approved partners with real-time updates
  */
 export function usePartners() {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['partners'],
     queryFn: async () => {
       const partnersCollection = collection(db, 'partners');
@@ -38,15 +41,42 @@ export function usePartners() {
         ...doc.data()
       })) as Partner[];
     },
-    staleTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: Infinity, // Keep data fresh via real-time listener
   });
+
+  // Real-time listener for automatic updates when admin changes partners
+  useEffect(() => {
+    const partnersCollection = collection(db, 'partners');
+    const q = query(
+      partnersCollection,
+      where('status', '==', 'approved'),
+      orderBy('createdAt', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const partners = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Partner[];
+
+        queryClient.setQueryData(['partners'], partners);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient]);
+
+  return queryResult;
 }
 
 /**
- * Fetch active approved partners only
+ * Fetch active approved partners only with real-time updates
  */
 export function useActivePartners() {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['partners', 'active'],
     queryFn: async () => {
       const partnersCollection = collection(db, 'partners');
@@ -62,8 +92,34 @@ export function useActivePartners() {
         ...doc.data()
       })) as Partner[];
     },
-    staleTime: 1000 * 60 * 10,
+    staleTime: Infinity,
   });
+
+  // Real-time listener
+  useEffect(() => {
+    const partnersCollection = collection(db, 'partners');
+    const q = query(
+      partnersCollection,
+      where('status', '==', 'approved'),
+      where('active', '==', true),
+      orderBy('createdAt', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const partners = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Partner[];
+
+        queryClient.setQueryData(['partners', 'active'], partners);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient]);
+
+  return queryResult;
 }
 
 /**

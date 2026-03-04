@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/firebase';
-import { collection, getDocs, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit, Timestamp, onSnapshot } from 'firebase/firestore';
+import { useEffect } from 'react';
 
 export interface Video {
   id: string;
@@ -19,10 +20,12 @@ export interface Video {
 }
 
 /**
- * Fetch all published videos
+ * Fetch all published videos with real-time updates
  */
 export function useVideos() {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['videos'],
     queryFn: async () => {
       const videosCollection = collection(db, 'videos');
@@ -37,8 +40,33 @@ export function useVideos() {
         ...doc.data()
       })) as Video[];
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity, // Keep data fresh via real-time listener
   });
+
+  // Real-time listener for automatic updates when admin changes videos
+  useEffect(() => {
+    const videosCollection = collection(db, 'videos');
+    const q = query(
+      videosCollection,
+      where('status', '==', 'published'),
+      orderBy('publishedAt', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const videos = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Video[];
+
+        queryClient.setQueryData(['videos'], videos);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient]);
+
+  return queryResult;
 }
 
 /**
@@ -67,10 +95,12 @@ export function useVideosByCategory(category: string) {
 }
 
 /**
- * Fetch featured videos
+ * Fetch featured videos with real-time updates
  */
 export function useFeaturedVideos(limitCount = 3) {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['videos', 'featured', limitCount],
     queryFn: async () => {
       const videosCollection = collection(db, 'videos');
@@ -87,8 +117,35 @@ export function useFeaturedVideos(limitCount = 3) {
         ...doc.data()
       })) as Video[];
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
+
+  // Real-time listener
+  useEffect(() => {
+    const videosCollection = collection(db, 'videos');
+    const q = query(
+      videosCollection,
+      where('status', '==', 'published'),
+      where('featured', '==', true),
+      orderBy('views', 'desc'),
+      limit(limitCount)
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const videos = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Video[];
+
+        queryClient.setQueryData(['videos', 'featured', limitCount], videos);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient, limitCount]);
+
+  return queryResult;
 }
 
 /**

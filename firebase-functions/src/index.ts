@@ -11,6 +11,9 @@ export * from "./mux-functions";
 export * from "./stripe-functions";
 export * from "./stripe-webhooks";
 
+// Export Forms functions
+export * from "./forms-functions";
+
 // Export Email and Notification services (available for import in other functions)
 export * from "./email-service";
 export * from "./notification-service";

@@ -45,6 +45,8 @@ __exportStar(require("./mux-functions"), exports);
 // Export Stripe functions
 __exportStar(require("./stripe-functions"), exports);
 __exportStar(require("./stripe-webhooks"), exports);
+// Export Forms functions
+__exportStar(require("./forms-functions"), exports);
 // Export Email and Notification services (available for import in other functions)
 __exportStar(require("./email-service"), exports);
 __exportStar(require("./notification-service"), exports);

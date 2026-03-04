@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/firebase';
-import { collection, getDocs, getDoc, doc, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, query, where, orderBy, limit, Timestamp, onSnapshot } from 'firebase/firestore';
+import { useEffect } from 'react';
 
 export interface Event {
   id: string;
@@ -21,10 +22,12 @@ export interface Event {
 }
 
 /**
- * Fetch all published events
+ * Fetch all published events with real-time updates
  */
 export function useEvents() {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['events'],
     queryFn: async () => {
       const eventsCollection = collection(db, 'events');
@@ -39,15 +42,46 @@ export function useEvents() {
         ...doc.data()
       })) as Event[];
     },
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: Infinity, // Keep data fresh via real-time listener
   });
+
+  // Set up real-time listener for automatic updates
+  useEffect(() => {
+    const eventsCollection = collection(db, 'events');
+    const q = query(
+      eventsCollection,
+      where('published', '==', true),
+      orderBy('date', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const events = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Event[];
+
+        // Update React Query cache with real-time data
+        queryClient.setQueryData(['events'], events);
+      },
+      (error) => {
+        console.error('Events real-time listener error:', error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient]);
+
+  return queryResult;
 }
 
 /**
- * Fetch upcoming events only
+ * Fetch upcoming events only with real-time updates
  */
 export function useUpcomingEvents(limitCount = 10) {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['events', 'upcoming', limitCount],
     queryFn: async () => {
       const eventsCollection = collection(db, 'events');
@@ -65,15 +99,45 @@ export function useUpcomingEvents(limitCount = 10) {
         ...doc.data()
       })) as Event[];
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
+
+  // Real-time listener for upcoming events
+  useEffect(() => {
+    const eventsCollection = collection(db, 'events');
+    const now = Timestamp.now();
+    const q = query(
+      eventsCollection,
+      where('published', '==', true),
+      where('date', '>=', now),
+      orderBy('date', 'asc'),
+      limit(limitCount)
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const events = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Event[];
+
+        queryClient.setQueryData(['events', 'upcoming', limitCount], events);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient, limitCount]);
+
+  return queryResult;
 }
 
 /**
- * Fetch featured events
+ * Fetch featured events with real-time updates
  */
 export function useFeaturedEvents(limitCount = 3) {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['events', 'featured', limitCount],
     queryFn: async () => {
       const eventsCollection = collection(db, 'events');
@@ -90,8 +154,35 @@ export function useFeaturedEvents(limitCount = 3) {
         ...doc.data()
       })) as Event[];
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
+
+  // Real-time listener
+  useEffect(() => {
+    const eventsCollection = collection(db, 'events');
+    const q = query(
+      eventsCollection,
+      where('published', '==', true),
+      where('featured', '==', true),
+      orderBy('date', 'desc'),
+      limit(limitCount)
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const events = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Event[];
+
+        queryClient.setQueryData(['events', 'featured', limitCount], events);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient, limitCount]);
+
+  return queryResult;
 }
 
 /**

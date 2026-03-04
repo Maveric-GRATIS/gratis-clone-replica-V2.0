@@ -213,11 +213,11 @@ export default function Index() {
       <LiveStatsBar />
 
       <main className="space-y-0 overflow-x-hidden max-w-full">
-        {/* ===== PRODUCT CAROUSEL - MOVED UP ===== */}
+        {/* ===== THIRST HAS NO BORDERS - PRODUCT CAROUSEL ===== */}
         <ProductCarousel />
 
-        {/* Product Features with Stagger Animation */}
-        <section className="bg-muted/30 py-20">
+        {/* ===== WHY CHOOSE GRATIS - Product Features ===== */}
+        <section className="bg-background py-20">
           <div className="container mx-auto px-4">
             <FadeInWhenVisible>
               <ProductFeatures
@@ -238,6 +238,182 @@ export default function Index() {
                 </Button>
               </div>
             </FadeInWhenVisible>
+          </div>
+        </section>
+
+        {/* ===== MORE THAN ADVERTISING - Advertising Partner CTA ===== */}
+        <FadeInWhenVisible direction="up">
+          <AdvertisingPartnerCTA />
+        </FadeInWhenVisible>
+
+        {/* ===== RIG COLLECTIONS - Merch Carousel ===== */}
+        <FadeInWhenVisible direction="up">
+          <MerchCarousel />
+          <div className="container text-center mt-8 mb-12">
+            <Button asChild size="lg" variant="outline" className="border-2">
+              <Link to="/rig">
+                Browse All Merch <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </FadeInWhenVisible>
+
+        {/* ===== THREE PILLARS SECTION ===== */}
+        <section
+          ref={pillarsRef}
+          className="py-24 bg-muted/30 relative overflow-hidden"
+        >
+          {/* Background Effects */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-hot-lime rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-electric-blue rounded-full blur-3xl" />
+          </div>
+
+          <div className="container relative z-10">
+            <FadeInWhenVisible>
+              <div className="text-center mb-16 space-y-4">
+                <Badge className="mb-4 bg-hot-magenta/10 text-hot-magenta border-hot-magenta/20">
+                  {t("home.impactPillarsBadge")}
+                </Badge>
+                <h2 className="text-4xl md:text-6xl font-bold">
+                  {t("home.threeWaysTitle")}{" "}
+                  <span className="text-hot-lime">
+                    {t("home.threeWaysTitleBold")}
+                  </span>
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                  {t("home.threeWaysSubtitle")}
+                </p>
+              </div>
+            </FadeInWhenVisible>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Pillar 1: Water */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-hot-lime/50 transition-all duration-300 hover:shadow-xl hover:shadow-hot-lime/20"
+              >
+                <div className="mb-6 w-16 h-16 rounded-full bg-hot-lime/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Droplet className="w-8 h-8 text-hot-lime" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-lime transition-colors">
+                  {t("home.pillar1Title")}
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  {t("home.pillar1Description")}
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-hot-lime" />
+                    <span>{t("home.pillar1Stat1")}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-hot-lime" />
+                    <span>{t("home.pillar1Stat2")}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-hot-lime" />
+                    <span>{t("home.pillar1Stat3")}</span>
+                  </div>
+                </div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full mt-4 text-hot-lime hover:text-hot-lime hover:bg-hot-lime/10"
+                >
+                  <Link to="/water">
+                    {t("home.learnMore")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
+
+              {/* Pillar 2: Arts */}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-hot-magenta/50 transition-all duration-300 hover:shadow-xl hover:shadow-hot-magenta/20"
+              >
+                <div className="mb-6 w-16 h-16 rounded-full bg-hot-magenta/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Palette className="w-8 h-8 text-hot-magenta" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-magenta transition-colors">
+                  {t("home.pillar2Title")}
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  {t("home.pillar2Description")}
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-hot-magenta" />
+                    <span>{t("home.pillar2Stat1")}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-hot-magenta" />
+                    <span>{t("home.pillar2Stat2")}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-hot-magenta" />
+                    <span>{t("home.pillar2Stat3")}</span>
+                  </div>
+                </div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full mt-4 text-hot-magenta hover:text-hot-magenta hover:bg-hot-magenta/10"
+                >
+                  <Link to="/theurgy">
+                    {t("home.learnMore")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
+
+              {/* Pillar 3: Education */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-electric-blue/50 transition-all duration-300 hover:shadow-xl hover:shadow-electric-blue/20"
+              >
+                <div className="mb-6 w-16 h-16 rounded-full bg-electric-blue/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <GraduationCap className="w-8 h-8 text-electric-blue" />
+                </div>
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-electric-blue transition-colors">
+                  {t("home.pillar3Title")}
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  {t("home.pillar3Description")}
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-electric-blue" />
+                    <span>{t("home.pillar3Stat1")}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-electric-blue" />
+                    <span>{t("home.pillar3Stat2")}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Check className="w-4 h-4 text-electric-blue" />
+                    <span>{t("home.pillar3Stat3")}</span>
+                  </div>
+                </div>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full mt-4 text-electric-blue hover:text-electric-blue hover:bg-electric-blue/10"
+                >
+                  <Link to="/fu">
+                    {t("home.learnMore")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </section>
 
@@ -416,165 +592,6 @@ export default function Index() {
           </div>
         </div>
 
-        {/* ===== THREE PILLARS SECTION WITH ANIMATIONS ===== */}
-        <section
-          ref={pillarsRef}
-          className="py-24 bg-muted/30 relative overflow-hidden"
-        >
-          {/* Background Effects */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-hot-lime rounded-full blur-3xl" />
-            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-electric-blue rounded-full blur-3xl" />
-          </div>
-
-          <div className="container relative z-10">
-            <FadeInWhenVisible>
-              <div className="text-center mb-16 space-y-4">
-                <Badge className="mb-4 bg-hot-magenta/10 text-hot-magenta border-hot-magenta/20">
-                  {t("home.impactPillarsBadge")}
-                </Badge>
-                <h2 className="text-4xl md:text-6xl font-bold">
-                  {t("home.threeWaysTitle")}{" "}
-                  <span className="text-hot-lime">
-                    {t("home.threeWaysTitleBold")}
-                  </span>
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  {t("home.threeWaysSubtitle")}
-                </p>
-              </div>
-            </FadeInWhenVisible>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Pillar 1: Water */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-hot-lime/50 transition-all duration-300 hover:shadow-xl hover:shadow-hot-lime/20"
-              >
-                <div className="mb-6 w-16 h-16 rounded-full bg-hot-lime/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Droplet className="w-8 h-8 text-hot-lime" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-lime transition-colors">
-                  {t("home.pillar1Title")}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {t("home.pillar1Description")}
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.pillar1Stat1")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.pillar1Stat2")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.pillar1Stat3")}</span>
-                  </div>
-                </div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="w-full mt-4 text-hot-lime hover:text-hot-lime hover:bg-hot-lime/10"
-                >
-                  <Link to="/water">
-                    {t("home.learnMore")}{" "}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
-
-              {/* Pillar 2: Arts */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-hot-magenta/50 transition-all duration-300 hover:shadow-xl hover:shadow-hot-magenta/20"
-              >
-                <div className="mb-6 w-16 h-16 rounded-full bg-hot-magenta/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Palette className="w-8 h-8 text-hot-magenta" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-magenta transition-colors">
-                  {t("home.pillar2Title")}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {t("home.pillar2Description")}
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>{t("home.pillar2Stat1")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>{t("home.pillar2Stat2")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>{t("home.pillar2Stat3")}</span>
-                  </div>
-                </div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="w-full mt-4 text-hot-magenta hover:text-hot-magenta hover:bg-hot-magenta/10"
-                >
-                  <Link to="/theurgy">
-                    {t("home.learnMore")}{" "}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
-
-              {/* Pillar 3: Education */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-electric-blue/50 transition-all duration-300 hover:shadow-xl hover:shadow-electric-blue/20"
-              >
-                <div className="mb-6 w-16 h-16 rounded-full bg-electric-blue/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <GraduationCap className="w-8 h-8 text-electric-blue" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-electric-blue transition-colors">
-                  {t("home.pillar3Title")}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {t("home.pillar3Description")}
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-electric-blue" />
-                    <span>{t("home.pillar3Stat1")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-electric-blue" />
-                    <span>{t("home.pillar3Stat2")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-electric-blue" />
-                    <span>{t("home.pillar3Stat3")}</span>
-                  </div>
-                </div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="w-full mt-4 text-electric-blue hover:text-electric-blue hover:bg-electric-blue/10"
-                >
-                  <Link to="/fu">
-                    {t("home.learnMore")}{" "}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
         {/* ===== TRUST INDICATORS WITH AVATARS ===== */}
         <section className="py-16 bg-background">
           <div className="container">
@@ -697,23 +714,6 @@ export default function Index() {
             </FadeInWhenVisible>
           </div>
         </section>
-
-        {/* Advertising Partner CTA */}
-        <FadeInWhenVisible direction="up">
-          <AdvertisingPartnerCTA />
-        </FadeInWhenVisible>
-
-        {/* Merch Collection - Compact Carousel */}
-        <FadeInWhenVisible direction="up">
-          <MerchCarousel />
-          <div className="container text-center mt-8 mb-12">
-            <Button asChild size="lg" variant="outline" className="border-2">
-              <Link to="/rig">
-                Browse All Merch <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </FadeInWhenVisible>
 
         {/* ===== FINAL CTA SECTION WITH PARALLAX ===== */}
         <section className="relative py-32 overflow-hidden">

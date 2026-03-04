@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/firebase';
-import { collection, getDocs, query, where, orderBy, limit, Timestamp } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit, Timestamp, onSnapshot } from 'firebase/firestore';
+import { useEffect } from 'react';
 
 export interface Project {
   id: string;
@@ -18,10 +19,12 @@ export interface Project {
 }
 
 /**
- * Fetch all active projects
+ * Fetch all active projects with real-time updates
  */
 export function useProjects() {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['projects'],
     queryFn: async () => {
       const projectsCollection = collection(db, 'projects');
@@ -36,8 +39,33 @@ export function useProjects() {
         ...doc.data()
       })) as Project[];
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity, // Keep data fresh via real-time listener
   });
+
+  // Real-time listener - updates automatically when admin changes projects
+  useEffect(() => {
+    const projectsCollection = collection(db, 'projects');
+    const q = query(
+      projectsCollection,
+      where('status', '==', 'active'),
+      orderBy('createdAt', 'desc')
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const projects = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Project[];
+
+        queryClient.setQueryData(['projects'], projects);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient]);
+
+  return queryResult;
 }
 
 /**
@@ -66,10 +94,12 @@ export function useProjectsByCategory(category: string) {
 }
 
 /**
- * Fetch featured/trending projects
+ * Fetch featured/trending projects with real-time updates
  */
 export function useFeaturedProjects(limitCount = 3) {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const queryResult = useQuery({
     queryKey: ['projects', 'featured', limitCount],
     queryFn: async () => {
       const projectsCollection = collection(db, 'projects');
@@ -85,6 +115,32 @@ export function useFeaturedProjects(limitCount = 3) {
         ...doc.data()
       })) as Project[];
     },
-    staleTime: 1000 * 60 * 5,
+    staleTime: Infinity,
   });
+
+  // Real-time listener
+  useEffect(() => {
+    const projectsCollection = collection(db, 'projects');
+    const q = query(
+      projectsCollection,
+      where('status', '==', 'active'),
+      orderBy('raised', 'desc'),
+      limit(limitCount)
+    );
+
+    const unsubscribe = onSnapshot(q,
+      (snapshot) => {
+        const projects = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Project[];
+
+        queryClient.setQueryData(['projects', 'featured', limitCount], projects);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [queryClient, limitCount]);
+
+  return queryResult;
 }

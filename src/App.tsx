@@ -344,816 +344,840 @@ const AppContent = () => {
       <div className="overflow-x-hidden">
         <PageTransition>
           <ErrorBoundary resetKeys={[location.pathname]}>
-          <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/maintenance" element={<Maintenance />} />
-            <Route path="/api/health" element={<HealthCheck />} />
-            {/* Part Test Pages */}
-            <Route path="/part1-test" element={<Part1Test />} />
-            <Route path="/part2-test" element={<Part2Test />} />
-            <Route path="/part3-test" element={<Part3Test />} />
-            <Route path="/part4-test" element={<Part4Test />} />
-            <Route path="/part5-test" element={<Part5Test />} />
-            <Route path="/part6-test" element={<Part6Test />} />
-            <Route path="/part11-test" element={<Part11Test />} />
-            <Route path="/part12-test" element={<Part12Test />} />
-            <Route path="/part13-test" element={<Part13Test />} />
-            <Route path="/part14-test" element={<Part14Test />} />
-            <Route path="/part16-test" element={<Part16Test />} />
-            <Route path="/part17-test" element={<Part17Test />} />
-            <Route path="/part18-test" element={<Part18Test />} />
-            <Route path="/part19-test" element={<Part19Test />} />
-            <Route path="/activity-demo" element={<ActivityDemo />} />
-            <Route path="/activity-feed" element={<ActivityDemoPage />} />
-            <Route path="/status" element={<PublicStatusPage />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/auth/callback" element={<SocialAuthCallback />} />
-            <Route path="/rig" element={<RigStore />} />
-            <Route path="/rig/prime-picks" element={<PrimePicks />} />
-            <Route path="/rig/apex-arrivals" element={<ApexArrivals />} />
-            <Route path="/rig/imbued-icons" element={<ImbuedIcons />} />
-            <Route path="/rig/dazzle-drip" element={<DazzleDrip />} />
-            <Route path="/rig/charmed-cozies" element={<CharmedCozies />} />
-            <Route path="/rig/occult-originals" element={<OccultOriginals />} />
-            <Route path="/rig/nexus-noggin" element={<NexusNoggin />} />
-            <Route path="/rig/nebula-novelties" element={<NebulaNovelties />} />
-            <Route
-              path="/rig/collection/:slug"
-              element={<CollectionDetail />}
-            />
-            <Route path="/rig/:slug" element={<ProductDetail />} />
-            {/* Legacy route redirect */}
-            <Route path="/rig-store" element={<RigStore />} />
-            <Route
-              path="/rig-store/collection/:slug"
-              element={<CollectionDetail />}
-            />
-            <Route path="/rig-store/:slug" element={<ProductDetail />} />
-            <Route path="/hydration" element={<HydrationStore />} />
-            <Route path="/hydration/:slug" element={<ProductDetail />} />
-            <Route path="/gratis" element={<Gratis />} />
-            <Route path="/gratis/water" element={<Water />} />
-            <Route path="/gratis/theurgy" element={<Theurgy />} />
-            <Route path="/gratis/fu" element={<FU />} />
-            {/* Legacy route redirects */}
-            <Route path="/water" element={<Water />} />
-            <Route path="/theurgy" element={<Theurgy />} />
-            <Route path="/fu" element={<FU />} />
-            <Route path="/arcane" element={<Arcane />} />
-            {/* Partners route moved to Part 7 section */}
-            <Route path="/corporate" element={<Corporate />} />
-            <Route path="/press" element={<Press />} />
-            <Route path="/impact" element={<Impact />} />
-            <Route path="/impact/projects" element={<ImpactProjects />} />
-            <Route path="/impact/projects/:slug" element={<ProjectDetail />} />
-            <Route path="/ngo-application" element={<NGOApplication />} />
-            <Route path="/community" element={<Community />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/campaigns" element={<Campaigns />} />
-            <Route path="/social-demo" element={<SocialDemo />} />
-            <Route path="/route-test" element={<RouteTest />} />
-            <Route path="/tribe" element={<Tribe />} />
-            <Route path="/tribe/heritage" element={<Heritage />} />
-            <Route path="/tribe/ethics" element={<Ethics />} />
-            <Route path="/tribe/team" element={<Team />} />
-            <Route path="/tribe/standards" element={<Standards />} />
-            <Route path="/tribe/responsibility" element={<Responsibility />} />
-            <Route path="/tribe/accountability" element={<Accountability />} />
-            <Route path="/tribe/transparency" element={<Transparency />} />
-            <Route path="/tribe/compliance" element={<Compliance />} />
-            <Route path="/tribe/terms" element={<Terms />} />
-            <Route path="/tribe/privacy" element={<Privacy />} />
-            <Route path="/tribe/cookies" element={<Cookies />} />
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/maintenance" element={<Maintenance />} />
+                <Route path="/api/health" element={<HealthCheck />} />
+                {/* Part Test Pages */}
+                <Route path="/part1-test" element={<Part1Test />} />
+                <Route path="/part2-test" element={<Part2Test />} />
+                <Route path="/part3-test" element={<Part3Test />} />
+                <Route path="/part4-test" element={<Part4Test />} />
+                <Route path="/part5-test" element={<Part5Test />} />
+                <Route path="/part6-test" element={<Part6Test />} />
+                <Route path="/part11-test" element={<Part11Test />} />
+                <Route path="/part12-test" element={<Part12Test />} />
+                <Route path="/part13-test" element={<Part13Test />} />
+                <Route path="/part14-test" element={<Part14Test />} />
+                <Route path="/part16-test" element={<Part16Test />} />
+                <Route path="/part17-test" element={<Part17Test />} />
+                <Route path="/part18-test" element={<Part18Test />} />
+                <Route path="/part19-test" element={<Part19Test />} />
+                <Route path="/activity-demo" element={<ActivityDemo />} />
+                <Route path="/activity-feed" element={<ActivityDemoPage />} />
+                <Route path="/status" element={<PublicStatusPage />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/auth/callback" element={<SocialAuthCallback />} />
+                <Route path="/rig" element={<RigStore />} />
+                <Route path="/rig/prime-picks" element={<PrimePicks />} />
+                <Route path="/rig/apex-arrivals" element={<ApexArrivals />} />
+                <Route path="/rig/imbued-icons" element={<ImbuedIcons />} />
+                <Route path="/rig/dazzle-drip" element={<DazzleDrip />} />
+                <Route path="/rig/charmed-cozies" element={<CharmedCozies />} />
+                <Route
+                  path="/rig/occult-originals"
+                  element={<OccultOriginals />}
+                />
+                <Route path="/rig/nexus-noggin" element={<NexusNoggin />} />
+                <Route
+                  path="/rig/nebula-novelties"
+                  element={<NebulaNovelties />}
+                />
+                <Route
+                  path="/rig/collection/:slug"
+                  element={<CollectionDetail />}
+                />
+                <Route path="/rig/:slug" element={<ProductDetail />} />
+                {/* Legacy route redirect */}
+                <Route path="/rig-store" element={<RigStore />} />
+                <Route
+                  path="/rig-store/collection/:slug"
+                  element={<CollectionDetail />}
+                />
+                <Route path="/rig-store/:slug" element={<ProductDetail />} />
+                <Route path="/hydration" element={<HydrationStore />} />
+                <Route path="/hydration/:slug" element={<ProductDetail />} />
+                <Route path="/gratis" element={<Gratis />} />
+                <Route path="/gratis/water" element={<Water />} />
+                <Route path="/gratis/theurgy" element={<Theurgy />} />
+                <Route path="/gratis/fu" element={<FU />} />
+                {/* Legacy route redirects */}
+                <Route path="/water" element={<Water />} />
+                <Route path="/theurgy" element={<Theurgy />} />
+                <Route path="/fu" element={<FU />} />
+                <Route path="/arcane" element={<Arcane />} />
+                {/* Partners route moved to Part 7 section */}
+                <Route path="/corporate" element={<Corporate />} />
+                <Route path="/press" element={<Press />} />
+                <Route path="/impact" element={<Impact />} />
+                <Route path="/impact/projects" element={<ImpactProjects />} />
+                <Route
+                  path="/impact/projects/:slug"
+                  element={<ProjectDetail />}
+                />
+                <Route path="/ngo-application" element={<NGOApplication />} />
+                <Route path="/community" element={<Community />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/campaigns" element={<Campaigns />} />
+                <Route path="/social-demo" element={<SocialDemo />} />
+                <Route path="/route-test" element={<RouteTest />} />
+                <Route path="/tribe" element={<Tribe />} />
+                <Route path="/tribe/heritage" element={<Heritage />} />
+                <Route path="/tribe/ethics" element={<Ethics />} />
+                <Route path="/tribe/team" element={<Team />} />
+                <Route path="/tribe/standards" element={<Standards />} />
+                <Route
+                  path="/tribe/responsibility"
+                  element={<Responsibility />}
+                />
+                <Route
+                  path="/tribe/accountability"
+                  element={<Accountability />}
+                />
+                <Route path="/tribe/transparency" element={<Transparency />} />
+                <Route path="/tribe/compliance" element={<Compliance />} />
+                <Route path="/tribe/terms" element={<Terms />} />
+                <Route path="/tribe/privacy" element={<Privacy />} />
+                <Route path="/tribe/cookies" element={<Cookies />} />
 
-            {/* TRIBE Membership Routes */}
-            <Route path="/tribe/signup" element={<TribeSignup />} />
-            <Route
-              path="/tribe/dashboard"
-              element={
-                <ProtectedRoute>
-                  <TribeDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tribe/voting"
-              element={
-                <ProtectedRoute>
-                  <TribeVoting />
-                </ProtectedRoute>
-              }
-            />
+                {/* TRIBE Membership Routes */}
+                <Route path="/tribe/signup" element={<TribeSignup />} />
+                <Route
+                  path="/tribe/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <TribeDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/tribe/voting"
+                  element={
+                    <ProtectedRoute>
+                      <TribeVoting />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Legal Pages */}
-            <Route path="/legal/privacy" element={<LegalPages.Privacy />} />
-            <Route path="/legal/terms" element={<LegalPages.Terms />} />
-            <Route path="/legal/cookies" element={<LegalPages.Cookies />} />
-            <Route
-              path="/legal/donor-privacy"
-              element={<LegalPages.DonorPrivacy />}
-            />
-            <Route
-              path="/legal/accessibility"
-              element={<LegalPages.Accessibility />}
-            />
-            <Route
-              path="/legal/disclaimer"
-              element={<LegalPages.Disclaimer />}
-            />
+                {/* Legal Pages */}
+                <Route path="/legal/privacy" element={<LegalPages.Privacy />} />
+                <Route path="/legal/terms" element={<LegalPages.Terms />} />
+                <Route path="/legal/cookies" element={<LegalPages.Cookies />} />
+                <Route
+                  path="/legal/donor-privacy"
+                  element={<LegalPages.DonorPrivacy />}
+                />
+                <Route
+                  path="/legal/accessibility"
+                  element={<LegalPages.Accessibility />}
+                />
+                <Route
+                  path="/legal/disclaimer"
+                  element={<LegalPages.Disclaimer />}
+                />
 
-            <Route path="/impact-tv" element={<ImpactTV />} />
-            <Route path="/impact-tv/nexus" element={<Nexus />} />
-            <Route path="/impact-tv/yarns" element={<Yarns />} />
-            <Route path="/impact-tv/unveil" element={<Unveil />} />
-            <Route path="/impact-tv/icon" element={<Icon />} />
-            <Route path="/impact-tv/tales" element={<Tales />} />
+                <Route path="/impact-tv" element={<ImpactTV />} />
+                <Route path="/impact-tv/nexus" element={<Nexus />} />
+                <Route path="/impact-tv/yarns" element={<Yarns />} />
+                <Route path="/impact-tv/unveil" element={<Unveil />} />
+                <Route path="/impact-tv/icon" element={<Icon />} />
+                <Route path="/impact-tv/tales" element={<Tales />} />
 
-            {/* Video Platform Routes */}
-            <Route path="/videos" element={<Videos />} />
-            <Route path="/videos/:slug" element={<VideoDetail />} />
+                {/* Video Platform Routes */}
+                <Route path="/videos" element={<Videos />} />
+                <Route path="/videos/:slug" element={<VideoDetail />} />
 
-            <Route path="/spark" element={<Spark />} />
-            <Route path="/spark/donate" element={<DonateNew />} />
-            <Route path="/spark/donate/legacy" element={<Donate />} />
-            <Route
-              path="/spark/donate/manage"
-              element={
-                <ProtectedRoute>
-                  <ManageRecurringDonations />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/spark/verve" element={<Verve />} />
-            <Route path="/spark/infuse" element={<Infuse />} />
-            <Route path="/spark/blaze" element={<Blaze />} />
-            <Route path="/spark/enlist" element={<Enlist />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/checkout/success" element={<CheckoutSuccess />} />
-            <Route path="/checkout/cancel" element={<CheckoutCancel />} />
-            <Route
-              path="/order-confirmation/:orderId"
-              element={<OrderConfirmation />}
-            />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/orders/:orderId" element={<OrderDetail />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/bottles" element={<DashboardBottles />} />
-            <Route path="/dashboard/vote" element={<DashboardVote />} />
-            <Route path="/dashboard/settings" element={<DashboardSettings />} />
-            <Route path="/referrals" element={<Referrals />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/:userId" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route
-              path="/settings/notifications"
-              element={<NotificationSettings />}
-            />
+                <Route path="/spark" element={<Spark />} />
+                <Route path="/spark/donate" element={<DonateNew />} />
+                <Route path="/spark/donate/legacy" element={<Donate />} />
+                <Route
+                  path="/spark/donate/manage"
+                  element={
+                    <ProtectedRoute>
+                      <ManageRecurringDonations />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/spark/verve" element={<Verve />} />
+                <Route path="/spark/infuse" element={<Infuse />} />
+                <Route path="/spark/blaze" element={<Blaze />} />
+                <Route path="/spark/enlist" element={<Enlist />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/checkout/success" element={<CheckoutSuccess />} />
+                <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+                <Route
+                  path="/order-confirmation/:orderId"
+                  element={<OrderConfirmation />}
+                />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/orders/:orderId" element={<OrderDetail />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route
+                  path="/dashboard/bottles"
+                  element={<DashboardBottles />}
+                />
+                <Route path="/dashboard/vote" element={<DashboardVote />} />
+                <Route
+                  path="/dashboard/settings"
+                  element={<DashboardSettings />}
+                />
+                <Route path="/referrals" element={<Referrals />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/:userId" element={<Profile />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route
+                  path="/settings/notifications"
+                  element={<NotificationSettings />}
+                />
 
-            {/* Events Routes */}
-            <Route path="/events" element={<Events />} />
-            <Route path="/events/:id" element={<EventDetail />} />
+                {/* Events Routes */}
+                <Route path="/events" element={<Events />} />
+                <Route path="/events/:id" element={<EventDetail />} />
 
-            {/* Admin Routes - New Admin Panel with Enhanced Layout */}
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <NewAdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/products"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminProducts />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/orders"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminOrders />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/users"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminUsers />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/videos"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminVideos />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/campaigns"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminCampaigns />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/events"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminEvents />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/blog"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminBlogPosts />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/event-checkin"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminEventCheckIn />
-                </ProtectedRoute>
-              }
-            />
+                {/* Admin Routes - New Admin Panel with Enhanced Layout */}
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <NewAdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/products"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminProducts />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/orders"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminOrders />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/users"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminUsers />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/videos"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminVideos />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/campaigns"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminCampaigns />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/events"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminEvents />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/blog"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminBlogPosts />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/event-checkin"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminEventCheckIn />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Donations */}
-            <Route
-              path="/admin/donations"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminDonations />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/donations/campaigns"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminDonationCampaigns />
-                </ProtectedRoute>
-              }
-            />
+                {/* Donations */}
+                <Route
+                  path="/admin/donations"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminDonations />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/donations/campaigns"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminDonationCampaigns />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Users & TRIBE */}
-            <Route
-              path="/admin/users/tribe"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminTribeMembers />
-                </ProtectedRoute>
-              }
-            />
+                {/* Users & TRIBE */}
+                <Route
+                  path="/admin/users/tribe"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminTribeMembers />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Partners */}
-            <Route
-              path="/admin/partners"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminPartners />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/partners/applications"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminPartnerApplications />
-                </ProtectedRoute>
-              }
-            />
+                {/* Partners */}
+                <Route
+                  path="/admin/partners"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminPartners />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/partners/applications"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminPartnerApplications />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Voting */}
-            <Route
-              path="/admin/voting"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminVoting />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/voting/results"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminVotingResults />
-                </ProtectedRoute>
-              }
-            />
+                {/* Voting */}
+                <Route
+                  path="/admin/voting"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminVoting />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/voting/results"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminVotingResults />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Communications */}
-            <Route
-              path="/admin/emails"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminEmails />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/emails/logs"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <EmailLogsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/emails/templates"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <EmailTemplatesPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/notifications"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminNotifications />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/errors"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <ErrorTrackingDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/media"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <MediaManagerPage />
-                </ProtectedRoute>
-              }
-            />
+                {/* Communications */}
+                <Route
+                  path="/admin/emails"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminEmails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/emails/logs"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <EmailLogsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/emails/templates"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <EmailTemplatesPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/notifications"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminNotifications />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/errors"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <ErrorTrackingDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/media"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <MediaManagerPage />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Analytics */}
-            <Route
-              path="/admin/analytics"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminAnalytics />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/analytics/traffic"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminAnalyticsTraffic />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/analytics/impact"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminAnalyticsImpact />
-                </ProtectedRoute>
-              }
-            />
+                {/* Analytics */}
+                <Route
+                  path="/admin/analytics"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminAnalytics />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/analytics/traffic"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminAnalyticsTraffic />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/analytics/impact"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminAnalyticsImpact />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Settings */}
-            <Route
-              path="/admin/settings"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminSettings />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/settings/integrations"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminSettingsIntegrations />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/developer"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <DeveloperKeys />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/scheduler"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <ScheduledJobs />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/config"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <PlatformConfig />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/rate-limits"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <RateLimitsDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/files"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <FileManagerPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/import"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <DataImportPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/bulk"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <BulkOperationsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/dashboards"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <DashboardsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/dashboards/:id"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <DashboardViewPage />
-                </ProtectedRoute>
-              }
-            />
+                {/* Settings */}
+                <Route
+                  path="/admin/settings"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminSettings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/settings/integrations"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminSettingsIntegrations />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/developer"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DeveloperKeys />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/scheduler"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <ScheduledJobs />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/config"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <PlatformConfig />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/rate-limits"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <RateLimitsDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/files"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <FileManagerPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/import"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DataImportPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/bulk"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <BulkOperationsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/dashboards"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DashboardsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/dashboards/:id"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DashboardViewPage />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Legacy Admin Routes (keep for backwards compatibility) */}
-            <Route
-              path="/admin/dashboard"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/old/*"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
+                {/* Legacy Admin Routes (keep for backwards compatibility) */}
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/old/*"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <Admin />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Part 6: Partner System - Public Pages */}
-            <Route
-              path="/partners/apply"
-              element={<PartnerApplicationPage />}
-            />
-            <Route
-              path="/partners/apply/confirmation"
-              element={<ApplicationConfirmation />}
-            />
+                {/* Part 6: Partner System - Public Pages */}
+                <Route
+                  path="/partners/apply"
+                  element={<PartnerApplicationPage />}
+                />
+                <Route
+                  path="/partners/apply/confirmation"
+                  element={<ApplicationConfirmation />}
+                />
 
-            {/* Part 6: Partner System - Admin Pages */}
-            <Route
-              path="/admin/partners/applications"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminApplicationsList />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/partners/applications/:id"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminApplicationReview />
-                </ProtectedRoute>
-              }
-            />
+                {/* Part 6: Partner System - Admin Pages */}
+                <Route
+                  path="/admin/partners/applications"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminApplicationsList />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/partners/applications/:id"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminApplicationReview />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Part 6: Partner Dashboard - Protected Area */}
-            <Route
-              path="/partner"
-              element={
-                <ProtectedRoute requireAuth>
-                  <PartnerDashboardLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<PartnerDashboard />} />
-              <Route path="projects" element={<PartnerProjects />} />
-              <Route path="projects/new" element={<ProjectForm />} />
-              <Route path="projects/:id" element={<ProjectForm />} />
-              <Route path="donations" element={<PartnerDonations />} />
-              <Route path="analytics" element={<PartnerAnalytics />} />
-              <Route path="team" element={<PartnerTeam />} />
-              <Route path="reports" element={<PartnerReports />} />
-              <Route path="notifications" element={<PartnerNotifications />} />
-              <Route path="settings" element={<PartnerSettings />} />
-              <Route path="support" element={<PartnerSupport />} />
-            </Route>
+                {/* Part 6: Partner Dashboard - Protected Area */}
+                <Route
+                  path="/partner"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <PartnerDashboardLayout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<PartnerDashboard />} />
+                  <Route path="projects" element={<PartnerProjects />} />
+                  <Route path="projects/new" element={<ProjectForm />} />
+                  <Route path="projects/:id" element={<ProjectForm />} />
+                  <Route path="donations" element={<PartnerDonations />} />
+                  <Route path="analytics" element={<PartnerAnalytics />} />
+                  <Route path="team" element={<PartnerTeam />} />
+                  <Route path="reports" element={<PartnerReports />} />
+                  <Route
+                    path="notifications"
+                    element={<PartnerNotifications />}
+                  />
+                  <Route path="settings" element={<PartnerSettings />} />
+                  <Route path="support" element={<PartnerSupport />} />
+                </Route>
 
-            {/* Part 7: Public Partner Directory & Discovery */}
-            <Route path="/partners" element={<PartnersDirectory />} />
-            <Route path="/partners/:slug" element={<PartnerProfile />} />
+                {/* Part 7: Public Partner Directory & Discovery */}
+                <Route path="/partners" element={<PartnersDirectory />} />
+                <Route path="/partners/:slug" element={<PartnerProfile />} />
 
-            {/* Part 7: Messaging System */}
-            <Route
-              path="/messages"
-              element={
-                <ProtectedRoute requireAuth>
-                  <MessagingCenter />
-                </ProtectedRoute>
-              }
-            />
+                {/* Part 7: Messaging System */}
+                <Route
+                  path="/messages"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <MessagingCenter />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Part 7: PWA Offline Page */}
-            <Route path="/offline" element={<OfflinePage />} />
+                {/* Part 7: PWA Offline Page */}
+                <Route path="/offline" element={<OfflinePage />} />
 
-            {/* Part 7: Test Page */}
-            <Route path="/part7-test" element={<Part7Test />} />
+                {/* Part 7: Test Page */}
+                <Route path="/part7-test" element={<Part7Test />} />
 
-            {/* Part 8: Gamification & Community */}
-            <Route
-              path="/gamification"
-              element={
-                <ProtectedRoute requireAuth>
-                  <GamificationProfile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/support"
-              element={
-                <ProtectedRoute requireAuth>
-                  <SupportTickets />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/part8-test" element={<Part8Test />} />
-            <Route path="/part15-test" element={<Part15Test />} />
-            <Route
-              path="/admin/support"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdminSupportDashboard />
-                </ProtectedRoute>
-              }
-            />
+                {/* Part 8: Gamification & Community */}
+                <Route
+                  path="/gamification"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <GamificationProfile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/support"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <SupportTickets />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/leaderboard" element={<Leaderboard />} />
+                <Route path="/part8-test" element={<Part8Test />} />
+                <Route path="/part15-test" element={<Part15Test />} />
+                <Route
+                  path="/admin/support"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdminSupportDashboard />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* Part 9: Push Notifications, A/B Testing, Analytics, Volunteers */}
-            <Route
-              path="/settings/push-notifications"
-              element={
-                <ProtectedRoute requireAuth>
-                  <PushNotificationSettings />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/experiments"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <ABTestingDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/analytics-advanced"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AnalyticsDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/volunteer" element={<VolunteerOpportunities />} />
-            <Route path="/part9-test" element={<Part9Test />} />
+                {/* Part 9: Push Notifications, A/B Testing, Analytics, Volunteers */}
+                <Route
+                  path="/settings/push-notifications"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <PushNotificationSettings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/experiments"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <ABTestingDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/analytics-advanced"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AnalyticsDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/volunteer" element={<VolunteerOpportunities />} />
+                <Route path="/part9-test" element={<Part9Test />} />
 
-            {/* Part 10: Inventory, Tax Receipts, Integrations, White-label */}
-            <Route
-              path="/admin/inventory"
-              element="{
+                {/* Part 10: Inventory, Tax Receipts, Integrations, White-label */}
+                <Route
+                  path="/admin/inventory"
+                  element="{
                 <ProtectedRoute requireAdmin>
                   <InventoryManagement />
                 </ProtectedRoute>
               }"
-            />
-            <Route
-              path="/admin/tax-receipts"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <TaxReceipts />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/integrations"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <IntegrationMarketplace />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/white-label"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <WhiteLabelConfig />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/part10-test" element={<Part10Test />} />
+                />
+                <Route
+                  path="/admin/tax-receipts"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <TaxReceipts />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/integrations"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <IntegrationMarketplace />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/white-label"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <WhiteLabelConfig />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/part10-test" element={<Part10Test />} />
 
-            {/* PART 11 ROUTES - Enterprise Features (Sections 43-48) */}
-            <Route
-              path="/admin/analytics-advanced"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AdvancedAnalyticsDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/privacy" element={<GDPRComplianceDashboard />} />
-            <Route
-              path="/donations/subscribe"
-              element={
-                <ProtectedRoute requireAuth>
-                  <SubscriptionManagement />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/refunds"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <RefundManagement />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/monitoring"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <SystemMonitor />
-                </ProtectedRoute>
-              }
-            />
+                {/* PART 11 ROUTES - Enterprise Features (Sections 43-48) */}
+                <Route
+                  path="/admin/analytics-advanced"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AdvancedAnalyticsDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/privacy" element={<GDPRComplianceDashboard />} />
+                <Route
+                  path="/donations/subscribe"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <SubscriptionManagement />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/refunds"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <RefundManagement />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/monitoring"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <SystemMonitor />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* PART 14 ROUTES - Enterprise Features (Sections 59-63) */}
-            <Route
-              path="/admin/seo-manager"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <SEOManager />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/feature-flags"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <FeatureFlagsManager />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/data-export"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <DataExportManager />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/mfa-settings"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <MFASettings />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/moderation-queue"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <ModerationQueue />
-                </ProtectedRoute>
-              }
-            />
+                {/* PART 14 ROUTES - Enterprise Features (Sections 59-63) */}
+                <Route
+                  path="/admin/seo-manager"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <SEOManager />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/feature-flags"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <FeatureFlagsManager />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/data-export"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <DataExportManager />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/mfa-settings"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <MFASettings />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/moderation-queue"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <ModerationQueue />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* User Settings Routes */}
-            <Route
-              path="/settings/security"
-              element={
-                <ProtectedRoute requireAuth>
-                  <UserMFASettings />
-                </ProtectedRoute>
-              }
-            />
+                {/* User Settings Routes */}
+                <Route
+                  path="/settings/security"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <UserMFASettings />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* PART 15 ROUTES - Enterprise APIs & Platform Management (Sections 64-68) */}
-            <Route
-              path="/developer/api-keys"
-              element={
-                <ProtectedRoute requireAuth>
-                  <DeveloperAPIKeys />
-                </ProtectedRoute>
-              }
-            />
-            {/* Scheduler route moved to Part 17 - see /admin/scheduler above */}
-            <Route
-              path="/admin/platform-settings"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <PlatformSettings />
-                </ProtectedRoute>
-              }
-            />
+                {/* PART 15 ROUTES - Enterprise APIs & Platform Management (Sections 64-68) */}
+                <Route
+                  path="/developer/api-keys"
+                  element={
+                    <ProtectedRoute requireAuth>
+                      <DeveloperAPIKeys />
+                    </ProtectedRoute>
+                  }
+                />
+                {/* Scheduler route moved to Part 17 - see /admin/scheduler above */}
+                <Route
+                  path="/admin/platform-settings"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <PlatformSettings />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* PART 16 ROUTES - Enterprise Backend (Sections 69-73) */}
-            <Route
-              path="/admin/audit-logs"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <AuditLogViewer />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/roles"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <RoleManagement />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/tenants"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <TenantManager />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/webhooks"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <WebhookManager />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/graphql"
-              element={
-                <ProtectedRoute requireAdmin>
-                  <GraphQLExplorer />
-                </ProtectedRoute>
-              }
-            />
+                {/* PART 16 ROUTES - Enterprise Backend (Sections 69-73) */}
+                <Route
+                  path="/admin/audit-logs"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <AuditLogViewer />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/roles"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <RoleManagement />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/tenants"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <TenantManager />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/webhooks"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <WebhookManager />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/graphql"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <GraphQLExplorer />
+                    </ProtectedRoute>
+                  }
+                />
 
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-          </Suspense>
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
           </ErrorBoundary>
         </PageTransition>
       </div>

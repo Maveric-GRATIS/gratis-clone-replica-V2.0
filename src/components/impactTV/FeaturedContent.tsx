@@ -10,16 +10,19 @@ interface FeaturedContentProps {
 
 export const FeaturedContent = ({ video, onClick }: FeaturedContentProps) => {
   return (
-    <div className="relative rounded-xl overflow-hidden group cursor-pointer mb-12" onClick={onClick}>
+    <div
+      className="relative rounded-xl overflow-hidden group cursor-pointer mb-12"
+      onClick={onClick}
+    >
       {/* Background Image */}
       <div className="aspect-[21/9] w-full relative">
-        <img 
-          src={video.thumbnail} 
+        <img
+          src={video.thumbnail}
           alt={video.title}
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />

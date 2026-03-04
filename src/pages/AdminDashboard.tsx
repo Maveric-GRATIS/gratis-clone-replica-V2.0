@@ -139,7 +139,12 @@ export default function AdminDashboard() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <img src={logoGratis} alt="GRATIS" loading="eager" className="h-8 w-auto" />
+            <img
+              src={logoGratis}
+              alt="GRATIS"
+              loading="eager"
+              className="h-8 w-auto"
+            />
             <span className="font-bold text-lg hidden sm:inline">Admin</span>
           </Link>
 

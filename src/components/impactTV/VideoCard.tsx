@@ -10,23 +10,26 @@ interface VideoCardProps {
 
 export const VideoCard = ({ video, onClick }: VideoCardProps) => {
   return (
-    <Card 
+    <Card
       className="group cursor-pointer overflow-hidden hover-scale border-border"
       onClick={onClick}
     >
       <div className="relative aspect-video bg-secondary overflow-hidden">
-        <img 
-          src={video.thumbnail} 
+        <img
+          src={video.thumbnail}
           alt={video.title}
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
+
         {/* Play button overlay */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center">
-            <Play className="w-8 h-8 text-primary-foreground ml-1" fill="currentColor" />
+            <Play
+              className="w-8 h-8 text-primary-foreground ml-1"
+              fill="currentColor"
+            />
           </div>
         </div>
 
@@ -59,7 +62,7 @@ export const VideoCard = ({ video, onClick }: VideoCardProps) => {
         <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
           {video.description}
         </p>
-        
+
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             {video.viewCount && (

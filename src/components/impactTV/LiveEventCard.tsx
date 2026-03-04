@@ -27,7 +27,9 @@ export const LiveEventCard = ({ event, onClick }: LiveEventCardProps) => {
       }
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const hours = Math.floor(
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
       if (days > 0) {
@@ -49,50 +51,38 @@ export const LiveEventCard = ({ event, onClick }: LiveEventCardProps) => {
     switch (event.status) {
       case "live":
         return (
-          <Badge className="bg-red-500 text-white animate-pulse">
-            ● LIVE
-          </Badge>
+          <Badge className="bg-red-500 text-white animate-pulse">● LIVE</Badge>
         );
       case "upcoming":
-        return (
-          <Badge variant="secondary">
-            UPCOMING
-          </Badge>
-        );
+        return <Badge variant="secondary">UPCOMING</Badge>;
       case "replay":
-        return (
-          <Badge variant="outline">
-            REPLAY
-          </Badge>
-        );
+        return <Badge variant="outline">REPLAY</Badge>;
     }
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   return (
     <Card className="group cursor-pointer overflow-hidden hover-scale border-border">
       <div className="relative aspect-video bg-secondary overflow-hidden">
-        <img 
-          src={event.thumbnail} 
+        <img
+          src={event.thumbnail}
           alt={event.title}
           loading="lazy"
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
+
         {/* Status badge */}
-        <div className="absolute top-4 left-4">
-          {getStatusBadge()}
-        </div>
+        <div className="absolute top-4 left-4">{getStatusBadge()}</div>
 
         {/* Countdown for upcoming */}
         {event.status === "upcoming" && timeUntil && (
@@ -105,7 +95,10 @@ export const LiveEventCard = ({ event, onClick }: LiveEventCardProps) => {
         {event.status !== "upcoming" && (
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center">
-              <Play className="w-10 h-10 text-primary-foreground ml-1" fill="currentColor" />
+              <Play
+                className="w-10 h-10 text-primary-foreground ml-1"
+                fill="currentColor"
+              />
             </div>
           </div>
         )}
@@ -126,7 +119,7 @@ export const LiveEventCard = ({ event, onClick }: LiveEventCardProps) => {
             <Calendar className="w-4 h-4" />
             <span>{formatDate(event.startDate)}</span>
           </div>
-          
+
           {event.location && (
             <div className="flex items-center gap-2 text-muted-foreground">
               <MapPin className="w-4 h-4" />
@@ -142,8 +135,8 @@ export const LiveEventCard = ({ event, onClick }: LiveEventCardProps) => {
           )}
         </div>
 
-        <Button 
-          className="w-full" 
+        <Button
+          className="w-full"
           variant={event.status === "live" ? "default" : "outline"}
           onClick={onClick}
         >

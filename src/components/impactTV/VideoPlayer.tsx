@@ -1,4 +1,9 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { VideoContent } from "@/data/impactTVContent";
 import { Button } from "@/components/ui/button";
 import { Share2, ExternalLink } from "lucide-react";
@@ -22,7 +27,7 @@ export const VideoPlayer = ({ video, open, onClose }: VideoPlayerProps) => {
 
   const handleExternalLink = () => {
     if (video.videoUrl) {
-      window.open(video.videoUrl, '_blank');
+      window.open(video.videoUrl, "_blank");
     } else {
       toast.info("External link not available for this video");
     }
@@ -46,8 +51,8 @@ export const VideoPlayer = ({ video, open, onClose }: VideoPlayerProps) => {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <img 
-                src={video.thumbnail} 
+              <img
+                src={video.thumbnail}
                 alt={video.title}
                 loading="lazy"
                 className="w-full h-full object-cover"
@@ -79,7 +84,11 @@ export const VideoPlayer = ({ video, open, onClose }: VideoPlayerProps) => {
                 Share
               </Button>
               {video.videoUrl && (
-                <Button variant="outline" size="sm" onClick={handleExternalLink}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExternalLink}
+                >
                   <ExternalLink className="w-4 h-4 mr-2" />
                   Watch on {video.socialPlatform}
                 </Button>
@@ -107,7 +116,12 @@ export const VideoPlayer = ({ video, open, onClose }: VideoPlayerProps) => {
 
           {video.viewCount && (
             <div className="text-sm text-muted-foreground">
-              {video.viewCount.toLocaleString()} views • Published {new Date(video.publishedDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+              {video.viewCount.toLocaleString()} views • Published{" "}
+              {new Date(video.publishedDate).toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
             </div>
           )}
         </div>

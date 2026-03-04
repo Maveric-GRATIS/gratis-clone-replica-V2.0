@@ -49,6 +49,7 @@ export const VideoPlayer = ({ video, open, onClose }: VideoPlayerProps) => {
               <img 
                 src={video.thumbnail} 
                 alt={video.title}
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>

@@ -19,92 +19,92 @@ import FUWinnersHallOfFame from "@/components/fu/FUWinnersHallOfFame";
 import ProductFeatures from "@/components/ProductFeatures";
 import { fuFeatures } from "@/data/productFeatures";
 
+// F.U. Flavors Data
+const fuFlavors = [
+  {
+    id: "inferno",
+    nameKey: "products.fu.flavors.inferno.name",
+    subtitleKey: "products.fu.flavors.inferno.subtitle",
+    descriptionKey: "products.fu.flavors.inferno.description",
+    projectKey: "products.fu.flavors.inferno.project",
+    seriesNumber: 1,
+    editionSize: 500,
+    remainingUnits: 342,
+    price: 6.99,
+    image: "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
+    collaborator: null,
+    isWinnerCreation: false,
+  },
+  {
+    id: "ice-storm",
+    nameKey: "products.fu.flavors.iceStorm.name",
+    subtitleKey: "products.fu.flavors.iceStorm.subtitle",
+    descriptionKey: "products.fu.flavors.iceStorm.description",
+    projectKey: "products.fu.flavors.iceStorm.project",
+    seriesNumber: 2,
+    editionSize: 500,
+    remainingUnits: 500,
+    price: 6.99,
+    image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+    collaborator: null,
+    isWinnerCreation: false,
+  },
+  {
+    id: "rebel-drop",
+    nameKey: "products.fu.flavors.rebelDrop.name",
+    subtitleKey: "products.fu.flavors.rebelDrop.subtitle",
+    descriptionKey: "products.fu.flavors.rebelDrop.description",
+    projectKey: "products.fu.flavors.rebelDrop.project",
+    seriesNumber: 3,
+    editionSize: 300,
+    remainingUnits: 127,
+    price: 9.99,
+    image: "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
+    collaborator: "Rebel Collective",
+    isWinnerCreation: false,
+  },
+  {
+    id: "winners-choice",
+    nameKey: "products.fu.flavors.winnersChoice.name",
+    subtitleKey: "products.fu.flavors.winnersChoice.subtitle",
+    descriptionKey: "products.fu.flavors.winnersChoice.description",
+    projectKey: "products.fu.flavors.winnersChoice.project",
+    seriesNumber: 4,
+    editionSize: 100,
+    remainingUnits: 100,
+    price: 14.99,
+    image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
+    collaborator: null,
+    isWinnerCreation: true,
+  },
+];
+
+// Flavor images mapping
+const flavorImages: Record<string, string[]> = {
+  inferno: [
+    "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
+    "/lovable-uploads/gratis-lifestyle-drink.jpg",
+  ],
+  "ice-storm": [
+    "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
+    "/lovable-uploads/gratis-neon-tank.jpg",
+  ],
+  "rebel-drop": [
+    "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
+    "/lovable-uploads/gratis-geo-bodysuit.jpg",
+  ],
+  "winners-choice": [
+    "/lovable-uploads/gratis-lifestyle-drink.jpg",
+    "/lovable-uploads/gratis-canal-collection.jpg",
+  ],
+};
+
 export default function FU() {
   const { t } = useTranslation();
   const [selectedFlavor, setSelectedFlavor] = useState<string | null>(
     "inferno",
   );
   const { addItem } = useCart();
-
-  // F.U. Flavors Data with translations
-  const fuFlavors = [
-    {
-      id: "inferno",
-      name: t("products.fu.flavors.inferno.name"),
-      subtitle: t("products.fu.flavors.inferno.subtitle"),
-      seriesNumber: 1,
-      editionSize: 500,
-      remainingUnits: 342,
-      price: 6.99,
-      image: "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
-      description: t("products.fu.flavors.inferno.description"),
-      collaborator: null,
-      isWinnerCreation: false,
-      impactProject: t("products.fu.flavors.inferno.project"),
-    },
-    {
-      id: "ice-storm",
-      name: t("products.fu.flavors.iceStorm.name"),
-      subtitle: t("products.fu.flavors.iceStorm.subtitle"),
-      seriesNumber: 2,
-      editionSize: 500,
-      remainingUnits: 500,
-      price: 6.99,
-      image: "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
-      description: t("products.fu.flavors.iceStorm.description"),
-      collaborator: null,
-      isWinnerCreation: false,
-      impactProject: t("products.fu.flavors.iceStorm.project"),
-    },
-    {
-      id: "rebel-drop",
-      name: t("products.fu.flavors.rebelDrop.name"),
-      subtitle: t("products.fu.flavors.rebelDrop.subtitle"),
-      seriesNumber: 3,
-      editionSize: 300,
-      remainingUnits: 127,
-      price: 9.99,
-      image: "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
-      description: t("products.fu.flavors.rebelDrop.description"),
-      collaborator: "Rebel Collective",
-      isWinnerCreation: false,
-      impactProject: t("products.fu.flavors.rebelDrop.project"),
-    },
-    {
-      id: "winners-choice",
-      name: t("products.fu.flavors.winnersChoice.name"),
-      subtitle: t("products.fu.flavors.winnersChoice.subtitle"),
-      seriesNumber: 4,
-      editionSize: 100,
-      remainingUnits: 100,
-      price: 14.99,
-      image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
-      description: t("products.fu.flavors.winnersChoice.description"),
-      collaborator: null,
-      isWinnerCreation: true,
-      impactProject: t("products.fu.flavors.winnersChoice.project"),
-    },
-  ];
-
-  // Flavor images mapping
-  const flavorImages: Record<string, string[]> = {
-    inferno: [
-      "/lovable-uploads/48ce1e2e-0cbc-49f2-b2d0-0a2d372b640d.png",
-      "/lovable-uploads/gratis-lifestyle-drink.jpg",
-    ],
-    "ice-storm": [
-      "/lovable-uploads/5fb80093-c88d-4f40-87ed-593974c38b11.png",
-      "/lovable-uploads/gratis-neon-tank.jpg",
-    ],
-    "rebel-drop": [
-      "/lovable-uploads/9ac6ca6a-c33b-407e-ae9d-d71edd6d1a95.png",
-      "/lovable-uploads/gratis-geo-bodysuit.jpg",
-    ],
-    "winners-choice": [
-      "/lovable-uploads/gratis-lifestyle-drink.jpg",
-      "/lovable-uploads/gratis-canal-collection.jpg",
-    ],
-  };
 
   const currentFlavor =
     fuFlavors.find((f) => f.id === selectedFlavor) || fuFlavors[0];
@@ -126,21 +126,22 @@ export default function FU() {
       return;
     }
 
+    const flavorName = t(flavor.nameKey);
     const cartItem = {
       id: `fu-${flavor.id}-${Date.now()}`,
-      name: `F.U. ${flavor.name}`,
+      name: `F.U. ${flavorName}`,
       price: flavor.price,
       quantity: 1,
       image: flavor.image,
       category: "beverage" as const,
       variant: {
-        flavor: flavor.name,
+        flavor: flavorName,
         series: `#${String(flavor.seriesNumber).padStart(2, "0")}`,
       },
     };
 
     addItem(cartItem);
-    toast.success(t("products.fu.addedToCart", { name: flavor.name }), {
+    toast.success(t("products.fu.addedToCart", { name: flavorName }), {
       description: `Series #${String(flavor.seriesNumber).padStart(2, "0")} • €${flavor.price}`,
     });
   };
@@ -177,7 +178,7 @@ export default function FU() {
             {/* Left: Image Gallery */}
             <FUImageGallery
               images={currentImages}
-              productName={currentFlavor.name}
+              productName={t(currentFlavor.nameKey)}
               seriesNumber={currentFlavor.seriesNumber}
               isWinnerCreation={currentFlavor.isWinnerCreation}
             />
@@ -188,7 +189,7 @@ export default function FU() {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <h2 className="text-3xl md:text-4xl font-black text-foreground">
-                    {currentFlavor.name}
+                    {t(currentFlavor.nameKey)}
                   </h2>
                   {currentFlavor.collaborator && (
                     <Badge
@@ -200,7 +201,7 @@ export default function FU() {
                   )}
                 </div>
                 <p className="text-lg text-muted-foreground">
-                  {currentFlavor.description}
+                  {t(currentFlavor.descriptionKey)}
                 </p>
               </div>
 
@@ -217,7 +218,7 @@ export default function FU() {
                 <li className="flex items-center gap-2">
                   <span className="text-primary">✓</span>
                   {t("products.fu.profitsTo", {
-                    project: currentFlavor.impactProject,
+                    project: t(currentFlavor.projectKey),
                   })}
                 </li>
                 <li className="flex items-center gap-2">
@@ -228,7 +229,13 @@ export default function FU() {
 
               {/* Flavor Selector */}
               <FUFlavorGrid
-                flavors={fuFlavors}
+                flavors={fuFlavors.map((f) => ({
+                  ...f,
+                  name: t(f.nameKey),
+                  subtitle: t(f.subtitleKey),
+                  description: t(f.descriptionKey),
+                  impactProject: t(f.projectKey),
+                }))}
                 selected={selectedFlavor}
                 onSelect={setSelectedFlavor}
               />
@@ -240,7 +247,7 @@ export default function FU() {
                 remainingUnits={currentFlavor.remainingUnits}
                 collaborator={currentFlavor.collaborator}
                 isWinnerCreation={currentFlavor.isWinnerCreation}
-                impactProject={currentFlavor.impactProject}
+                impactProject={t(currentFlavor.projectKey)}
               />
 
               {/* Price & Add to Cart */}

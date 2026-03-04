@@ -258,7 +258,7 @@ export function TribeMemberDashboard() {
                   <>
                     <div className="flex justify-center p-4 bg-white rounded-lg">
                       {qrCode && (
-                        <img src={qrCode} alt="QR Code" className="w-48 h-48" />
+                        <img src={qrCode} alt="QR Code" loading="lazy" className="w-48 h-48" />
                       )}
                     </div>
                     <p className="text-sm text-center text-muted-foreground">

@@ -18,9 +18,6 @@ export const ProtectedRoute = ({
   const { user, loading: authLoading } = useAuth();
   const { isAdmin, isMarketing, loading: roleLoading } = useRole();
 
-  // 🚨 DEVELOPMENT MODE: Bypass admin checks (REMOVE IN PRODUCTION!)
-  const DEV_MODE = import.meta.env.DEV;
-
   if (authLoading || roleLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -31,12 +28,6 @@ export const ProtectedRoute = ({
 
   if (!user) {
     return <Navigate to="/auth" replace />;
-  }
-
-  // In development, skip admin/marketing checks if user is logged in
-  if (DEV_MODE) {
-    console.log("🚨 DEV MODE: Admin checks disabled");
-    return <>{children}</>;
   }
 
   if (requireAdmin && !isAdmin) {

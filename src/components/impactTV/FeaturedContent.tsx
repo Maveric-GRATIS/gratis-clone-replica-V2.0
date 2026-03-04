@@ -16,6 +16,7 @@ export const FeaturedContent = ({ video, onClick }: FeaturedContentProps) => {
         <img 
           src={video.thumbnail} 
           alt={video.title}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         

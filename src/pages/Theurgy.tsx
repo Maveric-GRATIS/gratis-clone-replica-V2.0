@@ -13,97 +13,97 @@ import { useCart } from "@/contexts/CartContext";
 import { toast } from "sonner";
 import { ShoppingCart, Sparkles, Shield, Truck, Award } from "lucide-react";
 
+// Flavor data
+const theurgyFlavors = [
+  {
+    id: "citrus-carnival",
+    nameKey: "products.theurgy.flavors.citrusCarnival.name",
+    subtitleKey: "products.theurgy.flavors.citrusCarnival.subtitle",
+    descriptionKey: "products.theurgy.flavors.citrusCarnival.description",
+    image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
+    color: "#FFA500",
+    country: "Brazil",
+  },
+  {
+    id: "hibiscus-bloom",
+    nameKey: "products.theurgy.flavors.hibiscusBloom.name",
+    subtitleKey: "products.theurgy.flavors.hibiscusBloom.subtitle",
+    descriptionKey: "products.theurgy.flavors.hibiscusBloom.description",
+    image: "/lovable-uploads/gratis-neon-tank.jpg",
+    color: "#E91E63",
+    country: "India",
+  },
+  {
+    id: "dragon-fire",
+    nameKey: "products.theurgy.flavors.dragonFire.name",
+    subtitleKey: "products.theurgy.flavors.dragonFire.subtitle",
+    descriptionKey: "products.theurgy.flavors.dragonFire.description",
+    image: "/lovable-uploads/gratis-geo-bodysuit.jpg",
+    color: "#FF5722",
+    country: "China",
+  },
+  {
+    id: "variety-pack",
+    nameKey: "products.theurgy.flavors.varietyPack.name",
+    subtitleKey: "products.theurgy.flavors.varietyPack.subtitle",
+    descriptionKey: "products.theurgy.flavors.varietyPack.description",
+    image: "/lovable-uploads/gratis-canal-collection.jpg",
+    color: "#9C27B0",
+    country: "Global",
+  },
+];
+
+// Pack options
+const theurgyPacks = [
+  {
+    value: "6",
+    label: "6-Pack",
+    price: 24.99,
+    savings: 0,
+    descriptionKey: "products.theurgy.packs.starter",
+  },
+  {
+    value: "12",
+    label: "12-Pack",
+    price: 44.99,
+    savings: 10,
+    descriptionKey: "products.theurgy.packs.teamSize",
+  },
+  {
+    value: "24",
+    label: "24-Pack",
+    price: 79.99,
+    savings: 20,
+    descriptionKey: "products.theurgy.packs.eventReady",
+  },
+];
+
+// Product images by flavor
+const flavorImages: Record<string, string[]> = {
+  "citrus-carnival": [
+    "/lovable-uploads/gratis-lifestyle-drink.jpg",
+    "/lovable-uploads/gratis-street-duo.jpg",
+  ],
+  "hibiscus-bloom": [
+    "/lovable-uploads/gratis-neon-tank.jpg",
+    "/lovable-uploads/gratis-squad-look.jpg",
+  ],
+  "dragon-fire": [
+    "/lovable-uploads/gratis-geo-bodysuit.jpg",
+    "/lovable-uploads/gratis-colorblock-squad.jpg",
+  ],
+  "variety-pack": [
+    "/lovable-uploads/gratis-canal-collection.jpg",
+    "/lovable-uploads/gratis-studio-crew.jpg",
+  ],
+};
+
 export default function Theurgy() {
   const { t } = useTranslation();
   const [selectedFlavor, setSelectedFlavor] =
     useState<string>("citrus-carnival");
   const [selectedPack, setSelectedPack] = useState<string>("6");
   const { addItem } = useCart();
-
-  // Flavor data with translations
-  const theurgyFlavors = [
-    {
-      id: "citrus-carnival",
-      name: t("products.theurgy.flavors.citrusCarnival.name"),
-      subtitle: t("products.theurgy.flavors.citrusCarnival.subtitle"),
-      description: t("products.theurgy.flavors.citrusCarnival.description"),
-      image: "/lovable-uploads/gratis-lifestyle-drink.jpg",
-      color: "#FFA500",
-      country: "Brazil",
-    },
-    {
-      id: "hibiscus-bloom",
-      name: t("products.theurgy.flavors.hibiscusBloom.name"),
-      subtitle: t("products.theurgy.flavors.hibiscusBloom.subtitle"),
-      description: t("products.theurgy.flavors.hibiscusBloom.description"),
-      image: "/lovable-uploads/gratis-neon-tank.jpg",
-      color: "#E91E63",
-      country: "India",
-    },
-    {
-      id: "dragon-fire",
-      name: t("products.theurgy.flavors.dragonFire.name"),
-      subtitle: t("products.theurgy.flavors.dragonFire.subtitle"),
-      description: t("products.theurgy.flavors.dragonFire.description"),
-      image: "/lovable-uploads/gratis-geo-bodysuit.jpg",
-      color: "#FF5722",
-      country: "China",
-    },
-    {
-      id: "variety-pack",
-      name: t("products.theurgy.flavors.varietyPack.name"),
-      subtitle: t("products.theurgy.flavors.varietyPack.subtitle"),
-      description: t("products.theurgy.flavors.varietyPack.description"),
-      image: "/lovable-uploads/gratis-canal-collection.jpg",
-      color: "#9C27B0",
-      country: "Global",
-    },
-  ];
-
-  // Pack options with translations
-  const theurgyPacks = [
-    {
-      value: "6",
-      label: "6-Pack",
-      price: 24.99,
-      savings: 0,
-      description: t("products.theurgy.packs.starter"),
-    },
-    {
-      value: "12",
-      label: "12-Pack",
-      price: 44.99,
-      savings: 10,
-      description: t("products.theurgy.packs.teamSize"),
-    },
-    {
-      value: "24",
-      label: "24-Pack",
-      price: 79.99,
-      savings: 20,
-      description: t("products.theurgy.packs.eventReady"),
-    },
-  ];
-
-  // Product images by flavor
-  const flavorImages: Record<string, string[]> = {
-    "citrus-carnival": [
-      "/lovable-uploads/gratis-lifestyle-drink.jpg",
-      "/lovable-uploads/gratis-street-duo.jpg",
-    ],
-    "hibiscus-bloom": [
-      "/lovable-uploads/gratis-neon-tank.jpg",
-      "/lovable-uploads/gratis-squad-look.jpg",
-    ],
-    "dragon-fire": [
-      "/lovable-uploads/gratis-geo-bodysuit.jpg",
-      "/lovable-uploads/gratis-colorblock-squad.jpg",
-    ],
-    "variety-pack": [
-      "/lovable-uploads/gratis-canal-collection.jpg",
-      "/lovable-uploads/gratis-studio-crew.jpg",
-    ],
-  };
 
   const currentFlavor =
     theurgyFlavors.find((f) => f.id === selectedFlavor) || theurgyFlavors[0];
@@ -113,23 +113,22 @@ export default function Theurgy() {
     flavorImages[selectedFlavor] || flavorImages["citrus-carnival"];
 
   const handleAddToCart = () => {
+    const flavorName = t(currentFlavor.nameKey);
     const cartItem = {
       id: `theurgy-${selectedFlavor}-${selectedPack}-${Date.now()}`,
-      name: `GRATIS Theurgy - ${currentFlavor.name}`,
+      name: `GRATIS Theurgy - ${flavorName}`,
       price: currentPack.price,
       image: currentImages[0],
       category: "beverage" as const,
       variant: {
-        flavor: currentFlavor.name,
+        flavor: flavorName,
         pack: `${selectedPack}-Pack`,
       },
-      description: currentFlavor.description,
+      description: t(currentFlavor.descriptionKey),
     };
 
     addItem(cartItem);
-    toast.success(
-      `Added ${currentPack.label} of ${currentFlavor.name} to cart!`,
-    );
+    toast.success(`Added ${currentPack.label} of ${flavorName} to cart!`);
   };
 
   return (
@@ -175,7 +174,7 @@ export default function Theurgy() {
             <div className="sticky top-24">
               <TheurgyImageGallery
                 images={currentImages}
-                productName={currentFlavor.name}
+                productName={t(currentFlavor.nameKey)}
                 flavorColor={currentFlavor.color}
               />
             </div>
@@ -193,23 +192,31 @@ export default function Theurgy() {
                   </span>
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black text-foreground">
-                  {currentFlavor.name}
+                  {t(currentFlavor.nameKey)}
                 </h2>
                 <p className="text-lg text-muted-foreground mt-2">
-                  {currentFlavor.description}
+                  {t(currentFlavor.descriptionKey)}
                 </p>
               </div>
 
               {/* Flavor Grid */}
               <TheurgyFlavorGrid
-                flavors={theurgyFlavors}
+                flavors={theurgyFlavors.map((f) => ({
+                  ...f,
+                  name: t(f.nameKey),
+                  subtitle: t(f.subtitleKey),
+                  description: t(f.descriptionKey),
+                }))}
                 selected={selectedFlavor}
                 onSelect={setSelectedFlavor}
               />
 
               {/* Pack Selector */}
               <TheurgyPackSelector
-                packs={theurgyPacks}
+                packs={theurgyPacks.map((p) => ({
+                  ...p,
+                  description: t(p.descriptionKey),
+                }))}
                 selected={selectedPack}
                 onSelect={setSelectedPack}
               />
@@ -310,11 +317,13 @@ export default function Theurgy() {
                   className="text-2xl font-bold text-white mb-2"
                   style={{ color: flavor.color }}
                 >
-                  {flavor.name}
+                  {t(flavor.nameKey)}
                 </h3>
-                <p className="text-sm text-gray-400 mb-4">{flavor.subtitle}</p>
+                <p className="text-sm text-gray-400 mb-4">
+                  {t(flavor.subtitleKey)}
+                </p>
                 <p className="text-gray-300 leading-relaxed">
-                  {flavor.description}
+                  {t(flavor.descriptionKey)}
                 </p>
               </div>
             ))}

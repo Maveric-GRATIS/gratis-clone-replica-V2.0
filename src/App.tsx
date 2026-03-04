@@ -12,223 +12,321 @@ import { FloatingCartButton } from "@/components/FloatingCartButton";
 import { ScrollProgressBar } from "@/components/ScrollProgressBar";
 import { CookieConsent } from "@/components/CookieConsent";
 import { ThemeProvider } from "next-themes";
+import { lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import NotFoundPage from "./pages/NotFoundPage";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+
+// Core pages - loaded immediately
 import Gratis from "@/pages/Gratis";
 import Water from "@/pages/Water";
 import Theurgy from "@/pages/Theurgy";
 import FU from "@/pages/FU";
-import Arcane from "@/pages/Arcane";
-import Tribe from "@/pages/Tribe";
-import Heritage from "@/pages/tribe/Heritage";
-import Ethics from "@/pages/tribe/Ethics";
-import Team from "@/pages/tribe/Team";
-import Standards from "@/pages/tribe/Standards";
-import Responsibility from "@/pages/tribe/Responsibility";
-import Accountability from "@/pages/tribe/Accountability";
-import Transparency from "@/pages/tribe/Transparency";
-import Compliance from "@/pages/tribe/Compliance";
-import Terms from "@/pages/tribe/Terms";
-import Privacy from "@/pages/tribe/Privacy";
-import Cookies from "@/pages/tribe/Cookies";
-import TribeSignup from "@/pages/tribe/Signup";
-import TribeDashboard from "@/pages/tribe/Dashboard";
-import TribeVoting from "@/pages/tribe/Voting";
-import * as LegalPages from "@/pages/legal";
-import ImpactTV from "@/pages/ImpactTV";
-import Nexus from "@/pages/impactTV/Nexus";
-import Yarns from "@/pages/impactTV/Yarns";
-import Unveil from "@/pages/impactTV/Unveil";
-import Icon from "@/pages/impactTV/Icon";
-import Tales from "@/pages/impactTV/Tales";
-import Spark from "@/pages/Spark";
-import Donate from "@/pages/spark/Donate";
-import DonateNew from "./pages/spark/DonateNew";
-import ManageRecurringDonations from "./pages/spark/ManageRecurringDonations";
-import Verve from "@/pages/spark/Verve";
-import Infuse from "@/pages/spark/Infuse";
-import Blaze from "@/pages/spark/Blaze";
-import Enlist from "@/pages/spark/Enlist";
 import Auth from "./pages/Auth";
-import RigStore from "./pages/RigStore";
-import PrimePicks from "./pages/rig/PrimePicks";
-import ApexArrivals from "./pages/rig/ApexArrivals";
-import ImbuedIcons from "./pages/rig/ImbuedIcons";
-import DazzleDrip from "./pages/rig/DazzleDrip";
-import CharmedCozies from "./pages/rig/CharmedCozies";
-import OccultOriginals from "./pages/rig/OccultOriginals";
-import NexusNoggin from "./pages/rig/NexusNoggin";
-import NebulaNovelties from "./pages/rig/NebulaNovelties";
-import HydrationStore from "./pages/HydrationStore";
-import ProductDetail from "./pages/ProductDetail";
-import Contact from "./pages/Contact";
-import FAQ from "./pages/FAQ";
 import Checkout from "./pages/Checkout";
-import CheckoutSuccess from "./pages/CheckoutSuccess";
-import CheckoutCancel from "./pages/CheckoutCancel";
-import OrderConfirmation from "./pages/OrderConfirmation";
-import Orders from "./pages/Orders";
-import OrderDetail from "./pages/OrderDetail";
-import Dashboard from "./pages/Dashboard";
-import DashboardBottles from "./pages/dashboard/Bottles";
-import DashboardVote from "./pages/dashboard/Vote";
-import DashboardSettings from "./pages/dashboard/Settings";
-import Wishlist from "./pages/Wishlist";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
-import Events from "./pages/Events";
-import EventDetail from "./pages/EventDetail";
-import Videos from "./pages/Videos";
-import VideoDetail from "./pages/VideoDetail";
-import Admin from "./pages/Admin";
-import AdminDashboard from "./pages/AdminDashboard";
-// New Admin Panel Pages (Part 4)
-import NewAdminDashboard from "./pages/admin/Dashboard";
-import AdminProducts from "./pages/admin/Products";
-import AdminOrders from "./pages/admin/Orders";
-import AdminUsers from "./pages/admin/Users";
-import AdminVideos from "./pages/admin/Videos";
-import AdminCampaigns from "./pages/admin/Campaigns";
-import AdminEvents from "./pages/admin/Events";
-import AdminBlogPosts from "./pages/admin/BlogPosts";
-import AdminEventCheckIn from "./pages/admin/EventCheckIn";
-import AdminDonations from "./pages/admin/Donations";
-import AdminDonationCampaigns from "./pages/admin/DonationCampaigns";
-import AdminTribeMembers from "./pages/admin/TribeMembers";
-import AdminPartners from "./pages/admin/Partners";
-import PartnersTest from "./pages/admin/PartnersTest";
-import AdminPartnerApplications from "./pages/admin/PartnerApplications";
-import AdminVoting from "./pages/admin/Voting";
-import AdminVotingResults from "./pages/admin/VotingResults";
-import AdminEmails from "./pages/admin/Emails";
-import AdminNotifications from "./pages/admin/Notifications";
-import AdminAnalytics from "./pages/admin/Analytics";
-import AdminAnalyticsTraffic from "./pages/admin/AnalyticsTraffic";
-import AdminAnalyticsImpact from "./pages/admin/AnalyticsImpact";
-import AdminSettings from "./pages/admin/Settings";
-import AdminSettingsIntegrations from "./pages/admin/SettingsIntegrations";
-import Partners from "./pages/Partners";
-import CollectionDetail from "./pages/CollectionDetail";
-import Corporate from "./pages/Corporate";
-import Press from "./pages/Press";
-import Impact from "./pages/Impact";
-import NGOApplication from "./pages/NGOApplication";
-import SocialDemo from "./pages/SocialDemo";
-import RouteTest from "./pages/RouteTest";
-import Community from "./pages/Community";
-import ImpactProjects from "./pages/ImpactProjects";
-import Blog from "./pages/Blog";
-import Campaigns from "./pages/Campaigns";
-import ProjectDetail from "./pages/ProjectDetail";
-import Referrals from "./pages/Referrals";
-import Notifications from "./pages/Notifications";
-import NotificationSettings from "./pages/settings/NotificationSettings";
-// Part 6: Partner System
-import PartnerApplicationPage from "./pages/partners/Apply";
-import ApplicationConfirmation from "./pages/partners/ApplicationConfirmation";
-import AdminApplicationsList from "./pages/admin/partners/ApplicationsList";
-import AdminApplicationReview from "./pages/admin/partners/ApplicationReview";
-import PartnerDashboardLayout from "./components/partner/PartnerDashboardLayout";
-import PartnerDashboard from "./pages/partner/Dashboard";
-import PartnerProjects from "./pages/partner/Projects";
-import PartnerAnalytics from "./pages/partner/Analytics";
-import PartnerDonations from "./pages/partner/Donations";
-import PartnerTeam from "./pages/partner/Team";
-import PartnerReports from "./pages/partner/Reports";
-import PartnerSettings from "./pages/partner/Settings";
-import PartnerNotifications from "./pages/partner/PartnerNotifications";
-import PartnerSupport from "./pages/partner/Support";
-import ProjectForm from "./pages/partner/ProjectForm";
-// Part 7: Discovery, Search, Messaging, PWA
-import PartnersDirectory from "./pages/public/PartnersDirectory";
-import PartnerProfile from "./pages/public/PartnerProfile";
-import MessagingCenter from "./pages/MessagingCenter";
-import OfflinePage from "./pages/Offline";
-import Part7Test from "./pages/Part7Test";
-import Part8Test from "./pages/Part8Test";
-import Part15Test from "./pages/Part15Test";
-// Part 16 - Enterprise Backend (Sections 69-73)
-import AuditLogViewer from "./pages/admin/AuditLogViewer";
-import RoleManagement from "./pages/admin/RoleManagement";
-import TenantManager from "./pages/admin/TenantManager";
-import WebhookManager from "./pages/admin/WebhookManager";
-import GraphQLExplorer from "./pages/admin/GraphQLExplorer";
-// Part 8: Gamification, Support, Leaderboards
-import GamificationProfile from "./pages/GamificationProfile";
-import SupportTickets from "./pages/SupportTickets";
-import Leaderboard from "./pages/Leaderboard";
-import AdminSupportDashboard from "./pages/AdminSupportDashboard";
-// Part 9: Push Notifications, A/B Testing, Analytics, Volunteers
-import PushNotificationSettings from "./pages/PushNotificationSettings";
-import ABTestingDashboard from "./pages/ABTestingDashboard";
-import AnalyticsDashboard from "./pages/AnalyticsDashboard";
-import VolunteerOpportunities from "./pages/VolunteerOpportunities";
-import Part9Test from "./pages/Part9Test";
-// Part 10: Inventory, Tax Receipts, Integrations, White-label
-import InventoryManagement from "./pages/InventoryManagement";
-import TaxReceipts from "./pages/TaxReceipts";
-import IntegrationMarketplace from "./pages/IntegrationMarketplace";
-import WhiteLabelConfig from "./pages/WhiteLabelConfig";
-import Part10Test from "./pages/Part10Test";
-// Part 1-6: Foundation, Marketing, Social, Projects
-import Part1Test from "./pages/Part1Test";
-import Part2Test from "./pages/Part2Test";
-import Part3Test from "./pages/Part3Test";
-import Part4Test from "./pages/Part4Test";
-import Part5Test from "./pages/Part5Test";
-import Part6Test from "./pages/Part6Test";
-import AdvancedAnalyticsDashboard from "./pages/AdvancedAnalyticsDashboard";
-import GDPRComplianceDashboard from "./pages/GDPRComplianceDashboard";
-import SubscriptionManagement from "./pages/SubscriptionManagement";
-import RefundManagement from "./pages/RefundManagement";
-import Part11Test from "./pages/Part11Test";
-import Part12Test from "./pages/Part12Test";
-import Part13Test from "./pages/Part13Test";
-import Part14Test from "./pages/Part14Test";
-import Part16Test from "./pages/Part16Test";
-import Part17Test from "./pages/Part17Test";
-import Part18Test from "./pages/Part18Test";
-import Part19Test from "./pages/Part19Test";
-import ActivityDemo from "./pages/ActivityDemo";
-import ActivityDemoPage from "./pages/ActivityDemoPage";
-import PublicStatusPage from "./pages/PublicStatusPage";
-import SocialAuthCallback from "./pages/SocialAuthCallback";
-import EmailLogsPage from "./pages/admin/EmailLogsPage";
-import EmailTemplatesPage from "./pages/admin/EmailTemplatesPage";
-import ErrorTrackingDashboard from "./pages/admin/ErrorTrackingDashboard";
-import MediaManagerPage from "./pages/admin/MediaManagerPage";
-import SystemMonitor from "./pages/SystemMonitor";
-import HealthCheck from "./pages/HealthCheck";
-import SEOManager from "./pages/admin/SEOManager";
-import FeatureFlagsManager from "./pages/admin/FeatureFlagsManager";
-import DataExportManager from "./pages/admin/DataExportManager";
-import MFASettings from "./pages/admin/MFASettings";
-import ModerationQueue from "./pages/admin/ModerationQueue";
-import UserMFASettings from "./pages/UserMFASettings";
-import DeveloperKeys from "./pages/admin/DeveloperKeys";
-import ScheduledJobs from "./pages/admin/ScheduledJobs";
-import PlatformConfig from "./pages/admin/PlatformConfig";
-import Maintenance from "./pages/Maintenance";
-import RateLimitsDashboard from "./pages/admin/RateLimitsDashboard";
-import FileManagerPage from "./pages/admin/FileManagerPage";
-import DataImportPage from "./pages/admin/DataImportPage";
-import BulkOperationsPage from "./pages/admin/BulkOperationsPage";
-import DashboardsPage from "./pages/admin/DashboardsPage";
-import DashboardViewPage from "./pages/admin/DashboardViewPage";
+
+// Lazy-loaded pages - split into chunks
+const Arcane = lazy(() => import("@/pages/Arcane"));
+const Tribe = lazy(() => import("@/pages/Tribe"));
+const Heritage = lazy(() => import("@/pages/tribe/Heritage"));
+const Ethics = lazy(() => import("@/pages/tribe/Ethics"));
+const Team = lazy(() => import("@/pages/tribe/Team"));
+const Standards = lazy(() => import("@/pages/tribe/Standards"));
+const Responsibility = lazy(() => import("@/pages/tribe/Responsibility"));
+const Accountability = lazy(() => import("@/pages/tribe/Accountability"));
+const Transparency = lazy(() => import("@/pages/tribe/Transparency"));
+const Compliance = lazy(() => import("@/pages/tribe/Compliance"));
+const Terms = lazy(() => import("@/pages/tribe/Terms"));
+const Privacy = lazy(() => import("@/pages/tribe/Privacy"));
+const Cookies = lazy(() => import("@/pages/tribe/Cookies"));
+const TribeSignup = lazy(() => import("@/pages/tribe/Signup"));
+const TribeDashboard = lazy(() => import("@/pages/tribe/Dashboard"));
+const TribeVoting = lazy(() => import("@/pages/tribe/Voting"));
+const LegalPages = {
+  Privacy: lazy(() =>
+    import("@/pages/legal").then((m) => ({ default: m.Privacy })),
+  ),
+  Terms: lazy(() =>
+    import("@/pages/legal").then((m) => ({ default: m.Terms })),
+  ),
+  Cookies: lazy(() =>
+    import("@/pages/legal").then((m) => ({ default: m.Cookies })),
+  ),
+  DonorPrivacy: lazy(() =>
+    import("@/pages/legal").then((m) => ({ default: m.DonorPrivacy })),
+  ),
+  Accessibility: lazy(() =>
+    import("@/pages/legal").then((m) => ({ default: m.Accessibility })),
+  ),
+  Disclaimer: lazy(() =>
+    import("@/pages/legal").then((m) => ({ default: m.Disclaimer })),
+  ),
+};
+const ImpactTV = lazy(() => import("@/pages/ImpactTV"));
+const Nexus = lazy(() => import("@/pages/impactTV/Nexus"));
+const Yarns = lazy(() => import("@/pages/impactTV/Yarns"));
+const Unveil = lazy(() => import("@/pages/impactTV/Unveil"));
+const Icon = lazy(() => import("@/pages/impactTV/Icon"));
+const Tales = lazy(() => import("@/pages/impactTV/Tales"));
+const Spark = lazy(() => import("@/pages/Spark"));
+const Donate = lazy(() => import("@/pages/spark/Donate"));
+const DonateNew = lazy(() => import("./pages/spark/DonateNew"));
+const ManageRecurringDonations = lazy(
+  () => import("./pages/spark/ManageRecurringDonations"),
+);
+const Verve = lazy(() => import("@/pages/spark/Verve"));
+const Infuse = lazy(() => import("@/pages/spark/Infuse"));
+const Blaze = lazy(() => import("@/pages/spark/Blaze"));
+const Enlist = lazy(() => import("@/pages/spark/Enlist"));
+const RigStore = lazy(() => import("./pages/RigStore"));
+const PrimePicks = lazy(() => import("./pages/rig/PrimePicks"));
+const ApexArrivals = lazy(() => import("./pages/rig/ApexArrivals"));
+const ImbuedIcons = lazy(() => import("./pages/rig/ImbuedIcons"));
+const DazzleDrip = lazy(() => import("./pages/rig/DazzleDrip"));
+const CharmedCozies = lazy(() => import("./pages/rig/CharmedCozies"));
+const OccultOriginals = lazy(() => import("./pages/rig/OccultOriginals"));
+const NexusNoggin = lazy(() => import("./pages/rig/NexusNoggin"));
+const NebulaNovelties = lazy(() => import("./pages/rig/NebulaNovelties"));
+const HydrationStore = lazy(() => import("./pages/HydrationStore"));
+const ProductDetail = lazy(() => import("./pages/ProductDetail"));
+const Contact = lazy(() => import("./pages/Contact"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const CheckoutSuccess = lazy(() => import("./pages/CheckoutSuccess"));
+const CheckoutCancel = lazy(() => import("./pages/CheckoutCancel"));
+const OrderConfirmation = lazy(() => import("./pages/OrderConfirmation"));
+const Orders = lazy(() => import("./pages/Orders"));
+const OrderDetail = lazy(() => import("./pages/OrderDetail"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const DashboardBottles = lazy(() => import("./pages/dashboard/Bottles"));
+const DashboardVote = lazy(() => import("./pages/dashboard/Vote"));
+const DashboardSettings = lazy(() => import("./pages/dashboard/Settings"));
+const Wishlist = lazy(() => import("./pages/Wishlist"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Settings = lazy(() => import("./pages/Settings"));
+const Events = lazy(() => import("./pages/Events"));
+const EventDetail = lazy(() => import("./pages/EventDetail"));
+const Videos = lazy(() => import("./pages/Videos"));
+const VideoDetail = lazy(() => import("./pages/VideoDetail"));
+const Admin = lazy(() => import("./pages/Admin"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+// Admin Panel Pages (Part 4) - ALL lazy loaded for bundle splitting
+const NewAdminDashboard = lazy(() => import("./pages/admin/Dashboard"));
+const AdminProducts = lazy(() => import("./pages/admin/Products"));
+const AdminOrders = lazy(() => import("./pages/admin/Orders"));
+const AdminUsers = lazy(() => import("./pages/admin/Users"));
+const AdminVideos = lazy(() => import("./pages/admin/Videos"));
+const AdminCampaigns = lazy(() => import("./pages/admin/Campaigns"));
+const AdminEvents = lazy(() => import("./pages/admin/Events"));
+const AdminBlogPosts = lazy(() => import("./pages/admin/BlogPosts"));
+const AdminEventCheckIn = lazy(() => import("./pages/admin/EventCheckIn"));
+const AdminDonations = lazy(() => import("./pages/admin/Donations"));
+const AdminDonationCampaigns = lazy(
+  () => import("./pages/admin/DonationCampaigns"),
+);
+const AdminTribeMembers = lazy(() => import("./pages/admin/TribeMembers"));
+const AdminPartners = lazy(() => import("./pages/admin/Partners"));
+const PartnersTest = lazy(() => import("./pages/admin/PartnersTest"));
+const AdminPartnerApplications = lazy(
+  () => import("./pages/admin/PartnerApplications"),
+);
+const AdminVoting = lazy(() => import("./pages/admin/Voting"));
+const AdminVotingResults = lazy(() => import("./pages/admin/VotingResults"));
+const AdminEmails = lazy(() => import("./pages/admin/Emails"));
+const AdminNotifications = lazy(() => import("./pages/admin/Notifications"));
+const AdminAnalytics = lazy(() => import("./pages/admin/Analytics"));
+const AdminAnalyticsTraffic = lazy(
+  () => import("./pages/admin/AnalyticsTraffic"),
+);
+const AdminAnalyticsImpact = lazy(
+  () => import("./pages/admin/AnalyticsImpact"),
+);
+const AdminSettings = lazy(() => import("./pages/admin/Settings"));
+const AdminSettingsIntegrations = lazy(
+  () => import("./pages/admin/SettingsIntegrations"),
+);
+const Partners = lazy(() => import("./pages/Partners"));
+const CollectionDetail = lazy(() => import("./pages/CollectionDetail"));
+const Corporate = lazy(() => import("./pages/Corporate"));
+const Press = lazy(() => import("./pages/Press"));
+const Impact = lazy(() => import("./pages/Impact"));
+const NGOApplication = lazy(() => import("./pages/NGOApplication"));
+const SocialDemo = lazy(() => import("./pages/SocialDemo"));
+const RouteTest = lazy(() => import("./pages/RouteTest"));
+const Community = lazy(() => import("./pages/Community"));
+const ImpactProjects = lazy(() => import("./pages/ImpactProjects"));
+const Blog = lazy(() => import("./pages/Blog"));
+const Campaigns = lazy(() => import("./pages/Campaigns"));
+const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
+const Referrals = lazy(() => import("./pages/Referrals"));
+const Notifications = lazy(() => import("./pages/Notifications"));
+const NotificationSettings = lazy(
+  () => import("./pages/settings/NotificationSettings"),
+);
+// Part 6: Partner System - lazy loaded
+const PartnerApplicationPage = lazy(() => import("./pages/partners/Apply"));
+const ApplicationConfirmation = lazy(
+  () => import("./pages/partners/ApplicationConfirmation"),
+);
+const AdminApplicationsList = lazy(
+  () => import("./pages/admin/partners/ApplicationsList"),
+);
+const AdminApplicationReview = lazy(
+  () => import("./pages/admin/partners/ApplicationReview"),
+);
+const PartnerDashboardLayout = lazy(
+  () => import("./components/partner/PartnerDashboardLayout"),
+);
+const PartnerDashboard = lazy(() => import("./pages/partner/Dashboard"));
+const PartnerProjects = lazy(() => import("./pages/partner/Projects"));
+const PartnerAnalytics = lazy(() => import("./pages/partner/Analytics"));
+const PartnerDonations = lazy(() => import("./pages/partner/Donations"));
+const PartnerTeam = lazy(() => import("./pages/partner/Team"));
+const PartnerReports = lazy(() => import("./pages/partner/Reports"));
+const PartnerSettings = lazy(() => import("./pages/partner/Settings"));
+const PartnerNotifications = lazy(
+  () => import("./pages/partner/PartnerNotifications"),
+);
+const PartnerSupport = lazy(() => import("./pages/partner/Support"));
+const ProjectForm = lazy(() => import("./pages/partner/ProjectForm"));
+// Part 7: Discovery, Search, Messaging, PWA - lazy loaded
+const PartnersDirectory = lazy(
+  () => import("./pages/public/PartnersDirectory"),
+);
+const PartnerProfile = lazy(() => import("./pages/public/PartnerProfile"));
+const MessagingCenter = lazy(() => import("./pages/MessagingCenter"));
+const OfflinePage = lazy(() => import("./pages/Offline"));
+const Part7Test = lazy(() => import("./pages/Part7Test"));
+const Part8Test = lazy(() => import("./pages/Part8Test"));
+const Part15Test = lazy(() => import("./pages/Part15Test"));
+// Part 16 - Enterprise Backend - lazy loaded
+const AuditLogViewer = lazy(() => import("./pages/admin/AuditLogViewer"));
+const RoleManagement = lazy(() => import("./pages/admin/RoleManagement"));
+const TenantManager = lazy(() => import("./pages/admin/TenantManager"));
+const WebhookManager = lazy(() => import("./pages/admin/WebhookManager"));
+const GraphQLExplorer = lazy(() => import("./pages/admin/GraphQLExplorer"));
+// Part 8: Gamification, Support, Leaderboards - lazy loaded
+const GamificationProfile = lazy(() => import("./pages/GamificationProfile"));
+const SupportTickets = lazy(() => import("./pages/SupportTickets"));
+const Leaderboard = lazy(() => import("./pages/Leaderboard"));
+const AdminSupportDashboard = lazy(
+  () => import("./pages/AdminSupportDashboard"),
+);
+// Part 9: Push Notifications, A/B Testing, Analytics, Volunteers - lazy loaded
+const PushNotificationSettings = lazy(
+  () => import("./pages/PushNotificationSettings"),
+);
+const ABTestingDashboard = lazy(() => import("./pages/ABTestingDashboard"));
+const AnalyticsDashboard = lazy(() => import("./pages/AnalyticsDashboard"));
+const VolunteerOpportunities = lazy(
+  () => import("./pages/VolunteerOpportunities"),
+);
+const Part9Test = lazy(() => import("./pages/Part9Test"));
+// Part 10: Inventory, Tax Receipts, Integrations, White-label - lazy loaded
+const InventoryManagement = lazy(() => import("./pages/InventoryManagement"));
+const TaxReceipts = lazy(() => import("./pages/TaxReceipts"));
+const IntegrationMarketplace = lazy(
+  () => import("./pages/IntegrationMarketplace"),
+);
+const WhiteLabelConfig = lazy(() => import("./pages/WhiteLabelConfig"));
+const Part10Test = lazy(() => import("./pages/Part10Test"));
+// Part 1-6: Test pages - lazy loaded
+const Part1Test = lazy(() => import("./pages/Part1Test"));
+const Part2Test = lazy(() => import("./pages/Part2Test"));
+const Part3Test = lazy(() => import("./pages/Part3Test"));
+const Part4Test = lazy(() => import("./pages/Part4Test"));
+const Part5Test = lazy(() => import("./pages/Part5Test"));
+const Part6Test = lazy(() => import("./pages/Part6Test"));
+const AdvancedAnalyticsDashboard = lazy(
+  () => import("./pages/AdvancedAnalyticsDashboard"),
+);
+const GDPRComplianceDashboard = lazy(
+  () => import("./pages/GDPRComplianceDashboard"),
+);
+const SubscriptionManagement = lazy(
+  () => import("./pages/SubscriptionManagement"),
+);
+const RefundManagement = lazy(() => import("./pages/RefundManagement"));
+const Part11Test = lazy(() => import("./pages/Part11Test"));
+const Part12Test = lazy(() => import("./pages/Part12Test"));
+const Part13Test = lazy(() => import("./pages/Part13Test"));
+const Part14Test = lazy(() => import("./pages/Part14Test"));
+const Part16Test = lazy(() => import("./pages/Part16Test"));
+const Part17Test = lazy(() => import("./pages/Part17Test"));
+const Part18Test = lazy(() => import("./pages/Part18Test"));
+const Part19Test = lazy(() => import("./pages/Part19Test"));
+const ActivityDemo = lazy(() => import("./pages/ActivityDemo"));
+const ActivityDemoPage = lazy(() => import("./pages/ActivityDemoPage"));
+const PublicStatusPage = lazy(() => import("./pages/PublicStatusPage"));
+const SocialAuthCallback = lazy(() => import("./pages/SocialAuthCallback"));
+const EmailLogsPage = lazy(() => import("./pages/admin/EmailLogsPage"));
+const EmailTemplatesPage = lazy(
+  () => import("./pages/admin/EmailTemplatesPage"),
+);
+const ErrorTrackingDashboard = lazy(
+  () => import("./pages/admin/ErrorTrackingDashboard"),
+);
+const MediaManagerPage = lazy(() => import("./pages/admin/MediaManagerPage"));
+const SystemMonitor = lazy(() => import("./pages/SystemMonitor"));
+const HealthCheck = lazy(() => import("./pages/HealthCheck"));
+const SEOManager = lazy(() => import("./pages/admin/SEOManager"));
+const FeatureFlagsManager = lazy(
+  () => import("./pages/admin/FeatureFlagsManager"),
+);
+const DataExportManager = lazy(() => import("./pages/admin/DataExportManager"));
+const MFASettings = lazy(() => import("./pages/admin/MFASettings"));
+const ModerationQueue = lazy(() => import("./pages/admin/ModerationQueue"));
+const UserMFASettings = lazy(() => import("./pages/UserMFASettings"));
+const DeveloperKeys = lazy(() => import("./pages/admin/DeveloperKeys"));
+const ScheduledJobs = lazy(() => import("./pages/admin/ScheduledJobs"));
+const PlatformConfig = lazy(() => import("./pages/admin/PlatformConfig"));
+const Maintenance = lazy(() => import("./pages/Maintenance"));
+const RateLimitsDashboard = lazy(
+  () => import("./pages/admin/RateLimitsDashboard"),
+);
+const FileManagerPage = lazy(() => import("./pages/admin/FileManagerPage"));
+const DataImportPage = lazy(() => import("./pages/admin/DataImportPage"));
+const BulkOperationsPage = lazy(
+  () => import("./pages/admin/BulkOperationsPage"),
+);
+const DashboardsPage = lazy(() => import("./pages/admin/DashboardsPage"));
+const DashboardViewPage = lazy(() => import("./pages/admin/DashboardViewPage"));
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { analytics } from "@/lib/analytics";
 import { useEffect } from "react";
 import { PageTransition } from "@/components/PageTransition";
 import { useLocation } from "react-router-dom";
-// Part 15: Developer APIs, Real-time, Scheduler, Testing, Platform Config
-import DeveloperAPIKeys from "./pages/DeveloperAPIKeys";
-import SchedulerDashboard from "./pages/SchedulerDashboard";
-import PlatformSettings from "./pages/PlatformSettings";
+// Part 15: Developer APIs, Real-time, Scheduler, Testing, Platform Config - lazy loaded
+const DeveloperAPIKeys = lazy(() => import("./pages/DeveloperAPIKeys"));
+const SchedulerDashboard = lazy(() => import("./pages/SchedulerDashboard"));
+const PlatformSettings = lazy(() => import("./pages/PlatformSettings"));
 
-const queryClient = new QueryClient();
+// Page loading fallback
+const PageLoader = () => (
+  <div className="flex min-h-[60vh] items-center justify-center">
+    <div className="flex flex-col items-center gap-3">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <p className="text-sm text-muted-foreground">Laden...</p>
+    </div>
+  </div>
+);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minuten
+      gcTime: 10 * 60 * 1000, // 10 minuten cache
+      retry: 2,
+      retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 10000),
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: true,
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+});
 
 const AppContent = () => {
   const location = useLocation();
@@ -245,6 +343,8 @@ const AppContent = () => {
       {!isAdminPage && <FloatingCartButton />}
       <div className="overflow-x-hidden">
         <PageTransition>
+          <ErrorBoundary resetKeys={[location.pathname]}>
+          <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/maintenance" element={<Maintenance />} />
@@ -1053,6 +1153,8 @@ const AppContent = () => {
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          </Suspense>
+          </ErrorBoundary>
         </PageTransition>
       </div>
       {!isAdminPage && <Footer />}

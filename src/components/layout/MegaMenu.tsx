@@ -23,9 +23,10 @@ export interface MegaMenuProps {
     link: string;
     badge?: string;
   };
+  onClose?: () => void;
 }
 
-export function MegaMenu({ sections, featured }: MegaMenuProps) {
+export function MegaMenu({ sections, featured, onClose }: MegaMenuProps) {
   return (
     <div className="absolute left-0 right-0 top-full bg-background/95 backdrop-blur-xl border-t border-white/10 shadow-2xl">
       <div className="container py-8">
@@ -51,6 +52,7 @@ export function MegaMenu({ sections, featured }: MegaMenuProps) {
                     <li key={linkIdx}>
                       <Link
                         to={link.to}
+                        onClick={onClose}
                         className="group flex items-start gap-3 px-3 py-2.5 rounded-lg hover:bg-white/10 hover:backdrop-blur-sm transition-all"
                       >
                         {link.image && (
@@ -91,7 +93,11 @@ export function MegaMenu({ sections, featured }: MegaMenuProps) {
           {/* Featured section */}
           {featured && (
             <div className="col-span-4">
-              <Link to={featured.link} className="group block">
+              <Link
+                to={featured.link}
+                onClick={onClose}
+                className="group block"
+              >
                 <Card className="overflow-hidden border-2 border-white/20 hover:border-[hsl(var(--brand-yellow))]/50 transition-all bg-background/40 backdrop-blur-sm">
                   <div className="relative aspect-[4/3] overflow-hidden bg-muted/50">
                     <img

@@ -18,7 +18,7 @@ interface ContactFormData {
   message: string;
 }
 
-export const sendContactEmail = functions.https.onCall(
+export const sendContactEmail = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(
   async (data: ContactFormData, context) => {
     try {
       // Validate input
@@ -94,7 +94,7 @@ interface PartnerInquiryData {
   [key: string]: any;
 }
 
-export const sendPartnerInquiryNotification = functions.https.onCall(
+export const sendPartnerInquiryNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(
   async (data: PartnerInquiryData, context) => {
     try {
       if (!data.company_name || !data.email || !data.contact_person) {
@@ -173,7 +173,7 @@ interface NGOApplicationData {
   [key: string]: any;
 }
 
-export const sendNGOApplicationNotification = functions.https.onCall(
+export const sendNGOApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(
   async (data: NGOApplicationData, context) => {
     try {
       if (
@@ -259,7 +259,7 @@ interface PartnerApplicationData {
   [key: string]: any;
 }
 
-export const sendPartnerApplicationNotification = functions.https.onCall(
+export const sendPartnerApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(
   async (data: PartnerApplicationData, context) => {
     try {
       if (
@@ -342,7 +342,7 @@ interface JobApplicationData {
   [key: string]: any;
 }
 
-export const sendJobApplicationNotification = functions.https.onCall(
+export const sendJobApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(
   async (data: JobApplicationData, context) => {
     try {
       if (!data.position || !data.email || !data.name) {
@@ -423,7 +423,7 @@ interface VolunteerApplicationData {
   [key: string]: any;
 }
 
-export const sendVolunteerApplicationNotification = functions.https.onCall(
+export const sendVolunteerApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(
   async (data: VolunteerApplicationData, context) => {
     try {
       if (!data.name || !data.email || !data.motivation) {

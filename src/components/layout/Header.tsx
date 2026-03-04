@@ -758,6 +758,7 @@ export default function Header() {
             featured={
               (MENU.find((m) => m.label === openMenu) as any).megaMenu.featured
             }
+            onClose={() => setOpenMenu(null)}
           />
         )}
 

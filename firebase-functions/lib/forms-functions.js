@@ -41,7 +41,7 @@ exports.sendVolunteerApplicationNotification = exports.sendJobApplicationNotific
 const functions = __importStar(require("firebase-functions"));
 const email_service_1 = require("./email-service");
 const admin = __importStar(require("firebase-admin"));
-exports.sendContactEmail = functions.https.onCall(async (data, context) => {
+exports.sendContactEmail = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     try {
         // Validate input
         if (!data.name || !data.email || !data.subject || !data.message) {
@@ -90,7 +90,7 @@ exports.sendContactEmail = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('internal', 'Failed to send email');
     }
 });
-exports.sendPartnerInquiryNotification = functions.https.onCall(async (data, context) => {
+exports.sendPartnerInquiryNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     try {
         if (!data.company_name || !data.email || !data.contact_person) {
             throw new functions.https.HttpsError('invalid-argument', 'Missing required fields');
@@ -144,7 +144,7 @@ exports.sendPartnerInquiryNotification = functions.https.onCall(async (data, con
         throw new functions.https.HttpsError('internal', 'Failed to send email');
     }
 });
-exports.sendNGOApplicationNotification = functions.https.onCall(async (data, context) => {
+exports.sendNGOApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     try {
         if (!data.organizationName ||
             !data.contactEmail ||
@@ -203,7 +203,7 @@ exports.sendNGOApplicationNotification = functions.https.onCall(async (data, con
         throw new functions.https.HttpsError('internal', 'Failed to send email');
     }
 });
-exports.sendPartnerApplicationNotification = functions.https.onCall(async (data, context) => {
+exports.sendPartnerApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     var _a, _b, _c;
     try {
         if (!data.organizationName ||
@@ -261,7 +261,7 @@ exports.sendPartnerApplicationNotification = functions.https.onCall(async (data,
         throw new functions.https.HttpsError('internal', 'Failed to send email');
     }
 });
-exports.sendJobApplicationNotification = functions.https.onCall(async (data, context) => {
+exports.sendJobApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     try {
         if (!data.position || !data.email || !data.name) {
             throw new functions.https.HttpsError('invalid-argument', 'Missing required fields');
@@ -319,7 +319,7 @@ exports.sendJobApplicationNotification = functions.https.onCall(async (data, con
         throw new functions.https.HttpsError('internal', 'Failed to send email');
     }
 });
-exports.sendVolunteerApplicationNotification = functions.https.onCall(async (data, context) => {
+exports.sendVolunteerApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     try {
         if (!data.name || !data.email || !data.motivation) {
             throw new functions.https.HttpsError('invalid-argument', 'Missing required fields');

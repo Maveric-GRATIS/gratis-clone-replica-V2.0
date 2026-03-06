@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
 import ProductGrid from "@/components/ProductGrid";
+import RigCollectionProducts from "@/components/rig/RigCollectionProducts";
 import { Crown, ArrowRight } from "lucide-react";
 
 export default function NexusNoggin() {
@@ -106,7 +107,7 @@ export default function NexusNoggin() {
             </p>
           </div>
 
-          <ProductGrid category="merch" showTitle={false} />
+          <RigCollectionProducts collectionId="nexus_noggin" />
         </div>
       </section>
     </div>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
 import ProductGrid from "@/components/ProductGrid";
+import RigCollectionProducts from "@/components/rig/RigCollectionProducts";
 import { Zap, Calendar, ArrowRight } from "lucide-react";
 
 export default function ApexArrivals() {
@@ -83,7 +84,7 @@ export default function ApexArrivals() {
             </p>
           </div>
 
-          <ProductGrid category="merch" showTitle={false} />
+          <RigCollectionProducts collectionId="apex_arrivals" />
         </div>
       </section>
 

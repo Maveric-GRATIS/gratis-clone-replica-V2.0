@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
 import ProductGrid from "@/components/ProductGrid";
+import RigCollectionProducts from "@/components/rig/RigCollectionProducts";
 import { Coffee, ArrowRight } from "lucide-react";
 
 export default function DazzleDrip() {
@@ -101,7 +102,7 @@ export default function DazzleDrip() {
             </p>
           </div>
 
-          <ProductGrid category="merch" showTitle={false} />
+          <RigCollectionProducts collectionId="dazzle_drip" />
         </div>
       </section>
     </div>

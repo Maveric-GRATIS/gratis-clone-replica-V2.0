@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
 import ProductGrid from "@/components/ProductGrid";
+import RigCollectionProducts from "@/components/rig/RigCollectionProducts";
 import { Shirt, ArrowRight } from "lucide-react";
 
 export default function ImbuedIcons() {
@@ -104,7 +105,7 @@ export default function ImbuedIcons() {
             </p>
           </div>
 
-          <ProductGrid category="merch" showTitle={false} />
+          <RigCollectionProducts collectionId="imbued_icons" />
         </div>
       </section>
     </div>

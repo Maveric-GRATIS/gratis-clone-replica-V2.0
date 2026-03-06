@@ -71,6 +71,15 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // RIG Products collection (streetwear/merchandise)
+    match /rig_products/{productId} {
+      // Everyone can read RIG products
+      allow read: if true;
+
+      // Only admins can create/update/delete RIG products
+      allow create, update, delete: if isAdmin();
+    }
+
     // Orders collection
     match /orders/{orderId} {
       // Users can read their own orders, admins can read all

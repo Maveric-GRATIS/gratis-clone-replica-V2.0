@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useProducts } from "@/hooks/useProducts";
 import ProductGrid from "@/components/ProductGrid";
+import RigCollectionProducts from "@/components/rig/RigCollectionProducts";
 import { Star, TrendingUp, ArrowRight } from "lucide-react";
 
 export default function PrimePicks() {
@@ -101,7 +102,7 @@ export default function PrimePicks() {
             </p>
           </div>
 
-          <ProductGrid category="merch" featured={true} showTitle={false} />
+          <RigCollectionProducts collectionId="prime_picks" />
         </div>
       </section>
 

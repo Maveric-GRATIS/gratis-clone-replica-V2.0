@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCartActions } from "@/hooks/useCartActions";
-import { useProducts } from "@/hooks/useProducts";
+import { useRigProducts } from "@/hooks/useRigProducts";
 import { ShoppingBag, Filter, Star, Eye, ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatEuro } from "@/lib/currency";
@@ -39,7 +39,7 @@ export default function RigStore() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<any>(null);
   const { addToCart } = useCartActions();
-  const { products, loading, error } = useProducts("merch");
+  const { products, loading, error } = useRigProducts();
 
   const handleQuickViewAddToCart = useCallback(
     (product: any, variant: { size?: string; color?: string }) => {
@@ -76,33 +76,36 @@ export default function RigStore() {
 
     // Map category names to badge values or other filters
     const categoryMap: Record<string, (product: any) => boolean> = {
-      "BEST SELLERS": (p) => p.badge === "BESTSELLER",
-      "NEW DROPS": (p) => p.badge === "NEW DROP",
+      "BEST SELLERS": (p) => (p as any).badge === "BESTSELLER",
+      "NEW DROPS": (p) => (p as any).badge === "NEW DROP",
       DRINKWARE: (p) =>
-        p.subcategory === "DRINKWARE" ||
-        p.name.toLowerCase().includes("bottle") ||
-        p.name.toLowerCase().includes("cup"),
+        (p as any).subcategory === "DRINKWARE" ||
+        p.item_name.toLowerCase().includes("bottle") ||
+        p.item_name.toLowerCase().includes("cup"),
       "TANKS + TOPS": (p) =>
-        p.subcategory === "TANKS + TOPS" ||
-        p.name.toLowerCase().includes("tank"),
+        (p as any).subcategory === "TANKS + TOPS" ||
+        p.item_name.toLowerCase().includes("tank"),
       "HOODIES + TRACKSUITS": (p) =>
-        p.subcategory === "HOODIES + TRACKSUITS" ||
-        p.name.toLowerCase().includes("hoodie") ||
-        p.name.toLowerCase().includes("tracksuit"),
+        (p as any).subcategory === "HOODIES + TRACKSUITS" ||
+        p.item_name.toLowerCase().includes("hoodie") ||
+        p.item_name.toLowerCase().includes("tracksuit"),
       SWIMWEAR: (p) =>
-        p.subcategory === "SWIMWEAR" || p.name.toLowerCase().includes("swim"),
+        (p as any).subcategory === "SWIMWEAR" ||
+        p.item_name.toLowerCase().includes("swim"),
       BOTTOMS: (p) =>
-        p.subcategory === "BOTTOMS" ||
-        p.name.toLowerCase().includes("short") ||
-        p.name.toLowerCase().includes("pant"),
+        (p as any).subcategory === "BOTTOMS" ||
+        p.item_name.toLowerCase().includes("short") ||
+        p.item_name.toLowerCase().includes("pant"),
       "CAPS + BEANIES": (p) =>
-        p.subcategory === "CAPS + BEANIES" ||
-        p.name.toLowerCase().includes("cap") ||
-        p.name.toLowerCase().includes("hat") ||
-        p.name.toLowerCase().includes("beanie"),
+        (p as any).subcategory === "CAPS + BEANIES" ||
+        p.item_name.toLowerCase().includes("cap") ||
+        p.item_name.toLowerCase().includes("hat") ||
+        p.item_name.toLowerCase().includes("beanie"),
       LIFESTYLE: (p) =>
-        p.badge === "LIFESTYLE" || p.subcategory === "LIFESTYLE",
-      COLLABS: (p) => p.badge === "COLLAB" || p.subcategory === "COLLABS",
+        (p as any).badge === "LIFESTYLE" ||
+        (p as any).subcategory === "LIFESTYLE",
+      COLLABS: (p) =>
+        (p as any).badge === "COLLAB" || (p as any).subcategory === "COLLABS",
     };
 
     const filterFn = categoryMap[selectedCategory];
@@ -297,36 +300,38 @@ export default function RigStore() {
                         string,
                         (product: any) => boolean
                       > = {
-                        "BEST SELLERS": (p) => p.badge === "BESTSELLER",
-                        "NEW DROPS": (p) => p.badge === "NEW DROP",
+                        "BEST SELLERS": (p) =>
+                          (p as any).badge === "BESTSELLER",
+                        "NEW DROPS": (p) => (p as any).badge === "NEW DROP",
                         DRINKWARE: (p) =>
-                          p.subcategory === "DRINKWARE" ||
-                          p.name.toLowerCase().includes("bottle") ||
-                          p.name.toLowerCase().includes("cup"),
+                          (p as any).subcategory === "DRINKWARE" ||
+                          p.item_name.toLowerCase().includes("bottle") ||
+                          p.item_name.toLowerCase().includes("cup"),
                         "TANKS + TOPS": (p) =>
-                          p.subcategory === "TANKS + TOPS" ||
-                          p.name.toLowerCase().includes("tank"),
+                          (p as any).subcategory === "TANKS + TOPS" ||
+                          p.item_name.toLowerCase().includes("tank"),
                         "HOODIES + TRACKSUITS": (p) =>
-                          p.subcategory === "HOODIES + TRACKSUITS" ||
-                          p.name.toLowerCase().includes("hoodie") ||
-                          p.name.toLowerCase().includes("tracksuit"),
+                          (p as any).subcategory === "HOODIES + TRACKSUITS" ||
+                          p.item_name.toLowerCase().includes("hoodie") ||
+                          p.item_name.toLowerCase().includes("tracksuit"),
                         SWIMWEAR: (p) =>
-                          p.subcategory === "SWIMWEAR" ||
-                          p.name.toLowerCase().includes("swim"),
+                          (p as any).subcategory === "SWIMWEAR" ||
+                          p.item_name.toLowerCase().includes("swim"),
                         BOTTOMS: (p) =>
-                          p.subcategory === "BOTTOMS" ||
-                          p.name.toLowerCase().includes("short") ||
-                          p.name.toLowerCase().includes("pant"),
+                          (p as any).subcategory === "BOTTOMS" ||
+                          p.item_name.toLowerCase().includes("short") ||
+                          p.item_name.toLowerCase().includes("pant"),
                         "CAPS + BEANIES": (p) =>
-                          p.subcategory === "CAPS + BEANIES" ||
-                          p.name.toLowerCase().includes("cap") ||
-                          p.name.toLowerCase().includes("hat") ||
-                          p.name.toLowerCase().includes("beanie"),
+                          (p as any).subcategory === "CAPS + BEANIES" ||
+                          p.item_name.toLowerCase().includes("cap") ||
+                          p.item_name.toLowerCase().includes("hat") ||
+                          p.item_name.toLowerCase().includes("beanie"),
                         LIFESTYLE: (p) =>
-                          p.badge === "LIFESTYLE" ||
-                          p.subcategory === "LIFESTYLE",
+                          (p as any).badge === "LIFESTYLE" ||
+                          (p as any).subcategory === "LIFESTYLE",
                         COLLABS: (p) =>
-                          p.badge === "COLLAB" || p.subcategory === "COLLABS",
+                          (p as any).badge === "COLLAB" ||
+                          (p as any).subcategory === "COLLABS",
                       };
                       const filterFn = categoryMap[category];
                       return filterFn ? filterFn(p) : false;
@@ -414,8 +419,8 @@ export default function RigStore() {
                   {/* Product Image */}
                   <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 p-8">
                     <LazyImage
-                      src={product.image_url || ""}
-                      alt={product.name}
+                      src={(product as any).image_url || ""}
+                      alt={product.item_name}
                       aspectRatio="1/1"
                       className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-rotate-6"
                     />
@@ -435,10 +440,10 @@ export default function RigStore() {
                           e.preventDefault();
                           addToCart({
                             id: product.id,
-                            name: product.name,
+                            name: product.item_name,
                             price: Number(product.price),
-                            image: product.image_url || "",
-                            category: product.category as "merch" | "beverage",
+                            image: "",
+                            category: "merch",
                             variant: {},
                           });
                         }}
@@ -482,7 +487,7 @@ export default function RigStore() {
                   <div className="p-6 space-y-4">
                     <div>
                       <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors duration-300">
-                        {product.name}
+                        {product.item_name}
                       </h3>
                     </div>
 
@@ -533,10 +538,10 @@ export default function RigStore() {
                           e.preventDefault();
                           addToCart({
                             id: product.id,
-                            name: product.name,
+                            name: product.item_name,
                             price: Number(product.price),
-                            image: product.image_url || "",
-                            category: product.category as "merch" | "beverage",
+                            image: "",
+                            category: "merch",
                             variant: {},
                           });
                         }}

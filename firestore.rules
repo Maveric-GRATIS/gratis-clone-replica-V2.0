@@ -37,11 +37,7 @@ service cloud.firestore {
       // Users can read their own data, admins can read all
       allow read: if isOwner(userId) || isAdmin();
 
-      // TEMPORARY: Allow specific user to set admin role
-      allow create, update: if isAuthenticated()
-                            && request.auth.uid == 'qvPtEb2ZjWc8HHRMU28IToj2KWu2';
-
-      // Users can create their own profile on signup
+      // Users can create their own profile on signup (role must be 'customer')
       allow create: if isAuthenticated() && isOwner(userId)
                     && request.resource.data.role == 'customer';
 
@@ -154,12 +150,11 @@ service cloud.firestore {
       allow read, write: if isOwner(userId);
     }
 
-    // Job Applications
+    // Job Applications — only written by Cloud Functions (not direct client writes)
     match /jobApplications/{applicationId} {
-      // Anyone can submit an application
-      allow create: if true
-                    && request.resource.data.keys().hasAll(['position', 'name', 'email', 'phone', 'city', 'coverLetter', 'startDate', 'resumeUrl', 'status'])
-                    && request.resource.data.status == 'pending';
+      // Authenticated users can submit — but NOT direct client writes; use allow create: if false
+      // to force all writes through validated Cloud Functions
+      allow create: if false; // Cloud Functions only via Admin SDK
 
       // Only admins can read, update, or delete applications
       allow read, update, delete: if isAdmin();
@@ -174,19 +169,17 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
-    // Partner Applications
+    // Partner Applications — only written by Cloud Functions
     match /partnerApplications/{applicationId} {
-      // Anyone can submit a partner application
-      allow create: if true;
+      allow create: if false; // Cloud Functions only via Admin SDK
 
       // Only admins can read, update, or delete
       allow read, update, delete: if isAdmin();
     }
 
-    // NGO Applications
+    // NGO Applications — only written by Cloud Functions
     match /ngoApplications/{applicationId} {
-      // Anyone can submit an NGO application
-      allow create: if true;
+      allow create: if false; // Cloud Functions only via Admin SDK
 
       // Only admins can read, update, or delete
       allow read, update, delete: if isAdmin();
@@ -201,13 +194,45 @@ service cloud.firestore {
       // Only system (Cloud Functions) and admins can create notifications
       allow create: if isAdmin();
 
-      // Users can update their own notifications (mark as read), admins can update all
+      // Users can only mark their own notifications as read (no other field changes)
       allow update: if isAuthenticated()
-                    && (resource.data.userId == request.auth.uid || isAdmin());
+                    && resource.data.userId == request.auth.uid
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read'])
+                    && request.resource.data.read == true
+                    || isAdmin();
 
       // Users can delete their own notifications, admins can delete all
       allow delete: if isAuthenticated()
                     && (resource.data.userId == request.auth.uid || isAdmin());
     }
-  }
-}
+
+    // Contact Messages — written by Cloud Functions only
+    match /contactMessages/{msgId} {
+      allow read:   if isAdmin();
+      allow create: if false; // Cloud Functions only via Admin SDK
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Partner Inquiries — written by Cloud Functions only
+    match /partnerInquiries/{id} {
+      allow read:   if isAdmin();
+      allow create: if false;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Volunteer Applications — written by Cloud Functions only
+    match /volunteerApplications/{id} {
+      allow read:   if isAdmin();
+      allow create: if false;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Rate Limits — Admin SDK only, never direct client access
+    match /rateLimits/{key} {
+      allow read, write: if false;
+    }
+  } // end match /databases/{database}/documents
+} // end service cloud.firestore

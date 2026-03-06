@@ -13,10 +13,15 @@ export const useRole = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Guard against setState after unmount
+    let mounted = true;
+
     const fetchRoles = async () => {
       if (!user) {
-        setRoles([]);
-        setLoading(false);
+        if (mounted) {
+          setRoles([]);
+          setLoading(false);
+        }
         return;
       }
 
@@ -26,17 +31,24 @@ export const useRole = () => {
         const q = query(rolesRef, where('user_id', '==', user.uid));
         const querySnapshot = await getDocs(q);
 
-        const userRoles = querySnapshot.docs.map(doc => doc.data().role as UserRole);
-        setRoles(userRoles);
+        if (mounted) {
+          const userRoles = querySnapshot.docs.map(doc => doc.data().role as UserRole);
+          setRoles(userRoles);
+        }
       } catch (err: any) {
-        setError(err.message);
-        setRoles([]);
+        if (mounted) {
+          setError(err.message);
+          setRoles([]);
+        }
       } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
       }
     };
 
     fetchRoles();
+
+    // Cleanup: prevent setState on unmounted component
+    return () => { mounted = false; };
   }, [user]);
 
   const hasRole = (role: UserRole) => roles.includes(role);

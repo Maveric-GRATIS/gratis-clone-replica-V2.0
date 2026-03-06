@@ -39,7 +39,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendVolunteerApplicationNotification = exports.sendJobApplicationNotification = exports.sendPartnerApplicationNotification = exports.sendNGOApplicationNotification = exports.sendPartnerInquiryNotification = exports.sendContactEmail = void 0;
+exports.sendApplicationActionEmail = exports.sendVolunteerApplicationNotification = exports.sendJobApplicationNotification = exports.sendPartnerApplicationNotification = exports.sendNGOApplicationNotification = exports.sendPartnerInquiryNotification = exports.sendContactEmail = void 0;
 const functions = __importStar(require("firebase-functions"));
 const email_service_1 = require("./email-service");
 const admin = __importStar(require("firebase-admin"));
@@ -601,6 +601,76 @@ exports.sendVolunteerApplicationNotification = functions.runWith({ secrets: ['RE
         if (error instanceof functions.https.HttpsError)
             throw error;
         functions.logger.error('Volunteer application error:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to send email');
+    }
+});
+exports.sendApplicationActionEmail = functions
+    .runWith({ secrets: ['RESEND_API_KEY'] })
+    .https.onCall(async (data, context) => {
+    var _a, _b, _c, _d, _e, _f;
+    try {
+        // Require authenticated caller
+        if (!context.auth) {
+            throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+        }
+        // Verify admin role in Firestore
+        const profileSnap = await admin.firestore().doc(`users/${context.auth.uid}`).get();
+        const role = (_a = profileSnap.data()) === null || _a === void 0 ? void 0 : _a.role;
+        if (role !== 'admin') {
+            throw new functions.https.HttpsError('permission-denied', 'Admin role required');
+        }
+        // Validate inputs
+        if (!data.to || !isValidEmail(data.to)) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid recipient email');
+        }
+        if (!['approve', 'reject', 'info'].includes(data.action)) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid action');
+        }
+        if (((_c = (_b = data.message) === null || _b === void 0 ? void 0 : _b.length) !== null && _c !== void 0 ? _c : 0) > 5000) {
+            throw new functions.https.HttpsError('invalid-argument', 'Message too long (max 5000 chars)');
+        }
+        const safeName = sanitize((_d = data.contactName) !== null && _d !== void 0 ? _d : '');
+        const safeOrg = sanitize((_e = data.organizationName) !== null && _e !== void 0 ? _e : '');
+        const safeMessage = sanitize((_f = data.message) !== null && _f !== void 0 ? _f : '');
+        const subjects = {
+            approve: `Welcome to GRATIS — ${safeOrg} 🎉`,
+            reject: `Update on your GRATIS partner application — ${safeOrg}`,
+            info: `Additional information needed — ${safeOrg}`,
+        };
+        await (0, email_service_1.sendEmail)({
+            to: data.to,
+            subject: subjects[data.action],
+            type: 'welcome',
+            data: {
+                firstName: safeName || 'Applicant',
+                customMessage: `
+            <p>${safeMessage.replace(/\n/g, '<br>')}</p>
+            <hr style="margin:24px 0;border-color:#333;">
+            <p style="font-size:12px;color:#888;">
+              This message was sent by the GRATIS partnerships team.<br>
+              Questions? Contact us at
+              <a href="mailto:partnerships@gratis.ngo" style="color:#C1FF00;">partnerships@gratis.ngo</a>
+            </p>
+          `,
+            },
+            replyTo: 'partnerships@gratis.ngo',
+        });
+        // Audit log
+        await admin.firestore().collection('adminActionLog').add({
+            adminUid: context.auth.uid,
+            action: data.action,
+            applicationType: data.applicationType,
+            recipientEmail: data.to,
+            organizationName: safeOrg,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+        functions.logger.info(`Admin ${context.auth.uid} sent '${data.action}' to ${data.to} for ${safeOrg}`);
+        return { success: true };
+    }
+    catch (error) {
+        if (error instanceof functions.https.HttpsError)
+            throw error;
+        functions.logger.error('Application action email error:', error);
         throw new functions.https.HttpsError('internal', 'Failed to send email');
     }
 });

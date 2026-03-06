@@ -234,5 +234,12 @@ service cloud.firestore {
     match /rateLimits/{key} {
       allow read, write: if false;
     }
+
+    // Admin Action Log — written by Cloud Functions, readable by admins only
+    match /adminActionLog/{logId} {
+      allow read:           if isAdmin();
+      allow create:         if false;
+      allow update, delete: if false;
+    }
   } // end match /databases/{database}/documents
 } // end service cloud.firestore

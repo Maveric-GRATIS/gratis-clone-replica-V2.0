@@ -1,683 +1,672 @@
-/**
+﻿/**
  * Admin: Application Review Detail
- *
- * Detailed view for reviewing a single partner application.
- * Part 6 - Section 26: Application API & Verification
+ * Reads real data from Firestore (partnerApplications or ngoApplications)
+ * and provides working approve / reject / info-request actions.
  */
 
-import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   ArrowLeft,
   Building2,
   User,
-  MapPin,
-  FileText,
+  Globe,
+  Mail,
+  Phone,
   CheckCircle,
   XCircle,
+  HelpCircle,
+  RefreshCw,
+  AlertCircle,
   Clock,
-  ExternalLink,
-  Download,
 } from "lucide-react";
 import { toast } from "sonner";
-import type { PartnerApplication } from "@/types/partner";
+import { db } from "@/firebase";
+import {
+  doc,
+  onSnapshot,
+  updateDoc,
+  serverTimestamp,
+} from "firebase/firestore";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { format } from "date-fns";
 
-// Mock data - same as in ApplicationsList
-const MOCK_APPLICATION: PartnerApplication = {
-  id: "1",
-  organizationName: "Clean Water Foundation",
-  organizationType: "ngo",
-  registrationNumber: "NL-12345",
-  taxId: "TAX-67890",
-  yearFounded: 2015,
-  website: "https://cleanwaterfoundation.org",
-  primaryContact: {
-    firstName: "Sarah",
-    lastName: "Johnson",
-    email: "sarah@cleanwater.org",
-    phone: "+31 20 123 4567",
-    position: "Executive Director",
+type AppStatus =
+  | "pending"
+  | "under_review"
+  | "approved"
+  | "rejected"
+  | "info_requested";
+type ActionMode = "approve" | "reject" | "info";
+
+const STATUS_CONFIG: Record<
+  AppStatus,
+  { label: string; className: string; icon: any }
+> = {
+  pending: {
+    label: "Pending",
+    className: "bg-yellow-500/20 text-yellow-600 border-yellow-500/30",
+    icon: Clock,
   },
-  headquarters: {
-    street: "Museumplein 1",
-    city: "Amsterdam",
-    postalCode: "1071 DJ",
-    country: "Netherlands",
+  under_review: {
+    label: "Under Review",
+    className: "bg-blue-500/20 text-blue-600 border-blue-500/30",
+    icon: AlertCircle,
   },
-  operatingCountries: ["Netherlands", "Kenya", "Uganda", "Tanzania"],
-  mission:
-    "Providing access to clean water and sanitation in underserved communities across Africa and Europe",
-  description:
-    "Clean Water Foundation works with local communities to build sustainable water infrastructure, implement sanitation programs, and provide education on water hygiene. Since 2015, we have served over 50.000 beneficiaries across multiple countries, partnering with local governments and international organizations to create lasting impact.",
-  focusAreas: ["clean_water", "sanitation", "education"],
-  beneficiariesServed: 50000,
-  annualBudget: "500k-1m",
-  staffCount: 15,
-  volunteerCount: 50,
-  documents: {
-    registrationCertificate: "https://example.com/docs/reg-cert.pdf",
-    taxExemptionCertificate: "https://example.com/docs/tax-exempt.pdf",
-    annualReport: "https://example.com/docs/annual-report-2023.pdf",
-    financialStatements: "https://example.com/docs/financials-2023.pdf",
+  info_requested: {
+    label: "Info Requested",
+    className: "bg-purple-500/20 text-purple-600 border-purple-500/30",
+    icon: HelpCircle,
   },
-  references: [
-    {
-      name: "Dr. James Wilson",
-      organization: "Global Health Initiative",
-      email: "james.wilson@globalhealth.org",
-      phone: "+44 20 1234 5678",
-      relationship: "Partner Organization",
-    },
-    {
-      name: "Maria Garcia",
-      organization: "European Development Fund",
-      email: "maria.garcia@edf.eu",
-      phone: "+32 2 123 4567",
-      relationship: "Funding Agency",
-    },
-  ],
-  partnershipGoals:
-    "We are seeking to expand our reach through the GRATIS platform by connecting with more donors who share our vision of universal access to clean water. Our goals include increasing our annual funding by 30%, launching 5 new water projects in underserved regions, and building awareness of water scarcity issues among European donors.",
-  expectedProjects: 5,
-  preferredStartDate: new Date("2024-02-01"),
-  status: "under_review",
-  submittedAt: new Date("2024-01-15"),
-  reviewedAt: new Date("2024-01-16"),
-  verification: {
-    documentsVerified: true,
-    referencesChecked: true,
-    backgroundCheckPassed: true,
+  approved: {
+    label: "Approved",
+    className: "bg-green-500/20 text-green-600 border-green-500/30",
+    icon: CheckCircle,
   },
-  createdAt: new Date("2024-01-15"),
-  updatedAt: new Date("2024-01-16"),
+  rejected: {
+    label: "Rejected",
+    className: "bg-red-500/20 text-red-600 border-red-500/30",
+    icon: XCircle,
+  },
 };
 
-export default function AdminApplicationReview() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [application] = useState<PartnerApplication>(MOCK_APPLICATION);
-  const [reviewNotes, setReviewNotes] = useState("");
-  const [verificationChecks, setVerificationChecks] = useState({
-    documents: application.verification.documentsVerified,
-    references: application.verification.referencesChecked,
-    registration: application.verification.backgroundCheckPassed,
-    taxStatus: false,
-  });
+const ACTION_CONFIG: Record<
+  ActionMode,
+  { title: string; btnLabel: string; btnClass: string; newStatus: AppStatus }
+> = {
+  approve: {
+    title: "Approve Application",
+    btnLabel: "Approve & Send Email",
+    btnClass: "bg-green-600 hover:bg-green-700 text-white",
+    newStatus: "approved",
+  },
+  reject: {
+    title: "Reject Application",
+    btnLabel: "Reject & Send Email",
+    btnClass: "bg-red-600 hover:bg-red-700 text-white",
+    newStatus: "rejected",
+  },
+  info: {
+    title: "Request More Information",
+    btnLabel: "Send Request",
+    btnClass: "bg-purple-600 hover:bg-purple-700 text-white",
+    newStatus: "info_requested",
+  },
+};
 
-  const handleApprove = () => {
-    // In real app, this would update Firebase
-    toast.success("Application approved successfully");
-    navigate("/admin/partners/applications");
+const DEFAULT_MESSAGES: Record<ActionMode, string> = {
+  approve: `Congratulations! We are pleased to inform you that your application has been approved.\n\nWelcome to the GRATIS partner network! Our team will reach out shortly to schedule an onboarding call and discuss next steps.\n\nThank you for joining us in making a difference.`,
+  reject: `Thank you for your interest in partnering with GRATIS.\n\nAfter careful review, we have decided not to proceed with your application at this time. This decision does not reflect the quality of your organization, but rather our current priorities and capacity.\n\nWe wish you the best and hope to collaborate in the future.`,
+  info: `Thank you for your application.\n\nTo complete our review, we need some additional information:\n\n- [Please specify the information needed]\n\nPlease reply directly to this email with your response. We look forward to hearing from you.`,
+};
+
+interface AppData {
+  id: string;
+  collectionType: "partner" | "ngo";
+  organizationName: string;
+  organizationType?: string;
+  contactFirstName: string;
+  contactLastName?: string;
+  contactEmail: string;
+  contactPhone?: string;
+  country?: string;
+  website?: string;
+  mission?: string;
+  focusAreas?: string[];
+  status: AppStatus;
+  createdAt: any;
+  reviewNote?: string;
+  reviewedAt?: any;
+  uid?: string;
+  raw: Record<string, any>;
+}
+
+function normalize(
+  id: string,
+  collectionType: "partner" | "ngo",
+  data: Record<string, any>,
+): AppData {
+  if (collectionType === "partner") {
+    return {
+      id,
+      collectionType,
+      organizationName: data.organizationName ?? "â€”",
+      organizationType: data.organizationType,
+      contactFirstName: data.primaryContact?.firstName ?? "",
+      contactLastName: data.primaryContact?.lastName ?? "",
+      contactEmail: data.primaryContact?.email ?? "",
+      contactPhone: data.primaryContact?.phone ?? "",
+      focusAreas: data.focusAreas,
+      status: data.status ?? "pending",
+      createdAt: data.createdAt,
+      reviewNote: data.reviewNote,
+      reviewedAt: data.reviewedAt,
+      uid: data.uid,
+      raw: data,
+    };
+  }
+  return {
+    id,
+    collectionType,
+    organizationName: data.organizationName ?? "â€”",
+    organizationType: "NGO",
+    contactFirstName: data.contactName ?? "",
+    contactEmail: data.contactEmail ?? "",
+    contactPhone: data.contactPhone ?? "",
+    country: data.country,
+    website: data.website,
+    mission: data.mission,
+    status: data.status ?? "pending",
+    createdAt: data.createdAt,
+    reviewNote: data.reviewNote,
+    reviewedAt: data.reviewedAt,
+    uid: data.uid,
+    raw: data,
   };
+}
 
-  const handleReject = () => {
-    if (!reviewNotes) {
-      toast.error("Please provide rejection reason");
-      return;
+// â”€â”€ Action Dialog â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+function ActionDialog({
+  open,
+  onClose,
+  mode,
+  application,
+  onConfirm,
+}: {
+  open: boolean;
+  onClose: () => void;
+  mode: ActionMode;
+  application: AppData;
+  onConfirm: (message: string) => Promise<void>;
+}) {
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const cfg = ACTION_CONFIG[mode];
+
+  useEffect(() => {
+    setMessage(DEFAULT_MESSAGES[mode]);
+  }, [mode]);
+
+  const handleConfirm = async () => {
+    if (!message.trim()) return;
+    setLoading(true);
+    try {
+      await onConfirm(message);
+      onClose();
+    } finally {
+      setLoading(false);
     }
-    // In real app, this would update Firebase
-    toast.success("Application rejected");
-    navigate("/admin/partners/applications");
-  };
-
-  const handleRequestDocuments = () => {
-    // In real app, this would send email and update status
-    toast.success("Document request sent to applicant");
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      {/* Header */}
-      <div className="mb-6">
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>{cfg.title}</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-2">
+          <div className="rounded-lg bg-muted/40 p-3 text-sm space-y-1">
+            <p>
+              <strong>To:</strong> {application.contactEmail}
+            </p>
+            <p>
+              <strong>Organization:</strong> {application.organizationName}
+            </p>
+          </div>
+          <div className="space-y-1">
+            <label className="text-sm font-medium">Email message:</label>
+            <Textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              rows={10}
+              className="font-mono text-sm"
+            />
+          </div>
+        </div>
+        <DialogFooter className="gap-2">
+          <Button variant="outline" onClick={onClose} disabled={loading}>
+            Cancel
+          </Button>
+          <Button
+            className={cfg.btnClass}
+            onClick={handleConfirm}
+            disabled={loading || !message.trim()}
+          >
+            {loading && <RefreshCw className="h-4 w-4 mr-2 animate-spin" />}
+            {cfg.btnLabel}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export default function AdminApplicationReview() {
+  const { id } = useParams<{ id: string }>();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const collectionType = (searchParams.get("type") ?? "partner") as
+    | "partner"
+    | "ngo";
+  const collectionName =
+    collectionType === "ngo" ? "ngoApplications" : "partnerApplications";
+
+  const [application, setApplication] = useState<AppData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogMode, setDialogMode] = useState<ActionMode>("approve");
+
+  // Real-time Firestore listener
+  useEffect(() => {
+    if (!id) return;
+    const unsub = onSnapshot(
+      doc(db, collectionName, id),
+      (snap) => {
+        if (!snap.exists()) {
+          setNotFound(true);
+          setLoading(false);
+          return;
+        }
+        setApplication(
+          normalize(
+            snap.id,
+            collectionType,
+            snap.data() as Record<string, any>,
+          ),
+        );
+        setLoading(false);
+      },
+      (err) => {
+        console.error("ApplicationReview listener:", err);
+        setLoading(false);
+      },
+    );
+    return () => unsub();
+  }, [id, collectionName, collectionType]);
+
+  const openDialog = (mode: ActionMode) => {
+    setDialogMode(mode);
+    setDialogOpen(true);
+  };
+
+  const handleAction = async (message: string) => {
+    if (!application) return;
+    const { newStatus } = ACTION_CONFIG[dialogMode];
+
+    // 1. Update Firestore
+    await updateDoc(doc(db, collectionName, application.id), {
+      status: newStatus,
+      reviewNote: message,
+      reviewedAt: serverTimestamp(),
+    });
+
+    // 2. Send email via Cloud Function
+    try {
+      const fn = getFunctions();
+      const sendApplicationActionEmail = httpsCallable(
+        fn,
+        "sendApplicationActionEmail",
+      );
+      await sendApplicationActionEmail({
+        to: application.contactEmail,
+        contactName: application.contactFirstName,
+        organizationName: application.organizationName,
+        action: dialogMode,
+        message,
+        applicationType: application.collectionType,
+      });
+    } catch (emailErr) {
+      console.error("Email send error:", emailErr);
+      toast.warning("Status updated, but email failed to send.");
+      return;
+    }
+
+    const labels: Record<ActionMode, string> = {
+      approve: "âœ… Application approved & email sent",
+      reject: "âŒ Application rejected & email sent",
+      info: "ðŸ“§ Information request sent",
+    };
+    toast.success(labels[dialogMode]);
+  };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto py-8 px-4 space-y-4">
+        <Skeleton className="h-10 w-48" />
+        <Skeleton className="h-64 w-full rounded-xl" />
+        <Skeleton className="h-64 w-full rounded-xl" />
+      </div>
+    );
+  }
+
+  if (notFound || !application) {
+    return (
+      <div className="container mx-auto py-8 px-4">
         <Button
           variant="ghost"
           onClick={() => navigate("/admin/partners/applications")}
-          className="mb-4"
+          className="mb-6"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Applications
+          <ArrowLeft className="w-4 h-4 mr-2" /> Back to Applications
         </Button>
+        <Card className="p-12 text-center">
+          <AlertCircle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold mb-1">Application not found</h3>
+          <p className="text-muted-foreground text-sm">
+            This application may have been deleted or the URL is incorrect.
+          </p>
+        </Card>
+      </div>
+    );
+  }
 
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">
-              {application.organizationName}
-            </h1>
-            <div className="flex items-center gap-3">
-              <Badge variant="default">
-                {application.status.replace("_", " ")}
-              </Badge>
-              <Badge variant="outline">
-                {application.organizationType.toUpperCase()}
-              </Badge>
-              <span className="text-sm text-gray-600">
-                Submitted: {application.submittedAt.toLocaleDateString()}
+  const statusCfg = STATUS_CONFIG[application.status] ?? STATUS_CONFIG.pending;
+  const StatusIcon = statusCfg.icon;
+  const canAct =
+    application.status !== "approved" && application.status !== "rejected";
+
+  return (
+    <div className="container mx-auto py-8 px-4">
+      {/* Back button */}
+      <Button
+        variant="ghost"
+        onClick={() => navigate("/admin/partners/applications")}
+        className="mb-4"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" /> Back to Applications
+      </Button>
+
+      {/* Header */}
+      <div className="flex items-start justify-between flex-wrap gap-4 mb-6">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">
+            {application.organizationName}
+          </h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <span
+              className={`text-sm px-3 py-1 rounded-full border font-medium inline-flex items-center gap-1 ${statusCfg.className}`}
+            >
+              <StatusIcon className="w-3 h-3" />
+              {statusCfg.label}
+            </span>
+            <Badge variant="outline" className="uppercase text-xs">
+              {application.collectionType === "ngo"
+                ? "NGO"
+                : (application.organizationType ?? "Partner")}
+            </Badge>
+            {application.createdAt?.seconds && (
+              <span className="text-sm text-muted-foreground">
+                Submitted:{" "}
+                {format(
+                  new Date(application.createdAt.seconds * 1000),
+                  "d MMM yyyy",
+                )}
               </span>
-            </div>
-          </div>
-
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={handleRequestDocuments}>
-              Request Documents
-            </Button>
-            <Button variant="destructive" onClick={handleReject}>
-              <XCircle className="w-4 h-4 mr-2" />
-              Reject
-            </Button>
-            <Button onClick={handleApprove}>
-              <CheckCircle className="w-4 h-4 mr-2" />
-              Approve
-            </Button>
+            )}
           </div>
         </div>
+
+        {canAct && (
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              onClick={() => openDialog("info")}
+              className="border-purple-500/50 text-purple-600"
+            >
+              <HelpCircle className="w-4 h-4 mr-2" /> Request Info
+            </Button>
+            <Button variant="destructive" onClick={() => openDialog("reject")}>
+              <XCircle className="w-4 h-4 mr-2" /> Reject
+            </Button>
+            <Button
+              className="bg-green-600 hover:bg-green-700 text-white"
+              onClick={() => openDialog("approve")}
+            >
+              <CheckCircle className="w-4 h-4 mr-2" /> Approve
+            </Button>
+          </div>
+        )}
+        {!canAct && (
+          <Badge className={`text-sm px-3 py-1 ${statusCfg.className}`}>
+            {application.status === "approved"
+              ? "Application Approved"
+              : "Application Rejected"}
+          </Badge>
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Content */}
-        <div className="lg:col-span-2">
-          <Tabs defaultValue="details">
-            <TabsList className="mb-4">
-              <TabsTrigger value="details">Details</TabsTrigger>
-              <TabsTrigger value="documents">Documents</TabsTrigger>
-              <TabsTrigger value="references">References</TabsTrigger>
-              <TabsTrigger value="verification">Verification</TabsTrigger>
-            </TabsList>
+        {/* Main info */}
+        <div className="lg:col-span-2 space-y-4">
+          {/* Contact info */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <User className="w-5 h-5" /> Contact Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="font-medium text-muted-foreground">Name</p>
+                <p>
+                  {`${application.contactFirstName} ${application.contactLastName ?? ""}`.trim() ||
+                    "â€”"}
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                <a
+                  href={`mailto:${application.contactEmail}`}
+                  className="text-blue-600 hover:underline break-all"
+                >
+                  {application.contactEmail}
+                </a>
+              </div>
+              {application.contactPhone && (
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                  <a
+                    href={`tel:${application.contactPhone}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {application.contactPhone}
+                  </a>
+                </div>
+              )}
+              {application.country && (
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                  <span>{application.country}</span>
+                </div>
+              )}
+              {application.website && (
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                  <a
+                    href={application.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline break-all"
+                  >
+                    {application.website}
+                  </a>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
-            {/* Details Tab */}
-            <TabsContent value="details" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Building2 className="w-5 h-5" />
-                    Organization Information
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Legal Name
-                      </span>
-                      <p>{application.organizationName}</p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Type
-                      </span>
-                      <p className="capitalize">
-                        {application.organizationType}
-                      </p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Registration Number
-                      </span>
-                      <p>{application.registrationNumber}</p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Tax ID
-                      </span>
-                      <p>{application.taxId || "Not provided"}</p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Year Founded
-                      </span>
-                      <p>{application.yearFounded}</p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Website
-                      </span>
-                      <a
-                        href={application.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline flex items-center gap-1"
-                      >
-                        Visit Site <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          {/* Organization info */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Building2 className="w-5 h-5" /> Organization Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="font-medium text-muted-foreground">
+                    Organization Name
+                  </p>
+                  <p>{application.organizationName}</p>
+                </div>
+                <div>
+                  <p className="font-medium text-muted-foreground">Type</p>
+                  <p className="capitalize">
+                    {application.organizationType ?? "â€”"}
+                  </p>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="w-5 h-5" />
-                    Primary Contact
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Name
-                      </span>
-                      <p>
-                        {application.primaryContact.firstName}{" "}
-                        {application.primaryContact.lastName}
-                      </p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Position
-                      </span>
-                      <p>{application.primaryContact.position}</p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Email
-                      </span>
-                      <a
-                        href={`mailto:${application.primaryContact.email}`}
-                        className="text-blue-600 hover:underline"
-                      >
-                        {application.primaryContact.email}
-                      </a>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Phone
-                      </span>
-                      <a
-                        href={`tel:${application.primaryContact.phone}`}
-                        className="text-blue-600 hover:underline"
-                      >
-                        {application.primaryContact.phone}
-                      </a>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              {application.mission && (
+                <div>
+                  <p className="font-medium text-muted-foreground mb-1">
+                    Mission
+                  </p>
+                  <p className="bg-muted/40 rounded-lg p-3">
+                    {application.mission}
+                  </p>
+                </div>
+              )}
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MapPin className="w-5 h-5" />
-                    Location
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div>
-                    <span className="text-sm font-medium text-gray-600">
-                      Headquarters
-                    </span>
-                    <p>
-                      {application.headquarters.street}
-                      <br />
-                      {application.headquarters.postalCode}{" "}
-                      {application.headquarters.city}
-                      <br />
-                      {application.headquarters.country}
-                    </p>
+              {application.focusAreas && application.focusAreas.length > 0 && (
+                <div>
+                  <p className="font-medium text-muted-foreground mb-2">
+                    Focus Areas
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {application.focusAreas.map((area) => (
+                      <Badge key={area} variant="secondary" className="text-xs">
+                        {area}
+                      </Badge>
+                    ))}
                   </div>
-                  <div>
-                    <span className="text-sm font-medium text-gray-600">
-                      Operating Countries
-                    </span>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {application.operatingCountries.map((country) => (
-                        <Badge key={country} variant="secondary">
-                          {country}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileText className="w-5 h-5" />
-                    Mission & Profile
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div>
-                    <span className="text-sm font-medium text-gray-600">
-                      Mission
-                    </span>
-                    <p className="mt-1">{application.mission}</p>
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium text-gray-600">
-                      Description
-                    </span>
-                    <p className="mt-1">{application.description}</p>
-                  </div>
-                  <div>
-                    <span className="text-sm font-medium text-gray-600">
-                      Focus Areas
-                    </span>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {application.focusAreas.map((area) => (
-                        <Badge key={area} variant="secondary">
-                          {area.replace("_", " ")}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 pt-2">
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Beneficiaries
-                      </span>
-                      <p className="text-xl font-semibold">
-                        {application.beneficiariesServed.toLocaleString()}
-                      </p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Annual Budget
-                      </span>
-                      <p className="text-xl font-semibold">
-                        {application.annualBudget}
-                      </p>
-                    </div>
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Staff
-                      </span>
-                      <p className="text-xl font-semibold">
-                        {application.staffCount}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Partnership Goals</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>{application.partnershipGoals}</p>
-                  <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t">
-                    <div>
-                      <span className="text-sm font-medium text-gray-600">
-                        Expected Projects (Year 1)
-                      </span>
-                      <p className="text-xl font-semibold">
-                        {application.expectedProjects}
-                      </p>
-                    </div>
-                    {application.preferredStartDate && (
-                      <div>
-                        <span className="text-sm font-medium text-gray-600">
-                          Preferred Start Date
-                        </span>
-                        <p className="text-xl font-semibold">
-                          {application.preferredStartDate.toLocaleDateString()}
-                        </p>
-                      </div>
+          {/* Previous review note */}
+          {application.reviewNote && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Previous Review Note</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm space-y-1">
+                <p className="bg-muted/40 rounded-lg p-3">
+                  {application.reviewNote}
+                </p>
+                {application.reviewedAt?.seconds && (
+                  <p className="text-muted-foreground text-xs">
+                    {format(
+                      new Date(application.reviewedAt.seconds * 1000),
+                      "d MMM yyyy HH:mm",
                     )}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Documents Tab */}
-            <TabsContent value="documents" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Submitted Documents</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {Object.entries(application.documents || {}).map(
-                    ([key, url]) => {
-                      const docUrl = Array.isArray(url) ? url[0] : url;
-                      if (!docUrl) return null;
-
-                      return (
-                        <div
-                          key={key}
-                          className="flex items-center justify-between p-3 border rounded-lg"
-                        >
-                          <div>
-                            <p className="font-medium capitalize">
-                              {key.replace(/([A-Z])/g, " $1").trim()}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              PDF Document
-                            </p>
-                          </div>
-                          <div className="flex gap-2">
-                            <Button variant="outline" size="sm" asChild>
-                              <a
-                                href={docUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                <ExternalLink className="w-4 h-4 mr-2" />
-                                View
-                              </a>
-                            </Button>
-                            <Button variant="outline" size="sm">
-                              <Download className="w-4 h-4 mr-2" />
-                              Download
-                            </Button>
-                          </div>
-                        </div>
-                      );
-                    },
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* References Tab */}
-            <TabsContent value="references" className="space-y-4">
-              {application.references.map((ref, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle>Reference {index + 1}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-sm font-medium text-gray-600">
-                          Name
-                        </span>
-                        <p>{ref.name}</p>
-                      </div>
-                      <div>
-                        <span className="text-sm font-medium text-gray-600">
-                          Organization
-                        </span>
-                        <p>{ref.organization}</p>
-                      </div>
-                      <div>
-                        <span className="text-sm font-medium text-gray-600">
-                          Email
-                        </span>
-                        <a
-                          href={`mailto:${ref.email}`}
-                          className="text-blue-600 hover:underline"
-                        >
-                          {ref.email}
-                        </a>
-                      </div>
-                      <div>
-                        <span className="text-sm font-medium text-gray-600">
-                          Phone
-                        </span>
-                        <p>{ref.phone}</p>
-                      </div>
-                      <div className="col-span-2">
-                        <span className="text-sm font-medium text-gray-600">
-                          Relationship
-                        </span>
-                        <p>{ref.relationship}</p>
-                      </div>
-                    </div>
-                    <div className="pt-3">
-                      <Button variant="outline" size="sm">
-                        Contact Reference
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-
-            {/* Verification Tab */}
-            <TabsContent value="verification">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Verification Checklist</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="check-documents"
-                        checked={verificationChecks.documents}
-                        onCheckedChange={(checked) =>
-                          setVerificationChecks((prev) => ({
-                            ...prev,
-                            documents: checked as boolean,
-                          }))
-                        }
-                      />
-                      <label
-                        htmlFor="check-documents"
-                        className="text-sm font-medium"
-                      >
-                        All required documents submitted and verified
-                      </label>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="check-references"
-                        checked={verificationChecks.references}
-                        onCheckedChange={(checked) =>
-                          setVerificationChecks((prev) => ({
-                            ...prev,
-                            references: checked as boolean,
-                          }))
-                        }
-                      />
-                      <label
-                        htmlFor="check-references"
-                        className="text-sm font-medium"
-                      >
-                        References contacted and verified
-                      </label>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="check-registration"
-                        checked={verificationChecks.registration}
-                        onCheckedChange={(checked) =>
-                          setVerificationChecks((prev) => ({
-                            ...prev,
-                            registration: checked as boolean,
-                          }))
-                        }
-                      />
-                      <label
-                        htmlFor="check-registration"
-                        className="text-sm font-medium"
-                      >
-                        Organization registration verified with authorities
-                      </label>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="check-tax"
-                        checked={verificationChecks.taxStatus}
-                        onCheckedChange={(checked) =>
-                          setVerificationChecks((prev) => ({
-                            ...prev,
-                            taxStatus: checked as boolean,
-                          }))
-                        }
-                      />
-                      <label
-                        htmlFor="check-tax"
-                        className="text-sm font-medium"
-                      >
-                        Tax-exempt status confirmed (if applicable)
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t">
-                    <p className="text-sm font-medium mb-2">
-                      Verification Progress
-                    </p>
-                    <div className="flex gap-2">
-                      {Object.values(verificationChecks).filter(Boolean)
-                        .length === 4 ? (
-                        <Badge variant="default">
-                          <CheckCircle className="w-3 h-3 mr-1" />
-                          Complete
-                        </Badge>
-                      ) : (
-                        <Badge variant="secondary">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {
-                            Object.values(verificationChecks).filter(Boolean)
-                              .length
-                          }{" "}
-                          of 4 Complete
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Sidebar */}
-        <div className="space-y-6">
+        <div className="space-y-4">
+          {/* Status card */}
           <Card>
             <CardHeader>
-              <CardTitle>Review Notes</CardTitle>
+              <CardTitle>Status</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Textarea
-                placeholder="Add notes about this application..."
-                value={reviewNotes}
-                onChange={(e) => setReviewNotes(e.target.value)}
-                rows={8}
-              />
+            <CardContent className="space-y-3 text-sm">
+              <div
+                className={`inline-flex items-center gap-1 px-3 py-1 rounded-full border font-medium text-xs ${statusCfg.className}`}
+              >
+                <StatusIcon className="w-3 h-3" />
+                {statusCfg.label}
+              </div>
+              {application.createdAt?.seconds && (
+                <div>
+                  <p className="font-medium text-muted-foreground">Submitted</p>
+                  <p>
+                    {format(
+                      new Date(application.createdAt.seconds * 1000),
+                      "d MMM yyyy 'at' HH:mm",
+                    )}
+                  </p>
+                </div>
+              )}
+              {application.reviewedAt?.seconds && (
+                <div>
+                  <p className="font-medium text-muted-foreground">
+                    Last Reviewed
+                  </p>
+                  <p>
+                    {format(
+                      new Date(application.reviewedAt.seconds * 1000),
+                      "d MMM yyyy 'at' HH:mm",
+                    )}
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <Button variant="outline" className="w-full justify-start">
-                Send Email to Applicant
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                Schedule Interview
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                Export Application PDF
-              </Button>
-            </CardContent>
-          </Card>
+          {/* Actions */}
+          {canAct && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button
+                  className="w-full bg-green-600 hover:bg-green-700 text-white"
+                  onClick={() => openDialog("approve")}
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" /> Approve
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full border-purple-500/50 text-purple-600 hover:bg-purple-500/10"
+                  onClick={() => openDialog("info")}
+                >
+                  <HelpCircle className="w-4 h-4 mr-2" /> Request Info
+                </Button>
+                <Button
+                  variant="destructive"
+                  className="w-full"
+                  onClick={() => openDialog("reject")}
+                >
+                  <XCircle className="w-4 h-4 mr-2" /> Reject
+                </Button>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
+
+      {/* Action Dialog */}
+      {application && (
+        <ActionDialog
+          open={dialogOpen}
+          onClose={() => setDialogOpen(false)}
+          mode={dialogMode}
+          application={application}
+          onConfirm={handleAction}
+        />
+      )}
     </div>
   );
 }

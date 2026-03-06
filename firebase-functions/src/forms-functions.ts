@@ -708,3 +708,96 @@ export const sendVolunteerApplicationNotification = functions.runWith({ secrets:
     }
   }
 );
+
+// ============================================================================
+// APPLICATION ACTION EMAIL
+// Called by AdminApplicationReview when admin approves / rejects / requests info
+// Only callable by authenticated admins (role verified against Firestore).
+// ============================================================================
+
+interface ApplicationActionData {
+  to:               string;
+  contactName:      string;
+  organizationName: string;
+  action:           'approve' | 'reject' | 'info';
+  message:          string;
+  applicationType:  'partner' | 'ngo';
+}
+
+export const sendApplicationActionEmail = functions
+  .runWith({ secrets: ['RESEND_API_KEY'] })
+  .https.onCall(async (data: ApplicationActionData, context) => {
+    try {
+      // Require authenticated caller
+      if (!context.auth) {
+        throw new functions.https.HttpsError('unauthenticated', 'Must be logged in');
+      }
+
+      // Verify admin role in Firestore
+      const profileSnap = await admin.firestore().doc(`users/${context.auth.uid}`).get();
+      const role = profileSnap.data()?.role;
+      if (role !== 'admin') {
+        throw new functions.https.HttpsError('permission-denied', 'Admin role required');
+      }
+
+      // Validate inputs
+      if (!data.to || !isValidEmail(data.to)) {
+        throw new functions.https.HttpsError('invalid-argument', 'Invalid recipient email');
+      }
+      if (!['approve', 'reject', 'info'].includes(data.action)) {
+        throw new functions.https.HttpsError('invalid-argument', 'Invalid action');
+      }
+      if ((data.message?.length ?? 0) > 5000) {
+        throw new functions.https.HttpsError('invalid-argument', 'Message too long (max 5000 chars)');
+      }
+
+      const safeName    = sanitize(data.contactName    ?? '');
+      const safeOrg     = sanitize(data.organizationName ?? '');
+      const safeMessage = sanitize(data.message ?? '');
+
+      const subjects: Record<string, string> = {
+        approve: `Welcome to GRATIS — ${safeOrg} 🎉`,
+        reject:  `Update on your GRATIS partner application — ${safeOrg}`,
+        info:    `Additional information needed — ${safeOrg}`,
+      };
+
+      await sendEmail({
+        to:      data.to,
+        subject: subjects[data.action],
+        type:    'welcome',
+        data: {
+          firstName: safeName || 'Applicant',
+          customMessage: `
+            <p>${safeMessage.replace(/\n/g, '<br>')}</p>
+            <hr style="margin:24px 0;border-color:#333;">
+            <p style="font-size:12px;color:#888;">
+              This message was sent by the GRATIS partnerships team.<br>
+              Questions? Contact us at
+              <a href="mailto:partnerships@gratis.ngo" style="color:#C1FF00;">partnerships@gratis.ngo</a>
+            </p>
+          `,
+        },
+        replyTo: 'partnerships@gratis.ngo',
+      });
+
+      // Audit log
+      await admin.firestore().collection('adminActionLog').add({
+        adminUid:         context.auth.uid,
+        action:           data.action,
+        applicationType:  data.applicationType,
+        recipientEmail:   data.to,
+        organizationName: safeOrg,
+        createdAt:        admin.firestore.FieldValue.serverTimestamp(),
+      });
+
+      functions.logger.info(
+        `Admin ${context.auth.uid} sent '${data.action}' to ${data.to} for ${safeOrg}`
+      );
+      return { success: true };
+    } catch (error) {
+      if (error instanceof functions.https.HttpsError) throw error;
+      functions.logger.error('Application action email error:', error);
+      throw new functions.https.HttpsError('internal', 'Failed to send email');
+    }
+  });
+

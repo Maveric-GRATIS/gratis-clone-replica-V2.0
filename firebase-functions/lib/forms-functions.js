@@ -316,7 +316,17 @@ exports.sendNGOApplicationNotification = functions.runWith({ secrets: ['RESEND_A
         throw new functions.https.HttpsError('internal', 'Failed to send email');
     }
 });
-const VALID_ORG_TYPES = ['ngo', 'company', 'startup', 'government', 'university', 'foundation', 'individual', 'other'];
+// Covers all values from ORGANIZATION_TYPES in src/types/partner.ts
+// plus legacy / alternative values that may arrive from older form versions.
+const VALID_ORG_TYPES = [
+    // Values used by the live PartnerApplicationForm (src/types/partner.ts)
+    'ngo', 'charity', 'foundation', 'social_enterprise', 'corporate',
+    'government', 'educational',
+    // Legacy / alternative spellings kept for backwards compatibility
+    'company', 'startup', 'university', 'individual', 'other',
+    'nonprofit', 'social-enterprise', 'cooperative', 'association',
+    'institute', 'network', 'alliance',
+];
 exports.sendPartnerApplicationNotification = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     var _a, _b, _c, _d, _e;
     try {
@@ -332,7 +342,7 @@ exports.sendPartnerApplicationNotification = functions.runWith({ secrets: ['RESE
         if (!isValidEmail(data.primaryContact.email)) {
             throw new functions.https.HttpsError('invalid-argument', 'Invalid email address');
         }
-        if (!VALID_ORG_TYPES.includes(String(data.organizationType).toLowerCase())) {
+        if (!VALID_ORG_TYPES.includes(String(data.organizationType).toLowerCase().trim())) {
             throw new functions.https.HttpsError('invalid-argument', `Invalid organizationType. Allowed: ${VALID_ORG_TYPES.join(', ')}`);
         }
         if (!Array.isArray(data.focusAreas) || data.focusAreas.some((a) => typeof a !== 'string' || a.length > 100)) {
@@ -342,7 +352,7 @@ exports.sendPartnerApplicationNotification = functions.runWith({ secrets: ['RESE
         const safeFirst = sanitize(data.primaryContact.firstName);
         const safeLast = sanitize((_c = data.primaryContact.lastName) !== null && _c !== void 0 ? _c : '');
         const safeName = `${safeFirst} ${safeLast}`.trim();
-        const safeType = sanitize(data.organizationType);
+        const safeType = sanitize(String(data.organizationType).toLowerCase().trim());
         const safeAreas = data.focusAreas.map(sanitize).join(', ');
         await (0, email_service_1.sendEmail)({
             to: 'partnerships@gratis.ngo',

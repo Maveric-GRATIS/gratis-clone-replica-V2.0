@@ -5,3 +5,4 @@ export { default as Cookies } from './Cookies';
 export { default as DonorPrivacy } from './DonorPrivacy';
 export { default as Accessibility } from './Accessibility';
 export { default as Disclaimer } from './Disclaimer';
+export { default as PartnerCodeOfConduct } from './PartnerCodeOfConduct';

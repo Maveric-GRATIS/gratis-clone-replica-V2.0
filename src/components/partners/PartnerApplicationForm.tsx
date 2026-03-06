@@ -32,8 +32,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
-import { db, functions } from "@/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { functions } from "@/firebase";
 import { httpsCallable } from "firebase/functions";
 import {
   ORGANIZATION_TYPES,
@@ -239,15 +238,9 @@ export function PartnerApplicationForm() {
 
     setIsSubmitting(true);
     try {
-      // Save application to Firestore
-      await addDoc(collection(db, "partnerApplications"), {
-        ...formData,
-        status: "pending",
-        submittedAt: serverTimestamp(),
-        createdAt: new Date().toISOString(),
-      });
-
-      // Send email notification
+      // The Cloud Function handles both the Firestore write AND the email.
+      // Do NOT call addDoc here — Firestore rules block direct client writes
+      // to partnerApplications (write: if false; only Cloud Functions allowed).
       const sendPartnerNotification = httpsCallable(
         functions,
         "sendPartnerApplicationNotification",
@@ -258,9 +251,21 @@ export function PartnerApplicationForm() {
       await clearDraft();
       // Redirect to confirmation page
       window.location.href = "/partners/apply/confirmation";
-    } catch (error) {
-      console.error("Error submitting application:", error);
-      toast.error("Failed to submit application. Please try again.");
+    } catch (error: any) {
+      console.error("Partner application submit error:", {
+        code: error?.code,
+        message: error?.message,
+        details: error?.details,
+      });
+      if (error?.code === "functions/unauthenticated") {
+        toast.error("Je moet ingelogd zijn om een aanvraag in te dienen.");
+      } else if (error?.code === "functions/invalid-argument") {
+        toast.error(`Ongeldige invoer: ${error.message}`);
+      } else if (error?.code === "functions/resource-exhausted") {
+        toast.error("Te veel aanvragen. Probeer het later opnieuw.");
+      } else {
+        toast.error("Failed to submit application. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }

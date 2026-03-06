@@ -62,6 +62,9 @@ const LegalPages = {
   Disclaimer: lazy(() =>
     import("@/pages/legal").then((m) => ({ default: m.Disclaimer })),
   ),
+  PartnerCodeOfConduct: lazy(() =>
+    import("@/pages/legal").then((m) => ({ default: m.PartnerCodeOfConduct })),
+  ),
 };
 const ImpactTV = lazy(() => import("@/pages/ImpactTV"));
 const Nexus = lazy(() => import("@/pages/impactTV/Nexus"));
@@ -475,6 +478,10 @@ const AppContent = () => {
                 <Route
                   path="/legal/disclaimer"
                   element={<LegalPages.Disclaimer />}
+                />
+                <Route
+                  path="/legal/partner-code-of-conduct"
+                  element={<LegalPages.PartnerCodeOfConduct />}
                 />
 
                 <Route path="/impact-tv" element={<ImpactTV />} />

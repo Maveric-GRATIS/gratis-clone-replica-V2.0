@@ -241,5 +241,12 @@ service cloud.firestore {
       allow create:         if false;
       allow update, delete: if false;
     }
+
+    // Form Drafts — doc ID format: {uid}_{formId}
+    // Users can only read/write/delete their own drafts.
+    match /drafts/{draftId} {
+      allow read, write, delete: if isAuthenticated()
+        && draftId.matches(request.auth.uid + '_.*');
+    }
   } // end match /databases/{database}/documents
 } // end service cloud.firestore

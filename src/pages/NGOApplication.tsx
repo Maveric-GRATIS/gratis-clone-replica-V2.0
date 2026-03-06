@@ -43,6 +43,9 @@ import { toast } from "sonner";
 import { db, functions } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { httpsCallable } from "firebase/functions";
+import { useFormDraft } from "@/hooks/useFormDraft";
+import { FormDraftBanner } from "@/components/forms/FormDraftBanner";
+import { SaveDraftButton } from "@/components/forms/SaveDraftButton";
 
 type ApplicationStep = 1 | 2 | 3 | 4;
 
@@ -50,6 +53,7 @@ export default function NGOApplication() {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<ApplicationStep>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
 
   // Form Data
   const [formData, setFormData] = useState({
@@ -162,6 +166,39 @@ export default function NGOApplication() {
     }
   };
 
+  const {
+    draft,
+    saveDraft,
+    clearDraft,
+    lastSaved,
+    saving,
+    hasDraft,
+    loadingDraft,
+  } = useFormDraft<typeof formData>("ngo-application");
+
+  const handleRestoreDraft = () => {
+    if (draft) {
+      setFormData(draft);
+      setDraftRestored(true);
+      toast.success(
+        "Concept hersteld — je kunt verder gaan waar je gebleven was",
+      );
+    }
+  };
+
+  const handleDiscardDraft = async () => {
+    await clearDraft();
+    setDraftRestored(false);
+    toast.info("Concept verwijderd");
+  };
+
+  const handleSaveDraft = async () => {
+    await saveDraft(formData as unknown as typeof formData);
+    toast.success(
+      "Concept opgeslagen — je kunt dit formulier later verder invullen.",
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -192,13 +229,16 @@ export default function NGOApplication() {
       // Send email notification
       const sendNGONotification = httpsCallable(
         functions,
-        "sendNGOApplicationNotification"
+        "sendNGOApplicationNotification",
       );
       await sendNGONotification(formData);
 
       toast.success(
         "Application submitted successfully! We'll review it within 5-7 business days.",
       );
+
+      await clearDraft();
+      setDraftRestored(false);
 
       // Reset form
       setFormData({
@@ -330,6 +370,15 @@ export default function NGOApplication() {
       {/* Application Form */}
       <section className="container py-12">
         <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8">
+          {hasDraft && !loadingDraft && (
+            <FormDraftBanner
+              lastSaved={lastSaved}
+              onRestore={handleRestoreDraft}
+              onDiscard={handleDiscardDraft}
+              restored={draftRestored}
+            />
+          )}
+
           {/* Step 1: Organization Information */}
           {currentStep === 1 && (
             <Card>
@@ -984,7 +1033,7 @@ export default function NGOApplication() {
           )}
 
           {/* Navigation Buttons */}
-          <div className="flex items-center justify-between pt-6 border-t border-border">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-border">
             <Button
               type="button"
               variant="outline"
@@ -994,6 +1043,12 @@ export default function NGOApplication() {
               <ChevronLeft className="mr-2 h-4 w-4" />
               Previous
             </Button>
+
+            <SaveDraftButton
+              onSave={handleSaveDraft}
+              lastSaved={lastSaved}
+              saving={saving}
+            />
 
             {currentStep < 4 ? (
               <Button type="button" onClick={nextStep}>

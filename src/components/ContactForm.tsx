@@ -10,6 +10,9 @@ import { analytics } from "@/lib/analytics";
 import { Mail, User, MessageSquare } from "lucide-react";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { useTranslation } from "react-i18next";
+import { useFormDraft } from "@/hooks/useFormDraft";
+import { FormDraftBanner } from "@/components/forms/FormDraftBanner";
+import { SaveDraftButton } from "@/components/forms/SaveDraftButton";
 
 interface ContactFormData {
   name: string;
@@ -27,7 +30,44 @@ export const ContactForm = () => {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
   const { toast } = useToast();
+
+  const {
+    draft,
+    saveDraft,
+    clearDraft,
+    lastSaved,
+    saving,
+    hasDraft,
+    loadingDraft,
+  } = useFormDraft<ContactFormData>("contact");
+
+  const handleRestoreDraft = () => {
+    if (draft) {
+      setFormData(draft);
+      setDraftRestored(true);
+      toast({
+        title: "Concept hersteld",
+        description: "Je kunt verder gaan waar je gebleven was.",
+      });
+    }
+  };
+
+  const handleDiscardDraft = async () => {
+    await clearDraft();
+    setDraftRestored(false);
+    setFormData({ name: "", email: "", subject: "", message: "" });
+    toast({ title: "Concept verwijderd" });
+  };
+
+  const handleSaveDraft = async () => {
+    await saveDraft(formData);
+    toast({
+      title: "Concept opgeslagen",
+      description: "Je kunt dit formulier later verder invullen.",
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +89,8 @@ export const ContactForm = () => {
         description: t("contact.successDescription"),
       });
 
+      await clearDraft();
+      setDraftRestored(false);
       setFormData({
         name: "",
         email: "",
@@ -89,6 +131,15 @@ export const ContactForm = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {hasDraft && !loadingDraft && (
+            <FormDraftBanner
+              lastSaved={lastSaved}
+              onRestore={handleRestoreDraft}
+              onDiscard={handleDiscardDraft}
+              restored={draftRestored}
+            />
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name" className="flex items-center gap-2">
@@ -150,16 +201,27 @@ export const ContactForm = () => {
             />
           </div>
 
-          <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? (
-              <>
-                <LoadingSpinner size="sm" />
-                Sending...
-              </>
-            ) : (
-              "Send Message"
-            )}
-          </Button>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+            <SaveDraftButton
+              onSave={handleSaveDraft}
+              lastSaved={lastSaved}
+              saving={saving}
+            />
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto"
+            >
+              {isSubmitting ? (
+                <>
+                  <LoadingSpinner size="sm" />
+                  Sending...
+                </>
+              ) : (
+                "Send Message"
+              )}
+            </Button>
+          </div>
         </form>
 
         <div className="text-center text-sm text-muted-foreground">

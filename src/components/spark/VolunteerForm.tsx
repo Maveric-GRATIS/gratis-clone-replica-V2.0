@@ -12,6 +12,9 @@ import { Loader2, UserPlus } from "lucide-react";
 import { db, functions } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { httpsCallable } from "firebase/functions";
+import { useFormDraft } from "@/hooks/useFormDraft";
+import { FormDraftBanner } from "@/components/forms/FormDraftBanner";
+import { SaveDraftButton } from "@/components/forms/SaveDraftButton";
 
 const volunteerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -21,13 +24,19 @@ const volunteerSchema = z.object({
   interests: z.array(z.string()).min(1, "Select at least one interest"),
   availability: z.enum(["weekdays", "weekends", "flexible"]),
   experience: z.string().optional(),
-  motivation: z.string().min(10, "Please share why you want to volunteer (at least 10 characters)"),
+  motivation: z
+    .string()
+    .min(10, "Please share why you want to volunteer (at least 10 characters)"),
 });
 
 type VolunteerFormData = z.infer<typeof volunteerSchema>;
 
+type VolunteerDraftData = Omit<VolunteerFormData, "interests"> & {
+  interests: string[];
+};
+
 export const VolunteerForm = () => {
-  const [formData, setFormData] = useState<Omit<VolunteerFormData, "interests"> & { interests: string[] }>({
+  const defaultValues: VolunteerDraftData = {
     name: "",
     email: "",
     phone: "",
@@ -36,8 +45,47 @@ export const VolunteerForm = () => {
     availability: "flexible",
     experience: "",
     motivation: "",
-  });
+  };
+
+  const [formData, setFormData] = useState<VolunteerDraftData>(defaultValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
+
+  const {
+    draft,
+    saveDraft,
+    clearDraft,
+    lastSaved,
+    saving,
+    hasDraft,
+    loadingDraft,
+  } = useFormDraft<VolunteerDraftData>("volunteer-application");
+
+  const handleRestoreDraft = () => {
+    if (draft) {
+      setFormData(draft);
+      setDraftRestored(true);
+      toast.success(
+        "Concept hersteld — je kunt verder gaan waar je gebleven was",
+      );
+    }
+  };
+
+  const handleDiscardDraft = async () => {
+    await clearDraft();
+    setDraftRestored(false);
+    setFormData(defaultValues);
+    toast.info("Concept verwijderd");
+  };
+
+  const handleSaveDraft = async () => {
+    await saveDraft(
+      formData as unknown as Record<string, unknown> as VolunteerDraftData,
+    );
+    toast.success(
+      "Concept opgeslagen — je kunt dit formulier later verder invullen.",
+    );
+  };
 
   const interestOptions = [
     { id: "events", label: "Event Support" },
@@ -74,25 +122,19 @@ export const VolunteerForm = () => {
       // Send email notification
       const sendVolunteerNotification = httpsCallable(
         functions,
-        "sendVolunteerApplicationNotification"
+        "sendVolunteerApplicationNotification",
       );
       await sendVolunteerNotification(validatedData);
 
       toast.success("Application received! 🙌", {
-        description: "We'll review your application and get back to you within 48 hours. Welcome to the crew!",
+        description:
+          "We'll review your application and get back to you within 48 hours. Welcome to the crew!",
       });
 
+      await clearDraft();
+      setDraftRestored(false);
       // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        city: "",
-        interests: [],
-        availability: "flexible",
-        experience: "",
-        motivation: "",
-      });
+      setFormData(defaultValues);
     } catch (error) {
       console.error("Error submitting volunteer application:", error);
       if (error instanceof z.ZodError) {
@@ -109,6 +151,14 @@ export const VolunteerForm = () => {
     <Card className="bg-card border-border shadow-lg">
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
+          {hasDraft && !loadingDraft && (
+            <FormDraftBanner
+              lastSaved={lastSaved}
+              onRestore={handleRestoreDraft}
+              onDiscard={handleDiscardDraft}
+              restored={draftRestored}
+            />
+          )}
           {/* Personal Info */}
           <div className="space-y-4">
             <div>
@@ -116,7 +166,9 @@ export const VolunteerForm = () => {
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 placeholder="Your full name"
                 required
               />
@@ -129,7 +181,9 @@ export const VolunteerForm = () => {
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   placeholder="your@email.com"
                   required
                 />
@@ -141,7 +195,9 @@ export const VolunteerForm = () => {
                   id="phone"
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
                   placeholder="+31 6 12345678"
                   required
                 />
@@ -153,7 +209,9 @@ export const VolunteerForm = () => {
               <Input
                 id="city"
                 value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, city: e.target.value })
+                }
                 placeholder="Amsterdam, Rotterdam, etc."
                 required
               />
@@ -214,11 +272,15 @@ export const VolunteerForm = () => {
 
           {/* Experience */}
           <div>
-            <Label htmlFor="experience">Previous Volunteer Experience (Optional)</Label>
+            <Label htmlFor="experience">
+              Previous Volunteer Experience (Optional)
+            </Label>
             <Textarea
               id="experience"
               value={formData.experience}
-              onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, experience: e.target.value })
+              }
               placeholder="Have you volunteered before? Tell us about it..."
               rows={3}
             />
@@ -226,11 +288,15 @@ export const VolunteerForm = () => {
 
           {/* Motivation */}
           <div>
-            <Label htmlFor="motivation">Why GRATIS? What draws you to this movement?</Label>
+            <Label htmlFor="motivation">
+              Why GRATIS? What draws you to this movement?
+            </Label>
             <Textarea
               id="motivation"
               value={formData.motivation}
-              onChange={(e) => setFormData({ ...formData, motivation: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, motivation: e.target.value })
+              }
               placeholder="Share your motivation and what you hope to contribute..."
               rows={4}
               required
@@ -244,26 +310,34 @@ export const VolunteerForm = () => {
               <span className="font-semibold text-sm">NEXT STEPS</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Once you submit, we'll review your application and reach out within 48 hours to discuss next steps and upcoming opportunities.
+              Once you submit, we'll review your application and reach out
+              within 48 hours to discuss next steps and upcoming opportunities.
             </p>
           </div>
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground"
-            size="lg"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              "JOIN THE CREW"
-            )}
-          </Button>
+          {/* Footer: Save Draft + Submit */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-border">
+            <SaveDraftButton
+              onSave={handleSaveDraft}
+              lastSaved={lastSaved}
+              saving={saving}
+            />
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground"
+              size="lg"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "JOIN THE CREW"
+              )}
+            </Button>
+          </div>
         </form>
       </CardContent>
     </Card>

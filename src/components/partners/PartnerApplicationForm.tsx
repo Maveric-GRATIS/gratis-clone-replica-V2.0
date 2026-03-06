@@ -41,6 +41,9 @@ import {
   ANNUAL_BUDGET_RANGES,
 } from "@/types/partner";
 import type { PartnerApplication } from "@/types/partner";
+import { useFormDraft } from "@/hooks/useFormDraft";
+import { FormDraftBanner } from "@/components/forms/FormDraftBanner";
+import { SaveDraftButton } from "@/components/forms/SaveDraftButton";
 
 const STEPS = [
   { id: 1, title: "Organization", icon: Building2 },
@@ -79,6 +82,7 @@ const COUNTRIES = [
 export function PartnerApplicationForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
   const [formData, setFormData] = useState<Partial<PartnerApplication>>({
     organizationType: "ngo",
     focusAreas: [],
@@ -89,6 +93,39 @@ export function PartnerApplicationForm() {
     ],
     documents: {},
   });
+
+  const {
+    draft,
+    saveDraft,
+    clearDraft,
+    lastSaved,
+    saving,
+    hasDraft,
+    loadingDraft,
+  } = useFormDraft<Partial<PartnerApplication>>("partner-application");
+
+  const handleRestoreDraft = () => {
+    if (draft) {
+      setFormData(draft);
+      setDraftRestored(true);
+      toast.success(
+        "Concept hersteld — je kunt verder gaan waar je gebleven was",
+      );
+    }
+  };
+
+  const handleDiscardDraft = async () => {
+    await clearDraft();
+    setDraftRestored(false);
+    toast.info("Concept verwijderd");
+  };
+
+  const handleSaveDraft = async () => {
+    await saveDraft(formData as unknown as Partial<PartnerApplication>);
+    toast.success(
+      "Concept opgeslagen — je kunt dit formulier later verder invullen.",
+    );
+  };
 
   const updateFormData = (updates: Partial<PartnerApplication>) => {
     setFormData((prev) => ({ ...prev, ...updates }));
@@ -213,11 +250,12 @@ export function PartnerApplicationForm() {
       // Send email notification
       const sendPartnerNotification = httpsCallable(
         functions,
-        "sendPartnerApplicationNotification"
+        "sendPartnerApplicationNotification",
       );
       await sendPartnerNotification(formData);
 
       toast.success("Application submitted successfully!");
+      await clearDraft();
       // Redirect to confirmation page
       window.location.href = "/partners/apply/confirmation";
     } catch (error) {
@@ -230,6 +268,15 @@ export function PartnerApplicationForm() {
 
   return (
     <div>
+      {hasDraft && !loadingDraft && (
+        <FormDraftBanner
+          lastSaved={lastSaved}
+          onRestore={handleRestoreDraft}
+          onDiscard={handleDiscardDraft}
+          restored={draftRestored}
+        />
+      )}
+
       {/* Progress Steps */}
       <div className="mb-8">
         <div className="flex justify-between items-center">
@@ -1018,7 +1065,7 @@ export function PartnerApplicationForm() {
       </Card>
 
       {/* Navigation Buttons */}
-      <div className="flex justify-between mt-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mt-6">
         <Button
           variant="outline"
           onClick={prevStep}
@@ -1027,6 +1074,12 @@ export function PartnerApplicationForm() {
           <ArrowLeft className="w-4 h-4 mr-2" />
           Previous
         </Button>
+
+        <SaveDraftButton
+          onSave={handleSaveDraft}
+          lastSaved={lastSaved}
+          saving={saving}
+        />
 
         {currentStep < STEPS.length ? (
           <Button onClick={nextStep}>

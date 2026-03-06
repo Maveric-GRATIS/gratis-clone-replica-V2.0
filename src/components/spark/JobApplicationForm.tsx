@@ -18,6 +18,9 @@ import { db, storage, functions } from "@/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { httpsCallable } from "firebase/functions";
+import { useFormDraft } from "@/hooks/useFormDraft";
+import { FormDraftBanner } from "@/components/forms/FormDraftBanner";
+import { SaveDraftButton } from "@/components/forms/SaveDraftButton";
 
 const jobApplicationSchema = z.object({
   position: z.string().min(1, "Please select a position"),
@@ -35,7 +38,7 @@ const jobApplicationSchema = z.object({
 type JobApplicationFormData = z.infer<typeof jobApplicationSchema>;
 
 export const JobApplicationForm = () => {
-  const [formData, setFormData] = useState<JobApplicationFormData>({
+  const defaultValues: JobApplicationFormData = {
     position: "",
     name: "",
     email: "",
@@ -44,9 +47,49 @@ export const JobApplicationForm = () => {
     coverLetter: "",
     portfolio: "",
     startDate: "",
-  });
+  };
+
+  const [formData, setFormData] =
+    useState<JobApplicationFormData>(defaultValues);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
+
+  const {
+    draft,
+    saveDraft,
+    clearDraft,
+    lastSaved,
+    saving,
+    hasDraft,
+    loadingDraft,
+  } = useFormDraft<JobApplicationFormData>("job-application");
+
+  const handleRestoreDraft = () => {
+    if (draft) {
+      setFormData(draft);
+      setDraftRestored(true);
+      toast.success("Concept hersteld", {
+        description:
+          "Je kunt verder gaan waar je gebleven was. Upload je CV opnieuw.",
+      });
+    }
+  };
+
+  const handleDiscardDraft = async () => {
+    await clearDraft();
+    setDraftRestored(false);
+    setFormData(defaultValues);
+    toast.info("Concept verwijderd");
+  };
+
+  const handleSaveDraft = async () => {
+    await saveDraft(formData);
+    toast.success("Concept opgeslagen", {
+      description:
+        "Je kunt dit formulier later verder invullen. Vergeet je CV te herladen.",
+    });
+  };
 
   const positions = [
     { value: "event-coordinator", label: "Event Coordinator (Temporary)" },
@@ -125,7 +168,7 @@ export const JobApplicationForm = () => {
       // Send email notification
       const sendJobNotification = httpsCallable(
         functions,
-        "sendJobApplicationNotification"
+        "sendJobApplicationNotification",
       );
       await sendJobNotification({
         ...validatedData,
@@ -137,17 +180,11 @@ export const JobApplicationForm = () => {
           "We've received your application and will review it within 5 business days. Good luck!",
       });
 
+      await clearDraft();
+      setDraftRestored(false);
+
       // Reset form
-      setFormData({
-        position: "",
-        name: "",
-        email: "",
-        phone: "",
-        city: "",
-        coverLetter: "",
-        portfolio: "",
-        startDate: "",
-      });
+      setFormData(defaultValues);
       setResumeFile(null);
 
       // Reset file input
@@ -176,6 +213,15 @@ export const JobApplicationForm = () => {
     <Card className="bg-card border-border shadow-lg">
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
+          {hasDraft && !loadingDraft && (
+            <FormDraftBanner
+              lastSaved={lastSaved}
+              onRestore={handleRestoreDraft}
+              onDiscard={handleDiscardDraft}
+              restored={draftRestored}
+            />
+          )}
+
           {/* Position Selection */}
           <div className="space-y-2">
             <Label htmlFor="position">Position</Label>
@@ -337,22 +383,29 @@ export const JobApplicationForm = () => {
             </p>
           </div>
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full bg-gradient-to-r from-accent to-primary hover:opacity-90 text-primary-foreground"
-            size="lg"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting Application...
-              </>
-            ) : (
-              "APPLY NOW"
-            )}
-          </Button>
+          {/* Footer: Save Draft + Submit */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-border">
+            <SaveDraftButton
+              onSave={handleSaveDraft}
+              lastSaved={lastSaved}
+              saving={saving}
+            />
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto bg-gradient-to-r from-accent to-primary hover:opacity-90 text-primary-foreground"
+              size="lg"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting Application...
+                </>
+              ) : (
+                "APPLY NOW"
+              )}
+            </Button>
+          </div>
 
           <p className="text-xs text-center text-muted-foreground">
             By submitting this application, you consent to GRATIS storing and

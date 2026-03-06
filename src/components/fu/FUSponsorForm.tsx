@@ -25,6 +25,9 @@ import { db, functions } from "@/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { httpsCallable } from "firebase/functions";
 import { toast } from "@/hooks/use-toast";
+import { useFormDraft } from "@/hooks/useFormDraft";
+import { FormDraftBanner } from "@/components/forms/FormDraftBanner";
+import { SaveDraftButton } from "@/components/forms/SaveDraftButton";
 
 const formSchema = z.object({
   company_name: z.string().min(2, "Company/Brand name is required").max(100),
@@ -53,6 +56,17 @@ interface FUSponsorFormProps {
 
 export default function FUSponsorForm({ onSuccess }: FUSponsorFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draftRestored, setDraftRestored] = useState(false);
+
+  const {
+    draft,
+    saveDraft,
+    clearDraft,
+    lastSaved,
+    saving,
+    hasDraft,
+    loadingDraft,
+  } = useFormDraft<FormValues>("fu-sponsor");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -69,6 +83,32 @@ export default function FUSponsorForm({ onSuccess }: FUSponsorFormProps) {
       budget_range: "",
     },
   });
+
+  const handleRestoreDraft = () => {
+    if (draft) {
+      form.reset(draft);
+      setDraftRestored(true);
+      toast({
+        title: "Concept hersteld",
+        description: "Je kunt verder gaan waar je gebleven was.",
+      });
+    }
+  };
+
+  const handleDiscardDraft = async () => {
+    await clearDraft();
+    setDraftRestored(false);
+    form.reset();
+    toast({ title: "Concept verwijderd" });
+  };
+
+  const handleSaveDraft = async () => {
+    await saveDraft(form.getValues() as unknown as FormValues);
+    toast({
+      title: "Concept opgeslagen",
+      description: "Je kunt dit formulier later verder invullen.",
+    });
+  };
 
   const onSubmit = async (values: FormValues) => {
     setIsSubmitting(true);
@@ -95,6 +135,8 @@ export default function FUSponsorForm({ onSuccess }: FUSponsorFormProps) {
           "We're excited to create something unique with you. We'll contact you within 48 hours.",
       });
 
+      await clearDraft();
+      setDraftRestored(false);
       form.reset();
       onSuccess?.();
     } catch (error: any) {
@@ -111,6 +153,14 @@ export default function FUSponsorForm({ onSuccess }: FUSponsorFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        {hasDraft && !loadingDraft && (
+          <FormDraftBanner
+            lastSaved={lastSaved}
+            onRestore={handleRestoreDraft}
+            onDiscard={handleDiscardDraft}
+            restored={draftRestored}
+          />
+        )}
         {/* Company Info */}
         <div className="grid md:grid-cols-2 gap-4">
           <FormField
@@ -308,19 +358,26 @@ export default function FUSponsorForm({ onSuccess }: FUSponsorFormProps) {
           )}
         />
 
-        <Button
-          type="submit"
-          className="w-full"
-          size="lg"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Sparkles className="mr-2 h-4 w-4" />
-          )}
-          Submit F.U. Collaboration Request
-        </Button>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+          <SaveDraftButton
+            onSave={handleSaveDraft}
+            lastSaved={lastSaved}
+            saving={saving}
+          />
+          <Button
+            type="submit"
+            size="lg"
+            className="w-full sm:w-auto"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Sparkles className="mr-2 h-4 w-4" />
+            )}
+            Submit F.U. Collaboration Request
+          </Button>
+        </div>
 
         <p className="text-xs text-center text-muted-foreground">
           By submitting, you agree to be contacted about your F.U.

@@ -14,6 +14,8 @@ import {
   orderBy,
   limit,
   getDocs,
+  getDoc,
+  doc,
   Timestamp,
 } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
@@ -94,11 +96,9 @@ export function ActivityFeed() {
       }
 
       // Add signup activity from user creation
-      const userDoc = await getDocs(
-        query(collection(db, "users"), where("__name__", "==", user.uid)),
-      );
-      if (!userDoc.empty) {
-        const userData = userDoc.docs[0].data();
+      const userDocSnap = await getDoc(doc(db, "users", user.uid));
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
         activitiesData.push({
           id: "signup",
           type: "signup",

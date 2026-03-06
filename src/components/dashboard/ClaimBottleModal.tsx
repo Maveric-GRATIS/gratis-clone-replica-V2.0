@@ -7,6 +7,7 @@ import {
   doc,
   updateDoc,
   increment,
+  getDoc,
   Timestamp,
 } from "firebase/firestore";
 import {
@@ -64,11 +65,38 @@ export function ClaimBottleModal({ isOpen, onClose }: ClaimBottleModalProps) {
       try {
         if (!user) throw new Error("User not authenticated");
 
+        // ── Overclaim guard: verify bottles remaining before writing ──
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          const tierLimits: Record<string, number> = {
+            explorer: 1,
+            insider: 2,
+            core: 4,
+            founder: 999,
+          };
+          const limit = tierLimits[userData.tribeTier || "explorer"] ?? 1;
+          const claimed = userData.bottlesClaimed ?? 0;
+          if (limit !== 999 && claimed >= limit) {
+            toast.error("You have no bottles remaining this month.");
+            setIsSubmitting(false);
+            return;
+          }
+        }
+
+        // ── Generate order number ──
+        const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+        const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
+        const orderNumber = `GR-${dateStr}-${rand}`;
+
         // Create order in Firestore
         const orderRef = await addDoc(collection(db, "orders"), {
           userId: user.uid,
+          order_number: orderNumber,
           productId: "gratis-water",
           productName: "GRATIS Water Bottle",
+          total: 0,
           status: "pending",
           shippingAddress: {
             street: formData.street,
@@ -81,7 +109,6 @@ export function ClaimBottleModal({ isOpen, onClose }: ClaimBottleModalProps) {
         });
 
         // Update user's bottlesClaimed count
-        const userRef = doc(db, "users", user.uid);
         await updateDoc(userRef, {
           bottlesClaimed: increment(1),
           lastClaimDate: Timestamp.now(),

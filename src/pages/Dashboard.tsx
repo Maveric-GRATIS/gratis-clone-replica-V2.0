@@ -22,7 +22,6 @@ import {
   onSnapshot,
   Timestamp,
 } from "firebase/firestore";
-import { useUserImpact } from "@/hooks/useUserImpact";
 import {
   Package,
   Heart,
@@ -48,10 +47,10 @@ import { useEffect, useState } from "react";
 
 interface Order {
   id: string;
-  order_number: string;
+  order_number?: string;
   total: number;
   status: string;
-  created_at: Timestamp;
+  createdAt: Timestamp;
 }
 
 interface UserData {
@@ -66,7 +65,6 @@ interface UserData {
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const { data: impact } = useUserImpact();
   const [userData, setUserData] = useState<UserData>({
     tribeTier: "explorer",
     bottlesClaimed: 0,
@@ -118,8 +116,8 @@ export default function Dashboard() {
       const ordersRef = collection(db, "orders");
       const q = query(
         ordersRef,
-        where("user_id", "==", user.uid),
-        orderBy("created_at", "desc"),
+        where("userId", "==", user.uid),
+        orderBy("createdAt", "desc"),
         limit(5),
       );
 
@@ -318,13 +316,17 @@ export default function Dashboard() {
                           </div>
                           <div>
                             <p className="font-medium">
-                              Order #{order.order_number}
+                              Order #
+                              {order.order_number ??
+                                order.id.slice(-8).toUpperCase()}
                             </p>
                             <p className="text-sm text-muted-foreground">
-                              {format(
-                                order.created_at.toDate(),
-                                "MMM dd, yyyy",
-                              )}
+                              {order.createdAt?.toDate
+                                ? format(
+                                    order.createdAt.toDate(),
+                                    "MMM dd, yyyy",
+                                  )
+                                : "—"}
                             </p>
                           </div>
                         </div>

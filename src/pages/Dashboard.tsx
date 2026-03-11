@@ -33,7 +33,7 @@ import {
   Settings as SettingsIcon,
 } from "lucide-react";
 import { format } from "date-fns";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { SEO } from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
 import { EmptyState } from "@/components/EmptyState";
@@ -65,6 +65,7 @@ interface UserData {
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const { formatPrice } = useCurrency();
   const [userData, setUserData] = useState<UserData>({
     tribeTier: "explorer",
     bottlesClaimed: 0,
@@ -332,7 +333,7 @@ export default function Dashboard() {
                         </div>
                         <div className="text-right">
                           <p className="font-medium">
-                            {formatEuro(order.total)}
+                            {formatPrice(order.total)}
                           </p>
                           <Badge
                             variant={

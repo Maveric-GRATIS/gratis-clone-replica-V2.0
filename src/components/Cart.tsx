@@ -8,12 +8,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/contexts/CartContext";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export const Cart = () => {
   const { t } = useTranslation();
+  const { formatPrice } = useCurrency();
   const {
     items,
     isOpen,
@@ -74,7 +75,7 @@ export const Cart = () => {
                       </p>
                     )}
                     <p className="text-sm sm:text-base font-semibold mt-1">
-                      {formatEuro(item.price)}
+                      {formatPrice(item.price)}
                     </p>
 
                     <div className="flex items-center gap-1.5 sm:gap-2 mt-2">

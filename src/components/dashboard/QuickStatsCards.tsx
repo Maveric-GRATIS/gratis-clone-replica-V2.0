@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
 import { Crown, Droplet, Heart, Vote } from "lucide-react";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface UserData {
   tribeTier: "explorer" | "insider" | "core" | "founder";
@@ -26,6 +26,7 @@ const tierInfo = {
 };
 
 export function QuickStatsCards({ userData }: QuickStatsCardsProps) {
+  const { formatPrice } = useCurrency();
   const tier = tierInfo[userData.tribeTier];
   const bottlesRemaining = userData.bottlesLimit - userData.bottlesClaimed;
   const bottleProgress =
@@ -101,7 +102,7 @@ export function QuickStatsCards({ userData }: QuickStatsCardsProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold mb-2">
-            {formatEuro(userData.totalImpact)}
+            {formatPrice(userData.totalImpact)}
           </div>
           <p className="text-xs text-muted-foreground">
             Your contribution to date

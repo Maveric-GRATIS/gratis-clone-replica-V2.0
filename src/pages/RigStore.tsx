@@ -6,7 +6,7 @@ import { useCartActions } from "@/hooks/useCartActions";
 import { useRigProducts } from "@/hooks/useRigProducts";
 import { ShoppingBag, Filter, Star, Eye, ArrowRight } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { LazyImage } from "@/components/LazyImage";
 import { QuickViewModal } from "@/components/product/QuickViewModal";
 import {
@@ -39,6 +39,7 @@ export default function RigStore() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState<any>(null);
   const { addToCart } = useCartActions();
+  const { formatPrice } = useCurrency();
   const { products, loading, error } = useRigProducts();
 
   const handleQuickViewAddToCart = useCallback(
@@ -521,11 +522,11 @@ export default function RigStore() {
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl font-black text-primary">
-                            {formatEuro(Number(product.price))}
+                            {formatPrice(Number(product.price))}
                           </span>
                           {product.original_price && (
                             <span className="text-lg text-gray-500 line-through">
-                              {formatEuro(Number(product.original_price))}
+                              {formatPrice(Number(product.original_price))}
                             </span>
                           )}
                         </div>

@@ -1,13 +1,20 @@
-
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { db } from '@/firebase';
-import { collection, query, where, getDocs, limit, orderBy, documentId } from 'firebase/firestore';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ShoppingBag, Plus } from 'lucide-react';
-import { useCartActions } from '@/hooks/useCartActions';
-import { formatEuro } from '@/lib/currency';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { db } from "@/firebase";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  limit,
+  orderBy,
+  documentId,
+} from "firebase/firestore";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ShoppingBag, Plus } from "lucide-react";
+import { useCartActions } from "@/hooks/useCartActions";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 // Define a TypeScript interface for the Product
 interface Product {
@@ -30,56 +37,59 @@ interface CompleteTheLookProps {
 // Define category matching logic for outfit combinations
 const getCategoryMatches = (subcategory: string | null): string[] => {
   const matches: Record<string, string[]> = {
-    'TANKS + TOPS': ['BOTTOMS', 'CAPS + BEANIES', 'SWIMWEAR'],
-    'HOODIES + TRACKSUITS': ['BOTTOMS', 'CAPS + BEANIES'],
-    'SWIMWEAR': ['CAPS + BEANIES', 'TANKS + TOPS'],
-    'BOTTOMS': ['TANKS + TOPS', 'HOODIES + TRACKSUITS', 'CAPS + BEANIES'],
-    'CAPS + BEANIES': ['HOODIES + TRACKSUITS', 'TANKS + TOPS', 'BOTTOMS'],
+    "TANKS + TOPS": ["BOTTOMS", "CAPS + BEANIES", "SWIMWEAR"],
+    "HOODIES + TRACKSUITS": ["BOTTOMS", "CAPS + BEANIES"],
+    SWIMWEAR: ["CAPS + BEANIES", "TANKS + TOPS"],
+    BOTTOMS: ["TANKS + TOPS", "HOODIES + TRACKSUITS", "CAPS + BEANIES"],
+    "CAPS + BEANIES": ["HOODIES + TRACKSUITS", "TANKS + TOPS", "BOTTOMS"],
   };
-  
+
   return subcategory && matches[subcategory] ? matches[subcategory] : [];
 };
 
-export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps) {
+export default function CompleteTheLook({
+  currentProduct,
+}: CompleteTheLookProps) {
   const [matchingProducts, setMatchingProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCartActions();
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     const fetchMatchingProducts = async () => {
       setLoading(true);
-      
+
       const matchingCategories = getCategoryMatches(currentProduct.subcategory);
-      
+
       if (matchingCategories.length === 0) {
         setLoading(false);
         return;
       }
 
       try {
-        const productsRef = collection(db, 'products');
+        const productsRef = collection(db, "products");
         const q = query(
           productsRef,
-          where('category', '==', 'merch'),
-          where('in_stock', '==', true),
-          where('subcategory', 'in', matchingCategories),
-          orderBy('featured', 'desc'),
-          limit(5) // Fetch extra to filter out current product client-side
+          where("category", "==", "merch"),
+          where("in_stock", "==", true),
+          where("subcategory", "in", matchingCategories),
+          orderBy("featured", "desc"),
+          limit(5), // Fetch extra to filter out current product client-side
         );
 
         const querySnapshot = await getDocs(q);
         const fetchedProducts = querySnapshot.docs
-          .map(doc => ({ id: doc.id, ...doc.data() } as Product))
-          .filter(p => p.id !== currentProduct.id); // Exclude current product
+          .map((doc) => ({ id: doc.id, ...doc.data() }) as Product)
+          .filter((p) => p.id !== currentProduct.id); // Exclude current product
 
         const sortedData = fetchedProducts.sort((a, b) => {
           const aHasMatchingColor = currentProduct.colors_available?.some(
-            color => a.colors_available?.includes(color)
+            (color) => a.colors_available?.includes(color),
           );
           const bHasMatchingColor = currentProduct.colors_available?.some(
-            color => b.colors_available?.includes(color)
+            (color) => b.colors_available?.includes(color),
           );
-          
+
           if (aHasMatchingColor && !bHasMatchingColor) return -1;
           if (!aHasMatchingColor && bHasMatchingColor) return 1;
           return 0;
@@ -87,14 +97,18 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
 
         setMatchingProducts(sortedData.slice(0, 4));
       } catch (error) {
-        console.error('Error fetching matching products:', error);
+        console.error("Error fetching matching products:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchMatchingProducts();
-  }, [currentProduct.id, currentProduct.subcategory, currentProduct.colors_available]);
+  }, [
+    currentProduct.id,
+    currentProduct.subcategory,
+    currentProduct.colors_available,
+  ]);
 
   const handleQuickAdd = (product: Product, e: React.MouseEvent) => {
     e.preventDefault();
@@ -102,24 +116,27 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
       id: product.id,
       name: product.name,
       price: Number(product.price),
-      image: product.image_url || '',
-      category: 'merch',
+      image: product.image_url || "",
+      category: "merch",
       variant: {},
     });
   };
 
   const getTotalPrice = () => {
     const currentPrice = Number(currentProduct.price);
-    const matchingPrices = matchingProducts.slice(0, 2).reduce((sum, p) => sum + Number(p.price), 0);
+    const matchingPrices = matchingProducts
+      .slice(0, 2)
+      .reduce((sum, p) => sum + Number(p.price), 0);
     return currentPrice + matchingPrices;
   };
 
   const getOriginalTotalPrice = () => {
-    const currentPrice = Number(currentProduct.original_price || currentProduct.price);
-    const matchingPrices = matchingProducts.slice(0, 2).reduce(
-      (sum, p) => sum + Number(p.original_price || p.price), 
-      0
+    const currentPrice = Number(
+      currentProduct.original_price || currentProduct.price,
     );
+    const matchingPrices = matchingProducts
+      .slice(0, 2)
+      .reduce((sum, p) => sum + Number(p.original_price || p.price), 0);
     return currentPrice + matchingPrices;
   };
 
@@ -129,7 +146,8 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
 
   const totalPrice = getTotalPrice();
   const originalTotal = getOriginalTotalPrice();
-  const savings = originalTotal > totalPrice ? originalTotal - totalPrice : null;
+  const savings =
+    originalTotal > totalPrice ? originalTotal - totalPrice : null;
 
   return (
     <section className="py-12 border-t">
@@ -141,19 +159,23 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
               Style it together for the ultimate streetwear outfit
             </p>
           </div>
-          
+
           {matchingProducts.length >= 2 && (
             <div className="text-right">
-              <p className="text-sm text-muted-foreground mb-1">Bundle price (3 items)</p>
+              <p className="text-sm text-muted-foreground mb-1">
+                Bundle price (3 items)
+              </p>
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-bold text-primary">{formatEuro(totalPrice)}</span>
+                <span className="text-2xl font-bold text-primary">
+                  {formatEuro(totalPrice)}
+                </span>
                 {savings && (
                   <>
                     <span className="text-sm text-muted-foreground line-through">
-                      {formatEuro(originalTotal)}
+                      {formatPrice(originalTotal)}
                     </span>
                     <Badge variant="destructive" className="text-xs">
-                      Save {formatEuro(savings)}
+                      Save {formatPrice(savings)}
                     </Badge>
                   </>
                 )}
@@ -171,14 +193,18 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
             <Link to={`/rig/${currentProduct.id}`} className="block">
               <div className="aspect-square p-6 bg-gradient-to-br from-gray-900 to-gray-800">
                 <img
-                  src={currentProduct.image_url || ''}
+                  src={currentProduct.image_url || ""}
                   alt={currentProduct.name}
                   className="w-full h-full object-contain"
                 />
               </div>
               <div className="p-4 space-y-2">
-                <h3 className="font-semibold text-sm line-clamp-2">{currentProduct.name}</h3>
-                <p className="text-lg font-bold">{formatEuro(Number(currentProduct.price))}</p>
+                <h3 className="font-semibold text-sm line-clamp-2">
+                  {currentProduct.name}
+                </h3>
+                <p className="text-lg font-bold">
+                  {formatEuro(Number(currentProduct.price))}
+                </p>
               </div>
             </Link>
           </div>
@@ -198,7 +224,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
                 <Link to={`/rig/${product.id}`} className="block">
                   <div className="aspect-square p-6 bg-gradient-to-br from-gray-900 to-gray-800">
                     <img
-                      src={product.image_url || ''}
+                      src={product.image_url || ""}
                       alt={product.name}
                       className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                     />
@@ -218,18 +244,22 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
                       </Button>
                     </div>
                     <div className="flex items-baseline gap-2">
-                      <p className="text-lg font-bold">{formatEuro(Number(product.price))}</p>
+                      <p className="text-lg font-bold">
+                        {formatEuro(Number(product.price))}
+                      </p>
                       {product.original_price && (
                         <span className="text-sm text-muted-foreground line-through">
-                          {formatEuro(Number(product.original_price))}
+                          {formatPrice(Number(product.original_price))}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground">{product.subcategory}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {product.subcategory}
+                    </p>
                   </div>
                 </Link>
               </div>
-              
+
               {index === 0 && matchingProducts.length > 1 && (
                 <div className="hidden md:flex items-center justify-center">
                   <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
@@ -251,17 +281,17 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
                   id: currentProduct.id,
                   name: currentProduct.name,
                   price: Number(currentProduct.price),
-                  image: currentProduct.image_url || '',
-                  category: 'merch',
+                  image: currentProduct.image_url || "",
+                  category: "merch",
                   variant: {},
                 });
-                matchingProducts.slice(0, 2).forEach(p => {
+                matchingProducts.slice(0, 2).forEach((p) => {
                   addToCart({
                     id: p.id,
                     name: p.name,
                     price: Number(p.price),
-                    image: p.image_url || '',
-                    category: 'merch',
+                    image: p.image_url || "",
+                    category: "merch",
                     variant: {},
                   });
                 });
@@ -269,7 +299,9 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
             >
               <ShoppingBag className="w-5 h-5" />
               Add All 3 Items to Cart
-              {savings && <span className="ml-2">• Save {formatEuro(savings)}</span>}
+              {savings && (
+                <span className="ml-2">• Save {formatEuro(savings)}</span>
+              )}
             </Button>
           </div>
         )}
@@ -277,9 +309,7 @@ export default function CompleteTheLook({ currentProduct }: CompleteTheLookProps
         {matchingProducts.length > 2 && (
           <div className="text-center pt-4">
             <Link to="/rig">
-              <Button variant="outline">
-                View More Matching Items
-              </Button>
+              <Button variant="outline">View More Matching Items</Button>
             </Link>
           </div>
         )}

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { Product } from "@/data/products";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface ProductHeroProps {
   title: string;
@@ -12,20 +12,21 @@ interface ProductHeroProps {
   backgroundImage: string;
 }
 
-export default function ProductHero({ 
-  title, 
-  subtitle, 
-  description, 
-  ctaText, 
+export default function ProductHero({
+  title,
+  subtitle,
+  description,
+  ctaText,
   products,
-  backgroundImage 
+  backgroundImage,
 }: ProductHeroProps) {
   const { addItem } = useCart();
+  const { formatPrice } = useCurrency();
 
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* Background Image with Overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
@@ -53,24 +54,24 @@ export default function ProductHero({
                   {subtitle}
                 </span>
               </h1>
-              
+
               <p className="text-xl md:text-2xl text-gray-300 max-w-2xl font-medium">
                 {description}
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button 
-                variant="hero" 
-                size="xl" 
+              <Button
+                variant="hero"
+                size="xl"
                 className="text-lg font-bold hover-scale transform transition-all duration-300"
                 onClick={() => products[0] && addItem(products[0])}
               >
                 {ctaText}
               </Button>
-              <Button 
-                variant="outline" 
-                size="xl" 
+              <Button
+                variant="outline"
+                size="xl"
                 className="text-lg font-bold border-primary/50 text-foreground hover:bg-primary/20"
               >
                 Learn More
@@ -81,15 +82,21 @@ export default function ProductHero({
             <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-800">
               <div className="text-center lg:text-left">
                 <div className="text-3xl font-black text-primary">100%</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wide">Natural</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wide">
+                  Natural
+                </div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-3xl font-black text-primary">0</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wide">Artificial</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wide">
+                  Artificial
+                </div>
               </div>
               <div className="text-center lg:text-left">
                 <div className="text-3xl font-black text-primary">∞</div>
-                <div className="text-sm text-gray-400 uppercase tracking-wide">Recyclable</div>
+                <div className="text-sm text-gray-400 uppercase tracking-wide">
+                  Recyclable
+                </div>
               </div>
             </div>
           </div>
@@ -98,7 +105,7 @@ export default function ProductHero({
           <div className="relative">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6">
               {products.slice(0, 4).map((product, index) => (
-                <div 
+                <div
                   key={product.id}
                   className="group relative bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 hover-scale transition-all duration-500"
                   style={{ animationDelay: `${index * 200}ms` }}
@@ -111,14 +118,20 @@ export default function ProductHero({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  
+
                   <div className="mt-4 space-y-2">
-                    <h3 className="font-bold text-white text-lg">{product.name}</h3>
-                    <p className="text-gray-400 text-sm">{product.variant?.size}</p>
+                    <h3 className="font-bold text-white text-lg">
+                      {product.name}
+                    </h3>
+                    <p className="text-gray-400 text-sm">
+                      {product.variant?.size}
+                    </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-2xl font-black text-primary">{formatEuro(product.price)}</span>
-                      <Button 
-                        size="sm" 
+                      <span className="text-2xl font-black text-primary">
+                        {formatEuro(product.price)}
+                      </span>
+                      <Button
+                        size="sm"
                         className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         onClick={() => addItem(product)}
                       >

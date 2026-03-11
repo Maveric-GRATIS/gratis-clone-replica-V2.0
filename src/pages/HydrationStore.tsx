@@ -15,7 +15,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import SEO from "@/components/SEO";
 import {
   Select,
@@ -41,6 +41,7 @@ export default function HydrationStore() {
   const [sortBy, setSortBy] = useState("featured");
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const { addToCart } = useCartActions();
+  const { formatPrice } = useCurrency();
   const { products, loading, error } = useProducts("beverage");
 
   // Filter products based on selected category
@@ -419,11 +420,11 @@ export default function HydrationStore() {
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
                           <span className="text-2xl font-black text-primary">
-                            {formatEuro(Number(product.price))}
+                            {formatPrice(Number(product.price))}
                           </span>
                           {product.original_price && (
                             <span className="text-lg text-gray-500 line-through">
-                              {formatEuro(Number(product.original_price))}
+                              {formatPrice(Number(product.original_price))}
                             </span>
                           )}
                         </div>

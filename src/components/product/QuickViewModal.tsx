@@ -1,11 +1,16 @@
-import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { LazyImage } from '@/components/LazyImage';
-import { ShoppingBag, Star, X } from 'lucide-react';
-import { formatEuro } from '@/lib/currency';
-import { Link } from 'react-router-dom';
+import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { LazyImage } from "@/components/LazyImage";
+import { ShoppingBag, Star, X } from "lucide-react";
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { Link } from "react-router-dom";
 
 interface Product {
   id: string;
@@ -25,12 +30,21 @@ interface QuickViewModalProps {
   product: Product | null;
   isOpen: boolean;
   onClose: () => void;
-  onAddToCart: (product: Product, variant: { size?: string; color?: string }) => void;
+  onAddToCart: (
+    product: Product,
+    variant: { size?: string; color?: string },
+  ) => void;
 }
 
-export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickViewModalProps) {
+export function QuickViewModal({
+  product,
+  isOpen,
+  onClose,
+  onAddToCart,
+}: QuickViewModalProps) {
   const [selectedSize, setSelectedSize] = React.useState<string | null>(null);
   const [selectedColor, setSelectedColor] = React.useState<string | null>(null);
+  const { formatPrice } = useCurrency();
 
   // Reset selections when product changes
   React.useEffect(() => {
@@ -42,12 +56,19 @@ export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickV
 
   if (!product) return null;
 
-  const discount = product.original_price 
-    ? Math.round(((Number(product.original_price) - Number(product.price)) / Number(product.original_price)) * 100)
+  const discount = product.original_price
+    ? Math.round(
+        ((Number(product.original_price) - Number(product.price)) /
+          Number(product.original_price)) *
+          100,
+      )
     : 0;
 
   const handleAddToCart = () => {
-    onAddToCart(product, { size: selectedSize || undefined, color: selectedColor || undefined });
+    onAddToCart(product, {
+      size: selectedSize || undefined,
+      color: selectedColor || undefined,
+    });
     onClose();
   };
 
@@ -94,8 +115,8 @@ export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickV
                       key={i}
                       className={`w-4 h-4 ${
                         i < Math.floor(Number(product.rating || 0))
-                          ? 'text-yellow-400 fill-current'
-                          : 'text-gray-600'
+                          ? "text-yellow-400 fill-current"
+                          : "text-gray-600"
                       }`}
                     />
                   ))}
@@ -112,11 +133,11 @@ export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickV
             {/* Price */}
             <div className="flex items-center gap-3 mb-6">
               <span className="text-3xl font-black text-primary">
-                {formatEuro(Number(product.price))}
+                {formatPrice(Number(product.price))}
               </span>
               {product.original_price && (
                 <span className="text-xl text-gray-500 line-through">
-                  {formatEuro(Number(product.original_price))}
+                  {formatPrice(Number(product.original_price))}
                 </span>
               )}
             </div>
@@ -129,7 +150,9 @@ export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickV
             {/* Size Selector */}
             {product.sizes_available && product.sizes_available.length > 0 && (
               <div className="mb-6">
-                <label className="text-sm font-bold text-gray-400 mb-2 block">SIZE</label>
+                <label className="text-sm font-bold text-gray-400 mb-2 block">
+                  SIZE
+                </label>
                 <div className="flex flex-wrap gap-2">
                   {product.sizes_available.map((size) => (
                     <button
@@ -137,8 +160,8 @@ export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickV
                       onClick={() => setSelectedSize(size)}
                       className={`px-4 py-2 rounded-lg font-bold text-sm transition-all duration-200 ${
                         selectedSize === size
-                          ? 'bg-primary text-black'
-                          : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                          ? "bg-primary text-black"
+                          : "bg-gray-800 text-gray-300 hover:bg-gray-700"
                       }`}
                     >
                       {size}
@@ -149,26 +172,29 @@ export function QuickViewModal({ product, isOpen, onClose, onAddToCart }: QuickV
             )}
 
             {/* Color Selector */}
-            {product.colors_available && product.colors_available.length > 0 && (
-              <div className="mb-6">
-                <label className="text-sm font-bold text-gray-400 mb-2 block">COLOR</label>
-                <div className="flex flex-wrap gap-2">
-                  {product.colors_available.map((color) => (
-                    <button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
-                      className={`px-4 py-2 rounded-lg font-bold text-sm transition-all duration-200 ${
-                        selectedColor === color
-                          ? 'bg-primary text-black'
-                          : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                      }`}
-                    >
-                      {color}
-                    </button>
-                  ))}
+            {product.colors_available &&
+              product.colors_available.length > 0 && (
+                <div className="mb-6">
+                  <label className="text-sm font-bold text-gray-400 mb-2 block">
+                    COLOR
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {product.colors_available.map((color) => (
+                      <button
+                        key={color}
+                        onClick={() => setSelectedColor(color)}
+                        className={`px-4 py-2 rounded-lg font-bold text-sm transition-all duration-200 ${
+                          selectedColor === color
+                            ? "bg-primary text-black"
+                            : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+                        }`}
+                      >
+                        {color}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Actions */}
             <div className="mt-auto space-y-3">

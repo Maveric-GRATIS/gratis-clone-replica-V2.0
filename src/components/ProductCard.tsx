@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star, ShoppingCart } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LazyImage } from "@/components/LazyImage";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { useTranslation } from "react-i18next";
 
 interface ProductCardProps {
@@ -33,6 +33,7 @@ interface ProductCardProps {
 export default function ProductCard({ product, loading }: ProductCardProps) {
   const { t } = useTranslation();
   const { addToCart } = useCartActions();
+  const { formatPrice } = useCurrency();
 
   if (loading || !product) {
     return (
@@ -134,12 +135,12 @@ export default function ProductCard({ product, loading }: ProductCardProps) {
 
           <div className="flex items-center gap-1.5 sm:gap-2">
             <span className="text-lg sm:text-xl lg:text-2xl font-bold">
-              {formatEuro(product.price)}
+              {formatPrice(product.price)}
             </span>
             {product.original_price &&
               product.original_price > product.price && (
                 <span className="text-xs sm:text-sm text-muted-foreground line-through">
-                  {formatEuro(product.original_price)}
+                  {formatPrice(product.original_price)}
                 </span>
               )}
           </div>

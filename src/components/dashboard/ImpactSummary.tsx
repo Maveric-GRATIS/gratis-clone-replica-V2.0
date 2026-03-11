@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
 import { Droplet, Palette, BookOpen, ArrowRight } from "lucide-react";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface ImpactSummaryProps {
   totalImpact: number;
@@ -21,6 +21,7 @@ interface ImpactSummaryProps {
 }
 
 export function ImpactSummary({ totalImpact, breakdown }: ImpactSummaryProps) {
+  const { formatPrice } = useCurrency();
   // Default breakdown if not provided (40/30/30 split)
   const impactBreakdown = breakdown || {
     water: totalImpact * 0.4,
@@ -74,7 +75,7 @@ export function ImpactSummary({ totalImpact, breakdown }: ImpactSummaryProps) {
             <p className="text-sm text-muted-foreground mb-1">
               Total Contribution
             </p>
-            <p className="text-3xl font-bold">{formatEuro(totalImpact)}</p>
+            <p className="text-3xl font-bold">{formatPrice(totalImpact)}</p>
           </div>
 
           {/* Category Breakdown */}
@@ -97,7 +98,7 @@ export function ImpactSummary({ totalImpact, breakdown }: ImpactSummaryProps) {
                       </span>
                     </div>
                     <span className="text-sm font-semibold">
-                      {formatEuro(category.amount)}
+                      {formatPrice(category.amount)}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">

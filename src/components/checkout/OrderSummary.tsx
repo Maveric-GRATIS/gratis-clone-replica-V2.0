@@ -1,6 +1,6 @@
-import { formatEuro } from '@/lib/currency';
-import { CartItem } from '@/types/cart';
-import { Separator } from '@/components/ui/separator';
+import { useCurrency } from "@/contexts/CurrencyContext";
+import { CartItem } from "@/types/cart";
+import { Separator } from "@/components/ui/separator";
 
 interface OrderSummaryProps {
   items: CartItem[];
@@ -10,7 +10,14 @@ interface OrderSummaryProps {
   total: number;
 }
 
-export const OrderSummary = ({ items, subtotal, shippingCost, taxAmount = 0, total }: OrderSummaryProps) => {
+export const OrderSummary = ({
+  items,
+  subtotal,
+  shippingCost,
+  taxAmount = 0,
+  total,
+}: OrderSummaryProps) => {
+  const { formatPrice } = useCurrency();
   return (
     <div className="bg-muted/50 rounded-lg p-6 space-y-4">
       <h3 className="font-semibold text-lg">Order Summary</h3>
@@ -32,11 +39,11 @@ export const OrderSummary = ({ items, subtotal, shippingCost, taxAmount = 0, tot
                 </p>
               )}
               <p className="text-sm mt-1">
-                Qty: {item.quantity} × {formatEuro(item.price)}
+                Qty: {item.quantity} × {formatPrice(item.price)}
               </p>
             </div>
             <p className="font-semibold text-sm">
-              {formatEuro(item.price * item.quantity)}
+              {formatPrice(item.price * item.quantity)}
             </p>
           </div>
         ))}
@@ -47,22 +54,22 @@ export const OrderSummary = ({ items, subtotal, shippingCost, taxAmount = 0, tot
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
           <span>Subtotal</span>
-          <span>{formatEuro(subtotal)}</span>
+          <span>{formatPrice(subtotal)}</span>
         </div>
         <div className="flex justify-between text-sm">
           <span>Shipping</span>
-          <span>{shippingCost === 0 ? 'FREE' : formatEuro(shippingCost)}</span>
+          <span>{shippingCost === 0 ? 'FREE' : formatPrice(shippingCost)}</span>
         </div>
         {taxAmount > 0 && (
           <div className="flex justify-between text-sm">
             <span>VAT</span>
-            <span>{formatEuro(taxAmount)}</span>
+            <span>{formatPrice(taxAmount)}</span>
           </div>
         )}
         <Separator />
         <div className="flex justify-between text-base font-semibold">
           <span>Total</span>
-          <span>{formatEuro(total)}</span>
+          <span>{formatPrice(total)}</span>
         </div>
       </div>
     </div>

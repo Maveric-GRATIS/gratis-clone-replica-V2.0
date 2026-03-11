@@ -12,7 +12,7 @@ import {
 } from "@/data/rigCollections";
 import { EmptyState } from "@/components/EmptyState";
 import { LazyImage } from "@/components/LazyImage";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 export default function CollectionDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -196,13 +196,13 @@ export default function CollectionDetail() {
                           </p>
                           <div className="flex items-center gap-2 mt-2">
                             <p className="text-lg font-bold">
-                              {formatEuro(Number(product.price))}
+                              {formatPrice(Number(product.price))}
                             </p>
                             {product.original_price &&
                               Number(product.original_price) >
                                 Number(product.price) && (
                                 <p className="text-sm text-muted-foreground line-through">
-                                  {formatEuro(Number(product.original_price))}
+                                  {formatPrice(Number(product.original_price))}
                                 </p>
                               )}
                           </div>

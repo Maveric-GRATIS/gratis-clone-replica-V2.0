@@ -46,11 +46,11 @@ export default function Index() {
   const isInView = useInView(pillarsRef, { once: true, margin: "-100px" });
 
   const heroImages = [
-    "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=1920&q=80",
-    "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1920&q=80",
-    "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1920&q=80",
-    "https://images.unsplash.com/photo-1519058082700-08a0b56da9b4?w=1920&q=80",
-    "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=1920&q=80",
+    "/lovable-uploads/gratis-colorblock-squad.jpg",
+    "/lovable-uploads/gratis-canal-collection.jpg",
+    "/lovable-uploads/gratis-street-duo.jpg",
+    "/lovable-uploads/gratis-studio-crew.jpg",
+    "/lovable-uploads/gratis-amsterdam-crewneck.jpg",
   ];
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   useEffect(() => {

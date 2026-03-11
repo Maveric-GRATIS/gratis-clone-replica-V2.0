@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useAuth } from "@/hooks/useAuth";
 import { Trash2, ShoppingCart, Heart } from "lucide-react";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { useCart } from "@/contexts/CartContext";
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
@@ -14,6 +14,7 @@ export default function Wishlist() {
   const { user } = useAuth();
   const { wishlist, isLoading, removeFromWishlist } = useWishlist();
   const { addItem } = useCart();
+  const { formatPrice } = useCurrency();
 
   if (!user) {
     return (
@@ -92,7 +93,7 @@ export default function Wishlist() {
                           {item.products.description}
                         </p>
                         <p className="text-xl font-bold mt-2">
-                          {formatEuro(item.products.price)}
+                          {formatPrice(item.products.price)}
                         </p>
                       </div>
                       <div className="flex flex-col gap-2 justify-center">

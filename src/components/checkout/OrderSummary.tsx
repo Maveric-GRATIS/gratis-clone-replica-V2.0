@@ -58,7 +58,7 @@ export const OrderSummary = ({
         </div>
         <div className="flex justify-between text-sm">
           <span>Shipping</span>
-          <span>{shippingCost === 0 ? 'FREE' : formatPrice(shippingCost)}</span>
+          <span>{shippingCost === 0 ? "FREE" : formatPrice(shippingCost)}</span>
         </div>
         {taxAmount > 0 && (
           <div className="flex justify-between text-sm">

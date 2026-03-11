@@ -13,7 +13,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { Loader2, ArrowLeft, Package, MapPin } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { useAuth } from "@/hooks/useAuth";
@@ -54,6 +54,7 @@ export default function OrderDetail() {
   const { orderId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { formatPrice } = useCurrency();
   const [order, setOrder] = useState<Order | null>(null);
   const [items, setItems] = useState<OrderItem[]>([]);
   const [address, setAddress] = useState<ShippingAddress | null>(null);
@@ -208,11 +209,11 @@ export default function OrderDetail() {
                           </p>
                         )}
                       <p className="text-sm mt-1">
-                        Qty: {item.quantity} × {formatEuro(item.unit_price)}
+                        Qty: {item.quantity} × {formatPrice(item.unit_price)}
                       </p>
                     </div>
                     <p className="font-semibold">
-                      {formatEuro(item.total_price)}
+                      {formatPrice(item.total_price)}
                     </p>
                   </div>
                 ))}
@@ -223,16 +224,16 @@ export default function OrderDetail() {
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
-                  <span>{formatEuro(order.subtotal)}</span>
+                  <span>{formatPrice(order.subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Shipping</span>
-                  <span>{formatEuro(order.shipping_cost)}</span>
+                  <span>{formatPrice(order.shipping_cost)}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between text-lg font-semibold">
                   <span>Total</span>
-                  <span>{formatEuro(order.total)}</span>
+                  <span>{formatPrice(order.total)}</span>
                 </div>
               </div>
             </Card>

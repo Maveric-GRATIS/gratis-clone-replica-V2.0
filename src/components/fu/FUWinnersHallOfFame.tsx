@@ -224,8 +224,8 @@ export default function FUWinnersHallOfFame() {
                     <div className="text-sm">
                       <span className="font-bold text-foreground">
                         {winner.impactAmount
-                          ? formatEuro(winner.impactAmount)
-                          : "€0"}
+                          ? formatPrice(winner.impactAmount)
+                          : formatPrice(0)}
                       </span>
                       <span className="text-muted-foreground"> raised</span>
                     </div>

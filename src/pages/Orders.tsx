@@ -12,7 +12,7 @@ import {
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { Loader2, Package, ChevronRight } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
@@ -28,6 +28,7 @@ interface Order {
 
 export default function Orders() {
   const navigate = useNavigate();
+  const { formatPrice } = useCurrency();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -153,7 +154,7 @@ export default function Orders() {
                       <div className="text-right">
                         <p className="text-sm text-muted-foreground">Total</p>
                         <p className="text-lg font-semibold">
-                          {formatEuro(order.total)}
+                          {formatPrice(order.total)}
                         </p>
                       </div>
                       <ChevronRight className="h-5 w-5 text-muted-foreground" />

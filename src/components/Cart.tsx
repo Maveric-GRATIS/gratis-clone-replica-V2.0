@@ -120,7 +120,7 @@ export const Cart = () => {
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>{t("cart.subtotal")}</span>
-                  <span>{formatEuro(totalPrice)}</span>
+                  <span>{formatPrice(totalPrice)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-muted-foreground">
                   <span>{t("cart.shipping")}</span>
@@ -129,7 +129,7 @@ export const Cart = () => {
                 <Separator />
                 <div className="flex justify-between text-base font-semibold">
                   <span>{t("cart.total")}</span>
-                  <span>{formatEuro(totalPrice)}</span>
+                  <span>{formatPrice(totalPrice)}</span>
                 </div>
               </div>
 

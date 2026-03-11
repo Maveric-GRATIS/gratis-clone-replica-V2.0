@@ -128,7 +128,7 @@ export default function ProductHero({
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-black text-primary">
-                        {formatEuro(product.price)}
+                        {formatPrice(product.price)}
                       </span>
                       <Button
                         size="sm"

@@ -167,7 +167,7 @@ export default function CompleteTheLook({
               </p>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-bold text-primary">
-                  {formatEuro(totalPrice)}
+                  {formatPrice(totalPrice)}
                 </span>
                 {savings && (
                   <>
@@ -203,7 +203,7 @@ export default function CompleteTheLook({
                   {currentProduct.name}
                 </h3>
                 <p className="text-lg font-bold">
-                  {formatEuro(Number(currentProduct.price))}
+                  {formatPrice(Number(currentProduct.price))}
                 </p>
               </div>
             </Link>
@@ -245,7 +245,7 @@ export default function CompleteTheLook({
                     </div>
                     <div className="flex items-baseline gap-2">
                       <p className="text-lg font-bold">
-                        {formatEuro(Number(product.price))}
+                        {formatPrice(Number(product.price))}
                       </p>
                       {product.original_price && (
                         <span className="text-sm text-muted-foreground line-through">
@@ -300,7 +300,7 @@ export default function CompleteTheLook({
               <ShoppingBag className="w-5 h-5" />
               Add All 3 Items to Cart
               {savings && (
-                <span className="ml-2">• Save {formatEuro(savings)}</span>
+                <span className="ml-2">• Save {formatPrice(savings)}</span>
               )}
             </Button>
           </div>

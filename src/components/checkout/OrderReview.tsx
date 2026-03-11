@@ -66,7 +66,7 @@ export const OrderReview = ({
                 <p className="text-sm">Quantity: {item.quantity}</p>
               </div>
               <p className="font-medium">
-                {formatEuro(item.price * item.quantity)}
+                {formatPrice(item.price * item.quantity)}
               </p>
             </div>
           ))}

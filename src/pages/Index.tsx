@@ -72,79 +72,88 @@ export default function Index() {
       {/* ===== HERO SECTION WITH IMAGE SLIDESHOW ===== */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex items-center overflow-hidden bg-black"
+        className="relative w-full overflow-hidden bg-black"
+        style={{ height: "70vh", minHeight: "520px", maxHeight: "800px" }}
       >
         {/* Background images - crossfade slideshow */}
         {heroImages.map((img, i) => (
-          <div
+          <img
             key={img}
-            className="absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out"
+            src={img}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out pointer-events-none select-none"
             style={{
-              backgroundImage: `url(${img})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center top",
+              objectFit: "cover",
+              objectPosition: "50% 20%",
+              transform: "none",
               opacity: i === heroImageIndex ? 1 : 0,
             }}
           />
         ))}
 
-        {/* Overlays for text readability */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/85 via-black/55 to-black/20" />
-        <div className="absolute inset-0 z-10 bg-black/25" />
+        {/* Dark gradient overlay – strong left, fades right, no double-dark */}
+        <div
+          className="absolute inset-0 z-10"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.50) 45%, rgba(0,0,0,0.18) 100%)",
+          }}
+        />
 
-        {/* Hero Content - left aligned */}
-        <motion.div
-          className="relative z-20 container px-6 md:px-10"
-          style={{ y: heroY }}
-        >
-          <div className="max-w-2xl">
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-6xl md:text-7xl lg:text-8xl font-black leading-none mb-6"
-            >
-              <span className="block text-white">{t("home.mainTitle1")}</span>
-              <span className="block">
-                <span className="text-hot-lime">{t("home.mainTitle2")} </span>
-                <span className="text-hot-magenta">
-                  {t("home.mainTitle2Bold")}
+        {/* Flex container sits on top */}
+        <div className="absolute inset-0 z-20 flex items-center">
+          {/* Hero Content - left aligned */}
+          <motion.div className="container px-6 md:px-10" style={{ y: heroY }}>
+            <div className="max-w-2xl">
+              <motion.h1
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-6xl md:text-7xl lg:text-8xl font-black leading-none mb-6"
+              >
+                <span className="block text-white">{t("home.mainTitle1")}</span>
+                <span className="block">
+                  <span className="text-hot-lime">{t("home.mainTitle2")} </span>
+                  <span className="text-hot-magenta">
+                    {t("home.mainTitle2Bold")}
+                  </span>
                 </span>
-              </span>
-            </motion.h1>
+              </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              className="text-lg text-gray-200 mb-10 max-w-md leading-relaxed"
-            >
-              {t("home.mainSubtitle")}
-            </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="text-lg text-gray-200 mb-10 max-w-md leading-relaxed"
+              >
+                {t("home.mainSubtitle")}
+              </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Button
-                asChild
-                size="lg"
-                className="text-base px-8 py-6 bg-gradient-to-r from-hot-magenta to-electric-blue text-white font-bold hover:opacity-90 border-0"
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1 }}
+                className="flex flex-wrap gap-4"
               >
-                <Link to="/hydration">{t("home.heroCTA")}</Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                className="text-base px-8 py-6 bg-black text-white font-bold hover:bg-black/80 border-0"
-              >
-                <Link to="/gratis">{t("home.learnMore")}</Link>
-              </Button>
-            </motion.div>
-          </div>
-        </motion.div>
+                <Button
+                  asChild
+                  size="lg"
+                  className="text-base px-8 py-6 bg-gradient-to-r from-hot-magenta to-electric-blue text-white font-bold hover:opacity-90 border-0"
+                >
+                  <Link to="/hydration">{t("home.heroCTA")}</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  className="text-base px-8 py-6 bg-black text-white font-bold hover:bg-black/80 border-0"
+                >
+                  <Link to="/gratis">{t("home.learnMore")}</Link>
+                </Button>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Scroll indicator */}
         <motion.div
@@ -157,7 +166,7 @@ export default function Index() {
             repeatType: "reverse",
             repeatDelay: 0.5,
           }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30"
         >
           <ChevronDown className="w-8 h-8 text-white/60" />
         </motion.div>

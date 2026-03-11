@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { formatEuro } from "@/lib/currency";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { ProductDialog } from "@/components/admin/ProductDialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { db } from "@/firebase";
@@ -33,6 +33,7 @@ import {
 export default function AdminProducts() {
   const { products, loading, error } = useProducts();
   const queryClient = useQueryClient();
+  const { formatPrice } = useCurrency();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -139,7 +140,7 @@ export default function AdminProducts() {
                   <TableCell>
                     <Badge variant="outline">{product.category}</Badge>
                   </TableCell>
-                  <TableCell>{formatEuro(Number(product.price))}</TableCell>
+                  <TableCell>{formatPrice(Number(product.price))}</TableCell>
                   <TableCell>{product.stock_quantity}</TableCell>
                   <TableCell>
                     <Badge

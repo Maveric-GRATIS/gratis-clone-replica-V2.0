@@ -577,6 +577,14 @@ const AppContent = () => {
                   element={<MonthlyGiving />}
                 />
                 <Route path="/spark/donate" element={<Donate />} />
+                <Route path="/giving/corporate" element={<CorporateGiving />} />
+                <Route
+                  path="/giving/honor-memorial"
+                  element={<HonorMemorialGifts />}
+                />
+                <Route path="/giving/ways-to-give" element={<AllWaysToGive />} />
+                <Route path="/giving/monthly" element={<MonthlyGiving />} />
+                <Route path="/giving/other-ways" element={<Donate />} />
                 <Route path="/spark/donate/legacy" element={<DonateNew />} />
                 <Route
                   path="/reports/financial-policies"

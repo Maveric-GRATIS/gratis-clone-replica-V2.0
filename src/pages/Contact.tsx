@@ -12,8 +12,8 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="Contact GRATIS - Smart Inquiry Assistant"
+      <SEO
+        title="Contact GRATIS — Smart Inquiry Assistant"
         description="Get instant help from GRATIS Connect, our AI-powered intake assistant. We'll guide you to the right team for partnerships, sponsorships, volunteering, or support."
         canonical="/contact"
       />
@@ -31,7 +31,7 @@ const Contact = () => {
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
             {qualificationData
-              ? 'Chat with our AI assistant - it\'ll guide you to the right team or answer your question directly.'
+              ? 'Chat with our AI assistant — it\'ll guide you to the right team or answer your question directly.'
               : 'Answer a few quick questions and we\'ll connect you with exactly the right person or resource.'}
           </p>
         </div>
@@ -45,7 +45,7 @@ const Contact = () => {
               <QualifierWizard onComplete={setQualificationData} />
             </ScrollReveal>
           ) : (
-            <AIChat 
+            <AIChat
               qualificationData={qualificationData}
               onRestart={() => setQualificationData(null)}
             />
@@ -91,8 +91,8 @@ const Contact = () => {
                     How is tetrapack more sustainable?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-sm">
-                    Tetrapack uses 70% less plastic than traditional bottles and has a 
-                    significantly lower carbon footprint. Plus, they're fully recyclable 
+                    Tetrapack uses 70% less plastic than traditional bottles and has a
+                    significantly lower carbon footprint. Plus, they're fully recyclable
                     in most areas.
                   </AccordionContent>
                 </AccordionItem>
@@ -101,7 +101,7 @@ const Contact = () => {
                     Where can I buy GRATIS products?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-sm">
-                    Our products are available online through our store and at select 
+                    Our products are available online through our store and at select
                     retailers nationwide. Check our store locator for the nearest location.
                   </AccordionContent>
                 </AccordionItem>
@@ -110,7 +110,7 @@ const Contact = () => {
                     Do you offer bulk orders?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground text-sm">
-                    Yes! We offer bulk pricing for businesses, events, and organizations. 
+                    Yes! We offer bulk pricing for businesses, events, and organizations.
                     Use our AI assistant above for custom pricing and delivery options.
                   </AccordionContent>
                 </AccordionItem>

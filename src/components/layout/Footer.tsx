@@ -86,11 +86,11 @@ export default function Footer() {
         <Column
           title="Giving"
           links={[
-            { label: "Corporate Giving", to: "/spark/corporate-giving" },
-            { label: "Honor & Memorial Gifts", to: "/spark/honor-memorial" },
-            { label: "All Ways to Give (FAQ)", to: "/spark/all-ways-to-give" },
-            { label: "Monthly Giving", to: "/spark/monthly-giving" },
-            { label: "Phone, Mail & Crypto Donations", to: "/spark/donate" },
+            { label: "Corporate Giving", to: "/giving/corporate" },
+            { label: "Honor & Memorial Gifts", to: "/giving/honor-memorial" },
+            { label: "All Ways to Give (FAQ)", to: "/giving/ways-to-give" },
+            { label: "Monthly Giving", to: "/giving/monthly" },
+            { label: "Phone, Mail & Crypto Donations", to: "/giving/other-ways" },
           ]}
         />
         <Column

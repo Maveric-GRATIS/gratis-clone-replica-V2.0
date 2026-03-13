@@ -111,11 +111,14 @@ export default function Footer() {
         <Column
           title="Accreditation"
           links={[
-            { label: "Compliance & Licenses", to: "/tribe/compliance" },
-            { label: "Leadership", to: "/tribe/leadership" },
-            { label: "EIN: 95-1831116", to: "/tribe/ein" },
-            { label: "ANBI Status", to: "/tribe/anbi-status" },
-            { label: "Rating (Charity Rating)", to: "/tribe/charity-rating" },
+            { label: "Compliance & Licenses", to: "/accreditation/compliance" },
+            { label: "Leadership", to: "/accreditation/leadership" },
+            { label: "EIN: 95-1831116", to: "/accreditation/ein" },
+            { label: "ANBI Status", to: "/accreditation/anbi-status" },
+            {
+              label: "Rating (Charity Rating)",
+              to: "/accreditation/charity-rating",
+            },
           ]}
         />
         <Column

@@ -88,6 +88,16 @@ const FinancialPolicies = lazy(
 const AnnualReports = lazy(() => import("@/pages/reports/AnnualReports"));
 const InKindValuation = lazy(() => import("@/pages/reports/InKindValuation"));
 const DonationPolicies = lazy(() => import("@/pages/reports/DonationPolicies"));
+const AccreditationLeadership = lazy(
+  () => import("@/pages/accreditation/Leadership"),
+);
+const AccreditationEIN = lazy(() => import("@/pages/accreditation/EIN"));
+const AccreditationANBI = lazy(
+  () => import("@/pages/accreditation/ANBIStatus"),
+);
+const AccreditationCharityRating = lazy(
+  () => import("@/pages/accreditation/CharityRating"),
+);
 const ManageRecurringDonations = lazy(
   () => import("./pages/spark/ManageRecurringDonations"),
 );
@@ -454,6 +464,26 @@ const AppContent = () => {
                 <Route path="/tribe/transparency" element={<Transparency />} />
                 <Route path="/tribe/compliance" element={<Compliance />} />
                 <Route path="/tribe/terms" element={<Terms />} />
+                <Route
+                  path="/accreditation/compliance"
+                  element={<Compliance />}
+                />
+                <Route
+                  path="/accreditation/leadership"
+                  element={<AccreditationLeadership />}
+                />
+                <Route
+                  path="/accreditation/ein"
+                  element={<AccreditationEIN />}
+                />
+                <Route
+                  path="/accreditation/anbi-status"
+                  element={<AccreditationANBI />}
+                />
+                <Route
+                  path="/accreditation/charity-rating"
+                  element={<AccreditationCharityRating />}
+                />
                 <Route path="/tribe/privacy" element={<Privacy />} />
                 <Route path="/tribe/cookies" element={<Cookies />} />
 

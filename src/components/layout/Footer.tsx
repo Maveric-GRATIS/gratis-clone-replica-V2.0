@@ -99,7 +99,10 @@ export default function Footer() {
         <Column
           title="Reports"
           links={[
-            { label: "Policies (Financial Policies)", to: "/reports/financial-policies" },
+            {
+              label: "Policies (Financial Policies)",
+              to: "/reports/financial-policies",
+            },
             { label: "Annual Reports", to: "/reports/annual-reports" },
             { label: "In-Kind Valuation", to: "/reports/in-kind-valuation" },
             { label: "Donation Policies", to: "/reports/donation-policies" },

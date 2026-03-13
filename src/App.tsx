@@ -41,6 +41,10 @@ const Compliance = lazy(() => import("@/pages/tribe/Compliance"));
 const Terms = lazy(() => import("@/pages/tribe/Terms"));
 const Privacy = lazy(() => import("@/pages/tribe/Privacy"));
 const Cookies = lazy(() => import("@/pages/tribe/Cookies"));
+const TransparencyBrandProtection = lazy(
+  () => import("@/pages/transparency/BrandProtection"),
+);
+const TransparencySafety = lazy(() => import("@/pages/transparency/Safety"));
 const TribeSignup = lazy(() => import("@/pages/tribe/Signup"));
 const TribeDashboard = lazy(() => import("@/pages/tribe/Dashboard"));
 const TribeVoting = lazy(() => import("@/pages/tribe/Voting"));
@@ -464,6 +468,11 @@ const AppContent = () => {
                 <Route path="/tribe/transparency" element={<Transparency />} />
                 <Route path="/tribe/compliance" element={<Compliance />} />
                 <Route path="/tribe/terms" element={<Terms />} />
+                <Route path="/transparency/terms" element={<Terms />} />
+                <Route
+                  path="/transparency/brand-protection"
+                  element={<TransparencyBrandProtection />}
+                />
                 <Route
                   path="/accreditation/compliance"
                   element={<Compliance />}
@@ -486,6 +495,16 @@ const AppContent = () => {
                 />
                 <Route path="/tribe/privacy" element={<Privacy />} />
                 <Route path="/tribe/cookies" element={<Cookies />} />
+                <Route path="/transparency/privacy" element={<Privacy />} />
+                <Route path="/transparency/cookies" element={<Cookies />} />
+                <Route
+                  path="/transparency/accessibility"
+                  element={<LegalPages.Accessibility />}
+                />
+                <Route
+                  path="/transparency/safety"
+                  element={<TransparencySafety />}
+                />
 
                 {/* TRIBE Membership Routes */}
                 <Route path="/tribe/signup" element={<TribeSignup />} />

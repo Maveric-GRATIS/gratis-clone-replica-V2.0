@@ -41,51 +41,48 @@ const Column = ({
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const socialMediaLinks = [
+    {
+      label: "TikTok",
+      to: "https://tiktok.com/@gratis",
+      external: true,
+    },
+    {
+      label: "Instagram",
+      to: "https://instagram.com/gratis",
+      external: true,
+    },
+    {
+      label: "Pinterest",
+      to: "https://pinterest.com/gratis",
+      external: true,
+    },
+    {
+      label: "Snapchat",
+      to: "https://snapchat.com/add/gratis",
+      external: true,
+    },
+    { label: "X", to: "https://x.com/gratis", external: true },
+    {
+      label: "Facebook",
+      to: "https://facebook.com/gratis",
+      external: true,
+    },
+    {
+      label: "LinkedIn",
+      to: "https://linkedin.com/company/gratis",
+      external: true,
+    },
+    {
+      label: "YouTube",
+      to: "https://youtube.com/@gratis",
+      external: true,
+    },
+  ];
 
   return (
     <footer className="border-t border-border bg-background">
       <div className="container py-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
-        <Column
-          title="Follow GRATIS"
-          links={[
-            {
-              label: "TikTok",
-              to: "https://tiktok.com/@gratis",
-              external: true,
-            },
-            {
-              label: "Instagram",
-              to: "https://instagram.com/gratis",
-              external: true,
-            },
-            {
-              label: "Pinterest",
-              to: "https://pinterest.com/gratis",
-              external: true,
-            },
-            {
-              label: "Snapchat",
-              to: "https://snapchat.com/add/gratis",
-              external: true,
-            },
-            { label: "X", to: "https://x.com/gratis", external: true },
-            {
-              label: "Facebook",
-              to: "https://facebook.com/gratis",
-              external: true,
-            },
-            {
-              label: "LinkedIn",
-              to: "https://linkedin.com/company/gratis",
-              external: true,
-            },
-            {
-              label: "YouTube",
-              to: "https://youtube.com/@gratis",
-              external: true,
-            },
-          ]}
-        />
         <Column
           title="Giving"
           links={[
@@ -153,6 +150,7 @@ export default function Footer() {
             { label: "Team (Programs)", to: "/tribe/team" },
           ]}
         />
+        <Column title="Social media" links={socialMediaLinks} />
       </div>
       <FooterBottom currentYear={currentYear} />
     </footer>

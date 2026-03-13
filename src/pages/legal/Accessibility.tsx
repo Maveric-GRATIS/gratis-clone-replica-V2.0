@@ -1,329 +1,191 @@
-import { SEO } from "@/components/SEO";
-import { PageHero } from "@/components/PageHero";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { CheckCircle2, Mail } from "lucide-react";
+import SEO from '@/components/SEO';
+import { Card } from '@/components/ui/card';
+import { PageHero } from '@/components/PageHero';
+import { Link } from 'react-router-dom';
 
 export default function Accessibility() {
   return (
     <>
       <SEO
-        title="Accessibility Statement - G.R.A.T.I.S."
-        description="G.R.A.T.I.S. Accessibility Statement - Committed to digital accessibility for all. WCAG 2.1 Level AA conformance target."
-        canonical="https://gratis.ngo/legal/accessibility"
+        title="Accessibility Policy — GRATIS"
+        description="GRATIS is committed to ensuring digital accessibility for people with disabilities. Learn about our WCAG compliance and accessibility standards."
       />
 
-      <div className="min-h-screen bg-background">
-        <PageHero
-          title="Accessibility Statement"
-          subtitle="G.R.A.T.I.S. - Committed to Digital Accessibility for All"
-        />
+      <PageHero title="Accessibility Policy" lastUpdated="March 2026" />
 
-        <div className="container max-w-4xl py-16 px-4">
-          {/* Commitment */}
-          <Card className="mb-8">
-            <CardHeader>
-              <div className="flex items-center justify-between mb-2">
-                <CardTitle>Our Commitment</CardTitle>
-                <Badge
-                  variant="secondary"
-                  className="bg-[hsl(var(--brand-yellow))]/20"
-                >
-                  WCAG 2.1 Level AA
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                GRATIS.NGO is committed to ensuring digital accessibility for
-                people with disabilities. We are continually improving the user
-                experience for everyone and applying the relevant accessibility
-                standards to ensure we provide equal access to all users.
-              </p>
-              <p className="text-muted-foreground">
-                This website strives to conform to the Web Content Accessibility
-                Guidelines (WCAG) 2.1 Level AA standards. These guidelines
-                explain how to make web content more accessible for people with
-                disabilities and improve the user experience for all visitors.
-              </p>
-            </CardContent>
-          </Card>
+      <div className="bg-background pb-16">
+        <div className="container max-w-4xl mx-auto px-4">
+          <Card className="p-8 space-y-10">
 
-          {/* Measures */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Accessibility Measures</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                GRATIS.NGO takes the following measures to ensure accessibility:
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">1. Our Commitment</h2>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                Stichting G.R.A.T.I.S. ("GRATIS") is committed to ensuring that our website, applications, and digital services are accessible to everyone, including people with disabilities. We believe that access to clean water and social impact should be universal — and so should access to the platforms that enable it.
               </p>
-              <div className="space-y-3">
-                {[
-                  "Include accessibility as part of our mission statement",
-                  "Integrate accessibility into our procurement practices",
-                  "Appoint an accessibility coordinator and team",
-                  "Provide continual accessibility training for our staff",
-                  "Assign clear accessibility targets and responsibilities",
-                  "Employ formal accessibility quality assurance methods",
-                  "Use accessibility testing tools and manual reviews",
-                  "Work with disabled users during development and testing",
-                ].map((measure, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-[hsl(var(--brand-yellow))] flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{measure}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+              <p className="text-muted-foreground leading-relaxed">
+                We strive to conform to the <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong>, as published by the World Wide Web Consortium (W3C), and to comply with applicable accessibility laws including the European Accessibility Act (Directive (EU) 2019/882), the Americans with Disabilities Act (ADA), and Section 508 of the Rehabilitation Act.
+              </p>
+            </section>
 
-          {/* Features */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Accessibility Features</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                Our website includes the following accessibility features:
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">2. Accessibility Standards</h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Our Platform is designed and developed with the following WCAG 2.1 principles in mind:
               </p>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm">
-                    Navigation & Structure
-                  </h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>• Semantic HTML markup</li>
-                    <li>• Logical heading hierarchy</li>
-                    <li>• Skip to main content link</li>
-                    <li>• Keyboard navigation support</li>
-                    <li>• Focus indicators</li>
-                  </ul>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-muted/20 rounded-lg p-5 space-y-2">
+                  <h3 className="font-semibold text-foreground">Perceivable</h3>
+                  <p className="text-sm text-muted-foreground">Content is presented in ways that users can perceive, regardless of sensory abilities. We provide text alternatives for non-text content, captions for multimedia, and adaptable layouts.</p>
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm">Visual Design</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>• High contrast color schemes</li>
-                    <li>• Resizable text (up to 200%)</li>
-                    <li>• Alternative text for images</li>
-                    <li>• Clear typography</li>
-                    <li>• Dark/Light mode toggle</li>
-                  </ul>
+                <div className="bg-muted/20 rounded-lg p-5 space-y-2">
+                  <h3 className="font-semibold text-foreground">Operable</h3>
+                  <p className="text-sm text-muted-foreground">All functionality is available via keyboard navigation. We provide sufficient time for interactions, avoid content that causes seizures, and offer clear navigation mechanisms.</p>
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm">
-                    Interactive Elements
-                  </h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>• ARIA labels and roles</li>
-                    <li>• Form error identification</li>
-                    <li>• Clear button states</li>
-                    <li>• Accessible modals & dialogs</li>
-                    <li>• Screen reader compatibility</li>
-                  </ul>
+                <div className="bg-muted/20 rounded-lg p-5 space-y-2">
+                  <h3 className="font-semibold text-foreground">Understandable</h3>
+                  <p className="text-sm text-muted-foreground">Content is readable and predictable. We use clear language, consistent navigation, and provide input assistance for forms and interactive elements.</p>
                 </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-sm">Media & Content</h4>
-                  <ul className="space-y-1 text-sm text-muted-foreground">
-                    <li>• Video captions (when available)</li>
-                    <li>• Audio descriptions</li>
-                    <li>• Transcripts for audio content</li>
-                    <li>• Descriptive link text</li>
-                    <li>• Simple, clear language</li>
-                  </ul>
+                <div className="bg-muted/20 rounded-lg p-5 space-y-2">
+                  <h3 className="font-semibold text-foreground">Robust</h3>
+                  <p className="text-sm text-muted-foreground">Content is compatible with current and future assistive technologies. We use semantic HTML, ARIA landmarks, and follow progressive enhancement principles.</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </section>
 
-          {/* Technical Specifications */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Technical Specifications</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                Accessibility of GRATIS.NGO relies on the following
-                technologies:
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">3. Specific Measures</h2>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                GRATIS takes the following measures to ensure accessibility:
               </p>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• HTML5 for semantic structure</li>
-                <li>• WAI-ARIA for enhanced accessibility</li>
-                <li>• CSS for visual presentation</li>
-                <li>• JavaScript for interactive functionality</li>
-                <li>• React for component-based architecture</li>
+              <ul className="list-disc list-inside text-muted-foreground space-y-2">
+                <li><strong>Semantic HTML:</strong> We use proper heading hierarchy, landmark regions, and meaningful link text throughout the Platform</li>
+                <li><strong>Alternative Text:</strong> All informative images include descriptive alt text. Decorative images are marked appropriately</li>
+                <li><strong>Color Contrast:</strong> We maintain a minimum contrast ratio of 4.5:1 for normal text and 3:1 for large text, consistent with WCAG AA requirements</li>
+                <li><strong>Keyboard Navigation:</strong> All interactive elements (buttons, links, forms, menus) are fully accessible via keyboard with visible focus indicators</li>
+                <li><strong>Screen Reader Support:</strong> We use ARIA labels, roles, and properties to enhance compatibility with screen readers (JAWS, NVDA, VoiceOver, TalkBack)</li>
+                <li><strong>Responsive Design:</strong> The Platform adapts to different screen sizes, zoom levels (up to 200%), and viewport orientations</li>
+                <li><strong>Form Accessibility:</strong> All form fields have associated labels, error messages are programmatically associated, and validation feedback is announced to assistive technologies</li>
+                <li><strong>Motion Sensitivity:</strong> Users can reduce animations using the <code className="text-xs bg-muted px-1.5 py-0.5 rounded">prefers-reduced-motion</code> OS setting. Critical information is never conveyed through motion alone</li>
+                <li><strong>Skip Navigation:</strong> Skip-to-content links are available to bypass repetitive navigation</li>
+                <li><strong>Dark Mode:</strong> A high-contrast dark mode is available as the default theme, with a toggle for light mode</li>
               </ul>
-              <p className="text-muted-foreground mt-4 text-sm">
-                These technologies are relied upon for conformance with the
-                accessibility standards used.
-              </p>
-            </CardContent>
-          </Card>
+            </section>
 
-          {/* Compatible Browsers */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>
-                Compatible Browsers & Assistive Technologies
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                GRATIS.NGO is designed to be compatible with the following
-                assistive technologies:
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">4. Assistive Technology Compatibility</h2>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                The Platform is designed to be compatible with the following assistive technologies:
               </p>
-              <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h4 className="font-semibold mb-2">Screen Readers</h4>
-                  <ul className="space-y-1 text-muted-foreground">
-                    <li>• JAWS (Windows)</li>
-                    <li>• NVDA (Windows)</li>
-                    <li>• VoiceOver (macOS, iOS)</li>
-                    <li>• TalkBack (Android)</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Browsers</h4>
-                  <ul className="space-y-1 text-muted-foreground">
-                    <li>• Chrome (latest)</li>
-                    <li>• Firefox (latest)</li>
-                    <li>• Safari (latest)</li>
-                    <li>• Edge (latest)</li>
-                  </ul>
-                </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-muted-foreground border border-border rounded-lg">
+                  <thead>
+                    <tr className="border-b border-border bg-muted/30">
+                      <th className="text-left py-3 px-4 font-semibold text-foreground">Technology</th>
+                      <th className="text-left py-3 px-4 font-semibold text-foreground">Platform</th>
+                      <th className="text-left py-3 px-4 font-semibold text-foreground">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-border">
+                      <td className="py-3 px-4">VoiceOver</td>
+                      <td className="py-3 px-4">macOS / iOS</td>
+                      <td className="py-3 px-4">Supported</td>
+                    </tr>
+                    <tr className="border-b border-border">
+                      <td className="py-3 px-4">NVDA</td>
+                      <td className="py-3 px-4">Windows</td>
+                      <td className="py-3 px-4">Supported</td>
+                    </tr>
+                    <tr className="border-b border-border">
+                      <td className="py-3 px-4">JAWS</td>
+                      <td className="py-3 px-4">Windows</td>
+                      <td className="py-3 px-4">Supported</td>
+                    </tr>
+                    <tr className="border-b border-border">
+                      <td className="py-3 px-4">TalkBack</td>
+                      <td className="py-3 px-4">Android</td>
+                      <td className="py-3 px-4">Supported</td>
+                    </tr>
+                    <tr>
+                      <td className="py-3 px-4">Dragon NaturallySpeaking</td>
+                      <td className="py-3 px-4">Windows</td>
+                      <td className="py-3 px-4">Partially supported</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </CardContent>
-          </Card>
+            </section>
 
-          {/* Limitations */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Known Limitations</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                Despite our best efforts, some limitations may exist:
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">5. Known Limitations</h2>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                Despite our best efforts, some areas of the Platform may have accessibility limitations:
               </p>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="list-disc list-inside text-muted-foreground space-y-2">
+                <li><strong>Interactive Maps:</strong> The Mapbox-powered distribution location map may have limited screen reader support. A text-based alternative list of locations is planned</li>
+                <li><strong>Third-Party Content:</strong> Embedded YouTube videos and third-party payment forms (Stripe) are governed by their respective accessibility standards</li>
+                <li><strong>PDF Documents:</strong> Some downloadable reports may not yet be fully tagged for screen reader accessibility. We are working to remediate existing documents</li>
+                <li><strong>User-Generated Content:</strong> Reviews and comments submitted by users may not include alt text for uploaded images</li>
+              </ul>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                We actively work to identify and resolve accessibility barriers. Please report any issues you encounter.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">6. Legal Compliance</h2>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                Our accessibility efforts are guided by the following regulations:
+              </p>
+              <ul className="list-disc list-inside text-muted-foreground space-y-2">
+                <li><strong>European Accessibility Act (EAA):</strong> Directive (EU) 2019/882, requiring accessible products and services by June 28, 2025</li>
+                <li><strong>Web Accessibility Directive:</strong> Directive (EU) 2016/2102, applicable to public sector websites and extending best practices to the private sector</li>
+                <li><strong>Dutch Equal Treatment Act:</strong> Algemene wet gelijke behandeling (Awgb), prohibiting discrimination on the basis of disability</li>
+                <li><strong>Americans with Disabilities Act (ADA):</strong> Title III, applying to places of public accommodation including websites</li>
+                <li><strong>Section 508:</strong> Of the Rehabilitation Act, establishing accessibility standards for federal and federally funded entities</li>
+                <li><strong>EN 301 549:</strong> European standard for accessibility requirements in ICT products and services</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">7. Testing & Evaluation</h2>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                We evaluate the accessibility of the Platform through:
+              </p>
+              <ul className="list-disc list-inside text-muted-foreground space-y-2">
+                <li>Automated accessibility scanning using axe-core and Lighthouse</li>
+                <li>Manual testing with screen readers and keyboard-only navigation</li>
+                <li>Periodic third-party accessibility audits</li>
+                <li>Ongoing user feedback from people with disabilities</li>
+                <li>Accessibility reviews during the development and QA process for new features</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">8. Feedback & Contact</h2>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                We welcome your feedback on the accessibility of the GRATIS Platform. If you experience any accessibility barriers, need content in an alternative format, or have suggestions for improvement, please contact us via:
+              </p>
+              <ul className="list-disc list-inside text-muted-foreground space-y-2 mb-4">
                 <li>
-                  • <strong>Third-party content:</strong> Some embedded content
-                  from external providers may not be fully accessible. We work
-                  with vendors to address these issues.
-                </li>
-                <li>
-                  • <strong>Legacy content:</strong> Older content uploaded
-                  before our current accessibility standards may not fully
-                  conform. We are systematically updating this content.
-                </li>
-                <li>
-                  • <strong>User-generated content:</strong> Content uploaded by
-                  users may not meet accessibility standards. We provide
-                  guidelines and tools to help users create accessible content.
+                  Our{' '}
+                  <Link to="/contact" className="text-primary hover:underline">GRATIS Connect portal</Link>
+                  {' '}(select "Accessibility" as the inquiry type)
                 </li>
               </ul>
-            </CardContent>
+              <p className="text-muted-foreground leading-relaxed">
+                We aim to respond to accessibility feedback within <strong>5 business days</strong> and to resolve reported barriers within <strong>30 days</strong> where technically feasible.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4">9. Continuous Improvement</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Accessibility is an ongoing process. We are committed to continuous improvement and regularly review our Platform to identify and address new barriers. This policy is reviewed and updated at least annually, or more frequently as standards and regulations evolve.
+              </p>
+            </section>
+
           </Card>
-
-          {/* Feedback */}
-          <Card className="mb-8 border-[hsl(var(--brand-yellow))]/30">
-            <CardHeader>
-              <CardTitle>Feedback & Contact</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                We welcome your feedback on the accessibility of GRATIS.NGO.
-                Please let us know if you encounter accessibility barriers:
-              </p>
-
-              <div className="bg-muted/50 rounded-lg p-4 mb-4">
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-start gap-2">
-                    <span className="font-semibold min-w-[80px]">Email:</span>
-                    <a
-                      href="mailto:accessibility@gratis.ngo"
-                      className="text-[hsl(var(--brand-yellow))] hover:underline"
-                    >
-                      accessibility@gratis.ngo
-                    </a>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="font-semibold min-w-[80px]">Phone:</span>
-                    <span className="text-muted-foreground">
-                      +31 (0)20 123 4567
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="font-semibold min-w-[80px]">Address:</span>
-                    <span className="text-muted-foreground">
-                      GRATIS.NGO Accessibility Team
-                      <br />
-                      Herengracht 123
-                      <br />
-                      1015 BH Amsterdam
-                      <br />
-                      Netherlands
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-sm text-muted-foreground mb-4">
-                We aim to respond to accessibility feedback within{" "}
-                <strong>5 business days</strong> and propose a solution within{" "}
-                <strong>10 business days</strong>.
-              </p>
-
-              <Button asChild>
-                <a href="mailto:accessibility@gratis.ngo">
-                  <Mail className="w-4 h-4 mr-2" />
-                  Report Accessibility Issue
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Formal Complaints */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Formal Complaints Procedure</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                If you are not satisfied with our response to your accessibility
-                concern, you may escalate the matter through our formal
-                complaints procedure:
-              </p>
-              <ol className="space-y-2 text-sm text-muted-foreground list-decimal list-inside">
-                <li>
-                  Contact our Accessibility Coordinator at the email address
-                  above
-                </li>
-                <li>If unresolved, escalate to our Director of Operations</li>
-                <li>
-                  As a last resort, contact the Dutch Digital Government Agency
-                  (DigiCommissaris)
-                </li>
-              </ol>
-              <p className="text-sm text-muted-foreground mt-4">
-                We are also subject to oversight by the Dutch accessibility
-                monitoring body for compliance with EU Web Accessibility
-                Directive 2016/2102.
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Last Updated */}
-          <div className="mt-8 pt-8 border-t border-border text-center">
-            <p className="text-sm text-muted-foreground">
-              This accessibility statement was last reviewed and updated on{" "}
-              <strong>January 15, 2026</strong>.
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">
-              We review and update this statement regularly to reflect ongoing
-              accessibility improvements.
-            </p>
-          </div>
         </div>
       </div>
     </>

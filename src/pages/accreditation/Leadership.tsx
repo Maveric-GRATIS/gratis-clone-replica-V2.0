@@ -1,8 +1,9 @@
 import SEO from "@/components/SEO";
 import { PageHero } from "@/components/PageHero";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Users, Compass, Megaphone } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Users, Shield, Compass, Megaphone } from "lucide-react";
 
 const boardMembers = [
   {
@@ -150,6 +151,33 @@ const ambassadors = [
   },
 ];
 
+const sections = [
+  {
+    icon: Shield,
+    title: "Board of Directors",
+    subtitle: "Independent governance ensuring legal compliance, financial accountability, and strategic oversight. No board member receives compensation.",
+    color: "primary" as const,
+  },
+  {
+    icon: Users,
+    title: "Founding Partners",
+    subtitle: "The co-founders steering GRATIS from Amsterdam to the world. Full-time, mission-first leadership.",
+    color: "primary" as const,
+  },
+  {
+    icon: Compass,
+    title: "Advisory Council",
+    subtitle: "Strategic experts keeping us sharp, authentic, and effective. Pro-bono guidance from industry leaders.",
+    color: "accent" as const,
+  },
+  {
+    icon: Megaphone,
+    title: "Global Ambassadors",
+    subtitle: "Culture-makers and community leaders bringing the GRATIS mission to cities worldwide.",
+    color: "accent" as const,
+  },
+];
+
 export default function Leadership() {
   return (
     <div className="min-h-screen bg-background">
@@ -169,29 +197,15 @@ export default function Leadership() {
       <section className="border-t border-border">
         <div className="container max-w-4xl mx-auto py-12 px-4 text-center space-y-4">
           <p className="text-lg text-muted-foreground leading-relaxed">
-            GRATIS is governed by an independent board, led by mission-driven
-            founders, guided by world-class advisors, and amplified by culture
-            ambassadors across the globe. Every role exists to serve one
-            purpose:
-            <span className="text-primary font-semibold">
-              {" "}
-              maximize impact, not profit.
-            </span>
+            GRATIS is governed by an independent board, led by mission-driven founders, guided by world-class advisors,
+            and amplified by culture ambassadors across the globe. Every role exists to serve one purpose:
+            <span className="text-primary font-semibold"> maximize impact, not profit.</span>
           </p>
           <div className="flex flex-wrap justify-center gap-3 pt-2">
-            {[
-              { icon: Shield, label: "Board of Directors" },
-              { icon: Users, label: "Founding Partners" },
-              { icon: Compass, label: "Advisory Council" },
-              { icon: Megaphone, label: "Global Ambassadors" },
-            ].map((s) => (
-              <Badge
-                key={s.label}
-                variant="outline"
-                className="text-sm py-1.5 px-4 border-primary/30 text-primary"
-              >
+            {sections.map((s) => (
+              <Badge key={s.title} variant="outline" className="text-sm py-1.5 px-4 border-primary/30 text-primary">
                 <s.icon className="h-3.5 w-3.5 mr-1.5" />
-                {s.label}
+                {s.title}
               </Badge>
             ))}
           </div>
@@ -200,48 +214,29 @@ export default function Leadership() {
 
       <div className="bg-background pb-20">
         <div className="container max-w-6xl mx-auto px-4 space-y-20">
+
           {/* Board of Directors */}
           <section className="space-y-8">
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Shield className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl md:text-4xl font-black">
-                  Board of Directors
-                </h2>
+                <h2 className="text-3xl md:text-4xl font-black">{sections[0].title}</h2>
               </div>
-              <p className="text-muted-foreground max-w-2xl">
-                Independent governance ensuring legal compliance, financial
-                accountability, and strategic oversight. No board member
-                receives compensation.
-              </p>
+              <p className="text-muted-foreground max-w-2xl">{sections[0].subtitle}</p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {boardMembers.map((m) => (
-                <Card
-                  key={m.name}
-                  className="bg-primary/5 border-primary/20 hover:border-primary/40 transition-colors"
-                >
-                  <CardContent className="p-6 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary text-sm">
-                        {m.initials}
-                      </div>
-                      <div>
-                        <div className="font-bold text-foreground">
-                          {m.name}
-                        </div>
-                        <div className="text-sm text-primary">{m.role}</div>
-                      </div>
-                    </div>
-                    <Badge
-                      variant="outline"
-                      className="text-xs border-primary/30 text-muted-foreground"
-                    >
-                      {m.expertise}
-                    </Badge>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {m.bio}
-                    </p>
+                <Card key={m.name} className="bg-primary/5 border-primary/20 hover:border-primary/40 transition-colors">
+                  <CardHeader className="text-center pb-3">
+                    <Avatar className="w-16 h-16 mx-auto mb-3">
+                      <AvatarFallback className="bg-primary/20 text-primary text-lg font-bold">{m.initials}</AvatarFallback>
+                    </Avatar>
+                    <CardTitle className="text-lg">{m.name}</CardTitle>
+                    <CardDescription>{m.role}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">{m.expertise}</Badge>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{m.bio}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -253,47 +248,27 @@ export default function Leadership() {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Users className="h-6 w-6 text-primary" />
-                <h2 className="text-3xl md:text-4xl font-black">
-                  Founding Partners
-                </h2>
+                <h2 className="text-3xl md:text-4xl font-black">{sections[1].title}</h2>
               </div>
-              <p className="text-muted-foreground max-w-2xl">
-                The co-founders steering GRATIS from Amsterdam to the world.
-                Full-time, mission-first leadership.
-              </p>
+              <p className="text-muted-foreground max-w-2xl">{sections[1].subtitle}</p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {partners.map((p) => (
-                <Card
-                  key={p.name}
-                  className="bg-primary/10 border-primary/30 hover:border-primary/50 transition-colors"
-                >
-                  <CardContent className="p-6 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary text-sm">
-                        {p.initials}
-                      </div>
-                      <div>
-                        <div className="font-bold text-foreground">
-                          {p.name}
-                        </div>
-                        <div className="text-sm text-primary">{p.role}</div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-1">
+                <Card key={p.name} className="bg-primary/10 border-primary/30 hover:border-primary/50 transition-colors">
+                  <CardHeader className="text-center pb-3">
+                    <Avatar className="w-20 h-20 mx-auto mb-3">
+                      <AvatarFallback className="bg-primary/20 text-primary text-xl font-bold">{p.initials}</AvatarFallback>
+                    </Avatar>
+                    <CardTitle className="text-lg">{p.name}</CardTitle>
+                    <CardDescription>{p.role}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex flex-wrap gap-1.5">
                       {p.tags.map((t) => (
-                        <Badge
-                          key={t}
-                          variant="outline"
-                          className="text-xs border-primary/30 text-primary"
-                        >
-                          {t}
-                        </Badge>
+                        <Badge key={t} variant="secondary" className="text-xs">{t}</Badge>
                       ))}
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {p.bio}
-                    </p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{p.bio}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -305,36 +280,22 @@ export default function Leadership() {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Compass className="h-6 w-6 text-accent" />
-                <h2 className="text-3xl md:text-4xl font-black">
-                  Advisory Council
-                </h2>
+                <h2 className="text-3xl md:text-4xl font-black">{sections[2].title}</h2>
               </div>
-              <p className="text-muted-foreground max-w-2xl">
-                Strategic experts keeping us sharp, authentic, and effective.
-                Pro-bono guidance from industry leaders.
-              </p>
+              <p className="text-muted-foreground max-w-2xl">{sections[2].subtitle}</p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {advisors.map((a) => (
-                <Card
-                  key={a.name}
-                  className="bg-accent/10 border-accent/20 hover:border-accent/40 transition-colors"
-                >
-                  <CardContent className="p-5 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-bold text-accent text-xs">
-                        {a.initials}
-                      </div>
-                      <div>
-                        <div className="font-bold text-foreground text-sm">
-                          {a.name}
-                        </div>
-                        <div className="text-xs text-accent">{a.role}</div>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {a.bio}
-                    </p>
+                <Card key={a.name} className="bg-accent/10 border-accent/20 hover:border-accent/40 transition-colors">
+                  <CardHeader className="pb-3">
+                    <Avatar className="w-14 h-14 mb-2">
+                      <AvatarFallback className="bg-accent/20 text-accent-foreground font-semibold">{a.initials}</AvatarFallback>
+                    </Avatar>
+                    <CardTitle className="text-base">{a.name}</CardTitle>
+                    <CardDescription className="text-xs">{a.role}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{a.bio}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -346,38 +307,27 @@ export default function Leadership() {
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Megaphone className="h-6 w-6 text-accent" />
-                <h2 className="text-3xl md:text-4xl font-black">
-                  Global Ambassadors
-                </h2>
+                <h2 className="text-3xl md:text-4xl font-black">{sections[3].title}</h2>
               </div>
-              <p className="text-muted-foreground max-w-2xl">
-                Culture-makers and community leaders bringing the GRATIS mission
-                to cities worldwide.
-              </p>
+              <p className="text-muted-foreground max-w-2xl">{sections[3].subtitle}</p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {ambassadors.map((a) => (
-                <Card
-                  key={a.name}
-                  className="bg-muted/30 border-border hover:border-primary/30 transition-colors"
-                >
-                  <CardContent className="p-5 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center font-bold text-foreground text-xs">
-                        {a.initials}
-                      </div>
+                <Card key={a.name} className="bg-muted/30 border-border hover:border-primary/30 transition-colors">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-4">
+                      <Avatar className="w-14 h-14">
+                        <AvatarFallback className="bg-primary/10 text-primary font-semibold">{a.initials}</AvatarFallback>
+                      </Avatar>
                       <div>
-                        <div className="font-bold text-foreground text-sm">
-                          {a.name}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {a.city} · {a.focus}
-                        </div>
+                        <CardTitle className="text-base">{a.name}</CardTitle>
+                        <CardDescription className="text-xs">{a.city}</CardDescription>
                       </div>
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {a.bio}
-                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <Badge variant="outline" className="text-xs border-accent/30 text-accent-foreground">{a.focus}</Badge>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{a.bio}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -390,24 +340,22 @@ export default function Leadership() {
               <h3 className="text-xl font-bold mb-4">Governance Commitment</h3>
               <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                 <p>
-                  GRATIS operates under Dutch foundation law (
-                  <em>Stichtingsrecht</em>). Board members serve independently
-                  and receive no financial compensation. All advisory and
-                  ambassador roles are voluntary or pro-bono.
+                  GRATIS operates under Dutch foundation law (<em>stichting</em>). Board members serve independently
+                  and receive no financial compensation. All advisory and ambassador roles are voluntary or pro-bono.
                 </p>
                 <p>
-                  Our full Articles of Association, conflict-of-interest policy,
-                  and board minutes are available upon request to donors,
-                  regulators, and accreditation bodies.
+                  Financial statements are audited annually and published publicly. Board meetings occur quarterly
+                  with minutes available upon request. Our governance charter mandates a minimum of three independent
+                  board members at all times.
                 </p>
                 <p>
-                  GRATIS is committed to meeting the governance requirements of
-                  both Dutch ANBI status and US 501(c)(3) tax-exempt
-                  recognition.
+                  For governance inquiries, contact us at{" "}
+                  <a href="mailto:governance@gratis.com" className="text-primary hover:underline">governance@gratis.com</a>.
                 </p>
               </div>
             </Card>
           </section>
+
         </div>
       </div>
     </div>

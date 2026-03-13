@@ -1,158 +1,123 @@
+import { useState } from 'react';
 import { SEO } from '@/components/SEO';
-import { ContactForm } from '@/components/ContactForm';
 import { SocialProof } from '@/components/SocialProof';
-import { Map, Phone, Mail, Clock, MapPin } from 'lucide-react';
+import { ScrollReveal } from '@/components/ScrollReveal';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { QualifierWizard, type QualificationData } from '@/components/contact/QualifierWizard';
+import { AIChat } from '@/components/contact/AIChat';
+import { Bot, Sparkles, Shield, Zap } from 'lucide-react';
 
 const Contact = () => {
+  const [qualificationData, setQualificationData] = useState<QualificationData | null>(null);
+
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Contact GRATIS â€” Get in Touch"
-        description="Contact GRATIS for questions about our sustainable tetrapack beverages. We're here to help with orders, partnerships, and sustainability inquiries."
+        title="Contact GRATIS — Smart Inquiry Assistant"
+        description="Get instant help from GRATIS Connect, our AI-powered intake assistant. We'll guide you to the right team for partnerships, sponsorships, volunteering, or support."
         canonical="/contact"
       />
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            Let's Connect
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
+            <Bot className="h-4 w-4" />
+            AI-Powered Intake
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-fade-in">
+            {qualificationData ? 'GRATIS CONNECT' : 'HOW CAN WE HELP?'}
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Have questions about GRATIS? Want to partner with us? We're always excited to hear from the community.
+          <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
+            {qualificationData
+              ? 'Chat with our AI assistant — it\'ll guide you to the right team or answer your question directly.'
+              : 'Answer a few quick questions and we\'ll connect you with exactly the right person or resource.'}
           </p>
         </div>
       </section>
 
       <main className="container mx-auto px-4 pb-16">
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {/* Contact Form */}
-          <div>
-            <ContactForm />
-          </div>
-
-          {/* Contact Information */}
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-2xl font-semibold mb-6 text-foreground">
-                Other Ways to Reach Us
-              </h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                    <Mail className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">Email</h3>
-                    <p className="text-muted-foreground">hello@gratis.com</p>
-                    <p className="text-sm text-muted-foreground">
-                      General inquiries and support
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                    <Phone className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">Phone</h3>
-                    <p className="text-muted-foreground">+1 (555) 123-GRATIS</p>
-                    <p className="text-sm text-muted-foreground">
-                      Monday - Friday, 9 AM - 6 PM PST
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                    <MapPin className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">Office</h3>
-                    <p className="text-muted-foreground">
-                      123 Sustainable Way<br />
-                      San Francisco, CA 94102
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                    <Clock className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">Response Time</h3>
-                    <p className="text-muted-foreground">
-                      We typically respond within 24 hours
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="font-medium mb-2 text-foreground">
-                Partnership Inquiries
-              </h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                Interested in carrying GRATIS products or exploring a partnership? 
-              </p>
-              <a 
-                href="mailto:partnerships@gratis.com" 
-                className="text-primary hover:underline text-sm"
-              >
-                partnerships@gratis.com
-              </a>
-            </div>
-          </div>
+        {/* Wizard or Chat */}
+        <div className="mb-16">
+          {!qualificationData ? (
+            <ScrollReveal>
+              <QualifierWizard onComplete={setQualificationData} />
+            </ScrollReveal>
+          ) : (
+            <AIChat 
+              qualificationData={qualificationData}
+              onRestart={() => setQualificationData(null)}
+            />
+          )}
         </div>
+
+        {/* Trust badges */}
+        {!qualificationData && (
+          <ScrollReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-16">
+              {[
+                { icon: Sparkles, label: 'Instant AI Answers', desc: 'Get help in seconds, not days' },
+                { icon: Shield, label: 'Human Backup', desc: 'Request a callback anytime' },
+                { icon: Zap, label: 'Smart Routing', desc: 'We match you to the right team' },
+              ].map((item) => (
+                <div key={item.label} className="text-center">
+                  <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                    <item.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground text-sm">{item.label}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        )}
 
         {/* Social Proof */}
-        <SocialProof variant="stats" />
+        <ScrollReveal>
+          <SocialProof variant="stats" />
+        </ScrollReveal>
 
-        {/* FAQ Section */}
-        <div className="mt-16">
-          <h2 className="text-2xl font-semibold text-center mb-8 text-foreground">
-            Frequently Asked Questions
-          </h2>
-          
-          <div className="max-w-3xl mx-auto space-y-6">
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="font-medium mb-2 text-foreground">
-                How is tetrapack more sustainable?
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                Tetrapack uses 70% less plastic than traditional bottles and has a 
-                significantly lower carbon footprint. Plus, they're fully recyclable 
-                in most areas.
-              </p>
-            </div>
-
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="font-medium mb-2 text-foreground">
-                Where can I buy GRATIS products?
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                Our products are available online through our store and at select 
-                retailers nationwide. Check our store locator for the nearest location.
-              </p>
-            </div>
-
-            <div className="p-6 bg-card border border-border rounded-lg">
-              <h3 className="font-medium mb-2 text-foreground">
-                Do you offer bulk orders?
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                Yes! We offer bulk pricing for businesses, events, and organizations. 
-                Contact us for custom pricing and delivery options.
-              </p>
+        {/* FAQ */}
+        <ScrollReveal>
+          <div className="mt-16">
+            <h2 className="text-2xl font-semibold text-center mb-8 text-foreground">
+              Frequently Asked Questions
+            </h2>
+            <div className="max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="space-y-2">
+                <AccordionItem value="sustainability" className="bg-card border border-border rounded-lg px-6">
+                  <AccordionTrigger className="font-medium text-foreground">
+                    How is tetrapack more sustainable?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-sm">
+                    Tetrapack uses 70% less plastic than traditional bottles and has a 
+                    significantly lower carbon footprint. Plus, they're fully recyclable 
+                    in most areas.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="buy" className="bg-card border border-border rounded-lg px-6">
+                  <AccordionTrigger className="font-medium text-foreground">
+                    Where can I buy GRATIS products?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-sm">
+                    Our products are available online through our store and at select 
+                    retailers nationwide. Check our store locator for the nearest location.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="bulk" className="bg-card border border-border rounded-lg px-6">
+                  <AccordionTrigger className="font-medium text-foreground">
+                    Do you offer bulk orders?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-sm">
+                    Yes! We offer bulk pricing for businesses, events, and organizations. 
+                    Use our AI assistant above for custom pricing and delivery options.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </main>
     </div>
   );

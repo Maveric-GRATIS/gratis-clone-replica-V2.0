@@ -1,146 +1,83 @@
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useTranslation } from "react-i18next";
-import { TierComparison } from "@/components/tribe/TierComparison";
-import { DetailedTierCards } from "@/components/tribe/DetailedTierCards";
-import { VotingExplainer } from "@/components/tribe/VotingExplainer";
-import { TribeTestimonials } from "@/components/tribe/TribeTestimonials";
-import { FounderSpotCounter } from "@/components/tribe/FounderSpotCounter";
-import { TribeFAQ } from "@/components/tribe/TribeFAQ";
-import { BenefitShowcase } from "@/components/tribe/BenefitShowcase";
-import { TribeLiveStats } from "@/components/tribe/TribeLiveStats";
-import { Crown, Zap, Heart } from "lucide-react";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export default function Tribe() {
-  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background">
-      <SEO
-        title={t("tribePage.title")}
-        description={t("tribePage.description")}
-        canonical={
-          typeof window !== "undefined" ? window.location.href : "/tribe"
-        }
-      />
-
+      <SEO title="GRATIS TRIBE — Our Values" description="Heritage, Ethics, Responsibility, Team, Standards." canonical="/tribe" />
+      
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
         <div className="relative max-w-4xl mx-auto text-center">
-          <Badge className="mb-6 text-lg px-4 py-2">
-            <Crown className="mr-2 h-4 w-4" />
-            {t("tribePage.hero.badge")}
-          </Badge>
-          <h1 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-            {t("tribePage.hero.title")}
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-fade-in">
+            TRIBE
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            {t("tribePage.hero.subtitle")}
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
+            Born from the belief that every sip should serve a greater purpose.
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Link to="/tribe/signup">
-              <Button size="lg" className="text-lg">
-                <Zap className="mr-2 h-5 w-5" />
-                {t("tribePage.hero.cta")}
-              </Button>
-            </Link>
-            <Button size="lg" variant="outline" className="text-lg" asChild>
-              <a href="#comparison">{t("tribePage.hero.compareTiers")}</a>
-            </Button>
-          </div>
         </div>
       </section>
 
-      {/* Value Proposition */}
-      <section className="border-t border-border py-16">
-        <div className="container">
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center">
-              <div className="mb-4 flex justify-center">
-                <div className="p-4 rounded-full bg-primary/10">
-                  <Heart className="h-8 w-8 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-2">
-                {t("tribePage.valueProps.prop1.title")}
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                {t("tribePage.valueProps.prop1.description")}
+      <section className="border-t border-border">
+        <div className="container py-16 space-y-12">
+          <ScrollReveal>
+            <div className="text-center space-y-4">
+              <h2 className="text-2xl md:text-3xl font-bold">What We Stand For</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                GRATIS isn't just water. It's a movement built on authenticity, respect, and responsibility. 
+                Explore the values that drive everything we do.
               </p>
             </div>
-            <div className="text-center">
-              <div className="mb-4 flex justify-center">
-                <div className="p-4 rounded-full bg-primary/10">
-                  <Zap className="h-8 w-8 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-2">
-                {t("tribePage.valueProps.prop2.title")}
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                {t("tribePage.valueProps.prop2.description")}
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="mb-4 flex justify-center">
-                <div className="p-4 rounded-full bg-primary/10">
-                  <Crown className="h-8 w-8 text-primary" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-2">
-                {t("tribePage.valueProps.prop3.title")}
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                {t("tribePage.valueProps.prop3.description")}
-              </p>
-            </div>
+          </ScrollReveal>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { 
+                title: 'Heritage', 
+                body: 'Born from street culture. Built on authenticity. Discover the origin story that shaped our mission.',
+                to: '/tribe/heritage'
+              },
+              { 
+                title: 'Ethics', 
+                body: 'Fair trade, cultural respect, and community investment. Our commitment to doing right by everyone.',
+                to: '/tribe/ethics'
+              },
+              { 
+                title: 'Team', 
+                body: 'Meet the diverse crew building GRATIS. Real people from the culture, creating something authentic.',
+                to: '/tribe/team'
+              },
+              { 
+                title: 'Standards', 
+                body: 'Quality without compromise. Safety you can trust. Excellence in every bottle we produce.',
+                to: '/tribe/standards'
+              },
+              { 
+                title: 'Responsibility', 
+                body: 'Environmental commitments that protect the planet that sustains us all. Action over words.',
+                to: '/tribe/responsibility'
+              },
+            ].map((section, index) => (
+              <ScrollReveal key={section.title} delay={index * 100}>
+                <Link 
+                  to={section.to}
+                  className="group bg-muted/10 hover:bg-muted/20 rounded-lg p-6 transition-all duration-300 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1 space-y-4 block h-full"
+                >
+                  <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                    {section.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {section.body}
+                  </p>
+                  <div className="text-sm font-medium text-primary">
+                    Learn more ?
+                  </div>
+                </Link>
+              </ScrollReveal>
+            ))}
           </div>
-        </div>
-      </section>
-
-      {/* Live Stats */}
-      <TribeLiveStats />
-
-      {/* Tier Comparison Table */}
-      <div id="comparison">
-        <TierComparison />
-      </div>
-
-      {/* Detailed Tier Cards */}
-      <DetailedTierCards />
-
-      {/* Benefit Showcase */}
-      <BenefitShowcase />
-
-      {/* Founder Spot Counter */}
-      <FounderSpotCounter />
-
-      {/* Voting Explainer */}
-      <VotingExplainer />
-
-      {/* Testimonials */}
-      <TribeTestimonials />
-
-      {/* FAQ */}
-      <TribeFAQ />
-
-      {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-br from-primary/10 via-background to-accent/10">
-        <div className="container max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-black mb-4">
-            {t("tribePage.finalCta.title")}
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            {t("tribePage.finalCta.subtitle")}
-          </p>
-          <Link to="/tribe/signup">
-            <Button size="lg" className="text-lg">
-              <Crown className="mr-2 h-5 w-5" />
-              {t("tribePage.finalCta.cta")}
-            </Button>
-          </Link>
         </div>
       </section>
     </div>

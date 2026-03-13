@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { CartProvider } from "@/contexts/CartContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CurrencyProvider } from "@/contexts/CurrencyContext";
@@ -605,6 +605,16 @@ const AppContent = () => {
                 <Route path="/spark/blaze" element={<Blaze />} />
                 <Route path="/spark/enlist" element={<Enlist />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/information/contact" element={<Contact />} />
+                <Route path="/information/organization" element={<Tribe />} />
+                <Route path="/information/news" element={<Blog />} />
+                <Route
+                  path="/information/ngo-partners"
+                  element={<Partners />}
+                />
+                <Route path="/information/employment" element={<Enlist />} />
+                <Route path="/information/press" element={<Press />} />
+                <Route path="/information/team" element={<Team />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/checkout/success" element={<CheckoutSuccess />} />

@@ -144,13 +144,13 @@ export default function Footer() {
         <Column
           title="Information"
           links={[
-            { label: "Contact", to: "/contact" },
-            { label: "Organization (NGO)", to: "/tribe" },
-            { label: "News", to: "/blog?tab=news" },
-            { label: "NGO Partners", to: "/tribe/partners" },
-            { label: "Employment (Careers)", to: "/spark/enlist" },
-            { label: "Communications (Press & Media)", to: "/tribe/press" },
-            { label: "Team (Programs)", to: "/tribe/team" },
+            { label: "Contact", to: "/information/contact" },
+            { label: "Organization (NGO)", to: "/information/organization" },
+            { label: "News", to: "/information/news" },
+            { label: "NGO Partners", to: "/information/ngo-partners" },
+            { label: "Employment (Careers)", to: "/information/employment" },
+            { label: "Communications (Press & Media)", to: "/information/press" },
+            { label: "Team (Programs)", to: "/information/team" },
           ]}
         />
         <Column title="Social media" links={socialMediaLinks} />

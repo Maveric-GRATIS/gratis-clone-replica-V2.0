@@ -1,490 +1,384 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import SEO from "@/components/SEO";
 import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import AdvertisingPartnerForm from "@/components/AdvertisingPartnerForm";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { useActivePartners, useFeaturedPartners } from "@/hooks/usePartners";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Globe, MapPin, Users, Calendar, Star, TrendingUp, FileText, Handshake } from "lucide-react";
+import { Link } from "react-router-dom";
+import { PartnershipRequirements } from "@/components/partnership/PartnershipRequirements";
+import { PartnershipApplicationWizard } from "@/components/partnership/PartnershipApplicationWizard";
 
-import {
-  CheckCircle2,
-  Package,
-  Heart,
-  Target,
-  TrendingUp,
-  Users,
-  Download,
-  ArrowRight,
-  ExternalLink,
-} from "lucide-react";
-import { SEO } from "@/components/SEO";
+interface NGOPartner {
+  id: string;
+  organization_name: string;
+  slug: string;
+  description: string | null;
+  mission_statement: string | null;
+  logo_url: string | null;
+  website: string | null;
+  country: string;
+  city: string | null;
+  focus_area: string;
+  year_partnered: number;
+  annual_funding_amount: number | null;
+  total_funding_received: number | null;
+  beneficiaries_reached: string | null;
+  featured: boolean | null;
+  impact_highlights: string[] | null;
+}
 
-const Partners = () => {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const { data: activePartners, isLoading: partnersLoading } =
-    useActivePartners();
-  const { data: featuredPartners, isLoading: featuredLoading } =
-    useFeaturedPartners(6);
-
-  const benefits = [
-    {
-      icon: Package,
-      title: "Free Distribution",
-      description:
-        "Your brand on products given away at festivals and street events",
-    },
-    {
-      icon: Heart,
-      title: "Purpose-Driven",
-      description: "100% profits fund clean water projects globally",
-    },
-    {
-      icon: Target,
-      title: "Engaged Audience",
-      description: "Reach conscious consumers who value impact",
-    },
-    {
-      icon: TrendingUp,
-      title: "Transparent Metrics",
-      description: "Track impressions, distribution, and real impact",
-    },
-    {
-      icon: Users,
-      title: "Global Reach",
-      description: "Events, retail, and online distribution channels",
-    },
-  ];
-
-  const tiers = [
-    {
-      name: "Starter Pack",
-      price: "â‚¬5.000",
-      packs: "10.000 packs",
-      features: [
-        "Logo placement on packaging",
-        "Distribution at major events",
-        "Monthly impact report",
-        "Social media mentions",
-      ],
-    },
-    {
-      name: "Impact Pack",
-      price: "â‚¬20.000",
-      packs: "50.000 packs",
-      features: [
-        "Custom design collaboration",
-        "Premium event distribution",
-        "Dedicated case study",
-        "Quarterly strategy sessions",
-        "Partner spotlight feature",
-      ],
-      highlighted: true,
-    },
-    {
-      name: "Movement Pack",
-      price: "â‚¬50.000+",
-      packs: "100.000+ packs",
-      features: [
-        "Full branding integration",
-        "Exclusive campaign creation",
-        "Year-round partnership",
-        "Co-branded content",
-        "VIP event access",
-        "Custom impact dashboard",
-      ],
-    },
-  ];
-
-  const processSteps = [
-    {
-      number: "01",
-      title: "Apply",
-      description:
-        "Submit your partnership inquiry through our application form",
-    },
-    {
-      number: "02",
-      title: "Consult",
-      description: "Campaign consultation and custom design planning",
-    },
-    {
-      number: "03",
-      title: "Produce",
-      description: "Production and quality assurance of branded products",
-    },
-    {
-      number: "04",
-      title: "Distribute",
-      description: "Strategic distribution at events and retail locations",
-    },
-    {
-      number: "05",
-      title: "Track",
-      description: "Real-time impact tracking and quarterly reports",
-    },
-  ];
-
-  return (
-    <>
-      <SEO
-        title="Brand Partnerships - Partner With GRATIS"
-        description="Join the brands making advertising meaningful. Partner with GRATIS to reach engaged audiences while funding clean water projects worldwide. 100% profits to NGOs."
-      />
-
-      <main className="min-h-screen">
-        {/* Hero Section */}
-        <section className="relative py-20 md:py-32 bg-gradient-to-br from-background via-background to-primary/5">
-          <div className="container">
-            <div className="max-w-4xl mx-auto text-center">
-              <Badge className="mb-6" variant="secondary">
-                Brand Partnerships
-              </Badge>
-              <h1 className="text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-                PARTNER WITH GRATIS
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-4">
-                Your Brand. Our Mission. Real Impact.
-              </p>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Join the brands making advertising meaningful. Reach conscious
-                consumers while funding clean water projects worldwide.
-              </p>
-
-              <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-                <DialogTrigger asChild>
-                  <Button size="xl" className="gap-2">
-                    Become a Partner <ArrowRight className="h-5 w-5" />
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>Partner Application</DialogTitle>
-                    <DialogDescription>
-                      Tell us about your brand and campaign goals. We'll get
-                      back to you within 48 hours.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <AdvertisingPartnerForm
-                    onSuccess={() => setIsFormOpen(false)}
-                  />
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
-        </section>
-
-        {/* Impact Stats Banner */}
-        <section className="py-12 bg-gradient-to-r from-primary/20 to-accent/20">
-          <div className="container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-black text-foreground mb-2">
-                  2.5M+
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Liters Funded
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-black text-foreground mb-2">
-                  150+
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Events Reached
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-black text-foreground mb-2">
-                  50K+
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Direct Impressions
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-black text-foreground mb-2">
-                  25+
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Communities Served
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Why Partner With GRATIS */}
-        <section className="py-20">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                Why Advertise With GRATIS?
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Transform your marketing budget into meaningful impact while
-                reaching engaged, conscious consumers.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {benefits.map((benefit, index) => (
-                <Card
-                  key={index}
-                  className="border-2 hover:border-primary/50 transition-colors"
-                >
-                  <CardHeader>
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                      <benefit.icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-xl">{benefit.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      {benefit.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Partnership Tiers */}
-        <section className="py-20 bg-muted/30">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                Partnership Tiers
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Choose the partnership level that fits your brand's goals and
-                budget.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {tiers.map((tier, index) => (
-                <Card
-                  key={index}
-                  className={`relative ${tier.highlighted ? "border-primary border-2 shadow-lg scale-105" : "border-2"}`}
-                >
-                  {tier.highlighted && (
-                    <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      Most Popular
-                    </Badge>
-                  )}
-                  <CardHeader>
-                    <CardTitle className="text-2xl">{tier.name}</CardTitle>
-                    <div className="text-3xl font-black text-primary mt-2">
-                      {tier.price}
-                    </div>
-                    <CardDescription className="text-base font-semibold">
-                      {tier.packs}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      {tier.features.map((feature, fIndex) => (
-                        <li key={fIndex} className="flex items-start gap-2">
-                          <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="py-20">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                How It Works
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                From application to impact, we make the process seamless.
-              </p>
-            </div>
-
-            <div className="max-w-4xl mx-auto">
-              <div className="space-y-8">
-                {processSteps.map((step, index) => (
-                  <div key={index} className="flex gap-6 items-start">
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-2xl font-black text-primary">
-                        {step.number}
-                      </span>
-                    </div>
-                    <div className="flex-1 pt-3">
-                      <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                      <p className="text-muted-foreground">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Partners Section */}
-        <section className="py-20 bg-muted/30">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-black mb-4">
-                Our Partners
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Join the brands making a difference.
-              </p>
-            </div>
-
-            <div className="max-w-6xl mx-auto">
-              {partnersLoading ? (
-                <div className="flex justify-center items-center py-20">
-                  <LoadingSpinner />
-                </div>
-              ) : activePartners && activePartners.length > 0 ? (
-                <>
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
-                    {featuredPartners?.map((partner) => (
-                      <Card
-                        key={partner.id}
-                        className="border-2 hover:border-primary/50 transition-all hover:scale-105"
-                      >
-                        <CardContent className="p-6">
-                          <div className="aspect-square relative mb-4 bg-white rounded-lg overflow-hidden">
-                            {partner.logo ? (
-                              <img
-                                src={partner.logo}
-                                alt={partner.organizationName || partner.name}
-                                className="w-full h-full object-contain p-4"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center text-4xl font-black text-muted-foreground">
-                                {(partner.organizationName || partner.name)
-                                  .charAt(0)
-                                  .toUpperCase()}
-                              </div>
-                            )}
-                          </div>
-                          <h3 className="font-bold text-center mb-2 line-clamp-2">
-                            {partner.organizationName || partner.name}
-                          </h3>
-                          <div className="flex justify-center gap-2 flex-wrap">
-                            <Badge variant="outline" className="text-xs">
-                              {partner.tier}
-                            </Badge>
-                            {partner.featured && (
-                              <Badge className="text-xs bg-yellow-500">
-                                Featured
-                              </Badge>
-                            )}
-                          </div>
-                          {partner.website && (
-                            <a
-                              href={partner.website}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-1 text-sm text-primary hover:underline mt-3"
-                            >
-                              Visit Website
-                              <ExternalLink className="h-3 w-3" />
-                            </a>
-                          )}
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-
-                  <div className="text-center">
-                    <p className="text-muted-foreground mb-4">
-                      {activePartners.length} partners supporting our mission
-                    </p>
-                    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-                      <DialogTrigger asChild>
-                        <Button size="lg" className="gap-2">
-                          Become a Partner
-                          <ArrowRight className="h-4 w-4" />
-                        </Button>
-                      </DialogTrigger>
-                    </Dialog>
-                  </div>
-                </>
-              ) : (
-                <Card className="border-2 border-dashed">
-                  <CardContent className="py-20 text-center">
-                    <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold mb-2">
-                      Be Our First Partner
-                    </h3>
-                    <p className="text-muted-foreground mb-6">
-                      Your brand logo could be featured here, inspiring others
-                      to join the movement.
-                    </p>
-                    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-                      <DialogTrigger asChild>
-                        <Button size="lg">Apply Now</Button>
-                      </DialogTrigger>
-                    </Dialog>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA */}
-        <section className="py-20 bg-gradient-to-br from-primary/10 via-accent/10 to-background">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-5xl font-black mb-6">
-                Ready to Make Advertising Meaningful?
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Let's create a campaign that grows your brand while funding
-                clean water worldwide.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-                  <DialogTrigger asChild>
-                    <Button size="xl" className="gap-2">
-                      Apply Now <ArrowRight className="h-5 w-5" />
-                    </Button>
-                  </DialogTrigger>
-                </Dialog>
-
-                <Button size="xl" variant="outline" className="gap-2">
-                  <Download className="h-5 w-5" />
-                  Download Media Kit
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </>
-  );
+const focusAreaColors: Record<string, string> = {
+  "Clean Water": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  "Education": "bg-purple-500/20 text-purple-400 border-purple-500/30",
+  "Environment": "bg-green-500/20 text-green-400 border-green-500/30",
+  "Housing": "bg-orange-500/20 text-orange-400 border-orange-500/30",
+  "Food Security": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+  "Health": "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  "default": "bg-primary/20 text-primary border-primary/30",
 };
 
-export default Partners;
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-EU', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
+export default function Partners() {
+  const [focusFilter, setFocusFilter] = useState<string>("all");
+  const [countryFilter, setCountryFilter] = useState<string>("all");
+  const [applicationOpen, setApplicationOpen] = useState(false);
+
+  const { data: partners, isLoading } = useQuery({
+    queryKey: ['ngo-partners'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('ngo_partners')
+        .select('*')
+        .order('featured', { ascending: false })
+        .order('organization_name');
+      
+      if (error) throw error;
+      return data as NGOPartner[];
+    },
+  });
+
+  const focusAreas = partners 
+    ? [...new Set(partners.map(p => p.focus_area))].sort()
+    : [];
+  
+  const countries = partners 
+    ? [...new Set(partners.map(p => p.country))].sort()
+    : [];
+
+  const filteredPartners = partners?.filter(partner => {
+    if (focusFilter !== "all" && partner.focus_area !== focusFilter) return false;
+    if (countryFilter !== "all" && partner.country !== countryFilter) return false;
+    return true;
+  });
+
+  const prioritySlugs = ["black-jaguar-foundation", "free-a-girl"];
+  const sortedFilteredPartners = [...(filteredPartners || [])].sort((a, b) => {
+    const aPriority = prioritySlugs.indexOf(a.slug);
+    const bPriority = prioritySlugs.indexOf(b.slug);
+
+    const aRank = aPriority === -1 ? Number.MAX_SAFE_INTEGER : aPriority;
+    const bRank = bPriority === -1 ? Number.MAX_SAFE_INTEGER : bPriority;
+
+    if (aRank !== bRank) return aRank - bRank;
+    if ((a.featured ? 1 : 0) !== (b.featured ? 1 : 0)) return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
+    return a.organization_name.localeCompare(b.organization_name);
+  });
+
+  const totalFunding = partners?.reduce((sum, p) => sum + (p.total_funding_received || 0), 0) || 0;
+  const totalPartners = partners?.length || 0;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SEO 
+        title="NGO Partners — GRATIS TRIBE" 
+        description="Meet our verified NGO partners receiving 100% of advertising revenue. Transparent funding, measurable impact." 
+        canonical="/tribe/partners"
+      />
+      
+      {/* Hero Section */}
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
+        <div className="relative max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            OUR PARTNERS
+          </h1>
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+            Verified NGOs receiving 100% of our advertising revenue. Every euro tracked. Every impact measured.
+          </p>
+          
+          {/* Impact Stats */}
+          <div className="flex flex-wrap justify-center gap-8 mt-12">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-primary">{totalPartners}</div>
+              <div className="text-sm text-muted-foreground">Verified Partners</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-primary">{formatCurrency(totalFunding)}</div>
+              <div className="text-sm text-muted-foreground">Total Funding Distributed</div>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-bold text-primary">100%</div>
+              <div className="text-sm text-muted-foreground">Ad Revenue Donated</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Filters */}
+      <section className="border-t border-border">
+        <div className="container py-6">
+          <div className="flex flex-wrap gap-4 items-center justify-between">
+            <div className="flex flex-wrap gap-4">
+              <Select value={focusFilter} onValueChange={setFocusFilter}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Focus Area" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Focus Areas</SelectItem>
+                  {focusAreas.map(area => (
+                    <SelectItem key={area} value={area}>{area}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              <Select value={countryFilter} onValueChange={setCountryFilter}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Country" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Countries</SelectItem>
+                  {countries.map(country => (
+                    <SelectItem key={country} value={country}>{country}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <p className="text-sm text-muted-foreground">
+              Showing {sortedFilteredPartners?.length || 0} of {totalPartners} partners
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Partner Grid */}
+      <section className="container py-12">
+        {isLoading ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="animate-pulse">
+                <CardHeader className="h-32 bg-muted/20" />
+                <CardContent className="space-y-3 pt-4">
+                  <div className="h-6 bg-muted/20 rounded w-3/4" />
+                  <div className="h-4 bg-muted/10 rounded w-full" />
+                  <div className="h-4 bg-muted/10 rounded w-2/3" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : sortedFilteredPartners && sortedFilteredPartners.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sortedFilteredPartners.map(partner => (
+              <Card 
+                key={partner.id} 
+                className={`group hover:border-primary/50 transition-all duration-300 ${
+                  partner.featured ? 'ring-2 ring-primary/30' : ''
+                }`}
+              >
+                <CardHeader className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        {partner.featured && (
+                          <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                        )}
+                        <Badge 
+                          variant="outline" 
+                          className={focusAreaColors[partner.focus_area] || focusAreaColors.default}
+                        >
+                          {partner.focus_area}
+                        </Badge>
+                      </div>
+                      <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                        {partner.organization_name}
+                      </h3>
+                    </div>
+                    {partner.logo_url && (
+                      <img 
+                        src={partner.logo_url} 
+                        alt={partner.organization_name}
+                        className="w-12 h-12 rounded-lg object-contain bg-muted/20"
+                      />
+                    )}
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="h-3.5 w-3.5" />
+                      {partner.city ? `${partner.city}, ` : ''}{partner.country}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Calendar className="h-3.5 w-3.5" />
+                      Partner since {partner.year_partnered}
+                    </span>
+                  </div>
+                </CardHeader>
+                
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground line-clamp-3">
+                    {partner.description}
+                  </p>
+                  
+                  {/* Funding & Impact */}
+                  <div className="grid grid-cols-2 gap-4 py-4 border-t border-border">
+                    <div>
+                      <div className="text-lg font-bold text-primary">
+                        {partner.total_funding_received 
+                          ? formatCurrency(partner.total_funding_received)
+                          : '—'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Funding Received</div>
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold">
+                        {partner.beneficiaries_reached || '—'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Beneficiaries</div>
+                    </div>
+                  </div>
+                  
+                  {/* Impact Highlights */}
+                  {partner.impact_highlights && partner.impact_highlights.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1 text-xs font-semibold text-muted-foreground">
+                        <TrendingUp className="h-3.5 w-3.5" />
+                        Impact Highlights
+                      </div>
+                      <ul className="text-xs space-y-1">
+                        {partner.impact_highlights.slice(0, 2).map((highlight, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-primary mt-1.5" />
+                            <span className="text-muted-foreground">{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {/* Actions */}
+                  <div className="flex gap-2 pt-2">
+                    <Button variant="outline" size="sm" className="flex-1" asChild>
+                      <Link to={`/tribe/partners/${partner.slug}`}>
+                        View Details
+                      </Link>
+                    </Button>
+                    {partner.website && (
+                      <Button variant="ghost" size="sm" asChild>
+                        <a href={partner.website} target="_blank" rel="noopener noreferrer">
+                          <Globe className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <Users className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
+            <h3 className="text-xl font-semibold mb-2">No partners found</h3>
+            <p className="text-muted-foreground">
+              Try adjusting your filters to see more results.
+            </p>
+          </div>
+        )}
+      </section>
+
+      {/* Partnership Requirements & Application */}
+      <section className="border-t border-border" id="apply">
+        <div className="container py-16">
+          <Tabs defaultValue="requirements" className="max-w-5xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Become a Partner</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+                GRATIS distributes 100% of advertising revenue to verified NGO partners. 
+                Review our requirements and apply to join the network.
+              </p>
+              <TabsList className="mx-auto">
+                <TabsTrigger value="requirements" className="gap-2">
+                  <FileText className="h-4 w-4" />
+                  Requirements
+                </TabsTrigger>
+                <TabsTrigger value="apply" className="gap-2">
+                  <Handshake className="h-4 w-4" />
+                  Apply Now
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            <TabsContent value="requirements">
+              <PartnershipRequirements />
+              <div className="text-center mt-8">
+                <Button size="lg" onClick={() => setApplicationOpen(true)}>
+                  <Handshake className="h-4 w-4 mr-2" />
+                  Start Application
+                </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="apply">
+              <div className="max-w-2xl mx-auto text-center space-y-6">
+                <Card className="border-primary/20 bg-primary/5">
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto">
+                      <Handshake className="h-8 w-8 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold">Ready to Apply?</h3>
+                    <p className="text-muted-foreground">
+                      Our 4-step application takes about 15 minutes. You'll need your organization's 
+                      registration details, financial information, and impact data.
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-3 text-sm text-muted-foreground">
+                      <span className="flex items-center gap-1">? ANBI/501(c)(3) number</span>
+                      <span className="flex items-center gap-1">? 3+ years active</span>
+                      <span className="flex items-center gap-1">? Audited financials</span>
+                    </div>
+                    <Button size="lg" onClick={() => setApplicationOpen(true)} className="mt-4">
+                      <Handshake className="h-4 w-4 mr-2" />
+                      Open Application Form
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <div className="flex flex-wrap justify-center gap-4">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/tribe/standards">View Our Standards</Link>
+                  </Button>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/tribe/ethics">Ethics & Due Diligence</Link>
+                  </Button>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
+
+      {/* Application Wizard Dialog */}
+      <PartnershipApplicationWizard open={applicationOpen} onOpenChange={setApplicationOpen} />
+    </div>
+  );
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+ï»¿import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useBlogPosts, DbBlogPost } from '@/hooks/useBlogPosts';
@@ -85,7 +85,7 @@ export default function Blog() {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title={activeTab === 'news' ? "News — GRATIS" : "Blog — GRATIS"} 
+        title={activeTab === 'news' ? "News - GRATIS" : "Blog - GRATIS"} 
         description={activeTab === 'news' ? "Latest news and press releases from GRATIS." : "Stories, updates, and insights from GRATIS."} 
         canonical="/blog" 
       />

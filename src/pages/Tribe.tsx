@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+ï»¿import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export default function Tribe() {
   return (
     <div className="min-h-screen bg-background">
-      <SEO title="GRATIS TRIBE — Our Values" description="Heritage, Ethics, Responsibility, Team, Standards." canonical="/tribe" />
+      <SEO title="GRATIS TRIBE - Our Values" description="Heritage, Ethics, Responsibility, Team, Standards." canonical="/tribe" />
       
       {/* Hero Section */}
       <section className="relative py-20 px-4 overflow-hidden">

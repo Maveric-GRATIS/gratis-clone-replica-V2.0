@@ -1,4 +1,4 @@
-import { useState } from 'react';
+ï»¿import { useState } from 'react';
 import { SEO } from '@/components/SEO';
 import { SocialProof } from '@/components/SocialProof';
 import { ScrollReveal } from '@/components/ScrollReveal';
@@ -13,7 +13,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Contact GRATIS — Smart Inquiry Assistant"
+        title="Contact GRATIS - Smart Inquiry Assistant"
         description="Get instant help from GRATIS Connect, our AI-powered intake assistant. We'll guide you to the right team for partnerships, sponsorships, volunteering, or support."
         canonical="/contact"
       />
@@ -31,7 +31,7 @@ const Contact = () => {
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-4 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
             {qualificationData
-              ? 'Chat with our AI assistant — it\'ll guide you to the right team or answer your question directly.'
+              ? 'Chat with our AI assistant - it\'ll guide you to the right team or answer your question directly.'
               : 'Answer a few quick questions and we\'ll connect you with exactly the right person or resource.'}
           </p>
         </div>

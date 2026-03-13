@@ -176,9 +176,11 @@ const AdminSettingsIntegrations = lazy(
   () => import("./pages/admin/SettingsIntegrations"),
 );
 const Partners = lazy(() => import("./pages/Partners"));
+const InformationPartners = lazy(() => import("./pages/tribe/Partners"));
 const CollectionDetail = lazy(() => import("./pages/CollectionDetail"));
 const Corporate = lazy(() => import("./pages/Corporate"));
 const Press = lazy(() => import("./pages/Press"));
+const InformationPress = lazy(() => import("./pages/tribe/Press"));
 const Impact = lazy(() => import("./pages/Impact"));
 const NGOApplication = lazy(() => import("./pages/NGOApplication"));
 const SocialDemo = lazy(() => import("./pages/SocialDemo"));
@@ -610,10 +612,10 @@ const AppContent = () => {
                 <Route path="/information/news" element={<Blog />} />
                 <Route
                   path="/information/ngo-partners"
-                  element={<Partners />}
+                  element={<InformationPartners />}
                 />
                 <Route path="/information/employment" element={<Enlist />} />
-                <Route path="/information/press" element={<Press />} />
+                <Route path="/information/press" element={<InformationPress />} />
                 <Route path="/information/team" element={<Team />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/checkout" element={<Checkout />} />

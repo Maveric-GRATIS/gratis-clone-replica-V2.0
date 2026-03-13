@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Globe, MapPin, Users, Calendar, Star, TrendingUp, FileText, Handshake } from "lucide-react";
+import { ExternalLink, Globe, MapPin, Users, Calendar, Star, TrendingUp, FileText, Handshake } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PartnershipRequirements } from "@/components/partnership/PartnershipRequirements";
 import { PartnershipApplicationWizard } from "@/components/partnership/PartnershipApplicationWizard";
@@ -58,22 +58,22 @@ export default function Partners() {
   const { data: partners, isLoading } = useQuery({
     queryKey: ['ngo-partners'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('ngo_partners')
         .select('*')
         .order('featured', { ascending: false })
         .order('organization_name');
-      
+
       if (error) throw error;
       return data as NGOPartner[];
     },
   });
 
-  const focusAreas = partners 
+  const focusAreas = partners
     ? [...new Set(partners.map(p => p.focus_area))].sort()
     : [];
-  
-  const countries = partners 
+
+  const countries = partners
     ? [...new Set(partners.map(p => p.country))].sort()
     : [];
 
@@ -101,13 +101,12 @@ export default function Partners() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO 
-        title="NGO Partners - GRATIS TRIBE" 
-        description="Meet our verified NGO partners receiving 100% of advertising revenue. Transparent funding, measurable impact." 
+      <SEO
+        title="NGO Partners - GRATIS TRIBE"
+        description="Meet our verified NGO partners receiving 100% of advertising revenue. Transparent funding, measurable impact."
         canonical="/tribe/partners"
       />
-      
-      {/* Hero Section */}
+
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-background" />
         <div className="relative max-w-4xl mx-auto text-center">
@@ -117,8 +116,7 @@ export default function Partners() {
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
             Verified NGOs receiving 100% of our advertising revenue. Every euro tracked. Every impact measured.
           </p>
-          
-          {/* Impact Stats */}
+
           <div className="flex flex-wrap justify-center gap-8 mt-12">
             <div className="text-center">
               <div className="text-4xl font-bold text-primary">{totalPartners}</div>
@@ -136,7 +134,6 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* Filters */}
       <section className="border-t border-border">
         <div className="container py-6">
           <div className="flex flex-wrap gap-4 items-center justify-between">
@@ -152,7 +149,7 @@ export default function Partners() {
                   ))}
                 </SelectContent>
               </Select>
-              
+
               <Select value={countryFilter} onValueChange={setCountryFilter}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Country" />
@@ -165,7 +162,7 @@ export default function Partners() {
                 </SelectContent>
               </Select>
             </div>
-            
+
             <p className="text-sm text-muted-foreground">
               Showing {sortedFilteredPartners?.length || 0} of {totalPartners} partners
             </p>
@@ -173,7 +170,6 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* Partner Grid */}
       <section className="container py-12">
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -191,8 +187,8 @@ export default function Partners() {
         ) : sortedFilteredPartners && sortedFilteredPartners.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sortedFilteredPartners.map(partner => (
-              <Card 
-                key={partner.id} 
+              <Card
+                key={partner.id}
                 className={`group hover:border-primary/50 transition-all duration-300 ${
                   partner.featured ? 'ring-2 ring-primary/30' : ''
                 }`}
@@ -204,8 +200,8 @@ export default function Partners() {
                         {partner.featured && (
                           <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                         )}
-                        <Badge 
-                          variant="outline" 
+                        <Badge
+                          variant="outline"
                           className={focusAreaColors[partner.focus_area] || focusAreaColors.default}
                         >
                           {partner.focus_area}
@@ -216,14 +212,14 @@ export default function Partners() {
                       </h3>
                     </div>
                     {partner.logo_url && (
-                      <img 
-                        src={partner.logo_url} 
+                      <img
+                        src={partner.logo_url}
                         alt={partner.organization_name}
                         className="w-12 h-12 rounded-lg object-contain bg-muted/20"
                       />
                     )}
                   </div>
-                  
+
                   <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <MapPin className="h-3.5 w-3.5" />
@@ -235,17 +231,16 @@ export default function Partners() {
                     </span>
                   </div>
                 </CardHeader>
-                
+
                 <CardContent className="space-y-4">
                   <p className="text-sm text-muted-foreground line-clamp-3">
                     {partner.description}
                   </p>
-                  
-                  {/* Funding & Impact */}
+
                   <div className="grid grid-cols-2 gap-4 py-4 border-t border-border">
                     <div>
                       <div className="text-lg font-bold text-primary">
-                        {partner.total_funding_received 
+                        {partner.total_funding_received
                           ? formatCurrency(partner.total_funding_received)
                           : '-'}
                       </div>
@@ -258,8 +253,7 @@ export default function Partners() {
                       <div className="text-xs text-muted-foreground">Beneficiaries</div>
                     </div>
                   </div>
-                  
-                  {/* Impact Highlights */}
+
                   {partner.impact_highlights && partner.impact_highlights.length > 0 && (
                     <div className="space-y-2">
                       <div className="flex items-center gap-1 text-xs font-semibold text-muted-foreground">
@@ -276,8 +270,7 @@ export default function Partners() {
                       </ul>
                     </div>
                   )}
-                  
-                  {/* Actions */}
+
                   <div className="flex gap-2 pt-2">
                     <Button variant="outline" size="sm" className="flex-1" asChild>
                       <Link to={`/tribe/partners/${partner.slug}`}>
@@ -307,14 +300,13 @@ export default function Partners() {
         )}
       </section>
 
-      {/* Partnership Requirements & Application */}
       <section className="border-t border-border" id="apply">
         <div className="container py-16">
           <Tabs defaultValue="requirements" className="max-w-5xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Become a Partner</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
-                GRATIS distributes 100% of advertising revenue to verified NGO partners. 
+                GRATIS distributes 100% of advertising revenue to verified NGO partners.
                 Review our requirements and apply to join the network.
               </p>
               <TabsList className="mx-auto">
@@ -348,13 +340,13 @@ export default function Partners() {
                     </div>
                     <h3 className="text-xl font-bold">Ready to Apply?</h3>
                     <p className="text-muted-foreground">
-                      Our 4-step application takes about 15 minutes. You'll need your organization's 
+                      Our 4-step application takes about 15 minutes. You'll need your organization's
                       registration details, financial information, and impact data.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1">? ANBI/501(c)(3) number</span>
-                      <span className="flex items-center gap-1">? 3+ years active</span>
-                      <span className="flex items-center gap-1">? Audited financials</span>
+                      <span className="flex items-center gap-1">ANBI/501(c)(3) number</span>
+                      <span className="flex items-center gap-1">3+ years active</span>
+                      <span className="flex items-center gap-1">Audited financials</span>
                     </div>
                     <Button size="lg" onClick={() => setApplicationOpen(true)} className="mt-4">
                       <Handshake className="h-4 w-4 mr-2" />
@@ -377,8 +369,8 @@ export default function Partners() {
         </div>
       </section>
 
-      {/* Application Wizard Dialog */}
       <PartnershipApplicationWizard open={applicationOpen} onOpenChange={setApplicationOpen} />
     </div>
   );
 }
+

@@ -24,8 +24,8 @@ export default function Press() {
   useEffect(() => {
     const load = async () => {
       const [relRes, assetRes] = await Promise.all([
-        supabase.from('press_releases').select('*').eq('published', true).order('published_date', { ascending: false }).limit(12),
-        supabase.from('press_assets').select('*').eq('published', true).order('sort_order', { ascending: true }),
+        (supabase as any).from('press_releases').select('*').eq('published', true).order('published_date', { ascending: false }).limit(12),
+        (supabase as any).from('press_assets').select('*').eq('published', true).order('sort_order', { ascending: true }),
       ]);
       setReleases(relRes.data || []);
       setAssets(assetRes.data || []);
@@ -47,7 +47,6 @@ export default function Press() {
       />
 
       <div className="container py-16 space-y-20">
-        {/* Media Contact */}
         <section className="max-w-3xl mx-auto text-center space-y-6">
           <h2 className="text-3xl font-bold">Media Contact</h2>
           <p className="text-muted-foreground text-lg">
@@ -69,7 +68,6 @@ export default function Press() {
           </div>
         </section>
 
-        {/* Press Releases */}
         <section className="space-y-8">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold">Latest Press Releases</h2>
@@ -98,7 +96,6 @@ export default function Press() {
           )}
         </section>
 
-        {/* Media Kit / Documents */}
         <section className="space-y-8">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold">Media Kit</h2>
@@ -130,7 +127,6 @@ export default function Press() {
           )}
         </section>
 
-        {/* Coverage & Reach */}
         <section className="space-y-8 max-w-4xl mx-auto">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-bold">Our Reach</h2>
@@ -151,7 +147,6 @@ export default function Press() {
           </div>
         </section>
 
-        {/* Editorial Guidelines */}
         <section className="max-w-3xl mx-auto space-y-6 border border-border/50 rounded-lg p-8 bg-card/30">
           <div className="flex items-center gap-3">
             <Globe className="h-6 w-6 text-[hsl(var(--brand-blue))]" />
@@ -169,3 +164,4 @@ export default function Press() {
     </>
   );
 }
+

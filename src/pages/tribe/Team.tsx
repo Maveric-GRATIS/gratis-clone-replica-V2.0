@@ -1,4 +1,4 @@
-import SEO from "@/components/SEO";
+﻿import SEO from "@/components/SEO";
 import InquiryForm from "@/components/InquiryForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";

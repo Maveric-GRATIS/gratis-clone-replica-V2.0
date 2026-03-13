@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+ï»¿import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { JobApplicationForm } from "@/components/spark/JobApplicationForm";
 import { SEO } from "@/components/SEO";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -42,7 +42,7 @@ const jobs = [
     id: "event-coordinator",
     title: "Event Coordinator",
     type: "Temporary",
-    compensation: "€150/day stipend",
+    compensation: "-150/day stipend",
     description: "Coordinate logistics for festivals, pop-ups, and community events. Manage volunteers, liaise with venues, ensure smooth operations.",
     requirements: ["Event management experience", "Strong organizational skills", "Available weekends"],
   },
@@ -50,7 +50,7 @@ const jobs = [
     id: "distribution-lead",
     title: "Distribution Lead",
     type: "Temporary",
-    compensation: "€120/day stipend",
+    compensation: "-120/day stipend",
     description: "Lead street distribution teams, manage inventory, track impact metrics, train new volunteers.",
     requirements: ["Leadership experience", "Comfortable in outdoor environments", "Valid driver's license"],
   },
@@ -58,7 +58,7 @@ const jobs = [
     id: "marketing-intern",
     title: "Marketing & Social Media Intern",
     type: "Internship",
-    compensation: "€500/month",
+    compensation: "-500/month",
     description: "Create content, manage social channels, analyze engagement metrics, develop campaigns.",
     requirements: ["Currently enrolled or recent graduate", "3-6 month commitment", "Portfolio of social media work"],
   },
@@ -66,7 +66,7 @@ const jobs = [
     id: "impact-intern",
     title: "Impact Analysis Intern",
     type: "Internship",
-    compensation: "€500/month",
+    compensation: "-500/month",
     description: "Track donation impact, compile reports, communicate with beneficiaries, maintain impact dashboard.",
     requirements: ["Data analysis skills", "Research background", "Passion for social impact"],
   },
@@ -74,7 +74,7 @@ const jobs = [
     id: "operations-manager",
     title: "Operations Manager",
     type: "Full-Time",
-    compensation: "€3,200-4,000/month",
+    compensation: "-3,200-4,000/month",
     description: "Oversee day-to-day NGO operations, manage supply chain, coordinate distribution networks, optimize processes.",
     requirements: ["3+ years operations experience", "NGO or logistics background", "Proven team leadership"],
   },
@@ -82,7 +82,7 @@ const jobs = [
     id: "partnerships-manager",
     title: "Partnerships Manager",
     type: "Full-Time",
-    compensation: "€3,500-4,500/month",
+    compensation: "-3,500-4,500/month",
     description: "Build brand partnerships, negotiate advertising deals, maintain NGO relationships, drive revenue growth.",
     requirements: ["Partnership/sales experience", "Strong negotiation skills", "Extensive network"],
   },
@@ -129,7 +129,7 @@ const Enlist = () => {
               BUILD WITH US
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
-              Join the team. Shape the future. Get paid to make a difference—from internships to full-time roles.
+              Join the team. Shape the future. Get paid to make a difference-from internships to full-time roles.
             </p>
             <div className="flex flex-wrap justify-center gap-4 animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'backwards' }}>
               <Button size="lg" className="bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 text-lg px-8"
@@ -209,7 +209,7 @@ const Enlist = () => {
                           <ul className="space-y-1.5">
                             {job.requirements.map((req) => (
                               <li key={req} className="text-sm text-muted-foreground flex items-start gap-2">
-                                <span className="text-primary mt-0.5">•</span>
+                                <span className="text-primary mt-0.5">-</span>
                                 <span>{req}</span>
                               </li>
                             ))}
@@ -239,7 +239,7 @@ const Enlist = () => {
                 <Rocket className="w-12 h-12 text-primary mx-auto mb-4" />
                 <h2 className="text-3xl md:text-4xl font-black mb-3">BRAND AMBASSADOR PROGRAM</h2>
                 <Badge className="bg-accent/20 text-accent border-accent/30 text-sm px-4 py-1.5">
-                  Flexible • Mission-Driven • High Impact
+                  Flexible - Mission-Driven - High Impact
                 </Badge>
               </div>
             </ScrollReveal>
@@ -269,7 +269,7 @@ const Enlist = () => {
                     <div className="grid md:grid-cols-3 gap-4">
                       {[
                         { icon: Award, title: "Free Products", desc: "Unlimited personal supply", color: "primary" },
-                        { icon: Briefcase, title: "Monthly Stipend", desc: "€100-150/month for active", color: "accent" },
+                        { icon: Briefcase, title: "Monthly Stipend", desc: "-100-150/month for active", color: "accent" },
                         { icon: Clock, title: "Flexible Hours", desc: "Work on your terms", color: "primary" },
                       ].map((perk) => (
                         <div key={perk.title} className={`p-4 bg-${perk.color}/5 rounded-xl border border-${perk.color}/20`}>

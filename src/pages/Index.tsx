@@ -9,7 +9,6 @@ import AdvertisingPartnerCTA from "@/components/AdvertisingPartnerCTA";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { TrustIndicators } from "@/components/TrustIndicators";
 import { HowItWorksCard } from "@/components/HowItWorksCard";
-import { LiveStatsBar } from "@/components/LiveStatsBar";
 import { FadeInWhenVisible } from "@/components/ScrollAnimations";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import {
@@ -56,10 +55,10 @@ export default function Index() {
   useEffect(() => {
     const timer = setInterval(
       () => setHeroImageIndex((prev) => (prev + 1) % heroImages.length),
-      2000,
+      4000,
     );
     return () => clearInterval(timer);
-  }, []);
+  }, [heroImages.length]);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden max-w-full">
@@ -69,13 +68,13 @@ export default function Index() {
         canonical={typeof window !== "undefined" ? window.location.href : "/"}
       />
 
-      {/* ===== HERO SECTION WITH IMAGE SLIDESHOW ===== */}
+      {/* ===== HERO SECTION ===== */}
       <section
         ref={heroRef}
-        className="relative w-full overflow-hidden bg-black"
-        style={{ height: "70vh", minHeight: "520px", maxHeight: "800px" }}
+        className="relative w-full overflow-hidden bg-black flex items-center"
+        style={{ minHeight: "80vh", maxHeight: "1000px" }}
       >
-        {/* Background images - crossfade slideshow */}
+        {/* Background images */}
         {heroImages.map((img, i) => (
           <img
             key={img}
@@ -85,95 +84,78 @@ export default function Index() {
             className="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out pointer-events-none select-none"
             style={{
               objectFit: "cover",
-              objectPosition: "50% 20%",
-              transform: "none",
+              objectPosition: "center 15%",
               opacity: i === heroImageIndex ? 1 : 0,
             }}
           />
         ))}
 
-        {/* Dark gradient overlay – strong left, fades right, no double-dark */}
+        {/* Gradient overlay */}
         <div
           className="absolute inset-0 z-10"
           style={{
             background:
-              "linear-gradient(to right, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.50) 45%, rgba(0,0,0,0.18) 100%)",
+              "linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%)",
           }}
         />
 
-        {/* Flex container sits on top */}
-        <div className="absolute inset-0 z-20 flex items-center">
-          {/* Hero Content - left aligned */}
-          <motion.div className="container px-6 md:px-10" style={{ y: heroY }}>
-            <div className="max-w-2xl">
-              <motion.h1
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-6xl md:text-7xl lg:text-8xl font-black leading-none mb-6"
-              >
-                <span className="block text-white">{t("home.mainTitle1")}</span>
-                <span className="block">
-                  <span className="text-hot-lime">{t("home.mainTitle2")} </span>
-                  <span className="text-hot-magenta">
-                    {t("home.mainTitle2Bold")}
-                  </span>
-                </span>
-              </motion.h1>
+        <div className="container relative z-20 px-6 md:px-10 py-20">
+          <div className="max-w-2xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6"
+            >
+              <span className="block text-white">Pure Power,</span>
+              <span className="block">
+                <span className="text-hot-lime">Pure </span>
+                <span className="text-hot-magenta">Purpose</span>
+              </span>
+            </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="text-lg text-gray-200 mb-10 max-w-md leading-relaxed"
-              >
-                {t("home.mainSubtitle")}
-              </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="text-lg text-gray-200 mb-10 max-w-md leading-relaxed"
+            >
+              From mountain springs to your hands — in 100% recyclable
+              tetrapacks.
+            </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1 }}
-                className="flex flex-wrap gap-4"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
+              className="flex flex-wrap gap-4"
+            >
+              <Button
+                asChild
+                size="lg"
+                className="text-base px-8 py-6 bg-gradient-to-r from-hot-magenta to-electric-blue text-white font-bold hover:opacity-90 border-0"
               >
-                <Button
-                  asChild
-                  size="lg"
-                  className="text-base px-8 py-6 bg-gradient-to-r from-hot-magenta to-electric-blue text-white font-bold hover:opacity-90 border-0"
-                >
-                  <Link to="/hydration">{t("home.heroCTA")}</Link>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  className="text-base px-8 py-6 bg-black text-white font-bold hover:bg-black/80 border-0"
-                >
-                  <Link to="/gratis">{t("home.learnMore")}</Link>
-                </Button>
-              </motion.div>
-            </div>
-          </motion.div>
+                <Link to="/hydration">Drink with Purpose</Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                className="text-base px-8 py-6 bg-white/10 backdrop-blur-md text-white font-bold hover:bg-white/20 border-0"
+              >
+                <Link to="/gratis">Learn More</Link>
+              </Button>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 2,
-            duration: 0.6,
-            repeat: Infinity,
-            repeatType: "reverse",
-            repeatDelay: 0.5,
-          }}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30"
         >
           <ChevronDown className="w-8 h-8 text-white/60" />
         </motion.div>
       </section>
-
-      {/* Live Impact Stats Bar - Sticky */}
-      <LiveStatsBar />
 
       <main className="space-y-0 overflow-x-hidden max-w-full">
         {/* ===== THIRST HAS NO BORDERS - PRODUCT CAROUSEL ===== */}
@@ -251,536 +233,199 @@ export default function Index() {
             </FadeInWhenVisible>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {/* Pillar 1: Water */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-hot-lime/50 transition-all duration-300 hover:shadow-xl hover:shadow-hot-lime/20"
-              >
-                <div className="mb-6 w-16 h-16 rounded-full bg-hot-lime/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Droplet className="w-8 h-8 text-hot-lime" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-lime transition-colors">
-                  {t("home.pillar1Title")}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {t("home.pillar1Description")}
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.pillar1Stat1")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.pillar1Stat2")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.pillar1Stat3")}</span>
-                  </div>
-                </div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="w-full mt-4 text-hot-lime hover:text-hot-lime hover:bg-hot-lime/10"
-                >
-                  <Link to="/water">
-                    {t("home.learnMore")}{" "}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
-
-              {/* Pillar 2: Arts */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-hot-magenta/50 transition-all duration-300 hover:shadow-xl hover:shadow-hot-magenta/20"
-              >
-                <div className="mb-6 w-16 h-16 rounded-full bg-hot-magenta/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Palette className="w-8 h-8 text-hot-magenta" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-hot-magenta transition-colors">
-                  {t("home.pillar2Title")}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {t("home.pillar2Description")}
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>{t("home.pillar2Stat1")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>{t("home.pillar2Stat2")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-hot-magenta" />
-                    <span>{t("home.pillar2Stat3")}</span>
-                  </div>
-                </div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="w-full mt-4 text-hot-magenta hover:text-hot-magenta hover:bg-hot-magenta/10"
-                >
-                  <Link to="/theurgy">
-                    {t("home.learnMore")}{" "}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
-
-              {/* Pillar 3: Education */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-electric-blue/50 transition-all duration-300 hover:shadow-xl hover:shadow-electric-blue/20"
-              >
-                <div className="mb-6 w-16 h-16 rounded-full bg-electric-blue/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <GraduationCap className="w-8 h-8 text-electric-blue" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-electric-blue transition-colors">
-                  {t("home.pillar3Title")}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {t("home.pillar3Description")}
-                </p>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-electric-blue" />
-                    <span>{t("home.pillar3Stat1")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-electric-blue" />
-                    <span>{t("home.pillar3Stat2")}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Check className="w-4 h-4 text-electric-blue" />
-                    <span>{t("home.pillar3Stat3")}</span>
-                  </div>
-                </div>
-                <Button
-                  asChild
-                  variant="ghost"
-                  className="w-full mt-4 text-electric-blue hover:text-electric-blue hover:bg-electric-blue/10"
-                >
-                  <Link to="/fu">
-                    {t("home.learnMore")}{" "}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </motion.div>
+              <PillarCard
+                icon={Droplet}
+                title={t("home.pillar1Title")}
+                desc={t("home.pillar1Description")}
+                stats={[
+                  t("home.pillar1Stat1"),
+                  t("home.pillar1Stat2"),
+                  t("home.pillar1Stat3"),
+                ]}
+                color="lime"
+                link="/water"
+                isInView={isInView}
+                delay={0.2}
+              />
+              <PillarCard
+                icon={Palette}
+                title={t("home.pillar2Title")}
+                desc={t("home.pillar2Description")}
+                stats={[
+                  t("home.pillar2Stat1"),
+                  t("home.pillar2Stat2"),
+                  t("home.pillar2Stat3"),
+                ]}
+                color="magenta"
+                link="/theurgy"
+                isInView={isInView}
+                delay={0.4}
+              />
+              <PillarCard
+                icon={GraduationCap}
+                title={t("home.pillar3Title")}
+                desc={t("home.pillar3Description")}
+                stats={[
+                  t("home.pillar3Stat1"),
+                  t("home.pillar3Stat2"),
+                  t("home.pillar3Stat3"),
+                ]}
+                color="blue"
+                link="/fu"
+                isInView={isInView}
+                delay={0.6}
+              />
             </div>
           </div>
         </section>
 
-        {/* ===== 4-STEP ANIMATED CARDS (HOW IT WORKS) ===== */}
+        {/* HOW IT WORKS */}
         <section className="py-24 bg-background relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(114,252,253,0.1),transparent_50%)]" />
-          </div>
-
           <div className="container relative z-10">
             <FadeInWhenVisible>
               <div className="text-center mb-16 space-y-4">
                 <Badge className="mb-4 bg-electric-blue/10 text-electric-blue border-electric-blue/20">
                   {t("home.howItWorksBadge")}
                 </Badge>
-                <motion.h2
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="text-4xl md:text-6xl font-bold"
-                >
+                <h2 className="text-4xl md:text-6xl font-bold">
                   {t("home.howItWorksTitle")}{" "}
                   <span className="text-hot-lime">
                     {t("home.howItWorksTitleBold")}
                   </span>
-                </motion.h2>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  {t("home.howItWorksSubtitle")}
-                </p>
+                </h2>
               </div>
             </FadeInWhenVisible>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-              {/* Step 1 */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0 }}
-              >
-                <Link to="/hydration">
-                  <HowItWorksCard
-                    icon={Droplet}
-                    title={t("home.step1Title")}
-                    description={t("home.step1Description")}
-                    step={1}
-                    index={0}
-                    color="lime"
-                  />
-                </Link>
-              </motion.div>
-
-              {/* Step 2 */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <Link to="/theurgy">
-                  <HowItWorksCard
-                    icon={Palette}
-                    title={t("home.step2Title")}
-                    description={t("home.step2Description")}
-                    step={2}
-                    index={1}
-                    color="magenta"
-                  />
-                </Link>
-              </motion.div>
-
-              {/* Step 3 */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                <Link to="/fu">
-                  <HowItWorksCard
-                    icon={GraduationCap}
-                    title={t("home.step3Title")}
-                    description={t("home.step3Description")}
-                    step={3}
-                    index={2}
-                    color="blue"
-                  />
-                </Link>
-              </motion.div>
-
-              {/* Step 4 */}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <Link to="/dashboard">
-                  <HowItWorksCard
-                    icon={Sparkles}
-                    title={t("home.step4Title")}
-                    description={t("home.step4Description")}
-                    step={4}
-                    index={3}
-                    color="orange"
-                  />
-                </Link>
-              </motion.div>
+              <Link to="/hydration">
+                <HowItWorksCard
+                  icon={Droplet}
+                  title={t("home.step1Title")}
+                  description={t("home.step1Description")}
+                  step={1}
+                  index={0}
+                  color="lime"
+                />
+              </Link>
+              <Link to="/theurgy">
+                <HowItWorksCard
+                  icon={Palette}
+                  title={t("home.step2Title")}
+                  description={t("home.step2Description")}
+                  step={2}
+                  index={1}
+                  color="magenta"
+                />
+              </Link>
+              <Link to="/fu">
+                <HowItWorksCard
+                  icon={GraduationCap}
+                  title={t("home.step3Title")}
+                  description={t("home.step3Description")}
+                  step={3}
+                  index={2}
+                  color="blue"
+                />
+              </Link>
+              <Link to="/dashboard">
+                <HowItWorksCard
+                  icon={Sparkles}
+                  title={t("home.step4Title")}
+                  description={t("home.step4Description")}
+                  step={4}
+                  index={3}
+                  color="orange"
+                />
+              </Link>
             </div>
+          </div>
+        </section>
 
-            {/* Impact Summary Banner */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-16 p-8 rounded-2xl bg-gradient-to-r from-hot-lime/10 via-electric-blue/10 to-hot-magenta/10 border border-hot-lime/20"
+        {/* FINAL CTA */}
+        <section className="relative py-32 overflow-hidden bg-black text-white">
+          <div className="container relative z-10 text-center">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8">
+              {t("home.finalCtaTitle1")}{" "}
+              <span className="text-hot-lime">{t("home.finalCtaTitle2")}</span>?
+            </h2>
+            <Button
+              asChild
+              size="lg"
+              className="bg-hot-lime text-black font-bold text-xl px-12 py-8 h-auto"
             >
-              <div className="grid md:grid-cols-3 gap-8 text-center">
-                <div>
-                  <div className="text-4xl font-bold text-hot-lime mb-2">
-                    100%
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Transparency Guaranteed
-                  </div>
-                </div>
-                <div>
-                  <div className="text-4xl font-bold text-electric-blue mb-2">
-                    2.8K+
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Active TRIBE Members
-                  </div>
-                </div>
-                <div>
-                  <div className="text-4xl font-bold text-hot-magenta mb-2">
-                    €84K+
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    Donations Distributed
-                  </div>
-                </div>
-              </div>
-              <div className="text-center mt-8">
-                <Button
-                  asChild
-                  variant="outline"
-                  className="border-hot-lime text-hot-lime hover:bg-hot-lime/10"
-                >
-                  <Link to="/gratis">
-                    Learn More About Our Impact{" "}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </motion.div>
+              <Link to="/tribe">{t("home.joinTheTribe")}</Link>
+            </Button>
           </div>
         </section>
 
-        {/* ===== TRUST INDICATORS WITH AVATARS ===== */}
-        <section className="py-16 bg-background">
-          <div className="container">
-            <FadeInWhenVisible>
-              <div className="text-center mb-12">
-                <Badge className="mb-4 bg-hot-lime/10 text-hot-lime border-hot-lime/20">
-                  {t("home.trustedBadge")}
-                </Badge>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                  {t("home.joinMovementTitle")}
-                </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  {t("home.joinMovementSubtitle")}
-                </p>
-              </div>
-
-              {/* Avatar Grid with Stats */}
-              <div className="max-w-4xl mx-auto">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="bg-card border border-border rounded-2xl p-8"
-                >
-                  {/* Main Avatar Stack */}
-                  <div className="flex items-center justify-center mb-8">
-                    <div className="flex -space-x-4">
-                      {[
-                        { bg: "from-hot-lime to-electric-blue", text: "A" },
-                        { bg: "from-electric-blue to-hot-magenta", text: "B" },
-                        { bg: "from-hot-magenta to-hot-lime", text: "C" },
-                        { bg: "from-hot-lime to-hot-magenta", text: "D" },
-                        { bg: "from-electric-blue to-hot-lime", text: "E" },
-                        { bg: "from-hot-magenta to-electric-blue", text: "F" },
-                      ].map((avatar, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0, scale: 0, x: -20 }}
-                          whileInView={{ opacity: 1, scale: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.3, delay: i * 0.1 }}
-                          className={`w-14 h-14 rounded-full border-4 border-background bg-gradient-to-br ${avatar.bg} flex items-center justify-center text-white font-bold shadow-lg`}
-                        >
-                          {avatar.text}
-                        </motion.div>
-                      ))}
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: 0.6 }}
-                        className="w-14 h-14 rounded-full border-4 border-background bg-muted flex items-center justify-center text-foreground font-bold shadow-lg"
-                      >
-                        +2.8K
-                      </motion.div>
-                    </div>
-                  </div>
-
-                  {/* Trust Stats */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                    <div>
-                      <div className="text-2xl font-bold text-hot-lime mb-1">
-                        2.847
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {t("home.activeMembers")}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-electric-blue mb-1">
-                        4,9/5
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {t("home.trustRating")}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-hot-magenta mb-1">
-                        100%
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {t("home.transparency")}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-hot-lime mb-1">
-                        €84K+
-                      </div>
-                      <div className="text-sm text-muted-foreground">
-                        {t("home.donated")}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Verified Partners */}
-                  <div className="mt-8 pt-8 border-t border-border">
-                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-4">
-                      <Check className="w-4 h-4 text-hot-lime" />
-                      <span>{t("home.verifiedNGO")}</span>
-                    </div>
-                    <TrustIndicators />
-                  </div>
-
-                  {/* CTA Button */}
-                  <div className="mt-8 text-center">
-                    <Button
-                      asChild
-                      size="lg"
-                      className="bg-hot-lime text-jet-black hover:bg-hot-lime/90"
-                    >
-                      <Link to="/tribe">
-                        {t("home.joinNow")}{" "}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </motion.div>
-              </div>
-            </FadeInWhenVisible>
-          </div>
-        </section>
-
-        {/* ===== FINAL CTA SECTION WITH PARALLAX ===== */}
-        <section className="relative py-32 overflow-hidden">
-          {/* Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-hot-lime/20 via-electric-blue/20 to-hot-magenta/20" />
-
-          {/* Animated Background Elements */}
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 90, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-hot-lime/10 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.3, 1],
-              rotate: [0, -90, 0],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-electric-blue/10 rounded-full blur-3xl"
-          />
-
-          <div className="container relative z-10">
-            <FadeInWhenVisible>
-              <div className="max-w-4xl mx-auto text-center space-y-8">
-                <Badge className="mx-auto bg-hot-lime text-jet-black px-6 py-2 text-sm font-bold">
-                  {t("home.finalCtaBadge")}
-                </Badge>
-
-                <motion.h2
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                  className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight"
-                >
-                  {t("home.finalCtaTitle1")}{" "}
-                  <span className="bg-gradient-to-r from-hot-lime via-electric-blue to-hot-magenta bg-clip-text text-transparent">
-                    {t("home.finalCtaTitle2")}
-                  </span>
-                  ?
-                </motion.h2>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto"
-                >
-                  {t("home.finalCtaSubtitle")}
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="flex flex-col sm:flex-row gap-4 justify-center pt-6"
-                >
-                  <Button
-                    asChild
-                    size="lg"
-                    className="text-lg px-10 py-7 bg-hot-lime text-jet-black hover:bg-hot-lime/90 font-bold group"
-                  >
-                    <Link to="/tribe">
-                      {t("home.joinTheTribe")}
-                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="text-lg px-10 py-7 border-2"
-                  >
-                    <Link to="/events">{t("home.exploreEvents")}</Link>
-                  </Button>
-                </motion.div>
-
-                {/* Social Proof Footer */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className="pt-12 flex items-center justify-center gap-8 flex-wrap text-sm text-muted-foreground"
-                >
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.noHiddenFees")}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.cancelAnytime")}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.fullTransparency")}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-hot-lime" />
-                    <span>{t("home.verifiedImpact")}</span>
-                  </div>
-                </motion.div>
-              </div>
-            </FadeInWhenVisible>
+        {/* FINAL CTA */}
+        <section className="relative py-32 overflow-hidden bg-black text-white">
+          <div className="container relative z-10 text-center">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8">
+              {t("home.finalCtaTitle1")}{" "}
+              <span className="text-hot-lime">{t("home.finalCtaTitle2")}</span>?
+            </h2>
+            <Button
+              asChild
+              size="lg"
+              className="bg-hot-lime text-black font-bold text-xl px-12 py-8 h-auto"
+            >
+              <Link to="/tribe">{t("home.joinTheTribe")}</Link>
+            </Button>
           </div>
         </section>
       </main>
     </div>
+  );
+}
+
+function PillarCard({
+  icon: Icon,
+  title,
+  desc,
+  stats,
+  color,
+  link,
+  isInView,
+  delay,
+}: any) {
+  const colorClass =
+    color === "lime"
+      ? "hot-lime"
+      : color === "magenta"
+        ? "hot-magenta"
+        : "electric-blue";
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay }}
+      className={`group p-8 rounded-2xl bg-card border border-border hover:border-${colorClass}/50 transition-all`}
+    >
+      <div
+        className={`mb-6 w-16 h-16 rounded-full bg-${colorClass}/10 flex items-center justify-center`}
+      >
+        <Icon className={`w-8 h-8 text-${colorClass}`} />
+      </div>
+      <h3 className="text-2xl font-bold mb-4">{title}</h3>
+      <p className="text-muted-foreground mb-6">{desc}</p>
+      <div className="space-y-2 mb-6">
+        {stats.map((stat: string, i: number) => (
+          <div key={i} className="flex items-center gap-2 text-sm">
+            <Check className={`w-4 h-4 text-${colorClass}`} />
+            <span>{stat}</span>
+          </div>
+        ))}
+      </div>
+      <Button
+        asChild
+        variant="ghost"
+        className={`w-full text-${colorClass} hover:bg-${colorClass}/10`}
+      >
+        <Link to={link}>
+          Learn More <ArrowRight className="ml-2 h-4 w-4" />
+        </Link>
+      </Button>
+    </motion.div>
   );
 }

@@ -251,6 +251,16 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Stripe Prices — location-based pricing mapping
+    // Public read to fetch prices from frontend, admin-only writes via Cloud Functions
+    match /stripe_prices/{priceId} {
+      // Everyone can read stripe prices (needed for frontend to display prices)
+      allow read: if true;
+
+      // Only Cloud Functions can write (via Admin SDK)
+      allow create, update, delete: if false;
+    }
+
     // Form Drafts — doc ID format: {uid}_{formId}
     // Users can only read/write/delete their own drafts.
     match /drafts/{draftId} {

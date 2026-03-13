@@ -11,6 +11,9 @@ export * from "./mux-functions";
 export * from "./stripe-functions";
 export * from "./stripe-webhooks";
 
+// Export Pricing functions
+export * from "./pricing-functions";
+
 // Export Forms functions
 export * from "./forms-functions";
 

@@ -82,6 +82,10 @@ const HonorMemorialGifts = lazy(
 );
 const AllWaysToGive = lazy(() => import("@/pages/spark/AllWaysToGive"));
 const MonthlyGiving = lazy(() => import("@/pages/spark/MonthlyGiving"));
+const FinancialPolicies = lazy(() => import("@/pages/reports/FinancialPolicies"));
+const AnnualReports = lazy(() => import("@/pages/reports/AnnualReports"));
+const InKindValuation = lazy(() => import("@/pages/reports/InKindValuation"));
+const DonationPolicies = lazy(() => import("@/pages/reports/DonationPolicies"));
 const ManageRecurringDonations = lazy(
   () => import("./pages/spark/ManageRecurringDonations"),
 );
@@ -521,6 +525,10 @@ const AppContent = () => {
                 />
                 <Route path="/spark/donate" element={<Donate />} />
                 <Route path="/spark/donate/legacy" element={<DonateNew />} />
+                <Route path="/reports/financial-policies" element={<FinancialPolicies />} />
+                <Route path="/reports/annual-reports" element={<AnnualReports />} />
+                <Route path="/reports/in-kind-valuation" element={<InKindValuation />} />
+                <Route path="/reports/donation-policies" element={<DonationPolicies />} />
                 <Route
                   path="/spark/donate/manage"
                   element={

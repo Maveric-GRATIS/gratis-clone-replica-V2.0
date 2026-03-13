@@ -121,7 +121,7 @@ export default function Donate() {
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in"
             style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
           >
-            Crypto, phone, wire transfer, or mail - choose the way that works
+            Crypto, phone, wire transfer, or mail — choose the way that works
             for you. Same mission. Same impact. Zero admin fees.
           </p>
           <div
@@ -420,9 +420,9 @@ export default function Donate() {
                           Hours
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          Mon - Fri
+                          Mon – Fri
                           <br />
-                          9:00 - 17:00 CET
+                          9:00 – 17:00 CET
                         </p>
                       </div>
                       <div>
@@ -482,7 +482,7 @@ export default function Donate() {
                         },
                         { label: "IBAN", value: "NL XX INGB XXXX XXXX XX" },
                         { label: "BIC/SWIFT", value: "INGBNL2A" },
-                        { label: "Reference", value: "[Your Name] - Donation" },
+                        { label: "Reference", value: "[Your Name] – Donation" },
                       ].map((row) => (
                         <div
                           key={row.label}
@@ -622,7 +622,7 @@ export default function Donate() {
                       <ul className="space-y-2 text-sm text-muted-foreground">
                         <li className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                          Processed within 7-10 business days
+                          Processed within 7–10 business days
                         </li>
                         <li className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />

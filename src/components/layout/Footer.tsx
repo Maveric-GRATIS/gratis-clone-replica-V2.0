@@ -99,10 +99,10 @@ export default function Footer() {
         <Column
           title="Reports"
           links={[
-            { label: "Policies (Financial Policies)", to: "/tribe/policies" },
-            { label: "Annual Reports", to: "/tribe/annual-reports" },
-            { label: "In-Kind Valuation", to: "/tribe/in-kind-valuation" },
-            { label: "Donation Policies", to: "/spark/policies" },
+            { label: "Policies (Financial Policies)", to: "/reports/financial-policies" },
+            { label: "Annual Reports", to: "/reports/annual-reports" },
+            { label: "In-Kind Valuation", to: "/reports/in-kind-valuation" },
+            { label: "Donation Policies", to: "/reports/donation-policies" },
           ]}
         />
         <Column

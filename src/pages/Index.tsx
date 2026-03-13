@@ -357,23 +357,6 @@ export default function Index() {
             </Button>
           </div>
         </section>
-
-        {/* FINAL CTA */}
-        <section className="relative py-32 overflow-hidden bg-black text-white">
-          <div className="container relative z-10 text-center">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8">
-              {t("home.finalCtaTitle1")}{" "}
-              <span className="text-hot-lime">{t("home.finalCtaTitle2")}</span>?
-            </h2>
-            <Button
-              asChild
-              size="lg"
-              className="bg-hot-lime text-black font-bold text-xl px-12 py-8 h-auto"
-            >
-              <Link to="/tribe">{t("home.joinTheTribe")}</Link>
-            </Button>
-          </div>
-        </section>
       </main>
     </div>
   );

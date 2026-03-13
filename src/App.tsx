@@ -76,6 +76,12 @@ const Tales = lazy(() => import("@/pages/impactTV/Tales"));
 const Spark = lazy(() => import("@/pages/Spark"));
 const Donate = lazy(() => import("@/pages/spark/Donate"));
 const DonateNew = lazy(() => import("./pages/spark/DonateNew"));
+const CorporateGiving = lazy(() => import("@/pages/spark/CorporateGiving"));
+const HonorMemorialGifts = lazy(
+  () => import("@/pages/spark/HonorMemorialGifts"),
+);
+const AllWaysToGive = lazy(() => import("@/pages/spark/AllWaysToGive"));
+const MonthlyGiving = lazy(() => import("@/pages/spark/MonthlyGiving"));
 const ManageRecurringDonations = lazy(
   () => import("./pages/spark/ManageRecurringDonations"),
 );
@@ -497,8 +503,24 @@ const AppContent = () => {
                 <Route path="/videos/:slug" element={<VideoDetail />} />
 
                 <Route path="/spark" element={<Spark />} />
-                <Route path="/spark/donate" element={<DonateNew />} />
-                <Route path="/spark/donate/legacy" element={<Donate />} />
+                <Route
+                  path="/spark/corporate-giving"
+                  element={<CorporateGiving />}
+                />
+                <Route
+                  path="/spark/honor-memorial"
+                  element={<HonorMemorialGifts />}
+                />
+                <Route
+                  path="/spark/all-ways-to-give"
+                  element={<AllWaysToGive />}
+                />
+                <Route
+                  path="/spark/monthly-giving"
+                  element={<MonthlyGiving />}
+                />
+                <Route path="/spark/donate" element={<Donate />} />
+                <Route path="/spark/donate/legacy" element={<DonateNew />} />
                 <Route
                   path="/spark/donate/manage"
                   element={

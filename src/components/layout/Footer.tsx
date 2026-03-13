@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useAuth } from "@/contexts/AuthContext";
+import { Settings } from "lucide-react";
 
 const Column = ({
   title,
@@ -39,12 +40,11 @@ const Column = ({
 );
 
 export default function Footer() {
-  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border bg-background">
-      <div className="container py-8 sm:py-10 md:py-12 px-4 sm:px-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 sm:gap-8">
+      <div className="container py-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
         <Column
           title="Follow GRATIS"
           links={[
@@ -89,90 +89,90 @@ export default function Footer() {
         <Column
           title="Giving"
           links={[
-            { label: "Corporate Giving", to: "/spark" },
-            { label: "Honor & Memorial Gifts", to: "/spark" },
-            { label: "All Ways to Give (FAQ)", to: "/spark" },
-            { label: "Monthly Giving", to: "/spark" },
+            { label: "Corporate Giving", to: "/spark/corporate-giving" },
+            { label: "Honor & Memorial Gifts", to: "/spark/honor-memorial" },
+            { label: "All Ways to Give (FAQ)", to: "/spark/all-ways-to-give" },
+            { label: "Monthly Giving", to: "/spark/monthly-giving" },
             { label: "Phone, Mail & Crypto Donations", to: "/spark/donate" },
           ]}
         />
         <Column
           title="Reports"
           links={[
-            { label: "Policies (Financial Policies)", to: "/tribe/standards" },
-            { label: "Annual Reports", to: "/tribe/responsibility" },
-            { label: "In-Kind Valuation", to: "/tribe/standards" },
-            { label: "Donation Policies", to: "/spark" },
+            { label: "Policies (Financial Policies)", to: "/tribe/policies" },
+            { label: "Annual Reports", to: "/tribe/annual-reports" },
+            { label: "In-Kind Valuation", to: "/tribe/in-kind-valuation" },
+            { label: "Donation Policies", to: "/spark/policies" },
           ]}
         />
         <Column
           title="Accreditation"
           links={[
             { label: "Compliance & Licenses", to: "/tribe/compliance" },
-            { label: "Leadership", to: "/tribe/team" },
-            { label: "EIN: 95-1831116", to: "/tribe/compliance" },
-            { label: "ANBI Status", to: "/tribe/compliance" },
-            { label: "Rating (Charity Rating)", to: "/tribe/responsibility" },
+            { label: "Leadership", to: "/tribe/leadership" },
+            { label: "EIN: 95-1831116", to: "/tribe/ein" },
+            { label: "ANBI Status", to: "/tribe/anbi-status" },
+            { label: "Rating (Charity Rating)", to: "/tribe/charity-rating" },
           ]}
         />
         <Column
           title="Transparency"
           links={[
-            { label: "Terms of Use", to: "/legal/terms" },
-            { label: "Privacy Policy", to: "/legal/privacy" },
-            { label: "Cookie Policy", to: "/legal/cookies" },
-            { label: "Donor Privacy", to: "/legal/donor-privacy" },
-            { label: "Privacy Settings", to: "/privacy" },
-            { label: "Accessibility", to: "/legal/accessibility" },
-            { label: "Disclaimer", to: "/legal/disclaimer" },
-            { label: "Brand Protection", to: "/tribe/standards" },
+            { label: "Terms of Use", to: "/tribe/terms" },
+            {
+              label: "Rights (Brand Protection)",
+              to: "/tribe/brand-protection",
+            },
+            { label: "User Privacy (Privacy Policy)", to: "/tribe/privacy" },
+            { label: "Tracking (Cookie Policy)", to: "/tribe/cookies" },
+            {
+              label: "Help (Accessibility Policy)",
+              to: "/tribe/accessibility",
+            },
+            {
+              label: "Safety (Disclaimer & Donor Privacy)",
+              to: "/tribe/safety",
+            },
           ]}
         />
         <Column
           title="Information"
           links={[
             { label: "Contact", to: "/contact" },
-            { label: "FAQ", to: "/faq" },
-            { label: "Community", to: "/community" },
-            { label: "Blog", to: "/blog" },
-            { label: "Campaigns", to: "/campaigns" },
-            { label: "Events", to: "/events" },
-            { label: "Videos", to: "/videos" },
-            { label: "Leaderboard", to: "/leaderboard" },
-            { label: "Volunteer", to: "/volunteer" },
-            { label: "NGO Application", to: "/ngo-application" },
             { label: "Organization (NGO)", to: "/tribe" },
-            { label: "News", to: "/impact-tv" },
-            { label: "Network (Partners)", to: "/partners" },
+            { label: "News", to: "/blog?tab=news" },
+            { label: "NGO Partners", to: "/tribe/partners" },
             { label: "Employment (Careers)", to: "/spark/enlist" },
-            { label: "Communications (Press & Media)", to: "/press" },
+            { label: "Communications (Press & Media)", to: "/tribe/press" },
             { label: "Team (Programs)", to: "/tribe/team" },
-            { label: "Corporate Partnerships", to: "/corporate" },
-            { label: "Our Impact", to: "/impact" },
-            { label: "Impact Projects", to: "/impact/projects" },
-            { label: "Referral Program", to: "/referrals" },
-            { label: "Become a Partner", to: "/partners/apply" },
-            { label: "Partner Portal", to: "/partner" },
           ]}
         />
       </div>
-      <div className="border-t border-border">
-        <div className="container py-6 text-xs text-foreground/60 flex items-center justify-between">
-          <span>
-            © {currentYear} G.R.A.T.I.S. Empower Change with Every Pack.
-          </span>
-          {process.env.NODE_ENV === "development" && (
-            <div className="flex gap-4">
-              <Link to="/route-test" className="text-primary hover:underline">
-                🧪 Route Test
-              </Link>
-              <Link to="/part15-test" className="text-primary hover:underline">
-                🔧 Part 15 Test
-              </Link>
-            </div>
-          )}
-        </div>
-      </div>
+      <FooterBottom currentYear={currentYear} />
     </footer>
+  );
+}
+
+function FooterBottom({ currentYear }: { currentYear: number }) {
+  const { user } = useAuth();
+  const isEditor = user?.role === "editor" || user?.role === "admin";
+
+  return (
+    <div className="border-t border-border">
+      <div className="container py-6 flex items-center justify-between text-xs text-foreground/60">
+        <span>
+          © {currentYear} G.R.A.T.I.S. Empower Change with Every Pack.
+        </span>
+        {user && isEditor && (
+          <Link
+            to="/cms"
+            className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Settings className="h-3.5 w-3.5" />
+            CMS
+          </Link>
+        )}
+      </div>
+    </div>
   );
 }

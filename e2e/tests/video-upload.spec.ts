@@ -5,7 +5,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Part 15 - Enterprise Features', () => {
   test('should load developer API keys page', async ({ page }) => {
-    await page.goto('/developer/api-keys', { waitUntil: 'commit' });
+    const response = await page.goto('/developer/api-keys', { waitUntil: 'domcontentloaded' });
+
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
 
     // Check if page loaded (will show login or API keys page)
     const url = page.url();
@@ -13,7 +16,10 @@ test.describe('Part 15 - Enterprise Features', () => {
   });
 
   test('should load admin scheduler dashboard', async ({ page }) => {
-    await page.goto('/admin/scheduler', { waitUntil: 'commit' });
+    const response = await page.goto('/admin/scheduler', { waitUntil: 'domcontentloaded' });
+
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
 
     // Check if page loaded (will redirect to login if not admin)
     const url = page.url();
@@ -21,7 +27,10 @@ test.describe('Part 15 - Enterprise Features', () => {
   });
 
   test('should load platform settings page', async ({ page }) => {
-    await page.goto('/admin/platform-settings', { waitUntil: 'commit' });
+    const response = await page.goto('/admin/platform-settings', { waitUntil: 'domcontentloaded' });
+
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
 
     // Check if page loaded (will redirect to login if not admin)
     const url = page.url();
@@ -29,7 +38,9 @@ test.describe('Part 15 - Enterprise Features', () => {
   });
 
   test('should handle 404 for non-existent routes', async ({ page }) => {
-    await page.goto('/this-route-does-not-exist', { waitUntil: 'commit' });
+    const response = await page.goto('/this-route-does-not-exist', { waitUntil: 'domcontentloaded' });
+
+    expect(response).not.toBeNull();
 
     // Should show 404 page or redirect
     const pageText = await page.textContent('body');
@@ -37,7 +48,10 @@ test.describe('Part 15 - Enterprise Features', () => {
   });
 
   test('should load homepage with proper structure', async ({ page }) => {
-    await page.goto('/', { waitUntil: 'commit' });
+    const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
 
     // Check for essential elements
     // Verify page is interactive

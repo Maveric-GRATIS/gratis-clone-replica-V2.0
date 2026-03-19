@@ -31,30 +31,34 @@ test.describe('GRATIS.NGO Platform - Smoke Tests', () => {
   });
 
   test('should load GRATIS beverage page', async ({ page }) => {
-    await page.goto('/gratis', { waitUntil: 'commit' });
+    const response = await page.goto('/gratis', { waitUntil: 'domcontentloaded' });
 
-    // Verify page loaded
-    await expect(page).toHaveURL(/\/gratis/i);
+    // Verify route responded successfully
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
   });
 
   test('should load water page', async ({ page }) => {
-    await page.goto('/gratis/water', { waitUntil: 'commit' });
+    const response = await page.goto('/gratis/water', { waitUntil: 'domcontentloaded' });
 
-    // Verify page loaded
-    await expect(page).toHaveURL(/\/water/i);
+    // Verify route responded successfully
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
   });
 
   test('should load impact TV page', async ({ page }) => {
-    await page.goto('/impact-tv', { waitUntil: 'commit' });
+    const response = await page.goto('/impact-tv', { waitUntil: 'domcontentloaded' });
 
-    // Verify page loaded
-    await expect(page).toHaveURL(/\/impact-tv/i);
+    // Verify route responded successfully
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
   });
 
   test('should load events page', async ({ page }) => {
-    await page.goto('/events', { waitUntil: 'commit' });
+    const response = await page.goto('/events', { waitUntil: 'domcontentloaded' });
 
-    // Verify page loaded
-    await expect(page).toHaveURL(/\/events/i);
+    // Verify route responded successfully
+    expect(response).not.toBeNull();
+    expect(response!.status()).toBeLessThan(400);
   });
 });

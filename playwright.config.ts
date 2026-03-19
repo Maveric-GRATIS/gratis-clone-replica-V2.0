@@ -13,7 +13,7 @@ export default defineConfig({
   timeout: 30000, // 30 seconds per test
 
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:5173',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:8080',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -47,7 +47,7 @@ export default defineConfig({
   // For local development, start dev server manually: npm run dev
   webServer: process.env.CI ? {
     command: 'npm run dev',
-    url: 'http://localhost:5173',
+    url: 'http://localhost:8080',
     timeout: 120000, // 2 minutes
     reuseExistingServer: false,
   } : undefined,

@@ -1,0 +1,2 @@
+en=web_vital&_ee=1&ep.origin=firebase&ep.event_category=performance&ep.event_label=FCP&epn.value=672&_et=5
+en=web_vital&_ee=1&ep.origin=firebase&ep.event_category=performance&ep.event_label=TTFB&epn.value=8&_et=290

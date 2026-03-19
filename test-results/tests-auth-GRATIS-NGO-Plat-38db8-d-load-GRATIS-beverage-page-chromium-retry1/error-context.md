@@ -1,0 +1,532 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - generic [ref=e8]:
+      - img [ref=e10]
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - heading "🍪 We Value Your Privacy" [level=3] [ref=e14]
+          - paragraph [ref=e15]: We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences at any time.
+          - paragraph [ref=e16]:
+            - text: Learn more in our
+            - link "Cookie Policy" [ref=e17] [cursor=pointer]:
+              - /url: /legal/cookies
+            - text: and
+            - link "Privacy Policy" [ref=e18] [cursor=pointer]:
+              - /url: /legal/privacy
+            - text: .
+        - generic [ref=e19]:
+          - button "Accept All" [ref=e20] [cursor=pointer]
+          - button "Reject All" [ref=e21] [cursor=pointer]
+          - button "Manage Preferences" [ref=e22] [cursor=pointer]:
+            - img
+            - text: Manage Preferences
+      - button [ref=e23] [cursor=pointer]:
+        - img
+    - banner [ref=e24]:
+      - generic [ref=e25]:
+        - link "GRATIS - Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - img "GRATIS - Home" [ref=e27]
+        - navigation [ref=e28]:
+          - menubar [ref=e29]:
+            - button "GRATIS" [ref=e30] [cursor=pointer]:
+              - text: GRATIS
+              - img [ref=e31]
+            - button "RIG" [ref=e33] [cursor=pointer]:
+              - text: RIG
+              - img [ref=e34]
+            - menuitem "ARCANE" [ref=e36] [cursor=pointer]
+            - button "TRIBE" [ref=e37] [cursor=pointer]:
+              - text: TRIBE
+              - img [ref=e38]
+            - button "IMPACT TV" [ref=e40] [cursor=pointer]:
+              - text: IMPACT TV
+              - img [ref=e41]
+            - button "SPARK" [ref=e43] [cursor=pointer]:
+              - text: SPARK
+              - img [ref=e44]
+        - generic [ref=e46]:
+          - button "Search (⌘K)" [ref=e47] [cursor=pointer]:
+            - img
+          - button "Switch to dark mode" [ref=e48] [cursor=pointer]:
+            - img
+            - img
+            - generic [ref=e49]: Toggle theme
+          - button "Verander taal / Change language" [ref=e50] [cursor=pointer]:
+            - img
+            - generic [ref=e51]: Verander taal / Change language
+          - button [ref=e52] [cursor=pointer]:
+            - img
+          - button [ref=e53] [cursor=pointer]:
+            - img
+          - button "Sign In" [ref=e54] [cursor=pointer]
+          - link "Shop" [ref=e56] [cursor=pointer]:
+            - /url: /rig
+    - generic [ref=e59]:
+      - generic [ref=e63]:
+        - generic [ref=e64]: G.R.A.T.I.S — Giving Resources to Achieve Transformative and Impactful Change
+        - heading "PREMIUM HYDRATATIE VOOR EEN DOEL" [level=1] [ref=e65]:
+          - text: PREMIUM HYDRATATIE
+          - text: VOOR EEN DOEL
+        - paragraph [ref=e66]: Drie revolutionaire drankenlijnen. Oneindig recyclebare aluminium flessen. 100% advertentie-inkomsten gedoneerd aan geverifieerde NGO's wereldwijd.
+        - generic [ref=e67]:
+          - link "Ontdek W.A.T.E.R" [ref=e68] [cursor=pointer]:
+            - /url: /gratis/water
+            - text: Ontdek W.A.T.E.R
+            - img
+          - link "Support the Mission" [ref=e69] [cursor=pointer]:
+            - /url: /spark/verve
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - heading "Het Probleem Dat We Oplossen" [level=2] [ref=e73]
+          - paragraph [ref=e74]: Begrijp waarom GRATIS bestaat en de verandering die we creëren
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - img [ref=e79]
+              - heading "Het Probleem" [level=3] [ref=e81]
+            - list [ref=e82]:
+              - listitem [ref=e83]:
+                - paragraph [ref=e85]: Miljarden plastic flessen belanden elk jaar op stortplaatsen en in oceanen, met onomkeerbare milieuschade tot gevolg
+              - listitem [ref=e86]:
+                - paragraph [ref=e88]: Traditionele reclamebudgetten voor dranken gaan naar bedrijven in plaats van goede doelen die steun nodig hebben
+              - listitem [ref=e89]:
+                - paragraph [ref=e91]: Consumenten hebben geen transparantie over waar hun geld naartoe gaat bij een aankoop
+              - listitem [ref=e92]:
+                - paragraph [ref=e94]: NGO's worstelen om duurzame financieringsbronnen te vinden voor hun vitale werk
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - img [ref=e98]
+              - heading "Onze Oplossing" [level=3] [ref=e101]
+            - list [ref=e102]:
+              - listitem [ref=e103]:
+                - img [ref=e104]
+                - paragraph [ref=e107]: Oneindig recyclebare aluminium flessen die plastic afval uit de vergelijking elimineren
+              - listitem [ref=e108]:
+                - img [ref=e109]
+                - paragraph [ref=e112]: 100% van reclame-inkomsten worden doorgestuurd naar geverifieerde NGO's die werken aan kritieke wereldwijde uitdagingen
+              - listitem [ref=e113]:
+                - img [ref=e114]
+                - paragraph [ref=e117]: Volledige transparantie met real-time impact tracking en kwartaalrapporten
+              - listitem [ref=e118]:
+                - img [ref=e119]
+                - paragraph [ref=e122]: Een duurzaam bedrijfsmodel dat groeit naarmate onze gemeenschap groeit, waardoor meer impact wordt gefinancierd
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - heading "Hoe Het Werkt" [level=2] [ref=e126]
+          - paragraph [ref=e127]: Drie eenvoudige stappen van jouw aankoop naar echte impact
+        - generic [ref=e128]:
+          - generic [ref=e129]:
+            - generic [ref=e131]:
+              - generic [ref=e132]: "1"
+              - img [ref=e134]
+              - heading "Jij Koopt GRATIS" [level=3] [ref=e138]
+              - paragraph [ref=e139]: Koop een GRATIS drank—W.A.T.E.R, THEURGY, of F.U.—in onze winkel of bij partners. Elke fles financiert verandering.
+            - img [ref=e140]
+          - generic [ref=e142]:
+            - generic [ref=e144]:
+              - generic [ref=e145]: "2"
+              - img [ref=e147]
+              - heading "Wij Verkopen Reclame" [level=3] [ref=e150]
+              - paragraph [ref=e151]: Onze flessen worden premium reclameruimte voor merken die zich willen aansluiten bij doelgerichte consumenten.
+            - img [ref=e152]
+          - generic [ref=e156]:
+            - generic [ref=e157]: "3"
+            - img [ref=e159]
+            - heading "100% Gaat Naar NGO's" [level=3] [ref=e162]
+            - paragraph [ref=e163]: Elke euro aan reclame-inkomsten wordt verdeeld onder geverifieerde NGO-partners. TRIBE-leden stemmen elk kwartaal over prioriteiten.
+      - generic [ref=e165]:
+        - generic [ref=e166]:
+          - heading "Choose Your Hydration" [level=2] [ref=e167]
+          - paragraph [ref=e168]: "Three distinct lines, one mission: premium beverages that fund real change."
+        - generic [ref=e169]:
+          - link "W.A.T.E.R Available Now Pure Still Water W.A.T.E.R Premium natural spring water in infinitely recyclable aluminum bottles. Pure hydration, zero compromise. \"Wisdom. Aqua. Thirst. Elemental. Refresh.\" Explore W.A.T.E.R" [ref=e170] [cursor=pointer]:
+            - /url: /gratis/water
+            - generic [ref=e171]:
+              - img "W.A.T.E.R" [ref=e172]
+              - generic [ref=e174]: Available Now
+            - generic [ref=e175]:
+              - generic [ref=e176]:
+                - img [ref=e177]
+                - text: Pure Still Water
+              - heading "W.A.T.E.R" [level=3] [ref=e179]
+              - paragraph [ref=e180]: Premium natural spring water in infinitely recyclable aluminum bottles. Pure hydration, zero compromise.
+              - generic [ref=e181]: "\"Wisdom. Aqua. Thirst. Elemental. Refresh.\""
+              - generic [ref=e182]:
+                - text: Explore W.A.T.E.R
+                - img [ref=e183]
+          - link "THEURGY Pre-Order Wellness Functional Water THEURGY Mystic-positioned functional water infused with adaptogens, vitamins, and natural botanicals. Elevate your hydration ritual. \"Transform. Harmonize. Elevate. Unite. Revive. Grace. Yield.\" Explore THEURGY" [ref=e185] [cursor=pointer]:
+            - /url: /gratis/theurgy
+            - generic [ref=e186]:
+              - img "THEURGY" [ref=e187]
+              - generic [ref=e189]: Pre-Order
+            - generic [ref=e190]:
+              - generic [ref=e191]:
+                - img [ref=e192]
+                - text: Wellness Functional Water
+              - heading "THEURGY" [level=3] [ref=e194]
+              - paragraph [ref=e195]: Mystic-positioned functional water infused with adaptogens, vitamins, and natural botanicals. Elevate your hydration ritual.
+              - generic [ref=e196]: "\"Transform. Harmonize. Elevate. Unite. Revive. Grace. Yield.\""
+              - generic [ref=e197]:
+                - text: Explore THEURGY
+                - img [ref=e198]
+          - link "F.U. Pre-Order Rebellious Functional Water F.U. Caffeine-powered energy water with rebellious attitude. For those who refuse to settle. Fuel your fire. \"Fierce. Unleashed.\" Explore F.U." [ref=e200] [cursor=pointer]:
+            - /url: /gratis/fu
+            - generic [ref=e201]:
+              - img "F.U." [ref=e202]
+              - generic [ref=e204]: Pre-Order
+            - generic [ref=e205]:
+              - generic [ref=e206]:
+                - img [ref=e207]
+                - text: Rebellious Functional Water
+              - heading "F.U." [level=3] [ref=e209]
+              - paragraph [ref=e210]: Caffeine-powered energy water with rebellious attitude. For those who refuse to settle. Fuel your fire.
+              - generic [ref=e211]: "\"Fierce. Unleashed.\""
+              - generic [ref=e212]:
+                - text: Explore F.U.
+                - img [ref=e213]
+      - generic [ref=e217]:
+        - heading "Every Sip Funds Real Change" [level=2] [ref=e218]
+        - generic [ref=e219]:
+          - paragraph [ref=e220]: GRATIS isn't just premium hydration—it's a movement. We partner with verified NGOs worldwide, donating 100% of advertising revenue to fund diverse projects across human rights, environment, education, and community development.
+          - paragraph [ref=e221]: Infinitely recyclable aluminum bottles. Zero plastic waste. Complete transparency. Every euro tracked, every claim verified, every bottle making an impact.
+        - generic [ref=e222]:
+          - link "See Our Impact Dashboard" [ref=e223] [cursor=pointer]:
+            - /url: /tribe/accountability
+          - link "View Financial Reports" [ref=e224] [cursor=pointer]:
+            - /url: /tribe/transparency
+      - generic [ref=e226]:
+        - generic [ref=e227]:
+          - generic [ref=e228]: Onze Basis
+          - heading "Gebouwd op Drie Pijlers" [level=2] [ref=e229]
+          - paragraph [ref=e230]: De principes die elke beslissing leiden
+        - generic [ref=e231]:
+          - generic [ref=e232]:
+            - generic [ref=e233]:
+              - img [ref=e235]
+              - heading "Radicale Transparantie" [level=3] [ref=e238]
+              - paragraph [ref=e239]: Volledige zichtbaarheid in onze financiën, operaties en impact. Geen verborgen kosten, geen bedrijfsgeheimen—gewoon eerlijk zakendoen.
+            - generic [ref=e240]:
+              - generic [ref=e241]:
+                - img [ref=e242]
+                - paragraph [ref=e245]: Real-time impact dashboard dagelijks bijgewerkt
+              - generic [ref=e246]:
+                - img [ref=e247]
+                - paragraph [ref=e250]: Kwartaalrapporten openbaar gepubliceerd
+              - generic [ref=e251]:
+                - img [ref=e252]
+                - paragraph [ref=e255]: Open-source toewijzingsmethodologie
+              - generic [ref=e256]:
+                - img [ref=e257]
+                - paragraph [ref=e260]: Onafhankelijke audits van alle claims
+          - generic [ref=e261]:
+            - generic [ref=e262]:
+              - img [ref=e264]
+              - heading "Rigoureuze Verificatie" [level=3] [ref=e266]
+              - paragraph [ref=e267]: Elke NGO-partner wordt grondig gescreend. Elke claim wordt onafhankelijk geverifieerd. Vertrouwen opgebouwd door bewijs, niet beloftes.
+            - generic [ref=e268]:
+              - generic [ref=e269]:
+                - img [ref=e270]
+                - paragraph [ref=e273]: Meerfasig NGO-screeningproces
+              - generic [ref=e274]:
+                - img [ref=e275]
+                - paragraph [ref=e278]: Impact verificatie ter plaatse
+              - generic [ref=e279]:
+                - img [ref=e280]
+                - paragraph [ref=e283]: Jaarlijkse externe audits
+              - generic [ref=e284]:
+                - img [ref=e285]
+                - paragraph [ref=e288]: Gedocumenteerde casestudies en resultaten
+          - generic [ref=e289]:
+            - generic [ref=e290]:
+              - img [ref=e292]
+              - heading "Door Gemeenschap Gedreven" [level=3] [ref=e297]
+              - paragraph [ref=e298]: "TRIBE-leden ondersteunen niet alleen de missie—ze vormen deze. Democratische stemming over fondstoewijzing houdt macht waar het hoort: bij de mensen."
+            - generic [ref=e299]:
+              - generic [ref=e300]:
+                - img [ref=e301]
+                - paragraph [ref=e304]: Kwartaalstemming over toewijzingsprioriteiten
+              - generic [ref=e305]:
+                - img [ref=e306]
+                - paragraph [ref=e309]: Open forum voor NGO-nominaties
+              - generic [ref=e310]:
+                - img [ref=e311]
+                - paragraph [ref=e314]: Feedback van leden vormtproductontwikkeling
+              - generic [ref=e315]:
+                - img [ref=e316]
+                - paragraph [ref=e319]: Transparante governance structuur
+      - generic [ref=e321]:
+        - generic [ref=e322]:
+          - generic [ref=e323]: Onze Reis
+          - heading "Het Verhaal Tot Nu Toe" [level=2] [ref=e324]
+          - paragraph [ref=e325]: Belangrijke mijlpalen van concept tot wereldwijde beweging
+        - generic [ref=e328]:
+          - generic [ref=e334]:
+            - img [ref=e336]
+            - generic [ref=e341]:
+              - generic [ref=e342]:
+                - img [ref=e343]
+                - generic [ref=e345]: Januari 2025
+              - heading "GRATIS Opgericht" [level=3] [ref=e346]
+              - paragraph [ref=e347]: "De visie begint: premium dranken die echte verandering financieren. Initiële conceptontwikkeling en bedrijfsmodelvalidatie."
+          - generic [ref=e353]:
+            - img [ref=e355]
+            - generic [ref=e360]:
+              - generic [ref=e361]:
+                - img [ref=e362]
+                - generic [ref=e364]: Maart 2025
+              - heading "Eerste W.A.T.E.R Lancering" [level=3] [ref=e365]
+              - paragraph [ref=e366]: GRATIS W.A.T.E.R komt op de markt. Eerste 1.000 flessen verkocht binnen 48 uur. Gemeenschap begint vorm te krijgen.
+          - generic [ref=e372]:
+            - img [ref=e374]
+            - generic [ref=e377]:
+              - generic [ref=e378]:
+                - img [ref=e379]
+                - generic [ref=e381]: Juni 2025
+              - heading "TRIBE Lidmaatschap Gelanceerd" [level=3] [ref=e382]
+              - paragraph [ref=e383]: Introductie van gelaagd lidmaatschap met democratische stemrechten. De gemeenschap empoweren om fondsen te sturen.
+          - generic [ref=e389]:
+            - img [ref=e391]
+            - generic [ref=e396]:
+              - generic [ref=e397]:
+                - img [ref=e398]
+                - generic [ref=e400]: Q1 2026
+              - 'heading "Expansie: THEURGY & F.U." [level=3] [ref=e401]'
+              - paragraph [ref=e402]: Twee nieuwe productlijnen gelanceerd. Diversificatie van aanbod met behoud van kernmissie. Pre-orders overtreffen verwachtingen.
+      - generic [ref=e404]:
+        - generic [ref=e405]:
+          - generic [ref=e406]: Onze Belofte
+          - heading "Onze Verplichtingen aan Jou" [level=2] [ref=e407]
+          - paragraph [ref=e408]: De niet-onderhandelbare principes die definiëren hoe we opereren
+        - generic [ref=e409]:
+          - generic [ref=e411]:
+            - img [ref=e413]
+            - heading "100% Financiële Transparantie" [level=3] [ref=e416]
+            - paragraph [ref=e417]: Elke euro wordt gevolgd. Elke toewijzing wordt gepubliceerd. Real-time dashboard toont precies waar reclame-inkomsten naartoe gaan.
+            - link "Bekijk Impact Dashboard" [ref=e418] [cursor=pointer]:
+              - /url: /impact
+              - text: Bekijk Impact Dashboard
+              - img
+          - generic [ref=e420]:
+            - img [ref=e422]
+            - heading "Alleen Geverifieerde NGO Partners" [level=3] [ref=e424]
+            - paragraph [ref=e425]: Rigoureus meerfasig screeningproces. Verificatie ter plaatse. Jaarlijkse audits. Alleen bewezen organisaties krijgen financiering.
+            - link "Bekijk Onze Partners" [ref=e426] [cursor=pointer]:
+              - /url: /partners
+              - text: Bekijk Onze Partners
+              - img
+          - generic [ref=e428]:
+            - img [ref=e430]
+            - heading "Gemeenschap Eerst, Altijd" [level=3] [ref=e432]
+            - paragraph [ref=e433]: TRIBE-leden stemmen over fondstoewijzing. Jouw stem telt. Democratisch bestuur zorgt ervoor dat macht bij de mensen blijft.
+            - link "Word Lid van TRIBE" [ref=e434] [cursor=pointer]:
+              - /url: /tribe
+              - text: Word Lid van TRIBE
+              - img
+        - generic [ref=e436]:
+          - heading "Certificeringen & Compliance" [level=3] [ref=e437]
+          - paragraph [ref=e438]: We houden onszelf aan de hoogste normen van transparantie, duurzaamheid en ethische zakenpraktijken.
+          - generic [ref=e439]:
+            - generic [ref=e440]: 🇳🇱 ANBI Status
+            - generic [ref=e441]: GDPR Compliant
+            - generic [ref=e442]: ISO 14001 (Environmental)
+            - generic [ref=e443]: B Corp Pending
+      - generic [ref=e445]:
+        - generic [ref=e446]:
+          - generic [ref=e447]: De Mensen Achter GRATIS
+          - heading "Ontmoet het Team" [level=2] [ref=e448]
+          - paragraph [ref=e449]: Gepassioneerde individuen verenigd door een missie om blijvende verandering te creëren
+        - generic [ref=e450]:
+          - generic [ref=e451]:
+            - generic [ref=e452]: 👨‍💼
+            - heading "Alex van der Berg" [level=3] [ref=e453]
+            - paragraph [ref=e454]: Oprichter & CEO
+            - paragraph [ref=e455]: Voormalig duurzaamheidsconsultant die social entrepreneur werd. Gelooft dat business een kracht voor goed kan zijn.
+            - button "Connect" [ref=e456] [cursor=pointer]:
+              - img
+              - text: Connect
+          - generic [ref=e457]:
+            - generic [ref=e458]: 👩‍💻
+            - heading "Maya Okonkwo" [level=3] [ref=e459]
+            - paragraph [ref=e460]: Hoofd Impact
+            - paragraph [ref=e461]: 10+ jaar in internationale ontwikkeling. Zorgt ervoor dat elke euro maximale positieve verandering creëert.
+            - button "Connect" [ref=e462] [cursor=pointer]:
+              - img
+              - text: Connect
+          - generic [ref=e463]:
+            - generic [ref=e464]: 👨‍🎨
+            - heading "Lucas Fernandez" [level=3] [ref=e465]
+            - paragraph [ref=e466]: Creative Director
+            - paragraph [ref=e467]: Bekroond ontwerper die doelgerichte merken tot leven brengt door gedurfde visuele storytelling.
+            - button "Connect" [ref=e468] [cursor=pointer]:
+              - img
+              - text: Connect
+          - generic [ref=e469]:
+            - generic [ref=e470]: 👩‍🔬
+            - heading "Dr. Sarah Chen" [level=3] [ref=e471]
+            - paragraph [ref=e472]: Duurzaamheidsleider
+            - paragraph [ref=e473]: Milieuwetenschapper toegewijd aan het elimineren van plastic afval en het bouwen van circulaire economie-oplossingen.
+            - button "Connect" [ref=e474] [cursor=pointer]:
+              - img
+              - text: Connect
+        - generic [ref=e476]:
+          - heading "Wil Je Onze Missie Versterken?" [level=3] [ref=e477]
+          - paragraph [ref=e478]: We zijn altijd op zoek naar gepassioneerde mensen die hun vaardigheden willen gebruiken om positieve verandering te creëren.
+          - link "Bekijk Volledig Team & Carrières" [ref=e479] [cursor=pointer]:
+            - /url: /tribe/team
+            - text: Bekijk Volledig Team & Carrières
+            - img
+      - generic [ref=e482]:
+        - generic [ref=e483]:
+          - img [ref=e485]
+          - heading "Premium Quality" [level=3] [ref=e487]
+          - paragraph [ref=e488]: Natural spring water, premium ingredients, and rigorous quality standards. Taste the difference.
+        - generic [ref=e489]:
+          - img [ref=e491]
+          - heading "Infinitely Recyclable" [level=3] [ref=e493]
+          - paragraph [ref=e494]: Aluminum bottles that can be recycled forever. Zero plastic, maximum sustainability.
+        - generic [ref=e495]:
+          - img [ref=e497]
+          - heading "Global Impact" [level=3] [ref=e499]
+          - paragraph [ref=e500]: 47 verified NGO partners across 23 countries. Your hydration funds their mission.
+      - generic [ref=e502]:
+        - heading "Ready to Make an Impact?" [level=2] [ref=e503]
+        - paragraph [ref=e504]: Start with hydration. Fund global change. Join the GRATIS movement today.
+        - generic [ref=e505]:
+          - link "Shop W.A.T.E.R" [ref=e506] [cursor=pointer]:
+            - /url: /gratis/water
+          - link "Learn Our Story" [ref=e507] [cursor=pointer]:
+            - /url: /tribe
+    - contentinfo [ref=e508]:
+      - generic [ref=e509]:
+        - generic [ref=e510]:
+          - heading "Giving" [level=3] [ref=e511]
+          - list [ref=e512]:
+            - listitem [ref=e513]:
+              - link "Corporate Giving" [ref=e514] [cursor=pointer]:
+                - /url: /giving/corporate
+            - listitem [ref=e515]:
+              - link "Honor & Memorial Gifts" [ref=e516] [cursor=pointer]:
+                - /url: /giving/honor-memorial
+            - listitem [ref=e517]:
+              - link "All Ways to Give (FAQ)" [ref=e518] [cursor=pointer]:
+                - /url: /giving/ways-to-give
+            - listitem [ref=e519]:
+              - link "Monthly Giving" [ref=e520] [cursor=pointer]:
+                - /url: /giving/monthly
+            - listitem [ref=e521]:
+              - link "Phone, Mail & Crypto Donations" [ref=e522] [cursor=pointer]:
+                - /url: /giving/other-ways
+        - generic [ref=e523]:
+          - heading "Reports" [level=3] [ref=e524]
+          - list [ref=e525]:
+            - listitem [ref=e526]:
+              - link "Policies (Financial Policies)" [ref=e527] [cursor=pointer]:
+                - /url: /reports/financial-policies
+            - listitem [ref=e528]:
+              - link "Annual Reports" [ref=e529] [cursor=pointer]:
+                - /url: /reports/annual-reports
+            - listitem [ref=e530]:
+              - link "In-Kind Valuation" [ref=e531] [cursor=pointer]:
+                - /url: /reports/in-kind-valuation
+            - listitem [ref=e532]:
+              - link "Donation Policies" [ref=e533] [cursor=pointer]:
+                - /url: /reports/donation-policies
+        - generic [ref=e534]:
+          - heading "Accreditation" [level=3] [ref=e535]
+          - list [ref=e536]:
+            - listitem [ref=e537]:
+              - link "Compliance & Licenses" [ref=e538] [cursor=pointer]:
+                - /url: /accreditation/compliance
+            - listitem [ref=e539]:
+              - link "Leadership" [ref=e540] [cursor=pointer]:
+                - /url: /accreditation/leadership
+            - listitem [ref=e541]:
+              - 'link "EIN: 95-1831116" [ref=e542] [cursor=pointer]':
+                - /url: /accreditation/ein
+            - listitem [ref=e543]:
+              - link "ANBI Status" [ref=e544] [cursor=pointer]:
+                - /url: /accreditation/anbi-status
+            - listitem [ref=e545]:
+              - link "Rating (Charity Rating)" [ref=e546] [cursor=pointer]:
+                - /url: /accreditation/charity-rating
+        - generic [ref=e547]:
+          - heading "Transparency" [level=3] [ref=e548]
+          - list [ref=e549]:
+            - listitem [ref=e550]:
+              - link "Terms of Use" [ref=e551] [cursor=pointer]:
+                - /url: /transparency/terms
+            - listitem [ref=e552]:
+              - link "Rights (Brand Protection)" [ref=e553] [cursor=pointer]:
+                - /url: /transparency/brand-protection
+            - listitem [ref=e554]:
+              - link "User Privacy (Privacy Policy)" [ref=e555] [cursor=pointer]:
+                - /url: /transparency/privacy
+            - listitem [ref=e556]:
+              - link "Tracking (Cookie Policy)" [ref=e557] [cursor=pointer]:
+                - /url: /transparency/cookies
+            - listitem [ref=e558]:
+              - link "Help (Accessibility Policy)" [ref=e559] [cursor=pointer]:
+                - /url: /transparency/accessibility
+            - listitem [ref=e560]:
+              - link "Safety (Disclaimer & Donor Privacy)" [ref=e561] [cursor=pointer]:
+                - /url: /transparency/safety
+        - generic [ref=e562]:
+          - heading "Information" [level=3] [ref=e563]
+          - list [ref=e564]:
+            - listitem [ref=e565]:
+              - link "Contact" [ref=e566] [cursor=pointer]:
+                - /url: /information/contact
+            - listitem [ref=e567]:
+              - link "Organization (NGO)" [ref=e568] [cursor=pointer]:
+                - /url: /information/organization
+            - listitem [ref=e569]:
+              - link "News" [ref=e570] [cursor=pointer]:
+                - /url: /information/news
+            - listitem [ref=e571]:
+              - link "NGO Partners" [ref=e572] [cursor=pointer]:
+                - /url: /information/ngo-partners
+            - listitem [ref=e573]:
+              - link "Employment (Careers)" [ref=e574] [cursor=pointer]:
+                - /url: /information/employment
+            - listitem [ref=e575]:
+              - link "Communications (Press & Media)" [ref=e576] [cursor=pointer]:
+                - /url: /information/press
+            - listitem [ref=e577]:
+              - link "Team (Programs)" [ref=e578] [cursor=pointer]:
+                - /url: /information/team
+        - generic [ref=e579]:
+          - heading "Social media" [level=3] [ref=e580]
+          - list [ref=e581]:
+            - listitem [ref=e582]:
+              - link "TikTok" [ref=e583] [cursor=pointer]:
+                - /url: https://tiktok.com/@gratis
+            - listitem [ref=e584]:
+              - link "Instagram" [ref=e585] [cursor=pointer]:
+                - /url: https://instagram.com/gratis
+            - listitem [ref=e586]:
+              - link "Pinterest" [ref=e587] [cursor=pointer]:
+                - /url: https://pinterest.com/gratis
+            - listitem [ref=e588]:
+              - link "Snapchat" [ref=e589] [cursor=pointer]:
+                - /url: https://snapchat.com/add/gratis
+            - listitem [ref=e590]:
+              - link "X" [ref=e591] [cursor=pointer]:
+                - /url: https://x.com/gratis
+            - listitem [ref=e592]:
+              - link "Facebook" [ref=e593] [cursor=pointer]:
+                - /url: https://facebook.com/gratis
+            - listitem [ref=e594]:
+              - link "LinkedIn" [ref=e595] [cursor=pointer]:
+                - /url: https://linkedin.com/company/gratis
+            - listitem [ref=e596]:
+              - link "YouTube" [ref=e597] [cursor=pointer]:
+                - /url: https://youtube.com/@gratis
+      - generic [ref=e600]: © 2026 G.R.A.T.I.S. Empower Change with Every Pack.
+```

@@ -22,7 +22,7 @@ test.describe('GRATIS.NGO Platform - Smoke Tests', () => {
     const authLink = page.locator('a[href*="/auth"], button:has-text("Login"), a:has-text("Login")');
     if (await authLink.count() > 0) {
       await authLink.first().click();
-      await page.waitForLoadState('networkidle');
+      await page.waitForLoadState('domcontentloaded');
 
       // Verify we're on auth-related page
       const url = page.url();
@@ -31,34 +31,30 @@ test.describe('GRATIS.NGO Platform - Smoke Tests', () => {
   });
 
   test('should load GRATIS beverage page', async ({ page }) => {
-    await page.goto('/gratis');
-    await page.waitForLoadState('networkidle');
+    await page.goto('/gratis', { waitUntil: 'commit' });
 
     // Verify page loaded
-    expect(page.url()).toContain('/gratis');
+    await expect(page).toHaveURL(/\/gratis/i);
   });
 
   test('should load water page', async ({ page }) => {
-    await page.goto('/gratis/water');
-    await page.waitForLoadState('networkidle');
+    await page.goto('/gratis/water', { waitUntil: 'commit' });
 
     // Verify page loaded
-    expect(page.url()).toContain('/water');
+    await expect(page).toHaveURL(/\/water/i);
   });
 
   test('should load impact TV page', async ({ page }) => {
-    await page.goto('/impact-tv');
-    await page.waitForLoadState('networkidle');
+    await page.goto('/impact-tv', { waitUntil: 'commit' });
 
     // Verify page loaded
-    expect(page.url()).toContain('/impact-tv');
+    await expect(page).toHaveURL(/\/impact-tv/i);
   });
 
   test('should load events page', async ({ page }) => {
-    await page.goto('/events');
-    await page.waitForLoadState('networkidle');
+    await page.goto('/events', { waitUntil: 'commit' });
 
     // Verify page loaded
-    expect(page.url()).toContain('/events');
+    await expect(page).toHaveURL(/\/events/i);
   });
 });

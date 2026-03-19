@@ -1,0 +1,543 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - generic [ref=e8]:
+      - img [ref=e10]
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - heading "🍪 We Value Your Privacy" [level=3] [ref=e14]
+          - paragraph [ref=e15]: We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences at any time.
+          - paragraph [ref=e16]:
+            - text: Learn more in our
+            - link "Cookie Policy" [ref=e17] [cursor=pointer]:
+              - /url: /legal/cookies
+            - text: and
+            - link "Privacy Policy" [ref=e18] [cursor=pointer]:
+              - /url: /legal/privacy
+            - text: .
+        - generic [ref=e19]:
+          - button "Accept All" [ref=e20] [cursor=pointer]
+          - button "Reject All" [ref=e21] [cursor=pointer]
+          - button "Manage Preferences" [ref=e22] [cursor=pointer]:
+            - img
+            - text: Manage Preferences
+      - button [ref=e23] [cursor=pointer]:
+        - img
+    - banner [ref=e24]:
+      - generic [ref=e25]:
+        - link "GRATIS - Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - img "GRATIS - Home" [ref=e27]
+        - navigation [ref=e28]:
+          - menubar [ref=e29]:
+            - button "GRATIS" [ref=e30] [cursor=pointer]:
+              - text: GRATIS
+              - img [ref=e31]
+            - button "RIG" [ref=e33] [cursor=pointer]:
+              - text: RIG
+              - img [ref=e34]
+            - menuitem "ARCANE" [ref=e36] [cursor=pointer]
+            - button "TRIBE" [ref=e37] [cursor=pointer]:
+              - text: TRIBE
+              - img [ref=e38]
+            - button "IMPACT TV" [ref=e40] [cursor=pointer]:
+              - text: IMPACT TV
+              - img [ref=e41]
+            - button "SPARK" [ref=e43] [cursor=pointer]:
+              - text: SPARK
+              - img [ref=e44]
+        - generic [ref=e46]:
+          - button "Search (⌘K)" [ref=e47] [cursor=pointer]:
+            - img
+          - button "Switch to dark mode" [ref=e48] [cursor=pointer]:
+            - img
+            - img
+            - generic [ref=e49]: Toggle theme
+          - button "Verander taal / Change language" [ref=e50] [cursor=pointer]:
+            - img
+            - generic [ref=e51]: Verander taal / Change language
+          - button [ref=e52] [cursor=pointer]:
+            - img
+          - button [ref=e53] [cursor=pointer]:
+            - img
+          - button "Sign In" [ref=e54] [cursor=pointer]
+          - link "Shop" [ref=e56] [cursor=pointer]:
+            - /url: /rig
+    - generic [ref=e59]:
+      - generic [ref=e63]:
+        - generic [ref=e64]: 100K SERIE
+        - heading "W.A.T.E.R" [level=1] [ref=e65]
+        - paragraph [ref=e66]: Bergbron • Tetrapack
+      - generic [ref=e69]:
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - img "Still - Image 1" [ref=e73]
+            - generic [ref=e74]: Limited Edition
+            - img [ref=e76]
+            - button [ref=e79] [cursor=pointer]:
+              - img [ref=e80]
+            - button [ref=e82] [cursor=pointer]:
+              - img [ref=e83]
+            - generic [ref=e86]: 1 / 2
+          - generic [ref=e87]:
+            - button "Thumbnail 1" [ref=e88] [cursor=pointer]:
+              - img "Thumbnail 1" [ref=e89]
+            - button "Thumbnail 2" [ref=e90] [cursor=pointer]:
+              - img "Thumbnail 2" [ref=e91]
+        - generic [ref=e92]:
+          - generic [ref=e93]:
+            - generic [ref=e94]:
+              - generic [ref=e95]: 100K SERIE
+              - generic [ref=e96]: Pure EDITIE
+            - heading "Still" [level=2] [ref=e97]
+            - paragraph [ref=e98]: Puur bronwater zonder poespas. Helder, fris en toewijding aan kwaliteit.
+          - generic [ref=e99]:
+            - text: Select Flavor
+            - generic [ref=e100]:
+              - button "Still Pure Still Pure & Clean" [ref=e101] [cursor=pointer]:
+                - generic [ref=e102]:
+                  - img "Still" [ref=e103]
+                  - img [ref=e107]
+                  - generic [ref=e109]: Pure
+                - generic [ref=e110]:
+                  - heading "Still" [level=4] [ref=e111]
+                  - paragraph [ref=e112]: Pure & Clean
+              - button "Mineral Mineral Mineral Natural Minerals" [ref=e113] [cursor=pointer]:
+                - generic [ref=e114]:
+                  - img "Mineral" [ref=e115]
+                  - generic [ref=e118]: Mineral
+                - generic [ref=e119]:
+                  - heading "Mineral" [level=4] [ref=e120]
+                  - paragraph [ref=e121]: Natural Minerals
+              - button "Sparkling Sparkling Sparkling Light Carbonation" [ref=e122] [cursor=pointer]:
+                - generic [ref=e123]:
+                  - img "Sparkling" [ref=e124]
+                  - generic [ref=e127]: Sparkling
+                - generic [ref=e128]:
+                  - heading "Sparkling" [level=4] [ref=e129]
+                  - paragraph [ref=e130]: Light Carbonation
+              - button "Spring Spring Spring Mountain Source" [ref=e131] [cursor=pointer]:
+                - generic [ref=e132]:
+                  - img "Spring" [ref=e133]
+                  - generic [ref=e136]: Spring
+                - generic [ref=e137]:
+                  - heading "Spring" [level=4] [ref=e138]
+                  - paragraph [ref=e139]: Mountain Source
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - img [ref=e142]
+              - text: Pack Size
+              - generic [ref=e146]: (Min. 6-Pack)
+            - generic [ref=e147]:
+              - button "6-Pack €11.94 Starter Pack" [ref=e148] [cursor=pointer]:
+                - generic [ref=e149]: 6-Pack
+                - generic [ref=e150]: €11.94
+                - generic [ref=e151]: Starter Pack
+              - button "10% OFF 12-Pack €21.49 Family Size" [ref=e152] [cursor=pointer]:
+                - generic [ref=e153]:
+                  - img [ref=e154]
+                  - text: 10% OFF
+                - generic [ref=e158]: 12-Pack
+                - generic [ref=e159]: €21.49
+                - generic [ref=e160]: Family Size
+              - button "20% OFF 24-Pack €38.99 Bulk Deal" [ref=e161] [cursor=pointer]:
+                - generic [ref=e162]:
+                  - img [ref=e163]
+                  - text: 20% OFF
+                - generic [ref=e167]: 24-Pack
+                - generic [ref=e168]: €38.99
+                - generic [ref=e169]: Bulk Deal
+            - paragraph [ref=e170]: "B2B minimum order: 6-Pack • Bulk discounts available for 50+ packs"
+          - generic [ref=e171]:
+            - generic [ref=e172]:
+              - generic [ref=e173]:
+                - paragraph [ref=e174]: Totaalprijs
+                - paragraph [ref=e175]: €11.94
+              - generic [ref=e176]:
+                - paragraph [ref=e177]: Per fles
+                - paragraph [ref=e178]: €1.99
+            - button "Toevoegen aan Winkelwagen" [ref=e179] [cursor=pointer]:
+              - img
+              - text: Toevoegen aan Winkelwagen
+            - paragraph [ref=e180]:
+              - img [ref=e181]
+              - text: key 'waterPage.goldenTicket (nl)' returned an object instead of string.
+          - generic [ref=e183]:
+            - generic [ref=e184]:
+              - img [ref=e185]
+              - paragraph [ref=e188]: 100% Puur
+            - generic [ref=e189]:
+              - img [ref=e190]
+              - paragraph [ref=e195]: Gratis Verzending 50€+
+            - generic [ref=e196]:
+              - img [ref=e197]
+              - paragraph [ref=e200]: Impact Certified
+      - generic [ref=e205]:
+        - generic [ref=e206]:
+          - img [ref=e208]
+          - generic [ref=e210]:
+            - generic [ref=e211]:
+              - heading "Golden Ticket Zoektocht" [level=3] [ref=e212]
+              - img [ref=e213]
+            - paragraph [ref=e215]: Elke 100K Serie heeft ÉÉN golden ticket verstopt onder de dop. Vind het en claim exclusieve prijzen!
+            - generic [ref=e216]:
+              - img [ref=e217]
+              - generic [ref=e221]: Prijzen zijn onder andere VIP-ervaringen, merchandise, en meer!
+        - button "Claim Prijs" [ref=e222] [cursor=pointer]:
+          - img
+          - text: Claim Prijs
+      - generic [ref=e225]:
+        - generic [ref=e226]:
+          - img [ref=e227]
+          - heading "Ontvang Elke Maand Gratis Flessen" [level=3] [ref=e230]
+          - paragraph [ref=e231]: Word lid van TRIBE om 2-10 gratis flessen per maand te claimen, bezorgd bij jou thuis. Leden stemmen ook over waar fondsen naartoe gaan en krijgen exclusieve voordelen.
+        - link "Ontdek TRIBE Lidmaatschap" [ref=e232] [cursor=pointer]:
+          - /url: /tribe
+          - button "Ontdek TRIBE Lidmaatschap" [ref=e233]:
+            - img
+            - text: Ontdek TRIBE Lidmaatschap
+      - generic [ref=e235]:
+        - heading "WATER VERANDERT ALLES" [level=2] [ref=e236]
+        - generic [ref=e237]:
+          - generic [ref=e238]:
+            - generic [ref=e239]: 💧
+            - heading "Schoon Water" [level=3] [ref=e240]
+            - paragraph [ref=e241]: Voor Iedereen
+            - paragraph [ref=e242]: Elke fles W.A.T.E.R die je koopt financiert directe toegang tot schoon drinkwater in ondervoorziene gemeenschappen.
+          - generic [ref=e243]:
+            - generic [ref=e244]: ♻️
+            - heading "Zero Plastic" [level=3] [ref=e245]
+            - paragraph [ref=e246]: 100% Duurzaam
+            - paragraph [ref=e247]: Onze tetrapacks zijn volledig recyclebaar. Geen plastic oceaanvervuiling. Geen compromis op kwaliteit.
+          - generic [ref=e248]:
+            - generic [ref=e249]: 🌍
+            - heading "Globale Impact" [level=3] [ref=e250]
+            - paragraph [ref=e251]: Lokale Actie
+            - paragraph [ref=e252]: 15+ distributiepunten in Nederland. Elke golden ticket winnaar bepaalt mee waar de volgende waterput komt.
+      - generic [ref=e254]:
+        - heading "Waarom GRATIS Water?" [level=2] [ref=e256]
+        - generic [ref=e258]:
+          - generic [ref=e259]:
+            - img [ref=e261]
+            - generic [ref=e264]:
+              - heading "Natuurlijke Bron" [level=3] [ref=e265]
+              - paragraph [ref=e266]: Afkomstig van ongerepte natuurlijke bronnen
+          - generic [ref=e267]:
+            - img [ref=e269]
+            - generic [ref=e276]:
+              - heading "100% Recyclebaar" [level=3] [ref=e277]
+              - paragraph [ref=e278]: Tetrapack verpakking, volledig recyclebaar
+          - generic [ref=e279]:
+            - img [ref=e281]
+            - generic [ref=e284]:
+              - heading "Nul Plastic" [level=3] [ref=e285]
+              - paragraph [ref=e286]: Geen plasticvervuiling, ooit
+          - generic [ref=e287]:
+            - img [ref=e289]
+            - generic [ref=e291]:
+              - heading "Financiert Schoon Water" [level=3] [ref=e292]
+              - paragraph [ref=e293]: Elke aankoop financiert toegang tot schoon water
+      - generic [ref=e296]:
+        - tablist [ref=e297]:
+          - tab "Details" [selected] [ref=e298] [cursor=pointer]:
+            - img [ref=e299]
+            - text: Details
+          - tab "Verzending" [ref=e302] [cursor=pointer]:
+            - img [ref=e303]
+            - text: Verzending
+          - tab "Impact" [ref=e308] [cursor=pointer]:
+            - img [ref=e309]
+            - text: Impact
+        - tabpanel "Details" [ref=e311]:
+          - generic [ref=e312]:
+            - heading "Product Details" [level=3] [ref=e313]
+            - paragraph [ref=e314]: GRATIS Water komt uit beschermde bergbronnen en is verpakt in innovatief Tetrapack-materiaal — de enige echt duurzame verpakking voor dranken.
+            - generic [ref=e315]:
+              - generic [ref=e316]:
+                - heading "Specificaties" [level=4] [ref=e317]:
+                  - img [ref=e318]
+                  - text: Specificaties
+                - list [ref=e321]:
+                  - listitem [ref=e322]:
+                    - generic [ref=e323]: •
+                    - generic [ref=e324]: "Bron: Natuurlijk bergbronwater"
+                  - listitem [ref=e325]:
+                    - generic [ref=e326]: •
+                    - generic [ref=e327]: "Verpakking: 100% recyclebaar Tetrapack"
+                  - listitem [ref=e328]:
+                    - generic [ref=e329]: •
+                    - generic [ref=e330]: "pH-waarde: 7.2-7.8 (neutraal)"
+                  - listitem [ref=e331]:
+                    - generic [ref=e332]: •
+                    - generic [ref=e333]: "Mineraalgehalte: Natuurlijk gebalanceerd"
+                  - listitem [ref=e334]:
+                    - generic [ref=e335]: •
+                    - generic [ref=e336]: "Houdbaarheidsdatum: 12 maanden ongeopend"
+              - generic [ref=e337]:
+                - heading "Duurzaamheid" [level=4] [ref=e338]:
+                  - img [ref=e339]
+                  - text: Duurzaamheid
+                - list [ref=e342]:
+                  - listitem [ref=e343]:
+                    - generic [ref=e344]: •
+                    - generic [ref=e345]: Tetrapack heeft 3x lagere CO2-voetafdruk dan plastic
+                  - listitem [ref=e346]:
+                    - generic [ref=e347]: •
+                    - generic [ref=e348]: 100% recyclebaar via standaard programma's
+                  - listitem [ref=e349]:
+                    - generic [ref=e350]: •
+                    - generic [ref=e351]: Geen microplastic vervuiling
+                  - listitem [ref=e352]:
+                    - generic [ref=e353]: •
+                    - generic [ref=e354]: Ondersteunt circulaire economie initiatieven
+            - generic [ref=e356]:
+              - generic [ref=e357]:
+                - img [ref=e358]
+                - text: BPA Vrij
+              - generic [ref=e360]:
+                - img [ref=e361]
+                - text: Klimaatneutraal
+              - generic [ref=e364]:
+                - img [ref=e365]
+                - text: Kwaliteit Gecertificeerd
+      - generic [ref=e370]:
+        - generic [ref=e371]:
+          - heading "Plastic Recycling Is Een Mythe" [level=2] [ref=e372]
+          - paragraph [ref=e373]: Minder dan 9% van al het ooit geproduceerde plastic is gerecycled. Daarom kozen we voor tetrapacks — ze zijn daadwerkelijk recyclebaar en hebben een 3x lagere CO2-voetafdruk dan plastic flessen.
+        - generic [ref=e374]:
+          - generic [ref=e377]:
+            - img [ref=e379]
+            - paragraph [ref=e382]: 1M+
+            - paragraph [ref=e383]: Liters Gedistribueerd
+          - generic [ref=e386]:
+            - img [ref=e388]
+            - paragraph [ref=e395]: 500K+
+            - paragraph [ref=e396]: Plastic Flessen Vermeden
+          - generic [ref=e399]:
+            - img [ref=e401]
+            - paragraph [ref=e404]: 50 Tons
+            - paragraph [ref=e405]: CO₂ Bespaard
+          - generic [ref=e408]:
+            - img [ref=e410]
+            - paragraph [ref=e413]: 25+
+            - paragraph [ref=e414]: Landen Bereikt
+        - paragraph [ref=e416]: Elke GRATIS Water die je drinkt maakt een verschil. Doe mee aan de beweging.
+      - generic [ref=e418]:
+        - generic [ref=e419]:
+          - heading "Wat Mensen Zeggen" [level=2] [ref=e420]
+          - paragraph [ref=e421]: Sluit je aan bij duizenden die de overstap hebben gemaakt
+        - generic [ref=e422]:
+          - generic [ref=e424]:
+            - img [ref=e425]
+            - generic [ref=e428]:
+              - img [ref=e429]
+              - img [ref=e431]
+              - img [ref=e433]
+              - img [ref=e435]
+              - img [ref=e437]
+            - blockquote [ref=e439]: "\"Eindelijk water dat de planeet niet kost. De tetrapack is geniaal.\""
+            - generic [ref=e440]:
+              - paragraph [ref=e441]: Sarah M.
+              - paragraph [ref=e442]: Amsterdam
+          - generic [ref=e444]:
+            - img [ref=e445]
+            - generic [ref=e448]:
+              - img [ref=e449]
+              - img [ref=e451]
+              - img [ref=e453]
+              - img [ref=e455]
+              - img [ref=e457]
+            - blockquote [ref=e459]: "\"Ik ben overgestapt van plastic flessen en heb er nooit spijt van gehad. Smaakt ook geweldig!\""
+            - generic [ref=e460]:
+              - paragraph [ref=e461]: Marcus K.
+              - paragraph [ref=e462]: Berlijn
+          - generic [ref=e464]:
+            - img [ref=e465]
+            - generic [ref=e468]:
+              - img [ref=e469]
+              - img [ref=e471]
+              - img [ref=e473]
+              - img [ref=e475]
+              - img [ref=e477]
+            - blockquote [ref=e479]: "\"Ik vind het geweldig dat elke fles helpt om schoon water te bieden aan mensen in nood.\""
+            - generic [ref=e480]:
+              - paragraph [ref=e481]: Emma L.
+              - paragraph [ref=e482]: Londen
+      - generic [ref=e484]:
+        - generic [ref=e485]:
+          - generic [ref=e486]:
+            - img [ref=e487]
+            - text: Vragen?
+          - heading "Veelgestelde Vragen" [level=2] [ref=e490]
+          - paragraph [ref=e491]: Alles wat je moet weten over GRATIS Water
+        - generic [ref=e493]:
+          - heading "Wat maakt GRATIS Water anders dan ander flessenwater?" [level=3] [ref=e495]:
+            - button "Wat maakt GRATIS Water anders dan ander flessenwater?" [ref=e496] [cursor=pointer]:
+              - text: Wat maakt GRATIS Water anders dan ander flessenwater?
+              - img [ref=e497]
+          - heading "Is Tetrapack echt beter dan plastic?" [level=3] [ref=e500]:
+            - button "Is Tetrapack echt beter dan plastic?" [ref=e501] [cursor=pointer]:
+              - text: Is Tetrapack echt beter dan plastic?
+              - img [ref=e502]
+          - heading "Hoe kan ik als TRIBE-lid gratis flessen claimen?" [level=3] [ref=e505]:
+            - button "Hoe kan ik als TRIBE-lid gratis flessen claimen?" [ref=e506] [cursor=pointer]:
+              - text: Hoe kan ik als TRIBE-lid gratis flessen claimen?
+              - img [ref=e507]
+          - heading "Waar komt het water vandaan?" [level=3] [ref=e510]:
+            - button "Waar komt het water vandaan?" [ref=e511] [cursor=pointer]:
+              - text: Waar komt het water vandaan?
+              - img [ref=e512]
+          - heading "Wat gebeurt er met mijn geld als ik GRATIS Water koop?" [level=3] [ref=e515]:
+            - button "Wat gebeurt er met mijn geld als ik GRATIS Water koop?" [ref=e516] [cursor=pointer]:
+              - text: Wat gebeurt er met mijn geld als ik GRATIS Water koop?
+              - img [ref=e517]
+      - generic [ref=e520]:
+        - generic [ref=e521]:
+          - generic [ref=e522]: 📍 Vind Gratis Water
+          - heading "DISTRIBUTIE LOCATIES" [level=2] [ref=e523]
+          - paragraph [ref=e524]: We distribueren gratis GRATIS water op grote treinstations tijdens de spitsuren. Elke fles is door adverteerders gefinancierd en 100% gratis voor jou.
+        - generic [ref=e525]:
+          - generic [ref=e526]:
+            - generic [ref=e527]: 15+
+            - generic [ref=e528]: Distributie Locaties
+            - generic [ref=e529]: Door heel Europa
+          - generic [ref=e530]:
+            - generic [ref=e531]: "0"
+            - generic [ref=e532]: Flessen Verspreid
+            - generic [ref=e533]: Sinds lancering
+          - generic [ref=e534]:
+            - generic [ref=e535]: Spitsuren
+            - generic [ref=e536]: 07:00-09:00 | 17:00-19:00
+            - generic [ref=e537]: Ma-Vr distributietijden
+    - contentinfo [ref=e538]:
+      - generic [ref=e539]:
+        - generic [ref=e540]:
+          - heading "Giving" [level=3] [ref=e541]
+          - list [ref=e542]:
+            - listitem [ref=e543]:
+              - link "Corporate Giving" [ref=e544] [cursor=pointer]:
+                - /url: /giving/corporate
+            - listitem [ref=e545]:
+              - link "Honor & Memorial Gifts" [ref=e546] [cursor=pointer]:
+                - /url: /giving/honor-memorial
+            - listitem [ref=e547]:
+              - link "All Ways to Give (FAQ)" [ref=e548] [cursor=pointer]:
+                - /url: /giving/ways-to-give
+            - listitem [ref=e549]:
+              - link "Monthly Giving" [ref=e550] [cursor=pointer]:
+                - /url: /giving/monthly
+            - listitem [ref=e551]:
+              - link "Phone, Mail & Crypto Donations" [ref=e552] [cursor=pointer]:
+                - /url: /giving/other-ways
+        - generic [ref=e553]:
+          - heading "Reports" [level=3] [ref=e554]
+          - list [ref=e555]:
+            - listitem [ref=e556]:
+              - link "Policies (Financial Policies)" [ref=e557] [cursor=pointer]:
+                - /url: /reports/financial-policies
+            - listitem [ref=e558]:
+              - link "Annual Reports" [ref=e559] [cursor=pointer]:
+                - /url: /reports/annual-reports
+            - listitem [ref=e560]:
+              - link "In-Kind Valuation" [ref=e561] [cursor=pointer]:
+                - /url: /reports/in-kind-valuation
+            - listitem [ref=e562]:
+              - link "Donation Policies" [ref=e563] [cursor=pointer]:
+                - /url: /reports/donation-policies
+        - generic [ref=e564]:
+          - heading "Accreditation" [level=3] [ref=e565]
+          - list [ref=e566]:
+            - listitem [ref=e567]:
+              - link "Compliance & Licenses" [ref=e568] [cursor=pointer]:
+                - /url: /accreditation/compliance
+            - listitem [ref=e569]:
+              - link "Leadership" [ref=e570] [cursor=pointer]:
+                - /url: /accreditation/leadership
+            - listitem [ref=e571]:
+              - 'link "EIN: 95-1831116" [ref=e572] [cursor=pointer]':
+                - /url: /accreditation/ein
+            - listitem [ref=e573]:
+              - link "ANBI Status" [ref=e574] [cursor=pointer]:
+                - /url: /accreditation/anbi-status
+            - listitem [ref=e575]:
+              - link "Rating (Charity Rating)" [ref=e576] [cursor=pointer]:
+                - /url: /accreditation/charity-rating
+        - generic [ref=e577]:
+          - heading "Transparency" [level=3] [ref=e578]
+          - list [ref=e579]:
+            - listitem [ref=e580]:
+              - link "Terms of Use" [ref=e581] [cursor=pointer]:
+                - /url: /transparency/terms
+            - listitem [ref=e582]:
+              - link "Rights (Brand Protection)" [ref=e583] [cursor=pointer]:
+                - /url: /transparency/brand-protection
+            - listitem [ref=e584]:
+              - link "User Privacy (Privacy Policy)" [ref=e585] [cursor=pointer]:
+                - /url: /transparency/privacy
+            - listitem [ref=e586]:
+              - link "Tracking (Cookie Policy)" [ref=e587] [cursor=pointer]:
+                - /url: /transparency/cookies
+            - listitem [ref=e588]:
+              - link "Help (Accessibility Policy)" [ref=e589] [cursor=pointer]:
+                - /url: /transparency/accessibility
+            - listitem [ref=e590]:
+              - link "Safety (Disclaimer & Donor Privacy)" [ref=e591] [cursor=pointer]:
+                - /url: /transparency/safety
+        - generic [ref=e592]:
+          - heading "Information" [level=3] [ref=e593]
+          - list [ref=e594]:
+            - listitem [ref=e595]:
+              - link "Contact" [ref=e596] [cursor=pointer]:
+                - /url: /information/contact
+            - listitem [ref=e597]:
+              - link "Organization (NGO)" [ref=e598] [cursor=pointer]:
+                - /url: /information/organization
+            - listitem [ref=e599]:
+              - link "News" [ref=e600] [cursor=pointer]:
+                - /url: /information/news
+            - listitem [ref=e601]:
+              - link "NGO Partners" [ref=e602] [cursor=pointer]:
+                - /url: /information/ngo-partners
+            - listitem [ref=e603]:
+              - link "Employment (Careers)" [ref=e604] [cursor=pointer]:
+                - /url: /information/employment
+            - listitem [ref=e605]:
+              - link "Communications (Press & Media)" [ref=e606] [cursor=pointer]:
+                - /url: /information/press
+            - listitem [ref=e607]:
+              - link "Team (Programs)" [ref=e608] [cursor=pointer]:
+                - /url: /information/team
+        - generic [ref=e609]:
+          - heading "Social media" [level=3] [ref=e610]
+          - list [ref=e611]:
+            - listitem [ref=e612]:
+              - link "TikTok" [ref=e613] [cursor=pointer]:
+                - /url: https://tiktok.com/@gratis
+            - listitem [ref=e614]:
+              - link "Instagram" [ref=e615] [cursor=pointer]:
+                - /url: https://instagram.com/gratis
+            - listitem [ref=e616]:
+              - link "Pinterest" [ref=e617] [cursor=pointer]:
+                - /url: https://pinterest.com/gratis
+            - listitem [ref=e618]:
+              - link "Snapchat" [ref=e619] [cursor=pointer]:
+                - /url: https://snapchat.com/add/gratis
+            - listitem [ref=e620]:
+              - link "X" [ref=e621] [cursor=pointer]:
+                - /url: https://x.com/gratis
+            - listitem [ref=e622]:
+              - link "Facebook" [ref=e623] [cursor=pointer]:
+                - /url: https://facebook.com/gratis
+            - listitem [ref=e624]:
+              - link "LinkedIn" [ref=e625] [cursor=pointer]:
+                - /url: https://linkedin.com/company/gratis
+            - listitem [ref=e626]:
+              - link "YouTube" [ref=e627] [cursor=pointer]:
+                - /url: https://youtube.com/@gratis
+      - generic [ref=e630]: © 2026 G.R.A.T.I.S. Empower Change with Every Pack.
+```

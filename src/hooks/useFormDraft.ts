@@ -99,7 +99,6 @@ export function useFormDraft<T extends Record<string, unknown>>(
     })();
 
     return () => { cancelled = true; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docId, formId]);
 
   // ── Save ─────────────────────────────────────────────────────────────────
@@ -130,7 +129,6 @@ export function useFormDraft<T extends Record<string, unknown>>(
         if (mountedRef.current) setSaving(false);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [docId, formId, lsKey],
   );
 
@@ -147,7 +145,6 @@ export function useFormDraft<T extends Record<string, unknown>>(
     } catch (err) {
       console.warn(`useFormDraft[${formId}] clear error`, err);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docId, formId, lsKey]);
 
   return { draft, saveDraft, clearDraft, lastSaved, saving, hasDraft, loadingDraft };

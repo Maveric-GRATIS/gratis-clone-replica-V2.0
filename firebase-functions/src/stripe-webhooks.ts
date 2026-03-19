@@ -11,6 +11,36 @@ import Stripe from "stripe";
 // Lazy initialize Stripe
 let stripe: Stripe | null = null;
 
+function parseMetadataJson<T>(value: string | undefined, fallback: T): T {
+  if (!value) {
+    return fallback;
+  }
+
+  try {
+    return JSON.parse(value) as T;
+  } catch (error) {
+    functions.logger.warn("Invalid JSON metadata in Stripe payload", {
+      value,
+      error,
+    });
+    return fallback;
+  }
+}
+
+function getWebhookSecret(): string {
+  const secret =
+    functions.config().stripe?.webhook_secret ||
+    process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!secret) {
+    throw new Error(
+      "Stripe webhook secret is not configured. Set stripe.webhook_secret or STRIPE_WEBHOOK_SECRET."
+    );
+  }
+
+  return secret;
+}
+
 function getStripeClient(): Stripe {
   if (!stripe) {
     const config = functions.config();
@@ -43,11 +73,11 @@ export const stripeWebhook = functions.https.onRequest(async (req, res) => {
   let event: Stripe.Event;
 
   try {
-    const webhookSecret = functions.config().stripe?.webhook_secret || process.env.STRIPE_WEBHOOK_SECRET;
+    const webhookSecret = getWebhookSecret();
     event = stripe.webhooks.constructEvent(
       req.rawBody,
       sig,
-      webhookSecret || ""
+      webhookSecret
     );
   } catch (err: any) {
     functions.logger.error("Webhook signature verification failed:", err);
@@ -194,9 +224,10 @@ async function handleDonationPurchase(
 ) {
   const db = admin.firestore();
   const amount = session.amount_total ? session.amount_total / 100 : 0;
-  const allocation = session.metadata?.allocation
-    ? JSON.parse(session.metadata.allocation)
-    : {};
+  const allocation = parseMetadataJson<Record<string, unknown>>(
+    session.metadata?.allocation,
+    {}
+  );
   const isMonthly = session.metadata?.monthly === "true";
 
   const donationData = {
@@ -227,9 +258,10 @@ async function handleDonationPurchase(
 async function handleAnonymousDonation(session: Stripe.Checkout.Session) {
   const db = admin.firestore();
   const amount = session.amount_total ? session.amount_total / 100 : 0;
-  const allocation = session.metadata?.allocation
-    ? JSON.parse(session.metadata.allocation)
-    : {};
+  const allocation = parseMetadataJson<Record<string, unknown>>(
+    session.metadata?.allocation,
+    {}
+  );
 
   await db.collection("donations").add({
     userId: "anonymous",
@@ -257,9 +289,10 @@ async function handleEventTicketPurchase(
   const eventId = session.metadata?.eventId;
   const ticketTypeId = session.metadata?.ticketTypeId;
   const quantity = parseInt(session.metadata?.quantity || "1");
-  const attendeeInfo = session.metadata?.attendeeInfo
-    ? JSON.parse(session.metadata.attendeeInfo)
-    : {};
+  const attendeeInfo = parseMetadataJson<Array<Record<string, string>>>(
+    session.metadata?.attendeeInfo,
+    []
+  );
 
   if (!eventId || !ticketTypeId) {
     functions.logger.error("Missing eventId or ticketTypeId in ticket purchase");
@@ -422,9 +455,10 @@ async function handleInvoicePaid(invoice: Stripe.Invoice) {
       const subscription = await stripe.subscriptions.retrieve(subscriptionId as string);
       if (subscription.metadata?.type === "donation") {
         const amount = invoice.amount_paid / 100;
-        const allocation = subscription.metadata?.allocation
-          ? JSON.parse(subscription.metadata.allocation)
-          : {};
+        const allocation = parseMetadataJson<Record<string, unknown>>(
+          subscription.metadata?.allocation,
+          {}
+        );
 
         await db.collection("donations").add({
           userId,

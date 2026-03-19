@@ -582,7 +582,10 @@ const AppContent = () => {
                   path="/giving/honor-memorial"
                   element={<HonorMemorialGifts />}
                 />
-                <Route path="/giving/ways-to-give" element={<AllWaysToGive />} />
+                <Route
+                  path="/giving/ways-to-give"
+                  element={<AllWaysToGive />}
+                />
                 <Route path="/giving/monthly" element={<MonthlyGiving />} />
                 <Route path="/giving/other-ways" element={<Donate />} />
                 <Route path="/spark/donate/legacy" element={<DonateNew />} />
@@ -623,7 +626,10 @@ const AppContent = () => {
                   element={<InformationPartners />}
                 />
                 <Route path="/information/employment" element={<Enlist />} />
-                <Route path="/information/press" element={<InformationPress />} />
+                <Route
+                  path="/information/press"
+                  element={<InformationPress />}
+                />
                 <Route path="/information/team" element={<Team />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/checkout" element={<Checkout />} />
@@ -1115,11 +1121,11 @@ const AppContent = () => {
                 {/* Part 10: Inventory, Tax Receipts, Integrations, White-label */}
                 <Route
                   path="/admin/inventory"
-                  element="{
-                <ProtectedRoute requireAdmin>
-                  <InventoryManagement />
-                </ProtectedRoute>
-              }"
+                  element={
+                    <ProtectedRoute requireAdmin>
+                      <InventoryManagement />
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/admin/tax-receipts"

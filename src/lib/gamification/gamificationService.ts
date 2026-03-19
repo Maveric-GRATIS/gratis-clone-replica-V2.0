@@ -243,20 +243,22 @@ export class GamificationService {
    */
   private static checkSecretBadge(badge: Badge, userStats: UserStats, data: any): boolean {
     switch (badge.id) {
-      case "night-owl":
+      case "night-owl": {
         // Donated between 2 AM and 5 AM
         const hour = new Date().getHours();
         return data?.activityType === "donation" && hour >= 2 && hour < 5;
+      }
 
       case "lucky-seven":
         // 7th donation
         return userStats.stats.totalDonations === 7;
 
-      case "anniversary":
+      case "anniversary": {
         // User account is 1 year old
         const accountAge = Date.now() - userStats.createdAt.getTime();
         const oneYear = 365 * 24 * 60 * 60 * 1000;
         return accountAge >= oneYear;
+      }
 
       default:
         return false;
@@ -363,11 +365,10 @@ export class GamificationService {
     limitCount: number = 100
   ): Promise<any[]> {
     const collectionRef = collection(db, "gamification");
-    let q;
 
     // For time-based filtering, we'd need separate collections or computed fields
     // For now, return top users by total XP
-    q = query(
+    const q = query(
       collectionRef,
       orderBy("totalXP", "desc"),
       limit(limitCount)

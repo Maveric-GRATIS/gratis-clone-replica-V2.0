@@ -47,6 +47,30 @@ const admin = __importStar(require("firebase-admin"));
 const stripe_1 = __importDefault(require("stripe"));
 // Lazy initialize Stripe
 let stripe = null;
+function parseMetadataJson(value, fallback) {
+    if (!value) {
+        return fallback;
+    }
+    try {
+        return JSON.parse(value);
+    }
+    catch (error) {
+        functions.logger.warn("Invalid JSON metadata in Stripe payload", {
+            value,
+            error,
+        });
+        return fallback;
+    }
+}
+function getWebhookSecret() {
+    var _a;
+    const secret = ((_a = functions.config().stripe) === null || _a === void 0 ? void 0 : _a.webhook_secret) ||
+        process.env.STRIPE_WEBHOOK_SECRET;
+    if (!secret) {
+        throw new Error("Stripe webhook secret is not configured. Set stripe.webhook_secret or STRIPE_WEBHOOK_SECRET.");
+    }
+    return secret;
+}
 function getStripeClient() {
     var _a;
     if (!stripe) {
@@ -65,7 +89,6 @@ function getStripeClient() {
  * Main webhook handler
  */
 exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
-    var _a;
     const stripe = getStripeClient();
     const sig = req.headers["stripe-signature"];
     if (!sig) {
@@ -75,8 +98,8 @@ exports.stripeWebhook = functions.https.onRequest(async (req, res) => {
     }
     let event;
     try {
-        const webhookSecret = ((_a = functions.config().stripe) === null || _a === void 0 ? void 0 : _a.webhook_secret) || process.env.STRIPE_WEBHOOK_SECRET;
-        event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret || "");
+        const webhookSecret = getWebhookSecret();
+        event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
     }
     catch (err) {
         functions.logger.error("Webhook signature verification failed:", err);
@@ -194,9 +217,7 @@ async function handleDonationPurchase(userId, session) {
     var _a, _b;
     const db = admin.firestore();
     const amount = session.amount_total ? session.amount_total / 100 : 0;
-    const allocation = ((_a = session.metadata) === null || _a === void 0 ? void 0 : _a.allocation)
-        ? JSON.parse(session.metadata.allocation)
-        : {};
+    const allocation = parseMetadataJson((_a = session.metadata) === null || _a === void 0 ? void 0 : _a.allocation, {});
     const isMonthly = ((_b = session.metadata) === null || _b === void 0 ? void 0 : _b.monthly) === "true";
     const donationData = {
         userId,
@@ -223,9 +244,7 @@ async function handleAnonymousDonation(session) {
     var _a, _b, _c;
     const db = admin.firestore();
     const amount = session.amount_total ? session.amount_total / 100 : 0;
-    const allocation = ((_a = session.metadata) === null || _a === void 0 ? void 0 : _a.allocation)
-        ? JSON.parse(session.metadata.allocation)
-        : {};
+    const allocation = parseMetadataJson((_a = session.metadata) === null || _a === void 0 ? void 0 : _a.allocation, {});
     await db.collection("donations").add({
         userId: "anonymous",
         email: ((_b = session.customer_details) === null || _b === void 0 ? void 0 : _b.email) || null,
@@ -248,9 +267,7 @@ async function handleEventTicketPurchase(userId, session) {
     const eventId = (_a = session.metadata) === null || _a === void 0 ? void 0 : _a.eventId;
     const ticketTypeId = (_b = session.metadata) === null || _b === void 0 ? void 0 : _b.ticketTypeId;
     const quantity = parseInt(((_c = session.metadata) === null || _c === void 0 ? void 0 : _c.quantity) || "1");
-    const attendeeInfo = ((_d = session.metadata) === null || _d === void 0 ? void 0 : _d.attendeeInfo)
-        ? JSON.parse(session.metadata.attendeeInfo)
-        : {};
+    const attendeeInfo = parseMetadataJson((_d = session.metadata) === null || _d === void 0 ? void 0 : _d.attendeeInfo, []);
     if (!eventId || !ticketTypeId) {
         functions.logger.error("Missing eventId or ticketTypeId in ticket purchase");
         return;
@@ -380,9 +397,7 @@ async function handleInvoicePaid(invoice) {
             const subscription = await stripe.subscriptions.retrieve(subscriptionId);
             if (((_a = subscription.metadata) === null || _a === void 0 ? void 0 : _a.type) === "donation") {
                 const amount = invoice.amount_paid / 100;
-                const allocation = ((_b = subscription.metadata) === null || _b === void 0 ? void 0 : _b.allocation)
-                    ? JSON.parse(subscription.metadata.allocation)
-                    : {};
+                const allocation = parseMetadataJson((_b = subscription.metadata) === null || _b === void 0 ? void 0 : _b.allocation, {});
                 await db.collection("donations").add({
                     userId,
                     amount,

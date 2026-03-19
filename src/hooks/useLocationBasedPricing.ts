@@ -3,7 +3,7 @@
  * Uses React Query for caching and data fetching
  */
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useQueries } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 import {
   fetchLocationPrice,
@@ -151,16 +151,65 @@ export function useLocationBasedPricingBatch(
   userIp?: string,
   enabled = true,
 ) {
-  const results = productIds.map((productId) =>
-    useLocationBasedPricing(productId, userIp, enabled),
-  );
+  const queryClient = useQueryClient();
+
+  const results = useQueries({
+    queries: productIds.map((productId) => ({
+      queryKey: ['location-price-batch', productId, userIp],
+      queryFn: async () => {
+        const response = await fetchLocationPrice(productId, userIp);
+        return {
+          productId,
+          currency: response.currency as Currency,
+          stripePriceId: response.stripePriceId,
+          amount: response.amount,
+          displayPrice: response.displayPrice,
+          country: 'Unknown',
+          loading: false,
+          error: null,
+          refetch: () => {
+            queryClient.invalidateQueries({
+              queryKey: ['location-price-batch', productId],
+            });
+          },
+        } as LocationPricingData;
+      },
+      enabled,
+      staleTime: 1000 * 60 * 30,
+      gcTime: 1000 * 60 * 60,
+    })),
+  });
+
+  const prices = results.map((result, index) => {
+    if (result.data) {
+      return result.data;
+    }
+
+    return {
+      productId: productIds[index],
+      currency: 'EUR' as Currency,
+      stripePriceId: '',
+      amount: 0,
+      displayPrice: 0,
+      country: 'Unknown',
+      loading: result.isLoading,
+      error: (result.error as Error | null) ?? null,
+      refetch: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['location-price-batch', productIds[index]],
+        });
+      },
+    } as LocationPricingData;
+  });
 
   // Calculate aggregate loading and error states
-  const isLoading = results.some((r) => r.loading);
-  const errors = results.filter((r) => r.error).map((r) => r.error);
+  const isLoading = results.some((r) => r.isLoading);
+  const errors = results
+    .map((r) => (r.error as Error | null) ?? null)
+    .filter((error): error is Error => error !== null);
 
   return {
-    prices: results,
+    prices,
     isLoading,
     hasErrors: errors.length > 0,
     errors,

@@ -48,7 +48,7 @@ async function detectCountryFromIp(
       : `https://ipapi.co/json/`;
 
     const response = await fetch(url, {
-      timeout: 5000, // 5 second timeout
+      signal: AbortSignal.timeout(5000), // 5 second timeout
     });
 
     if (!response.ok) {

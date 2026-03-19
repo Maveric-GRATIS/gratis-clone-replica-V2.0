@@ -198,7 +198,7 @@ export function PartnerApplicationForm() {
           return false;
         }
         break;
-      case 6:
+      case 6: {
         const validRefs = formData.references?.filter(
           (ref) => ref.name && ref.organization && ref.email,
         );
@@ -207,6 +207,7 @@ export function PartnerApplicationForm() {
           return false;
         }
         break;
+      }
       case 7:
         if (
           !formData.partnershipGoals ||

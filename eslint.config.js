@@ -12,6 +12,7 @@ export default tseslint.config(
       "scripts/**",
       "test/**",
       "e2e/**",
+      "temp.tsx",
       "*.config.js",
       "*.config.ts"
     ]

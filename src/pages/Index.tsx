@@ -71,8 +71,8 @@ export default function Index() {
       {/* ===== HERO SECTION ===== */}
       <section
         ref={heroRef}
-        className="relative w-full overflow-hidden bg-black flex items-center"
-        style={{ minHeight: "80vh", maxHeight: "1000px" }}
+        className="relative w-full overflow-hidden bg-black flex items-center min-h-screen"
+        style={{ minHeight: "100svh" }}
       >
         {/* Background images */}
         {heroImages.map((img, i) => (
@@ -83,8 +83,8 @@ export default function Index() {
             aria-hidden="true"
             className="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out pointer-events-none select-none"
             style={{
-              objectFit: "cover",
-              objectPosition: "center 15%",
+              objectFit: "contain",
+              objectPosition: "center",
               opacity: i === heroImageIndex ? 1 : 0,
             }}
           />

@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import gratisMcdonalds from "@/assets/gratis-mcdonalds.jpg";
+import gratisAmsterdamCanal from "@/assets/gratis-amsterdam-canal.jpg";
 
 export default function Index() {
   const { t } = useTranslation();
@@ -45,6 +47,8 @@ export default function Index() {
   const isInView = useInView(pillarsRef, { once: true, margin: "-100px" });
 
   const heroImages = [
+    gratisMcdonalds,
+    gratisAmsterdamCanal,
     "/lovable-uploads/gratis-colorblock-squad.jpg",
     "/lovable-uploads/gratis-canal-collection.jpg",
     "/lovable-uploads/gratis-street-duo.jpg",
@@ -81,7 +85,7 @@ export default function Index() {
             src={img}
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out pointer-events-none select-none"
+            className="absolute inset-0 m-auto w-auto h-auto max-w-[92%] max-h-[88%] transition-opacity duration-1000 ease-in-out pointer-events-none select-none"
             style={{
               objectFit: "contain",
               objectPosition: "center",

@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const SERVICE_ACCOUNT_PATH = path.join(__dirname, 'service-account.json');
+const SERVICE_ACCOUNT_PATH = path.join(__dirname, 'service-account.local.json');
 
 // Colors for console output
 const colors = {
@@ -29,19 +29,31 @@ function log(message: string, color: string = colors.reset) {
 
 async function checkDatabase() {
   try {
-    // Check if service account exists
-    if (!fs.existsSync(SERVICE_ACCOUNT_PATH)) {
-      log('\n❌ Service account key not found!', colors.red);
-      log('\nFollow these steps:', colors.yellow);
-      log('1. Go to: https://console.firebase.google.com/project/gratis-ngo-7bb44/settings/serviceaccounts/adminsdk');
-      log('2. Click "Generate New Private Key"');
-      log('3. Save as: scripts/service-account.json');
-      log('4. Run this script again\n');
+    // Initialize Firebase Admin from local file or environment variables
+    let serviceAccount: Record<string, string> | null = null;
+
+    if (fs.existsSync(SERVICE_ACCOUNT_PATH)) {
+      serviceAccount = JSON.parse(fs.readFileSync(SERVICE_ACCOUNT_PATH, 'utf8'));
+    } else if (
+      process.env.FIREBASE_ADMIN_PROJECT_ID
+      && process.env.FIREBASE_ADMIN_CLIENT_EMAIL
+      && process.env.FIREBASE_ADMIN_PRIVATE_KEY
+    ) {
+      serviceAccount = {
+        project_id: process.env.FIREBASE_ADMIN_PROJECT_ID,
+        client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+        private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      };
+    }
+
+    if (!serviceAccount) {
+      log('\n❌ Service account credentials not found!', colors.red);
+      log('\nUse one of these options:', colors.yellow);
+      log('1. Create scripts/service-account.local.json (ignored by git)');
+      log('2. Set env vars FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL, FIREBASE_ADMIN_PRIVATE_KEY\n');
       process.exit(1);
     }
 
-    // Initialize Firebase Admin
-    const serviceAccount = JSON.parse(fs.readFileSync(SERVICE_ACCOUNT_PATH, 'utf8'));
     initializeApp({
       credential: cert(serviceAccount),
     });

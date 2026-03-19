@@ -19,14 +19,31 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Initialize Firebase Admin
-const serviceAccountPath = path.join(__dirname, "service-account.json");
-let serviceAccount;
+const serviceAccountPath = path.join(__dirname, "service-account.local.json");
+let serviceAccount: Record<string, string> | null = null;
 
 try {
-  const fileContent = fs.readFileSync(serviceAccountPath, 'utf8');
-  serviceAccount = JSON.parse(fileContent);
+  if (fs.existsSync(serviceAccountPath)) {
+    const fileContent = fs.readFileSync(serviceAccountPath, 'utf8');
+    serviceAccount = JSON.parse(fileContent);
+  } else if (
+    process.env.FIREBASE_ADMIN_PROJECT_ID
+    && process.env.FIREBASE_ADMIN_CLIENT_EMAIL
+    && process.env.FIREBASE_ADMIN_PRIVATE_KEY
+  ) {
+    serviceAccount = {
+      project_id: process.env.FIREBASE_ADMIN_PROJECT_ID,
+      client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    };
+  }
 } catch {
-  console.error("⚠️  service-account.json not found. Please download from Firebase Console.");
+  serviceAccount = null;
+}
+
+if (!serviceAccount) {
+  console.error("⚠️  Service account credentials not found.");
+  console.error("Use scripts/service-account.local.json or env vars FIREBASE_ADMIN_PROJECT_ID/FIREBASE_ADMIN_CLIENT_EMAIL/FIREBASE_ADMIN_PRIVATE_KEY.");
   process.exit(1);
 }
 

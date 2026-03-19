@@ -27,7 +27,7 @@ firebase deploy --only storage
 
 1. Ga naar [Firebase Console](https://console.firebase.google.com/project/gratis-ngo-7bb44/settings/serviceaccounts/adminsdk)
 2. Klik op **Generate New Private Key**
-3. Sla het bestand op als: `scripts/service-account.json`
+3. Sla het bestand op als: `scripts/service-account.local.json`
 
 ### B. Run Seeding Script
 
@@ -146,7 +146,7 @@ Met je Blaze plan heb je:
 
 ## 🔒 Security Best Practices
 
-1. **Never commit** `service-account.json` (already in .gitignore)
+1. **Never commit** service-account keys (`service-account.local.json` is already in .gitignore)
 2. **Review Firestore rules** before production
 3. **Enable App Check** voor extra beveiliging
 4. **Monitor usage** in Firebase Console

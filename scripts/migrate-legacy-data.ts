@@ -1,7 +1,7 @@
 /**
  * Database Migration Script
  * Migrate legacy data to new Firestore structure
- * 
+ *
  * Usage: npx tsx scripts/migrate-legacy-data.ts
  */
 
@@ -10,7 +10,28 @@ import * as fs from "fs";
 import * as path from "path";
 
 // Initialize Firebase Admin
-const serviceAccount = require("./service-account.json");
+const serviceAccountPath = path.join(process.cwd(), "scripts", "service-account.local.json");
+let serviceAccount: Record<string, string> | null = null;
+
+if (fs.existsSync(serviceAccountPath)) {
+  serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+} else if (
+  process.env.FIREBASE_ADMIN_PROJECT_ID
+  && process.env.FIREBASE_ADMIN_CLIENT_EMAIL
+  && process.env.FIREBASE_ADMIN_PRIVATE_KEY
+) {
+  serviceAccount = {
+    project_id: process.env.FIREBASE_ADMIN_PROJECT_ID,
+    client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+    private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, "\n"),
+  };
+}
+
+if (!serviceAccount) {
+  console.error("❌ Could not load service account credentials.");
+  console.error("Use scripts/service-account.local.json or env vars FIREBASE_ADMIN_PROJECT_ID/FIREBASE_ADMIN_CLIENT_EMAIL/FIREBASE_ADMIN_PRIVATE_KEY");
+  process.exit(1);
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -45,7 +66,7 @@ async function migrateLegacyUsers() {
 
   // Read legacy data from CSV or JSON
   const legacyDataPath = path.join(__dirname, "../data/legacy-users.json");
-  
+
   if (!fs.existsSync(legacyDataPath)) {
     console.log("⚠️ No legacy data file found. Creating sample...");
     return;
@@ -107,7 +128,7 @@ async function migrateLegacyDonations() {
 
   // Similar structure for donations
   const legacyDataPath = path.join(__dirname, "../data/legacy-donations.json");
-  
+
   if (!fs.existsSync(legacyDataPath)) {
     console.log("⚠️ No legacy donation data found.");
     return;
@@ -122,7 +143,7 @@ async function migrateLegacyProjects() {
 
   // Similar structure for projects
   const legacyDataPath = path.join(__dirname, "../data/legacy-projects.json");
-  
+
   if (!fs.existsSync(legacyDataPath)) {
     console.log("⚠️ No legacy project data found.");
     return;
@@ -134,10 +155,10 @@ async function migrateLegacyProjects() {
 
 async function createBackup() {
   console.log("\n💾 Creating backup before migration...");
-  
+
   const collections = ["users", "donations", "projects", "orders"];
   const backupDir = path.join(__dirname, "../backups", new Date().toISOString());
-  
+
   if (!fs.existsSync(backupDir)) {
     fs.mkdirSync(backupDir, { recursive: true });
   }
@@ -145,25 +166,25 @@ async function createBackup() {
   for (const collectionName of collections) {
     const snapshot = await db.collection(collectionName).get();
     const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    
+
     fs.writeFileSync(
       path.join(backupDir, `${collectionName}.json`),
       JSON.stringify(data, null, 2)
     );
-    
+
     console.log(`✅ Backed up ${collectionName}: ${data.length} documents`);
   }
-  
+
   console.log(`✅ Backup saved to: ${backupDir}`);
 }
 
 async function verifyMigration() {
   console.log("\n🔍 Verifying migration...");
-  
+
   const usersCount = (await db.collection("users").get()).size;
   const donationsCount = (await db.collection("donations").get()).size;
   const projectsCount = (await db.collection("projects").get()).size;
-  
+
   console.log(`\n📈 Current database state:`);
   console.log(`   Users: ${usersCount}`);
   console.log(`   Donations: ${donationsCount}`);

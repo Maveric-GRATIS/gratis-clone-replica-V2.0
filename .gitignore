@@ -18,6 +18,10 @@ dist-ssr
 .env.*.local
 .env.production
 
+# Local GCP/Firebase service account keys (never commit)
+scripts/service-account*.json
+!scripts/service-account.example.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

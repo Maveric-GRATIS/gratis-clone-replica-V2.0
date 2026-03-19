@@ -7,22 +7,38 @@ import * as fs from 'fs';
 // Initialize Firebase Admin SDK
 // You need to download the service account key from Firebase Console
 // Go to: Project Settings > Service Accounts > Generate New Private Key
-// Save as service-account.json in the scripts folder
+// Save as service-account.local.json in the scripts folder (gitignored)
 
 try {
-  const serviceAccountPath = path.join(process.cwd(), 'scripts', 'service-account.json');
+  const serviceAccountPath = path.join(process.cwd(), 'scripts', 'service-account.local.json');
   console.log(`Looking for service account at: ${serviceAccountPath}`);
-  const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+  let serviceAccount: any;
+
+  if (fs.existsSync(serviceAccountPath)) {
+    serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+  } else if (
+    process.env.FIREBASE_ADMIN_PROJECT_ID
+    && process.env.FIREBASE_ADMIN_CLIENT_EMAIL
+    && process.env.FIREBASE_ADMIN_PRIVATE_KEY
+  ) {
+    serviceAccount = {
+      project_id: process.env.FIREBASE_ADMIN_PROJECT_ID,
+      client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    };
+  } else {
+    throw new Error('Missing credentials');
+  }
 
   initializeApp({
     credential: cert(serviceAccount)
   });
 } catch (error) {
   console.error('❌ Could not load service account credentials.');
-  console.error('Please download service-account.json from Firebase Console:');
+  console.error('Use scripts/service-account.local.json or env vars FIREBASE_ADMIN_PROJECT_ID/FIREBASE_ADMIN_CLIENT_EMAIL/FIREBASE_ADMIN_PRIVATE_KEY');
   console.error('1. Go to https://console.firebase.google.com/project/gratis-ngo-7bb44/settings/serviceaccounts/adminsdk');
   console.error('2. Click "Generate New Private Key"');
-  console.error('3. Save as scripts/service-account.json');
+  console.error('3. Save as scripts/service-account.local.json');
   process.exit(1);
 }
 

@@ -19,14 +19,30 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
 // ── Firebase Admin init (same pattern as seed-database.ts) ──────────────────
-const serviceAccountPath = path.join(__dirname, "service-account.json");
+const serviceAccountPath = path.join(__dirname, "service-account.local.json");
 
-let serviceAccount: object;
+let serviceAccount: object | null = null;
 try {
-  serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+  if (fs.existsSync(serviceAccountPath)) {
+    serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
+  } else if (
+    process.env.FIREBASE_ADMIN_PROJECT_ID
+    && process.env.FIREBASE_ADMIN_CLIENT_EMAIL
+    && process.env.FIREBASE_ADMIN_PRIVATE_KEY
+  ) {
+    serviceAccount = {
+      project_id: process.env.FIREBASE_ADMIN_PROJECT_ID,
+      client_email: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
+      private_key: process.env.FIREBASE_ADMIN_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    };
+  }
+
+  if (!serviceAccount) {
+    throw new Error("Missing credentials");
+  }
 } catch {
-  console.error("❌  service-account.json not found in scripts/");
-  console.error("    Download it from Firebase Console → Project settings → Service accounts");
+  console.error("❌  service-account credentials not found");
+  console.error("    Use scripts/service-account.local.json or env vars FIREBASE_ADMIN_PROJECT_ID/FIREBASE_ADMIN_CLIENT_EMAIL/FIREBASE_ADMIN_PRIVATE_KEY");
   process.exit(1);
 }
 

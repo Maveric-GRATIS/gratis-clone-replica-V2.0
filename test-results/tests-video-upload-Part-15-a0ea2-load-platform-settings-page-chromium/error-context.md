@@ -1,0 +1,221 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - generic [ref=e8]:
+      - img [ref=e10]
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - heading "🍪 We Value Your Privacy" [level=3] [ref=e14]
+          - paragraph [ref=e15]: We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences at any time.
+          - paragraph [ref=e16]:
+            - text: Learn more in our
+            - link "Cookie Policy" [ref=e17] [cursor=pointer]:
+              - /url: /legal/cookies
+            - text: and
+            - link "Privacy Policy" [ref=e18] [cursor=pointer]:
+              - /url: /legal/privacy
+            - text: .
+        - generic [ref=e19]:
+          - button "Accept All" [ref=e20] [cursor=pointer]
+          - button "Reject All" [ref=e21] [cursor=pointer]
+          - button "Manage Preferences" [ref=e22] [cursor=pointer]:
+            - img
+            - text: Manage Preferences
+      - button [ref=e23] [cursor=pointer]:
+        - img
+    - banner [ref=e24]:
+      - generic [ref=e25]:
+        - link "GRATIS - Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - img "GRATIS - Home" [ref=e27]
+        - navigation [ref=e28]:
+          - menubar [ref=e29]:
+            - button "GRATIS" [ref=e30] [cursor=pointer]:
+              - text: GRATIS
+              - img [ref=e31]
+            - button "RIG" [ref=e33] [cursor=pointer]:
+              - text: RIG
+              - img [ref=e34]
+            - menuitem "ARCANE" [ref=e36] [cursor=pointer]
+            - button "TRIBE" [ref=e37] [cursor=pointer]:
+              - text: TRIBE
+              - img [ref=e38]
+            - button "IMPACT TV" [ref=e40] [cursor=pointer]:
+              - text: IMPACT TV
+              - img [ref=e41]
+            - button "SPARK" [ref=e43] [cursor=pointer]:
+              - text: SPARK
+              - img [ref=e44]
+        - generic [ref=e46]:
+          - button "Search (⌘K)" [ref=e47] [cursor=pointer]:
+            - img
+          - button "Switch to dark mode" [ref=e48] [cursor=pointer]:
+            - img
+            - img
+            - generic [ref=e49]: Toggle theme
+          - button "Verander taal / Change language" [ref=e50] [cursor=pointer]:
+            - img
+            - generic [ref=e51]: Verander taal / Change language
+          - button [ref=e52] [cursor=pointer]:
+            - img
+          - button [ref=e53] [cursor=pointer]:
+            - img
+          - button "Sign In" [ref=e54] [cursor=pointer]
+          - link "Shop" [ref=e56] [cursor=pointer]:
+            - /url: /rig
+    - generic [ref=e60]:
+      - generic [ref=e61]:
+        - heading "GRATIS" [level=1] [ref=e62]
+        - paragraph [ref=e63]: Welcome to the future of hydration
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - heading "Get Started" [level=3] [ref=e66]
+          - paragraph [ref=e67]: Sign in to your account or create a new one
+        - generic [ref=e69]:
+          - tablist [ref=e70]:
+            - tab "Sign In" [selected] [ref=e71] [cursor=pointer]
+            - tab "Sign Up" [ref=e72] [cursor=pointer]
+          - tabpanel "Sign In" [ref=e73]:
+            - generic [ref=e74]:
+              - generic [ref=e75]:
+                - text: Email
+                - textbox "Email" [ref=e76]:
+                  - /placeholder: Enter your email
+              - generic [ref=e77]:
+                - text: Password
+                - textbox "Password" [ref=e78]:
+                  - /placeholder: Enter your password
+              - button "Sign In" [ref=e79] [cursor=pointer]
+      - paragraph [ref=e81]: By signing up, you agree to our terms of service and privacy policy.
+    - contentinfo [ref=e82]:
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - heading "Giving" [level=3] [ref=e85]
+          - list [ref=e86]:
+            - listitem [ref=e87]:
+              - link "Corporate Giving" [ref=e88] [cursor=pointer]:
+                - /url: /giving/corporate
+            - listitem [ref=e89]:
+              - link "Honor & Memorial Gifts" [ref=e90] [cursor=pointer]:
+                - /url: /giving/honor-memorial
+            - listitem [ref=e91]:
+              - link "All Ways to Give (FAQ)" [ref=e92] [cursor=pointer]:
+                - /url: /giving/ways-to-give
+            - listitem [ref=e93]:
+              - link "Monthly Giving" [ref=e94] [cursor=pointer]:
+                - /url: /giving/monthly
+            - listitem [ref=e95]:
+              - link "Phone, Mail & Crypto Donations" [ref=e96] [cursor=pointer]:
+                - /url: /giving/other-ways
+        - generic [ref=e97]:
+          - heading "Reports" [level=3] [ref=e98]
+          - list [ref=e99]:
+            - listitem [ref=e100]:
+              - link "Policies (Financial Policies)" [ref=e101] [cursor=pointer]:
+                - /url: /reports/financial-policies
+            - listitem [ref=e102]:
+              - link "Annual Reports" [ref=e103] [cursor=pointer]:
+                - /url: /reports/annual-reports
+            - listitem [ref=e104]:
+              - link "In-Kind Valuation" [ref=e105] [cursor=pointer]:
+                - /url: /reports/in-kind-valuation
+            - listitem [ref=e106]:
+              - link "Donation Policies" [ref=e107] [cursor=pointer]:
+                - /url: /reports/donation-policies
+        - generic [ref=e108]:
+          - heading "Accreditation" [level=3] [ref=e109]
+          - list [ref=e110]:
+            - listitem [ref=e111]:
+              - link "Compliance & Licenses" [ref=e112] [cursor=pointer]:
+                - /url: /accreditation/compliance
+            - listitem [ref=e113]:
+              - link "Leadership" [ref=e114] [cursor=pointer]:
+                - /url: /accreditation/leadership
+            - listitem [ref=e115]:
+              - 'link "EIN: 95-1831116" [ref=e116] [cursor=pointer]':
+                - /url: /accreditation/ein
+            - listitem [ref=e117]:
+              - link "ANBI Status" [ref=e118] [cursor=pointer]:
+                - /url: /accreditation/anbi-status
+            - listitem [ref=e119]:
+              - link "Rating (Charity Rating)" [ref=e120] [cursor=pointer]:
+                - /url: /accreditation/charity-rating
+        - generic [ref=e121]:
+          - heading "Transparency" [level=3] [ref=e122]
+          - list [ref=e123]:
+            - listitem [ref=e124]:
+              - link "Terms of Use" [ref=e125] [cursor=pointer]:
+                - /url: /transparency/terms
+            - listitem [ref=e126]:
+              - link "Rights (Brand Protection)" [ref=e127] [cursor=pointer]:
+                - /url: /transparency/brand-protection
+            - listitem [ref=e128]:
+              - link "User Privacy (Privacy Policy)" [ref=e129] [cursor=pointer]:
+                - /url: /transparency/privacy
+            - listitem [ref=e130]:
+              - link "Tracking (Cookie Policy)" [ref=e131] [cursor=pointer]:
+                - /url: /transparency/cookies
+            - listitem [ref=e132]:
+              - link "Help (Accessibility Policy)" [ref=e133] [cursor=pointer]:
+                - /url: /transparency/accessibility
+            - listitem [ref=e134]:
+              - link "Safety (Disclaimer & Donor Privacy)" [ref=e135] [cursor=pointer]:
+                - /url: /transparency/safety
+        - generic [ref=e136]:
+          - heading "Information" [level=3] [ref=e137]
+          - list [ref=e138]:
+            - listitem [ref=e139]:
+              - link "Contact" [ref=e140] [cursor=pointer]:
+                - /url: /information/contact
+            - listitem [ref=e141]:
+              - link "Organization (NGO)" [ref=e142] [cursor=pointer]:
+                - /url: /information/organization
+            - listitem [ref=e143]:
+              - link "News" [ref=e144] [cursor=pointer]:
+                - /url: /information/news
+            - listitem [ref=e145]:
+              - link "NGO Partners" [ref=e146] [cursor=pointer]:
+                - /url: /information/ngo-partners
+            - listitem [ref=e147]:
+              - link "Employment (Careers)" [ref=e148] [cursor=pointer]:
+                - /url: /information/employment
+            - listitem [ref=e149]:
+              - link "Communications (Press & Media)" [ref=e150] [cursor=pointer]:
+                - /url: /information/press
+            - listitem [ref=e151]:
+              - link "Team (Programs)" [ref=e152] [cursor=pointer]:
+                - /url: /information/team
+        - generic [ref=e153]:
+          - heading "Social media" [level=3] [ref=e154]
+          - list [ref=e155]:
+            - listitem [ref=e156]:
+              - link "TikTok" [ref=e157] [cursor=pointer]:
+                - /url: https://tiktok.com/@gratis
+            - listitem [ref=e158]:
+              - link "Instagram" [ref=e159] [cursor=pointer]:
+                - /url: https://instagram.com/gratis
+            - listitem [ref=e160]:
+              - link "Pinterest" [ref=e161] [cursor=pointer]:
+                - /url: https://pinterest.com/gratis
+            - listitem [ref=e162]:
+              - link "Snapchat" [ref=e163] [cursor=pointer]:
+                - /url: https://snapchat.com/add/gratis
+            - listitem [ref=e164]:
+              - link "X" [ref=e165] [cursor=pointer]:
+                - /url: https://x.com/gratis
+            - listitem [ref=e166]:
+              - link "Facebook" [ref=e167] [cursor=pointer]:
+                - /url: https://facebook.com/gratis
+            - listitem [ref=e168]:
+              - link "LinkedIn" [ref=e169] [cursor=pointer]:
+                - /url: https://linkedin.com/company/gratis
+            - listitem [ref=e170]:
+              - link "YouTube" [ref=e171] [cursor=pointer]:
+                - /url: https://youtube.com/@gratis
+      - generic [ref=e174]: © 2026 G.R.A.T.I.S. Empower Change with Every Pack.
+```

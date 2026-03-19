@@ -1,0 +1,545 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - generic [ref=e8]:
+      - img [ref=e10]
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - heading "🍪 We Value Your Privacy" [level=3] [ref=e14]
+          - paragraph [ref=e15]: We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences at any time.
+          - paragraph [ref=e16]:
+            - text: Learn more in our
+            - link "Cookie Policy" [ref=e17] [cursor=pointer]:
+              - /url: /legal/cookies
+            - text: and
+            - link "Privacy Policy" [ref=e18] [cursor=pointer]:
+              - /url: /legal/privacy
+            - text: .
+        - generic [ref=e19]:
+          - button "Accept All" [ref=e20] [cursor=pointer]
+          - button "Reject All" [ref=e21] [cursor=pointer]
+          - button "Manage Preferences" [ref=e22] [cursor=pointer]:
+            - img
+            - text: Manage Preferences
+      - button [ref=e23] [cursor=pointer]:
+        - img
+    - banner [ref=e24]:
+      - generic [ref=e25]:
+        - link "GRATIS - Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - img "GRATIS - Home" [ref=e27]
+        - navigation [ref=e28]:
+          - menubar [ref=e29]:
+            - button "GRATIS" [ref=e30] [cursor=pointer]:
+              - text: GRATIS
+              - img [ref=e31]
+            - button "RIG" [ref=e33] [cursor=pointer]:
+              - text: RIG
+              - img [ref=e34]
+            - menuitem "ARCANE" [ref=e36] [cursor=pointer]
+            - button "TRIBE" [ref=e37] [cursor=pointer]:
+              - text: TRIBE
+              - img [ref=e38]
+            - button "IMPACT TV" [ref=e40] [cursor=pointer]:
+              - text: IMPACT TV
+              - img [ref=e41]
+            - button "SPARK" [ref=e43] [cursor=pointer]:
+              - text: SPARK
+              - img [ref=e44]
+        - generic [ref=e46]:
+          - button "Search (⌘K)" [ref=e47] [cursor=pointer]:
+            - img
+          - button "Switch to dark mode" [ref=e48] [cursor=pointer]:
+            - img
+            - img
+            - generic [ref=e49]: Toggle theme
+          - button "Verander taal / Change language" [ref=e50] [cursor=pointer]:
+            - img
+            - generic [ref=e51]: Verander taal / Change language
+          - button [ref=e52] [cursor=pointer]:
+            - img
+          - button [ref=e53] [cursor=pointer]:
+            - img
+          - button "Sign In" [ref=e54] [cursor=pointer]
+          - link "Shop" [ref=e56] [cursor=pointer]:
+            - /url: /rig
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - img
+        - img
+        - img
+        - img
+        - img
+        - generic [ref=e63]:
+          - heading "Pure Power, Pure Purpose" [level=1] [ref=e64]:
+            - generic [ref=e65]: Pure Power,
+            - generic [ref=e66]: Pure Purpose
+          - paragraph [ref=e67]: From mountain springs to your hands — in 100% recyclable tetrapacks.
+          - generic [ref=e68]:
+            - link "Drink with Purpose" [ref=e69] [cursor=pointer]:
+              - /url: /hydration
+            - link "Learn More" [ref=e70] [cursor=pointer]:
+              - /url: /gratis
+        - img [ref=e72]
+      - main [ref=e74]:
+        - generic [ref=e76]:
+          - heading "DORST KENT GEEN GRENZEN" [level=2] [ref=e78]
+          - generic [ref=e79]:
+            - button "Previous slide" [ref=e80] [cursor=pointer]:
+              - img [ref=e81]
+            - button "Next slide" [ref=e83] [cursor=pointer]:
+              - img [ref=e84]
+            - generic [ref=e86]:
+              - generic [ref=e87]:
+                - link "W.A.T.E.R 500ML W.A.T.E.R 500ML Tetrapack Still Water. Puur. Simpel." [ref=e88] [cursor=pointer]:
+                  - /url: /rig/water-500ml
+                  - generic [ref=e89]:
+                    - generic [ref=e90]:
+                      - img "W.A.T.E.R"
+                      - generic [ref=e91]: 500ML
+                    - generic [ref=e92]:
+                      - heading "W.A.T.E.R" [level=3] [ref=e93]
+                      - paragraph [ref=e94]: 500ML Tetrapack
+                      - paragraph [ref=e95]: Still Water. Puur. Simpel.
+                - button "€4,97 • Toevoegen aan Winkelwagen" [ref=e96] [cursor=pointer]
+              - generic [ref=e97]:
+                - link "THEURGY 20OZ THEURGY 20OZ Tetrapack Sprankelende Energie. Magische Bubbels." [ref=e98] [cursor=pointer]:
+                  - /url: /rig/theurgy-20oz
+                  - generic [ref=e99]:
+                    - generic [ref=e100]:
+                      - img "THEURGY"
+                      - generic [ref=e101]: 20OZ
+                    - generic [ref=e102]:
+                      - heading "THEURGY" [level=3] [ref=e103]
+                      - paragraph [ref=e104]: 20OZ Tetrapack
+                      - paragraph [ref=e105]: Sprankelende Energie. Magische Bubbels.
+                - button "€5,97 • Toevoegen aan Winkelwagen" [ref=e106] [cursor=pointer]
+              - generic [ref=e107]:
+                - link "F.U. 1 GAL F.U. 1 GAL Tetrapack Gearomatiseerde Attitude. Grote Impact." [ref=e108] [cursor=pointer]:
+                  - /url: /rig/fu-1gal
+                  - generic [ref=e109]:
+                    - generic [ref=e110]:
+                      - img "F.U."
+                      - generic [ref=e111]: 1 GAL
+                    - generic [ref=e112]:
+                      - heading "F.U." [level=3] [ref=e113]
+                      - paragraph [ref=e114]: 1 GAL Tetrapack
+                      - paragraph [ref=e115]: Gearomatiseerde Attitude. Grote Impact.
+                - button "€12,97 • Toevoegen aan Winkelwagen" [ref=e116] [cursor=pointer]
+              - generic [ref=e117]:
+                - link "SQUEEZED TO DEATH 12OZ SQUEEZED TO DEATH Bruisend Water met Smaak Vermoord je dorst. 10 calorieën." [ref=e118] [cursor=pointer]:
+                  - /url: /rig/squeezed-death-12oz
+                  - generic [ref=e119]:
+                    - generic [ref=e120]:
+                      - img "SQUEEZED TO DEATH"
+                      - generic [ref=e121]: 12OZ
+                    - generic [ref=e122]:
+                      - heading "SQUEEZED TO DEATH" [level=3] [ref=e123]
+                      - paragraph [ref=e124]: Bruisend Water met Smaak
+                      - paragraph [ref=e125]: Vermoord je dorst. 10 calorieën.
+                - button "€3,97 • Toevoegen aan Winkelwagen" [ref=e126] [cursor=pointer]
+              - generic [ref=e127]:
+                - link "MANGO CHAINSAW 16OZ MANGO CHAINSAW Bruisend Water met Smaak Tropische vernietiging. 10 calorieën." [ref=e128] [cursor=pointer]:
+                  - /url: /rig/mango-chainsaw-16oz
+                  - generic [ref=e129]:
+                    - generic [ref=e130]:
+                      - img "MANGO CHAINSAW"
+                      - generic [ref=e131]: 16OZ
+                    - generic [ref=e132]:
+                      - heading "MANGO CHAINSAW" [level=3] [ref=e133]
+                      - paragraph [ref=e134]: Bruisend Water met Smaak
+                      - paragraph [ref=e135]: Tropische vernietiging. 10 calorieën.
+                - button "€4,47 • Toevoegen aan Winkelwagen" [ref=e136] [cursor=pointer]
+              - generic [ref=e137]:
+                - link "BLUEBERRY BUZZSAW 16OZ BLUEBERRY BUZZSAW IJsthee Bessenchaos in elke slok. 20 calorieën." [ref=e138] [cursor=pointer]:
+                  - /url: /rig/blueberry-buzzsaw-16oz
+                  - generic [ref=e139]:
+                    - generic [ref=e140]:
+                      - img "BLUEBERRY BUZZSAW"
+                      - generic [ref=e141]: 16OZ
+                    - generic [ref=e142]:
+                      - heading "BLUEBERRY BUZZSAW" [level=3] [ref=e143]
+                      - paragraph [ref=e144]: IJsthee
+                      - paragraph [ref=e145]: Bessenchaos in elke slok. 20 calorieën.
+                - button "€4,47 • Toevoegen aan Winkelwagen" [ref=e146] [cursor=pointer]
+              - generic [ref=e147]:
+                - link "GRAVE FRUIT 12OZ GRAVE FRUIT Bruisend Water met Smaak Citrus destructie. 0 calorieën." [ref=e148] [cursor=pointer]:
+                  - /url: /rig/grave-fruit-12oz
+                  - generic [ref=e149]:
+                    - generic [ref=e150]:
+                      - img "GRAVE FRUIT"
+                      - generic [ref=e151]: 12OZ
+                    - generic [ref=e152]:
+                      - heading "GRAVE FRUIT" [level=3] [ref=e153]
+                      - paragraph [ref=e154]: Bruisend Water met Smaak
+                      - paragraph [ref=e155]: Citrus destructie. 0 calorieën.
+                - button "€3,97 • Toevoegen aan Winkelwagen" [ref=e156] [cursor=pointer]
+              - generic [ref=e157]:
+                - link "ROOTBEER WRATH 16OZ ROOTBEER WRATH Bruisend Water met Smaak Koffie ontmoet furie. 0 calorieën." [ref=e158] [cursor=pointer]:
+                  - /url: /rig/root-beer-wrath-16oz
+                  - generic [ref=e159]:
+                    - generic [ref=e160]:
+                      - img "ROOTBEER WRATH"
+                      - generic [ref=e161]: 16OZ
+                    - generic [ref=e162]:
+                      - heading "ROOTBEER WRATH" [level=3] [ref=e163]
+                      - paragraph [ref=e164]: Bruisend Water met Smaak
+                      - paragraph [ref=e165]: Koffie ontmoet furie. 0 calorieën.
+                - button "€4,47 • Toevoegen aan Winkelwagen" [ref=e166] [cursor=pointer]
+              - generic [ref=e167]:
+                - link "GREEN GUILLOTINE 16OZ GREEN GUILLOTINE Bruisend Water met Smaak Limoen executie. 0 calorieën." [ref=e168] [cursor=pointer]:
+                  - /url: /rig/green-guillotine-16oz
+                  - generic [ref=e169]:
+                    - generic [ref=e170]:
+                      - img "GREEN GUILLOTINE"
+                      - generic [ref=e171]: 16OZ
+                    - generic [ref=e172]:
+                      - heading "GREEN GUILLOTINE" [level=3] [ref=e173]
+                      - paragraph [ref=e174]: Bruisend Water met Smaak
+                      - paragraph [ref=e175]: Limoen executie. 0 calorieën.
+                - button "€4,47 • Toevoegen aan Winkelwagen" [ref=e176] [cursor=pointer]
+            - generic [ref=e177]:
+              - button "Go to slide 1" [ref=e178] [cursor=pointer]
+              - button "Go to slide 2" [ref=e179] [cursor=pointer]
+              - button "Go to slide 3" [ref=e180] [cursor=pointer]
+              - button "Go to slide 4" [ref=e181] [cursor=pointer]
+              - button "Go to slide 5" [ref=e182] [cursor=pointer]
+              - button "Go to slide 6" [ref=e183] [cursor=pointer]
+              - button "Go to slide 7" [ref=e184] [cursor=pointer]
+              - button "Go to slide 8" [ref=e185] [cursor=pointer]
+              - button "Go to slide 9" [ref=e186] [cursor=pointer]
+        - generic [ref=e189]:
+          - generic [ref=e191]:
+            - generic [ref=e192]:
+              - heading "Waarom Kiezen voor GRATIS?" [level=2] [ref=e193]
+              - paragraph [ref=e194]: Pure hydratatie ontmoet straatcultuur
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - img [ref=e198]
+                - generic [ref=e201]: 100%
+                - heading "Pure Bergbron" [level=3] [ref=e202]
+                - paragraph [ref=e203]: Afkomstig van ongerepte bergwaterbronnen, natuurlijk gefilterd door eeuwenoude rotsformaties.
+              - generic [ref=e205]:
+                - img [ref=e207]
+                - generic [ref=e214]: 50%
+                - heading "Duurzame Verpakking" [level=3] [ref=e215]
+                - paragraph [ref=e216]: 100% recyclebare tetrapacks met 50% minder CO2-voetafdruk dan plastic flessen.
+              - generic [ref=e218]:
+                - img [ref=e220]
+                - generic [ref=e222]: 1 Day
+                - heading "Sociale Impact" [level=3] [ref=e223]
+                - paragraph [ref=e224]: Elke aankoop zorgt voor 1 dag schoon drinkwater voor gemeenschappen in nood.
+              - generic [ref=e226]:
+                - img [ref=e228]
+                - generic [ref=e231]: "0"
+                - heading "Nul Afval" [level=3] [ref=e232]
+                - paragraph [ref=e233]: Productie met hernieuwbare energie en plasticvrije toeleveringsketen.
+            - generic [ref=e236]:
+              - heading "Klaar om het Verschil te Ervaren?" [level=3] [ref=e237]
+              - paragraph [ref=e238]: Sluit je aan bij duizenden die al zijn overgestapt op een betere, duurzamere toekomst.
+              - generic [ref=e239]:
+                - generic [ref=e240]: ✓ 30 Dagen Geld-Terug-Garantie
+                - generic [ref=e241]: ✓ Gratis Verzending bij Bestellingen €50+
+                - generic [ref=e242]: ✓ Impact Tracking Dashboard
+          - link "Bestel Waterflessen" [ref=e244] [cursor=pointer]:
+            - /url: /hydration
+            - text: Bestel Waterflessen
+            - img
+        - generic [ref=e249]:
+          - generic [ref=e250]:
+            - generic [ref=e251]:
+              - img [ref=e252]
+              - generic [ref=e256]: Partner met een Doel
+            - heading "Meer dan Adverteren. Een Cultureel Statement." [level=2] [ref=e257]:
+              - text: Meer dan Adverteren.
+              - text: Een Cultureel Statement.
+            - paragraph [ref=e258]: Elke dag grijpen duizenden handen naar GRATIS. Niet alleen voor hydratatie, maar als symbool van duurzaam leven en straatauthenticiteit. Jouw merk kan deel uitmaken van dit verhaal.
+          - generic [ref=e259]:
+            - generic [ref=e260]:
+              - img [ref=e262]
+              - heading "De Beweging" [level=3] [ref=e264]
+              - paragraph [ref=e265]: Van straathoeken tot festivalpodia, GRATIS is de hydratatiekeuze geworden voor liefhebbers van urbane cultuur.
+            - generic [ref=e266]:
+              - img [ref=e268]
+              - heading "De Connectie" [level=3] [ref=e270]
+              - paragraph [ref=e271]: Elk pak is een dagelijks contactpunt—intiem, authentiek en met trots gedragen door onze gemeenschap.
+            - generic [ref=e272]:
+              - img [ref=e274]
+              - heading "De Impact" [level=3] [ref=e278]
+              - paragraph [ref=e279]: Jouw merk wordt niet alleen gezien. Het wordt onderdeel van de cultuur, de beweging, de lifestyle.
+          - generic [ref=e280]:
+            - generic [ref=e281]:
+              - generic [ref=e282]:
+                - heading "Waarom Partner worden met GRATIS?" [level=3] [ref=e283]
+                - generic [ref=e284]:
+                  - generic [ref=e285]:
+                    - img [ref=e287]
+                    - paragraph [ref=e292]: Bereik urbane, stijlbewuste doelgroepen
+                  - generic [ref=e293]:
+                    - img [ref=e295]
+                    - paragraph [ref=e297]: Milieubewuste merkalliantie
+                  - generic [ref=e298]:
+                    - img [ref=e300]
+                    - paragraph [ref=e303]: Hoge zichtbaarheid productplaatsing
+                  - generic [ref=e304]:
+                    - img [ref=e306]
+                    - paragraph [ref=e309]: Aangepaste pakontwerpen beschikbaar
+              - generic [ref=e310]:
+                - button "Word een Partner" [ref=e311] [cursor=pointer]
+                - link "Neem Contact Op" [ref=e312] [cursor=pointer]:
+                  - /url: mailto:partners@gratis.com
+            - generic [ref=e316]:
+              - generic [ref=e317]:
+                - generic [ref=e318]: 10.000+
+                - generic [ref=e319]: Pakketten Verspreid per Maand
+              - generic [ref=e320]:
+                - generic [ref=e321]: 100%
+                - generic [ref=e322]: Recyclebare Verpakking
+              - generic [ref=e323]:
+                - generic [ref=e324]: 24/7
+                - generic [ref=e325]: Zichtbaarheid van het Merk
+        - link "Browse All Merch" [ref=e328] [cursor=pointer]:
+          - /url: /rig
+          - text: Browse All Merch
+          - img
+        - generic [ref=e333]:
+          - generic [ref=e335]:
+            - generic [ref=e336]: ONZE IMPACT PIJLERS
+            - heading "Drie Manieren Waarop We Levens Veranderen" [level=2] [ref=e337]
+            - paragraph [ref=e338]: Elk GRATIS product steunt schoon water, kunst & cultuur, en onderwijs wereldwijd
+          - generic [ref=e339]:
+            - generic [ref=e340]:
+              - img [ref=e342]
+              - heading "Toegang tot Schoon Water" [level=3] [ref=e344]
+              - paragraph [ref=e345]: Duurzame wateroplossingen bieden aan gemeenschappen in nood. Elke fles financiert bronnen, filtersystemen en wateronderwijs.
+              - generic [ref=e346]:
+                - generic [ref=e347]:
+                  - img [ref=e348]
+                  - generic [ref=e350]: 47 bronnen gefinancierd
+                - generic [ref=e351]:
+                  - img [ref=e352]
+                  - generic [ref=e354]: 12.000+ mensen geholpen
+                - generic [ref=e355]:
+                  - img [ref=e356]
+                  - generic [ref=e358]: 100% project voltooiing
+              - link "Learn More" [ref=e359] [cursor=pointer]:
+                - /url: /water
+                - text: Learn More
+                - img
+            - generic [ref=e360]:
+              - img [ref=e362]
+              - heading "Kunst & Cultuur" [level=3] [ref=e368]
+              - paragraph [ref=e369]: Lokale kunstenaars empoweren en cultureel erfgoed behouden. Creatieve programma's ondersteunen die gemeenschappen samenbrengen.
+              - generic [ref=e370]:
+                - generic [ref=e371]:
+                  - img [ref=e372]
+                  - generic [ref=e374]: 230+ kunstenaars gesteund
+                - generic [ref=e375]:
+                  - img [ref=e376]
+                  - generic [ref=e378]: 15 gemeenschapscentra
+                - generic [ref=e379]:
+                  - img [ref=e380]
+                  - generic [ref=e382]: 50+ tentoonstellingen gefinancierd
+              - link "Learn More" [ref=e383] [cursor=pointer]:
+                - /url: /theurgy
+                - text: Learn More
+                - img
+            - generic [ref=e384]:
+              - img [ref=e386]
+              - heading "Toegang tot Onderwijs" [level=3] [ref=e389]
+              - paragraph [ref=e390]: Barrières voor onderwijs wereldwijd doorbreken. Beurzen, middelen en programma's financieren voor kansarme jongeren.
+              - generic [ref=e391]:
+                - generic [ref=e392]:
+                  - img [ref=e393]
+                  - generic [ref=e395]: 1.200+ studenten gesteund
+                - generic [ref=e396]:
+                  - img [ref=e397]
+                  - generic [ref=e399]: 8 scholen gebouwd
+                - generic [ref=e400]:
+                  - img [ref=e401]
+                  - generic [ref=e403]: €125K in beurzen
+              - link "Learn More" [ref=e404] [cursor=pointer]:
+                - /url: /fu
+                - text: Learn More
+                - img
+        - generic [ref=e406]:
+          - generic [ref=e408]:
+            - generic [ref=e409]: HOE HET WERKT
+            - heading "4 Eenvoudige Stappen naar Impact" [level=2] [ref=e410]
+          - generic [ref=e411]:
+            - link "1 1 Ontvang GRATIS Water Premium bronwater zonder kosten. Elke fles financiert schoon water projecten wereldwijd. →" [ref=e412] [cursor=pointer]:
+              - /url: /hydration
+              - generic [ref=e414]:
+                - generic [ref=e416]: "1"
+                - generic: "1"
+                - generic [ref=e417]:
+                  - img [ref=e419]
+                  - heading "Ontvang GRATIS Water" [level=3] [ref=e421]
+                  - paragraph [ref=e422]: Premium bronwater zonder kosten. Elke fles financiert schoon water projecten wereldwijd.
+                  - generic [ref=e424]: →
+            - link "2 2 Steun Kunst Jouw keuze steunt direct lokale kunstenaars en creatieve programma's in gemeenschappen. →" [ref=e425] [cursor=pointer]:
+              - /url: /theurgy
+              - generic [ref=e427]:
+                - generic [ref=e429]: "2"
+                - generic: "2"
+                - generic [ref=e430]:
+                  - img [ref=e432]
+                  - heading "Steun Kunst" [level=3] [ref=e438]
+                  - paragraph [ref=e439]: Jouw keuze steunt direct lokale kunstenaars en creatieve programma's in gemeenschappen.
+                  - generic [ref=e441]: →
+            - link "3 3 Financier Onderwijs Empoweer de volgende generatie met toegang tot kwaliteitsonderwijs en leermiddelen. →" [ref=e442] [cursor=pointer]:
+              - /url: /fu
+              - generic [ref=e444]:
+                - generic [ref=e446]: "3"
+                - generic: "3"
+                - generic [ref=e447]:
+                  - img [ref=e449]
+                  - heading "Financier Onderwijs" [level=3] [ref=e452]
+                  - paragraph [ref=e453]: Empoweer de volgende generatie met toegang tot kwaliteitsonderwijs en leermiddelen.
+                  - generic [ref=e455]: →
+            - link "4 4 Volg Impact Zie precies waar je impact naartoe gaat met real-time dashboards en geverifieerde rapporten. →" [ref=e456] [cursor=pointer]:
+              - /url: /dashboard
+              - generic [ref=e458]:
+                - generic [ref=e460]: "4"
+                - generic: "4"
+                - generic [ref=e461]:
+                  - img [ref=e463]
+                  - heading "Volg Impact" [level=3] [ref=e465]
+                  - paragraph [ref=e466]: Zie precies waar je impact naartoe gaat met real-time dashboards en geverifieerde rapporten.
+                  - generic [ref=e468]: →
+        - generic [ref=e470]:
+          - heading "Klaar Om Echte Impact Te Maken?" [level=2] [ref=e471]
+          - link "Word Lid van de TRIBE" [ref=e472] [cursor=pointer]:
+            - /url: /tribe
+    - contentinfo [ref=e473]:
+      - generic [ref=e474]:
+        - generic [ref=e475]:
+          - heading "Giving" [level=3] [ref=e476]
+          - list [ref=e477]:
+            - listitem [ref=e478]:
+              - link "Corporate Giving" [ref=e479] [cursor=pointer]:
+                - /url: /giving/corporate
+            - listitem [ref=e480]:
+              - link "Honor & Memorial Gifts" [ref=e481] [cursor=pointer]:
+                - /url: /giving/honor-memorial
+            - listitem [ref=e482]:
+              - link "All Ways to Give (FAQ)" [ref=e483] [cursor=pointer]:
+                - /url: /giving/ways-to-give
+            - listitem [ref=e484]:
+              - link "Monthly Giving" [ref=e485] [cursor=pointer]:
+                - /url: /giving/monthly
+            - listitem [ref=e486]:
+              - link "Phone, Mail & Crypto Donations" [ref=e487] [cursor=pointer]:
+                - /url: /giving/other-ways
+        - generic [ref=e488]:
+          - heading "Reports" [level=3] [ref=e489]
+          - list [ref=e490]:
+            - listitem [ref=e491]:
+              - link "Policies (Financial Policies)" [ref=e492] [cursor=pointer]:
+                - /url: /reports/financial-policies
+            - listitem [ref=e493]:
+              - link "Annual Reports" [ref=e494] [cursor=pointer]:
+                - /url: /reports/annual-reports
+            - listitem [ref=e495]:
+              - link "In-Kind Valuation" [ref=e496] [cursor=pointer]:
+                - /url: /reports/in-kind-valuation
+            - listitem [ref=e497]:
+              - link "Donation Policies" [ref=e498] [cursor=pointer]:
+                - /url: /reports/donation-policies
+        - generic [ref=e499]:
+          - heading "Accreditation" [level=3] [ref=e500]
+          - list [ref=e501]:
+            - listitem [ref=e502]:
+              - link "Compliance & Licenses" [ref=e503] [cursor=pointer]:
+                - /url: /accreditation/compliance
+            - listitem [ref=e504]:
+              - link "Leadership" [ref=e505] [cursor=pointer]:
+                - /url: /accreditation/leadership
+            - listitem [ref=e506]:
+              - 'link "EIN: 95-1831116" [ref=e507] [cursor=pointer]':
+                - /url: /accreditation/ein
+            - listitem [ref=e508]:
+              - link "ANBI Status" [ref=e509] [cursor=pointer]:
+                - /url: /accreditation/anbi-status
+            - listitem [ref=e510]:
+              - link "Rating (Charity Rating)" [ref=e511] [cursor=pointer]:
+                - /url: /accreditation/charity-rating
+        - generic [ref=e512]:
+          - heading "Transparency" [level=3] [ref=e513]
+          - list [ref=e514]:
+            - listitem [ref=e515]:
+              - link "Terms of Use" [ref=e516] [cursor=pointer]:
+                - /url: /transparency/terms
+            - listitem [ref=e517]:
+              - link "Rights (Brand Protection)" [ref=e518] [cursor=pointer]:
+                - /url: /transparency/brand-protection
+            - listitem [ref=e519]:
+              - link "User Privacy (Privacy Policy)" [ref=e520] [cursor=pointer]:
+                - /url: /transparency/privacy
+            - listitem [ref=e521]:
+              - link "Tracking (Cookie Policy)" [ref=e522] [cursor=pointer]:
+                - /url: /transparency/cookies
+            - listitem [ref=e523]:
+              - link "Help (Accessibility Policy)" [ref=e524] [cursor=pointer]:
+                - /url: /transparency/accessibility
+            - listitem [ref=e525]:
+              - link "Safety (Disclaimer & Donor Privacy)" [ref=e526] [cursor=pointer]:
+                - /url: /transparency/safety
+        - generic [ref=e527]:
+          - heading "Information" [level=3] [ref=e528]
+          - list [ref=e529]:
+            - listitem [ref=e530]:
+              - link "Contact" [ref=e531] [cursor=pointer]:
+                - /url: /information/contact
+            - listitem [ref=e532]:
+              - link "Organization (NGO)" [ref=e533] [cursor=pointer]:
+                - /url: /information/organization
+            - listitem [ref=e534]:
+              - link "News" [ref=e535] [cursor=pointer]:
+                - /url: /information/news
+            - listitem [ref=e536]:
+              - link "NGO Partners" [ref=e537] [cursor=pointer]:
+                - /url: /information/ngo-partners
+            - listitem [ref=e538]:
+              - link "Employment (Careers)" [ref=e539] [cursor=pointer]:
+                - /url: /information/employment
+            - listitem [ref=e540]:
+              - link "Communications (Press & Media)" [ref=e541] [cursor=pointer]:
+                - /url: /information/press
+            - listitem [ref=e542]:
+              - link "Team (Programs)" [ref=e543] [cursor=pointer]:
+                - /url: /information/team
+        - generic [ref=e544]:
+          - heading "Social media" [level=3] [ref=e545]
+          - list [ref=e546]:
+            - listitem [ref=e547]:
+              - link "TikTok" [ref=e548] [cursor=pointer]:
+                - /url: https://tiktok.com/@gratis
+            - listitem [ref=e549]:
+              - link "Instagram" [ref=e550] [cursor=pointer]:
+                - /url: https://instagram.com/gratis
+            - listitem [ref=e551]:
+              - link "Pinterest" [ref=e552] [cursor=pointer]:
+                - /url: https://pinterest.com/gratis
+            - listitem [ref=e553]:
+              - link "Snapchat" [ref=e554] [cursor=pointer]:
+                - /url: https://snapchat.com/add/gratis
+            - listitem [ref=e555]:
+              - link "X" [ref=e556] [cursor=pointer]:
+                - /url: https://x.com/gratis
+            - listitem [ref=e557]:
+              - link "Facebook" [ref=e558] [cursor=pointer]:
+                - /url: https://facebook.com/gratis
+            - listitem [ref=e559]:
+              - link "LinkedIn" [ref=e560] [cursor=pointer]:
+                - /url: https://linkedin.com/company/gratis
+            - listitem [ref=e561]:
+              - link "YouTube" [ref=e562] [cursor=pointer]:
+                - /url: https://youtube.com/@gratis
+      - generic [ref=e565]: © 2026 G.R.A.T.I.S. Empower Change with Every Pack.
+```

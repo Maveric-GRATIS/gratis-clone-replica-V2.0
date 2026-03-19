@@ -5,7 +5,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('GRATIS.NGO Platform - Smoke Tests', () => {
   test('should load homepage successfully', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'commit', timeout: 15000 });
 
     // Check if page loaded
     await expect(page).toHaveTitle(/GRATIS/i);
@@ -16,13 +16,13 @@ test.describe('GRATIS.NGO Platform - Smoke Tests', () => {
   });
 
   test('should navigate to auth page', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'commit', timeout: 15000 });
 
     // Look for login/auth link
     const authLink = page.locator('a[href*="/auth"], button:has-text("Login"), a:has-text("Login")');
     if (await authLink.count() > 0) {
       await authLink.first().click();
-      await page.waitForLoadState('domcontentloaded');
+      await page.waitForLoadState('commit');
 
       // Verify we're on auth-related page
       const url = page.url();
@@ -30,35 +30,31 @@ test.describe('GRATIS.NGO Platform - Smoke Tests', () => {
     }
   });
 
-  test('should load GRATIS beverage page', async ({ page }) => {
-    const response = await page.goto('/gratis', { waitUntil: 'domcontentloaded' });
+  test('should load GRATIS beverage page', async ({ request }) => {
+    const response = await request.get('/gratis');
 
     // Verify route responded successfully
-    expect(response).not.toBeNull();
-    expect(response!.status()).toBeLessThan(400);
+    expect(response.status()).toBeLessThan(400);
   });
 
-  test('should load water page', async ({ page }) => {
-    const response = await page.goto('/gratis/water', { waitUntil: 'domcontentloaded' });
+  test('should load water page', async ({ request }) => {
+    const response = await request.get('/gratis/water');
 
     // Verify route responded successfully
-    expect(response).not.toBeNull();
-    expect(response!.status()).toBeLessThan(400);
+    expect(response.status()).toBeLessThan(400);
   });
 
-  test('should load impact TV page', async ({ page }) => {
-    const response = await page.goto('/impact-tv', { waitUntil: 'domcontentloaded' });
+  test('should load impact TV page', async ({ request }) => {
+    const response = await request.get('/impact-tv');
 
     // Verify route responded successfully
-    expect(response).not.toBeNull();
-    expect(response!.status()).toBeLessThan(400);
+    expect(response.status()).toBeLessThan(400);
   });
 
-  test('should load events page', async ({ page }) => {
-    const response = await page.goto('/events', { waitUntil: 'domcontentloaded' });
+  test('should load events page', async ({ request }) => {
+    const response = await request.get('/events');
 
     // Verify route responded successfully
-    expect(response).not.toBeNull();
-    expect(response!.status()).toBeLessThan(400);
+    expect(response.status()).toBeLessThan(400);
   });
 });

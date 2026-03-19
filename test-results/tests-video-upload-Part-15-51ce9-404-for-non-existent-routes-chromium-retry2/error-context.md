@@ -1,0 +1,237 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - generic [ref=e8]:
+      - img [ref=e10]
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - heading "🍪 We Value Your Privacy" [level=3] [ref=e14]
+          - paragraph [ref=e15]: We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By clicking "Accept All", you consent to our use of cookies. You can manage your preferences at any time.
+          - paragraph [ref=e16]:
+            - text: Learn more in our
+            - link "Cookie Policy" [ref=e17] [cursor=pointer]:
+              - /url: /legal/cookies
+            - text: and
+            - link "Privacy Policy" [ref=e18] [cursor=pointer]:
+              - /url: /legal/privacy
+            - text: .
+        - generic [ref=e19]:
+          - button "Accept All" [ref=e20] [cursor=pointer]
+          - button "Reject All" [ref=e21] [cursor=pointer]
+          - button "Manage Preferences" [ref=e22] [cursor=pointer]:
+            - img
+            - text: Manage Preferences
+      - button [ref=e23] [cursor=pointer]:
+        - img
+    - banner [ref=e24]:
+      - generic [ref=e25]:
+        - link "GRATIS - Home" [ref=e26] [cursor=pointer]:
+          - /url: /
+          - img "GRATIS - Home" [ref=e27]
+        - navigation [ref=e28]:
+          - menubar [ref=e29]:
+            - button "GRATIS" [ref=e30] [cursor=pointer]:
+              - text: GRATIS
+              - img [ref=e31]
+            - button "RIG" [ref=e33] [cursor=pointer]:
+              - text: RIG
+              - img [ref=e34]
+            - menuitem "ARCANE" [ref=e36] [cursor=pointer]
+            - button "TRIBE" [ref=e37] [cursor=pointer]:
+              - text: TRIBE
+              - img [ref=e38]
+            - button "IMPACT TV" [ref=e40] [cursor=pointer]:
+              - text: IMPACT TV
+              - img [ref=e41]
+            - button "SPARK" [ref=e43] [cursor=pointer]:
+              - text: SPARK
+              - img [ref=e44]
+        - generic [ref=e46]:
+          - button "Search (⌘K)" [ref=e47] [cursor=pointer]:
+            - img
+          - button "Switch to dark mode" [ref=e48] [cursor=pointer]:
+            - img
+            - img
+            - generic [ref=e49]: Toggle theme
+          - button "Verander taal / Change language" [ref=e50] [cursor=pointer]:
+            - img
+            - generic [ref=e51]: Verander taal / Change language
+          - button [ref=e52] [cursor=pointer]:
+            - img
+          - button [ref=e53] [cursor=pointer]:
+            - img
+          - button "Sign In" [ref=e54] [cursor=pointer]
+          - link "Shop" [ref=e56] [cursor=pointer]:
+            - /url: /rig
+    - generic [ref=e60]:
+      - heading "404" [level=1] [ref=e62]
+      - heading "Pagina niet gevonden" [level=2] [ref=e64]
+      - paragraph [ref=e65]: De pagina die je zoekt bestaat niet of is verplaatst.
+      - generic [ref=e66]:
+        - heading "Wat kun je doen?" [level=3] [ref=e67]
+        - list [ref=e68]:
+          - listitem [ref=e69]:
+            - generic [ref=e70]: •
+            - generic [ref=e71]: Controleer de URL op typefouten
+          - listitem [ref=e72]:
+            - generic [ref=e73]: •
+            - generic [ref=e74]: Gebruik de zoekfunctie
+          - listitem [ref=e75]:
+            - generic [ref=e76]: •
+            - generic [ref=e77]: Ga terug naar de homepagina
+          - listitem [ref=e78]:
+            - generic [ref=e79]: •
+            - generic [ref=e80]: Neem contact op met support
+      - generic [ref=e81]:
+        - button "Ga terug" [ref=e82] [cursor=pointer]:
+          - img
+          - text: Ga terug
+        - link "Naar homepagina" [ref=e83] [cursor=pointer]:
+          - /url: /
+          - img
+          - text: Naar homepagina
+        - link "Zoeken" [ref=e84] [cursor=pointer]:
+          - /url: /search
+          - img
+          - text: Zoeken
+      - generic [ref=e85]:
+        - paragraph [ref=e86]: Hulp nodig?
+        - generic [ref=e87]:
+          - link "Helpcentrum" [ref=e88] [cursor=pointer]:
+            - /url: /help
+          - link "Contact" [ref=e89] [cursor=pointer]:
+            - /url: /contact
+          - link "Veelgestelde vragen" [ref=e90] [cursor=pointer]:
+            - /url: /faq
+    - contentinfo [ref=e91]:
+      - generic [ref=e92]:
+        - generic [ref=e93]:
+          - heading "Giving" [level=3] [ref=e94]
+          - list [ref=e95]:
+            - listitem [ref=e96]:
+              - link "Corporate Giving" [ref=e97] [cursor=pointer]:
+                - /url: /giving/corporate
+            - listitem [ref=e98]:
+              - link "Honor & Memorial Gifts" [ref=e99] [cursor=pointer]:
+                - /url: /giving/honor-memorial
+            - listitem [ref=e100]:
+              - link "All Ways to Give (FAQ)" [ref=e101] [cursor=pointer]:
+                - /url: /giving/ways-to-give
+            - listitem [ref=e102]:
+              - link "Monthly Giving" [ref=e103] [cursor=pointer]:
+                - /url: /giving/monthly
+            - listitem [ref=e104]:
+              - link "Phone, Mail & Crypto Donations" [ref=e105] [cursor=pointer]:
+                - /url: /giving/other-ways
+        - generic [ref=e106]:
+          - heading "Reports" [level=3] [ref=e107]
+          - list [ref=e108]:
+            - listitem [ref=e109]:
+              - link "Policies (Financial Policies)" [ref=e110] [cursor=pointer]:
+                - /url: /reports/financial-policies
+            - listitem [ref=e111]:
+              - link "Annual Reports" [ref=e112] [cursor=pointer]:
+                - /url: /reports/annual-reports
+            - listitem [ref=e113]:
+              - link "In-Kind Valuation" [ref=e114] [cursor=pointer]:
+                - /url: /reports/in-kind-valuation
+            - listitem [ref=e115]:
+              - link "Donation Policies" [ref=e116] [cursor=pointer]:
+                - /url: /reports/donation-policies
+        - generic [ref=e117]:
+          - heading "Accreditation" [level=3] [ref=e118]
+          - list [ref=e119]:
+            - listitem [ref=e120]:
+              - link "Compliance & Licenses" [ref=e121] [cursor=pointer]:
+                - /url: /accreditation/compliance
+            - listitem [ref=e122]:
+              - link "Leadership" [ref=e123] [cursor=pointer]:
+                - /url: /accreditation/leadership
+            - listitem [ref=e124]:
+              - 'link "EIN: 95-1831116" [ref=e125] [cursor=pointer]':
+                - /url: /accreditation/ein
+            - listitem [ref=e126]:
+              - link "ANBI Status" [ref=e127] [cursor=pointer]:
+                - /url: /accreditation/anbi-status
+            - listitem [ref=e128]:
+              - link "Rating (Charity Rating)" [ref=e129] [cursor=pointer]:
+                - /url: /accreditation/charity-rating
+        - generic [ref=e130]:
+          - heading "Transparency" [level=3] [ref=e131]
+          - list [ref=e132]:
+            - listitem [ref=e133]:
+              - link "Terms of Use" [ref=e134] [cursor=pointer]:
+                - /url: /transparency/terms
+            - listitem [ref=e135]:
+              - link "Rights (Brand Protection)" [ref=e136] [cursor=pointer]:
+                - /url: /transparency/brand-protection
+            - listitem [ref=e137]:
+              - link "User Privacy (Privacy Policy)" [ref=e138] [cursor=pointer]:
+                - /url: /transparency/privacy
+            - listitem [ref=e139]:
+              - link "Tracking (Cookie Policy)" [ref=e140] [cursor=pointer]:
+                - /url: /transparency/cookies
+            - listitem [ref=e141]:
+              - link "Help (Accessibility Policy)" [ref=e142] [cursor=pointer]:
+                - /url: /transparency/accessibility
+            - listitem [ref=e143]:
+              - link "Safety (Disclaimer & Donor Privacy)" [ref=e144] [cursor=pointer]:
+                - /url: /transparency/safety
+        - generic [ref=e145]:
+          - heading "Information" [level=3] [ref=e146]
+          - list [ref=e147]:
+            - listitem [ref=e148]:
+              - link "Contact" [ref=e149] [cursor=pointer]:
+                - /url: /information/contact
+            - listitem [ref=e150]:
+              - link "Organization (NGO)" [ref=e151] [cursor=pointer]:
+                - /url: /information/organization
+            - listitem [ref=e152]:
+              - link "News" [ref=e153] [cursor=pointer]:
+                - /url: /information/news
+            - listitem [ref=e154]:
+              - link "NGO Partners" [ref=e155] [cursor=pointer]:
+                - /url: /information/ngo-partners
+            - listitem [ref=e156]:
+              - link "Employment (Careers)" [ref=e157] [cursor=pointer]:
+                - /url: /information/employment
+            - listitem [ref=e158]:
+              - link "Communications (Press & Media)" [ref=e159] [cursor=pointer]:
+                - /url: /information/press
+            - listitem [ref=e160]:
+              - link "Team (Programs)" [ref=e161] [cursor=pointer]:
+                - /url: /information/team
+        - generic [ref=e162]:
+          - heading "Social media" [level=3] [ref=e163]
+          - list [ref=e164]:
+            - listitem [ref=e165]:
+              - link "TikTok" [ref=e166] [cursor=pointer]:
+                - /url: https://tiktok.com/@gratis
+            - listitem [ref=e167]:
+              - link "Instagram" [ref=e168] [cursor=pointer]:
+                - /url: https://instagram.com/gratis
+            - listitem [ref=e169]:
+              - link "Pinterest" [ref=e170] [cursor=pointer]:
+                - /url: https://pinterest.com/gratis
+            - listitem [ref=e171]:
+              - link "Snapchat" [ref=e172] [cursor=pointer]:
+                - /url: https://snapchat.com/add/gratis
+            - listitem [ref=e173]:
+              - link "X" [ref=e174] [cursor=pointer]:
+                - /url: https://x.com/gratis
+            - listitem [ref=e175]:
+              - link "Facebook" [ref=e176] [cursor=pointer]:
+                - /url: https://facebook.com/gratis
+            - listitem [ref=e177]:
+              - link "LinkedIn" [ref=e178] [cursor=pointer]:
+                - /url: https://linkedin.com/company/gratis
+            - listitem [ref=e179]:
+              - link "YouTube" [ref=e180] [cursor=pointer]:
+                - /url: https://youtube.com/@gratis
+      - generic [ref=e183]: © 2026 G.R.A.T.I.S. Empower Change with Every Pack.
+```

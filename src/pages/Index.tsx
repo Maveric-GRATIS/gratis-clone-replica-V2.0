@@ -85,10 +85,11 @@ export default function Index() {
             src={img}
             alt=""
             aria-hidden="true"
-            className="absolute inset-0 m-auto w-auto h-auto max-w-[92%] max-h-[88%] transition-opacity duration-1000 ease-in-out pointer-events-none select-none"
+            className="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out pointer-events-none select-none"
             style={{
               objectFit: "contain",
               objectPosition: "center",
+              transform: "scale(0.9)",
               opacity: i === heroImageIndex ? 1 : 0,
             }}
           />

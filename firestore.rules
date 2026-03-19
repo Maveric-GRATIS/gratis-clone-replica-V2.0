@@ -264,6 +264,30 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // Donation pledges — written by Cloud Functions only
+    match /donationPledges/{id} {
+      allow read: if isAdmin()
+                  || (isAuthenticated() && resource.data.uid == request.auth.uid);
+      allow create: if false;
+      allow update, delete: if isAdmin();
+    }
+
+    // Investment pledges — written by Cloud Functions only
+    match /investmentPledges/{id} {
+      allow read: if isAdmin()
+                  || (isAuthenticated() && resource.data.uid == request.auth.uid);
+      allow create: if false;
+      allow update, delete: if isAdmin();
+    }
+
+    // Partner projects — written by Cloud Functions, readable by owner/admin/public when active
+    match /partnerProjects/{projectId} {
+      allow read: if resource.data.status == 'active'
+                  || (isAuthenticated() && resource.data.createdBy == request.auth.uid)
+                  || isAdmin();
+      allow create, update, delete: if false;
+    }
+
     // Rate Limits — Admin SDK only, never direct client access
     match /rateLimits/{key} {
       allow read, write: if false;

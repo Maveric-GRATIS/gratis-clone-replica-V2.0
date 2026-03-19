@@ -8,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Loader2, Heart } from "lucide-react";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "@/firebase";
 
 const donationSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -43,16 +45,19 @@ export const DonationForm = () => {
     setIsSubmitting(true);
 
     try {
-      const finalAmount = customAmount ? parseFloat(customAmount) : formData.amount;
+      const finalAmount = customAmount
+        ? parseFloat(customAmount)
+        : formData.amount;
       const validatedData = donationSchema.parse({
         ...formData,
         amount: finalAmount,
       });
 
-      console.log("Donation submitted:", validatedData);
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const submitDonationPledge = httpsCallable(
+        functions,
+        "submitDonationPledge",
+      );
+      await submitDonationPledge(validatedData);
 
       const { bottles, families } = calculateImpact(validatedData.amount);
 
@@ -80,7 +85,9 @@ export const DonationForm = () => {
     }
   };
 
-  const impact = calculateImpact(customAmount ? parseFloat(customAmount) || 0 : formData.amount);
+  const impact = calculateImpact(
+    customAmount ? parseFloat(customAmount) || 0 : formData.amount,
+  );
 
   return (
     <Card className="bg-card border-border shadow-lg">
@@ -118,7 +125,11 @@ export const DonationForm = () => {
                 <Button
                   key={amount}
                   type="button"
-                  variant={formData.amount === amount && !customAmount ? "default" : "outline"}
+                  variant={
+                    formData.amount === amount && !customAmount
+                      ? "default"
+                      : "outline"
+                  }
                   onClick={() => {
                     setFormData({ ...formData, amount });
                     setCustomAmount("");
@@ -153,8 +164,8 @@ export const DonationForm = () => {
               <span className="font-semibold text-sm">YOUR IMPACT</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              €{customAmount || formData.amount} = {impact.bottles} bottles = {impact.families}{" "}
-              families for a week
+              €{customAmount || formData.amount} = {impact.bottles} bottles ={" "}
+              {impact.families} families for a week
             </p>
           </div>
 
@@ -165,7 +176,9 @@ export const DonationForm = () => {
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 placeholder="Your name"
                 required
               />
@@ -177,7 +190,9 @@ export const DonationForm = () => {
                 id="email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 placeholder="your@email.com"
                 required
               />
@@ -188,7 +203,9 @@ export const DonationForm = () => {
               <Textarea
                 id="message"
                 value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
                 placeholder="Any message or dedication?"
                 rows={3}
               />
@@ -213,7 +230,8 @@ export const DonationForm = () => {
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
-            Secure payment processing coming soon. For now, donations are recorded for future processing.
+            Donation pledges are securely stored and queued for follow-up
+            processing.
           </p>
         </form>
       </CardContent>

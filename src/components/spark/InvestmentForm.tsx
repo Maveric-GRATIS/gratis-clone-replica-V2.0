@@ -8,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Loader2, TrendingUp } from "lucide-react";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "@/firebase";
 
 const investmentSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -39,7 +41,10 @@ export const InvestmentForm = () => {
     microcredit: [100, 250, 500, 1000],
   };
 
-  const calculateImpact = (type: "scholarship" | "microcredit", amount: number) => {
+  const calculateImpact = (
+    type: "scholarship" | "microcredit",
+    amount: number,
+  ) => {
     if (type === "scholarship") {
       const scholarships = Math.floor(amount / 500);
       return {
@@ -62,18 +67,24 @@ export const InvestmentForm = () => {
     setIsSubmitting(true);
 
     try {
-      const finalAmount = customAmount ? parseFloat(customAmount) : formData.amount;
+      const finalAmount = customAmount
+        ? parseFloat(customAmount)
+        : formData.amount;
       const validatedData = investmentSchema.parse({
         ...formData,
         amount: finalAmount,
       });
 
-      console.log("Investment submitted:", validatedData);
+      const submitInvestmentPledge = httpsCallable(
+        functions,
+        "submitInvestmentPledge",
+      );
+      await submitInvestmentPledge(validatedData);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      const impact = calculateImpact(validatedData.investmentType, validatedData.amount);
+      const impact = calculateImpact(
+        validatedData.investmentType,
+        validatedData.amount,
+      );
 
       toast.success("Investment received! 📈", {
         description: `Your €${validatedData.amount} will fund ${impact.primary} ${impact.primaryLabel}. Welcome to the impact dashboard (coming soon).`,
@@ -103,7 +114,7 @@ export const InvestmentForm = () => {
 
   const impact = calculateImpact(
     formData.investmentType,
-    customAmount ? parseFloat(customAmount) || 0 : formData.amount
+    customAmount ? parseFloat(customAmount) || 0 : formData.amount,
   );
 
   return (
@@ -123,14 +134,18 @@ export const InvestmentForm = () => {
                 <RadioGroupItem value="scholarship" id="scholarship" />
                 <Label htmlFor="scholarship" className="cursor-pointer flex-1">
                   <div className="font-semibold">Scholarship Fund</div>
-                  <div className="text-xs text-muted-foreground">Direct investment in education</div>
+                  <div className="text-xs text-muted-foreground">
+                    Direct investment in education
+                  </div>
                 </Label>
               </div>
               <div className="flex items-center space-x-2 p-3 border border-border rounded-lg hover:border-primary/40 transition-colors">
                 <RadioGroupItem value="microcredit" id="microcredit" />
                 <Label htmlFor="microcredit" className="cursor-pointer flex-1">
                   <div className="font-semibold">Microcredit Program</div>
-                  <div className="text-xs text-muted-foreground">Small loans for entrepreneurs</div>
+                  <div className="text-xs text-muted-foreground">
+                    Small loans for entrepreneurs
+                  </div>
                 </Label>
               </div>
             </RadioGroup>
@@ -144,7 +159,11 @@ export const InvestmentForm = () => {
                 <Button
                   key={amount}
                   type="button"
-                  variant={formData.amount === amount && !customAmount ? "default" : "outline"}
+                  variant={
+                    formData.amount === amount && !customAmount
+                      ? "default"
+                      : "outline"
+                  }
                   onClick={() => {
                     setFormData({ ...formData, amount });
                     setCustomAmount("");
@@ -203,9 +222,12 @@ export const InvestmentForm = () => {
               <span className="font-semibold text-sm">PROJECTED IMPACT</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              €{customAmount || formData.amount} = {impact.primary} {impact.primaryLabel}
+              €{customAmount || formData.amount} = {impact.primary}{" "}
+              {impact.primaryLabel}
             </p>
-            <p className="text-xs text-muted-foreground mt-1">{impact.secondary}</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              {impact.secondary}
+            </p>
           </div>
 
           {/* Personal Info */}
@@ -215,7 +237,9 @@ export const InvestmentForm = () => {
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 placeholder="Your name"
                 required
               />
@@ -227,7 +251,9 @@ export const InvestmentForm = () => {
                 id="email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 placeholder="your@email.com"
                 required
               />
@@ -238,18 +264,24 @@ export const InvestmentForm = () => {
               <Input
                 id="country"
                 value={formData.country}
-                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, country: e.target.value })
+                }
                 placeholder="Your country"
                 required
               />
             </div>
 
             <div>
-              <Label htmlFor="motivation">Why are you investing? (Optional)</Label>
+              <Label htmlFor="motivation">
+                Why are you investing? (Optional)
+              </Label>
               <Textarea
                 id="motivation"
                 value={formData.motivation}
-                onChange={(e) => setFormData({ ...formData, motivation: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, motivation: e.target.value })
+                }
                 placeholder="Share your motivation..."
                 rows={3}
               />
@@ -274,7 +306,7 @@ export const InvestmentForm = () => {
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
-            Investment tracking dashboard and secure payment processing coming soon.
+            Investment pledges are securely stored for review and onboarding.
           </p>
         </form>
       </CardContent>

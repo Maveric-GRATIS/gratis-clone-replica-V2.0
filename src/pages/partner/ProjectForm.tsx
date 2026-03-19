@@ -5,7 +5,7 @@
  * Part 6 - Section 28: Partner Project Creation & Management
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,9 @@ import {
 import { ArrowLeft, Save, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { FOCUS_AREAS } from "@/types/partner";
+import { httpsCallable } from "firebase/functions";
+import { doc, getDoc } from "firebase/firestore";
+import { db, functions } from "@/firebase";
 
 const COUNTRIES = [
   "Netherlands",
@@ -41,6 +44,8 @@ export default function ProjectForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = !!id;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoadingProject, setIsLoadingProject] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -58,21 +63,118 @@ export default function ProjectForm() {
     coverImage: "",
   });
 
+  useEffect(() => {
+    if (!isEditing || !id) return;
+
+    const loadProject = async () => {
+      setIsLoadingProject(true);
+      try {
+        const projectRef = doc(db, "partnerProjects", id);
+        const snap = await getDoc(projectRef);
+
+        if (!snap.exists()) {
+          toast.error("Project not found");
+          navigate("/partner/projects");
+          return;
+        }
+
+        const project = snap.data();
+        setFormData({
+          title: project.title ?? "",
+          slug: project.slug ?? "",
+          description: project.description ?? "",
+          category: project.category ?? "clean_water",
+          country: project.country ?? "",
+          region: project.region ?? "",
+          city: project.city ?? "",
+          fundingGoal: project.fundingGoal ? String(project.fundingGoal) : "",
+          currency: project.currency ?? "EUR",
+          startDate: project.startDate ?? "",
+          endDate: project.endDate ?? "",
+          targetBeneficiaries: project.targetBeneficiaries
+            ? String(project.targetBeneficiaries)
+            : "",
+          coverImage: project.coverImage ?? "",
+        });
+      } catch (error) {
+        console.error("Failed to load project", error);
+        toast.error("Failed to load project details");
+      } finally {
+        setIsLoadingProject(false);
+      }
+    };
+
+    loadProject();
+  }, [id, isEditing, navigate]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.title || !formData.description || !formData.fundingGoal) {
+    setIsSubmitting(true);
+
+    const fundingGoal = Number(formData.fundingGoal);
+    const targetBeneficiaries = formData.targetBeneficiaries
+      ? Number(formData.targetBeneficiaries)
+      : null;
+
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.fundingGoal ||
+      !formData.country
+    ) {
       toast.error("Please fill in all required fields");
+      setIsSubmitting(false);
       return;
     }
 
-    // In real app, this would POST to Firebase
-    toast.success(
-      isEditing
-        ? "Project updated successfully!"
-        : "Project created successfully!",
-    );
-    navigate("/partner/projects");
+    if (!Number.isFinite(fundingGoal) || fundingGoal <= 0) {
+      toast.error("Funding goal must be a positive number");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (
+      targetBeneficiaries !== null &&
+      (!Number.isFinite(targetBeneficiaries) || targetBeneficiaries < 0)
+    ) {
+      toast.error("Target beneficiaries must be a valid positive number");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const savePartnerProject = httpsCallable(functions, "savePartnerProject");
+
+      await savePartnerProject({
+        projectId: isEditing ? id : undefined,
+        title: formData.title,
+        slug: formData.slug || generateSlug(formData.title),
+        description: formData.description,
+        category: formData.category,
+        country: formData.country,
+        region: formData.region,
+        city: formData.city,
+        fundingGoal,
+        currency: formData.currency,
+        startDate: formData.startDate || undefined,
+        endDate: formData.endDate || undefined,
+        targetBeneficiaries: targetBeneficiaries ?? undefined,
+        coverImage: formData.coverImage,
+      });
+
+      toast.success(
+        isEditing
+          ? "Project updated successfully!"
+          : "Project created successfully!",
+      );
+      navigate("/partner/projects");
+    } catch (error) {
+      console.error("Failed to save project", error);
+      toast.error("Failed to save project. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const generateSlug = (title: string) => {
@@ -374,9 +476,19 @@ export default function ProjectForm() {
                 <CardTitle>Publishing</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button type="submit" className="w-full">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting || isLoadingProject}
+                >
                   <Save className="w-4 h-4 mr-2" />
-                  {isEditing ? "Update Project" : "Create Project"}
+                  {isLoadingProject
+                    ? "Loading..."
+                    : isSubmitting
+                      ? "Saving..."
+                      : isEditing
+                        ? "Update Project"
+                        : "Create Project"}
                 </Button>
 
                 <Button

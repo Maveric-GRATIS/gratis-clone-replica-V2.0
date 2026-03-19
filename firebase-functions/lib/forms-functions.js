@@ -39,7 +39,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendApplicationActionEmail = exports.sendVolunteerApplicationNotification = exports.sendJobApplicationNotification = exports.sendPartnerApplicationNotification = exports.sendNGOApplicationNotification = exports.sendPartnerInquiryNotification = exports.sendContactEmail = void 0;
+exports.sendApplicationActionEmail = exports.sendVolunteerApplicationNotification = exports.sendJobApplicationNotification = exports.sendPartnerApplicationNotification = exports.sendNGOApplicationNotification = exports.sendPartnerInquiryNotification = exports.sendContactEmail = exports.savePartnerProject = exports.submitInvestmentPledge = exports.submitDonationPledge = void 0;
 const functions = __importStar(require("firebase-functions"));
 const email_service_1 = require("./email-service");
 const admin = __importStar(require("firebase-admin"));
@@ -78,6 +78,167 @@ async function checkRateLimit(key, maxCalls, windowMs) {
     });
 }
 const APP_URL = 'https://gratis-ngo-7bb44.web.app';
+exports.submitDonationPledge = functions.https.onCall(async (data, context) => {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    try {
+        const limitKey = `donation_${(_d = (_b = (_a = context.auth) === null || _a === void 0 ? void 0 : _a.uid) !== null && _b !== void 0 ? _b : (_c = context.rawRequest) === null || _c === void 0 ? void 0 : _c.ip) !== null && _d !== void 0 ? _d : 'unknown'}`;
+        await checkRateLimit(limitKey, 10, 60 * 60 * 1000);
+        if (!data.name || !data.email || !data.donationType || typeof data.amount !== 'number') {
+            throw new functions.https.HttpsError('invalid-argument', 'Missing required fields');
+        }
+        if (!isValidEmail(data.email)) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid email address');
+        }
+        if (!['one-time', 'monthly'].includes(String(data.donationType))) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid donation type');
+        }
+        if (!Number.isFinite(data.amount) || data.amount < 5 || data.amount > 100000) {
+            throw new functions.https.HttpsError('invalid-argument', 'Donation amount must be between 5 and 100000');
+        }
+        if (((_f = (_e = data.message) === null || _e === void 0 ? void 0 : _e.length) !== null && _f !== void 0 ? _f : 0) > 2000) {
+            throw new functions.https.HttpsError('invalid-argument', 'Message too long (max 2000 chars)');
+        }
+        const safeName = sanitize(data.name);
+        const safeMessage = data.message ? sanitize(data.message) : null;
+        const ref = await admin.firestore().collection('donationPledges').add({
+            name: safeName,
+            email: data.email,
+            donationType: data.donationType,
+            amount: data.amount,
+            message: safeMessage,
+            uid: (_h = (_g = context.auth) === null || _g === void 0 ? void 0 : _g.uid) !== null && _h !== void 0 ? _h : null,
+            ip: (_k = (_j = context.rawRequest) === null || _j === void 0 ? void 0 : _j.ip) !== null && _k !== void 0 ? _k : null,
+            source: 'spark_donation_form',
+            status: 'pending_payment',
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+        return { success: true, pledgeId: ref.id };
+    }
+    catch (error) {
+        if (error instanceof functions.https.HttpsError)
+            throw error;
+        functions.logger.error('Donation pledge error:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to submit donation pledge');
+    }
+});
+exports.submitInvestmentPledge = functions.https.onCall(async (data, context) => {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    try {
+        const limitKey = `investment_${(_d = (_b = (_a = context.auth) === null || _a === void 0 ? void 0 : _a.uid) !== null && _b !== void 0 ? _b : (_c = context.rawRequest) === null || _c === void 0 ? void 0 : _c.ip) !== null && _d !== void 0 ? _d : 'unknown'}`;
+        await checkRateLimit(limitKey, 10, 60 * 60 * 1000);
+        if (!data.name || !data.email || !data.country || !data.investmentType || !data.commitment || typeof data.amount !== 'number') {
+            throw new functions.https.HttpsError('invalid-argument', 'Missing required fields');
+        }
+        if (!isValidEmail(data.email)) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid email address');
+        }
+        if (!['scholarship', 'microcredit'].includes(String(data.investmentType))) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid investment type');
+        }
+        if (!['one-time', 'annual'].includes(String(data.commitment))) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid commitment type');
+        }
+        if (!Number.isFinite(data.amount) || data.amount < 100 || data.amount > 1000000) {
+            throw new functions.https.HttpsError('invalid-argument', 'Investment amount must be between 100 and 1000000');
+        }
+        if (((_f = (_e = data.motivation) === null || _e === void 0 ? void 0 : _e.length) !== null && _f !== void 0 ? _f : 0) > 3000) {
+            throw new functions.https.HttpsError('invalid-argument', 'Motivation too long (max 3000 chars)');
+        }
+        const safeName = sanitize(data.name);
+        const safeCountry = sanitize(data.country);
+        const safeMotivation = data.motivation ? sanitize(data.motivation) : null;
+        const ref = await admin.firestore().collection('investmentPledges').add({
+            name: safeName,
+            email: data.email,
+            country: safeCountry,
+            investmentType: data.investmentType,
+            amount: data.amount,
+            commitment: data.commitment,
+            motivation: safeMotivation,
+            uid: (_h = (_g = context.auth) === null || _g === void 0 ? void 0 : _g.uid) !== null && _h !== void 0 ? _h : null,
+            ip: (_k = (_j = context.rawRequest) === null || _j === void 0 ? void 0 : _j.ip) !== null && _k !== void 0 ? _k : null,
+            source: 'spark_investment_form',
+            status: 'pending_review',
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+        return { success: true, pledgeId: ref.id };
+    }
+    catch (error) {
+        if (error instanceof functions.https.HttpsError)
+            throw error;
+        functions.logger.error('Investment pledge error:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to submit investment pledge');
+    }
+});
+async function isAdminUser(uid) {
+    var _a;
+    const snap = await admin.firestore().doc(`users/${uid}`).get();
+    return ((_a = snap.data()) === null || _a === void 0 ? void 0 : _a.role) === 'admin';
+}
+exports.savePartnerProject = functions.https.onCall(async (data, context) => {
+    var _a, _b, _c, _d, _e;
+    try {
+        if (!context.auth) {
+            throw new functions.https.HttpsError('unauthenticated', 'Must be logged in to manage projects');
+        }
+        await checkRateLimit(`project_${context.auth.uid}`, 30, 60 * 60 * 1000);
+        if (!data.title || !data.description || !data.category || !data.country || typeof data.fundingGoal !== 'number') {
+            throw new functions.https.HttpsError('invalid-argument', 'Missing required fields');
+        }
+        if (((_b = (_a = data.title) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0) > 200 || ((_d = (_c = data.description) === null || _c === void 0 ? void 0 : _c.length) !== null && _d !== void 0 ? _d : 0) > 8000) {
+            throw new functions.https.HttpsError('invalid-argument', 'Project title/description exceeds max length');
+        }
+        if (!Number.isFinite(data.fundingGoal) || data.fundingGoal <= 0 || data.fundingGoal > 100000000) {
+            throw new functions.https.HttpsError('invalid-argument', 'Funding goal must be between 1 and 100000000');
+        }
+        if (!['EUR', 'USD', 'GBP'].includes(String(data.currency))) {
+            throw new functions.https.HttpsError('invalid-argument', 'Invalid currency');
+        }
+        if (data.targetBeneficiaries !== undefined) {
+            if (!Number.isFinite(data.targetBeneficiaries) || data.targetBeneficiaries < 0 || data.targetBeneficiaries > 100000000) {
+                throw new functions.https.HttpsError('invalid-argument', 'Invalid target beneficiaries value');
+            }
+        }
+        const safePayload = {
+            title: sanitize(data.title),
+            slug: sanitize(data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')),
+            description: sanitize(data.description),
+            category: sanitize(data.category),
+            country: sanitize(data.country),
+            region: data.region ? sanitize(data.region) : '',
+            city: data.city ? sanitize(data.city) : '',
+            fundingGoal: data.fundingGoal,
+            currency: data.currency,
+            startDate: data.startDate || null,
+            endDate: data.endDate || null,
+            targetBeneficiaries: (_e = data.targetBeneficiaries) !== null && _e !== void 0 ? _e : null,
+            coverImage: data.coverImage ? sanitize(data.coverImage) : '',
+        };
+        const db = admin.firestore();
+        const isAdmin = await isAdminUser(context.auth.uid);
+        if (data.projectId) {
+            const ref = db.collection('partnerProjects').doc(data.projectId);
+            const snap = await ref.get();
+            if (!snap.exists) {
+                throw new functions.https.HttpsError('not-found', 'Project not found');
+            }
+            const existing = snap.data();
+            if (!isAdmin && (existing === null || existing === void 0 ? void 0 : existing.createdBy) !== context.auth.uid) {
+                throw new functions.https.HttpsError('permission-denied', 'Not allowed to edit this project');
+            }
+            await ref.update(Object.assign(Object.assign({}, safePayload), { updatedAt: admin.firestore.FieldValue.serverTimestamp(), updatedBy: context.auth.uid }));
+            return { success: true, projectId: ref.id, action: 'updated' };
+        }
+        const createdRef = await db.collection('partnerProjects').add(Object.assign(Object.assign({}, safePayload), { status: 'draft', fundingCurrent: 0, donors: 0, views: 0, createdBy: context.auth.uid, createdAt: admin.firestore.FieldValue.serverTimestamp(), updatedAt: admin.firestore.FieldValue.serverTimestamp() }));
+        return { success: true, projectId: createdRef.id, action: 'created' };
+    }
+    catch (error) {
+        if (error instanceof functions.https.HttpsError)
+            throw error;
+        functions.logger.error('savePartnerProject error:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to save project');
+    }
+});
 exports.sendContactEmail = functions.runWith({ secrets: ['RESEND_API_KEY'] }).https.onCall(async (data, context) => {
     var _a, _b, _c, _d, _e, _f;
     try {
